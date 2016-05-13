@@ -1,1 +1,43 @@
-/* Empty. Add your own CSS if you like */
+#app-container {
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+}
+
+#nav-container {
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  width: 120px;
+}
+
+#content-container {
+  text-align: center;
+  display: -webkit-flex;
+  -webkit-flex: 1;
+}
+
+.navTabs {
+  background-color: lightgray;
+  height: 100vh;
+  display: -webkit-flex;
+  -webkit-flex: 1;
+  -webkit-flex-direction: column;
+}
+
+.navTab {
+  background-color: white;
+  margin: 5px;
+  text-align: center;
+  display: -webkit-flex;
+  -webkit-flex: 1;
+}
+
+.navTabText {
+  margin: auto;
+}
+
+.bigtext {
+  font-size: 55pt;
+}
+
+item {
+}
