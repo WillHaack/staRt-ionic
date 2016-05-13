@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="site.girlfriends.start.audio"
+        version="0.0.1">
+    <name>staRt Audio Plugin</name>
+    <description>Native audio calls for staRt. LPC and stuff like that</description>
+
+    <engines>
+      <engine name="cordova" version=">=3.8.1" />
+    </engines>
+
+    <js-module src="www/alert.js" name="Alert">
+      <clobbers target="Alert" />
+    </js-module>
+
+    <!-- ios -->
+    <platform name="ios">
+      <config-file target="config.xml" parent="/*">
+        <feature name="Alert">
+          <param name="ios-package" value="Alert" />
+          <param name="onload" value="true" />
+        </feature>
+      </config-file>
+      <header-file src="src/ios/Alert.h" />
+      <source-file src="src/ios/Alert.m" />
+    </platform>
+</plugin>
