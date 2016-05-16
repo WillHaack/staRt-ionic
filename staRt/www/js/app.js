@@ -34,6 +34,20 @@ angular.module('start', ['ionic'])
   };
 })
 
+.controller('LPCCtrl', function($scope){
+  $scope.drawRandomPoints = function() {
+    var pntCnt = 50;
+    var points = [];
+    for (var i=0; i<pntCnt; ++i) {
+      var x = i / (pntCnt-1);
+      var y = Math.random();
+      points.push([x,y,0.0]);
+    }
+    drawLPC(points);
+    console.log(points);
+  };
+})
+
 .controller('StartCtrl', function($scope, $timeout, StartUIState) {
 
   $scope.startUIState = StartUIState.getLastActiveIndex();
