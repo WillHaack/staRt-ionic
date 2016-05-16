@@ -9,19 +9,22 @@
       <engine name="cordova" version=">=3.8.1" />
     </engines>
 
-    <js-module src="www/alert.js" name="Alert">
-      <clobbers target="Alert" />
+    <js-module src="www/alert.js" name="AudioPlugin">
+      <clobbers target="AudioPlugin" />
     </js-module>
 
     <!-- ios -->
     <platform name="ios">
       <config-file target="config.xml" parent="/*">
-        <feature name="Alert">
-          <param name="ios-package" value="Alert" />
+        <feature name="AudioPlugin">
+          <param name="ios-package" value="AudioPlugin" />
           <param name="onload" value="true" />
         </feature>
       </config-file>
-      <header-file src="src/ios/Alert.h" />
-      <source-file src="src/ios/Alert.m" />
+      <source-file src="src/ios/AudioPlugin/lib/libAudioPlugin.a" framework="true"/>
+      <header-file src="src/ios/AudioPlugin/AudioPlugin/MyAlertView.h"/>
+      <header-file src="src/ios/AudioPlugin/AudioPlugin/AudioPlugin.h"/>
+      <!-- <source-file src="src/ios/AudioPlugin/AudioPlugin/AudioPlugin.m"/> -->
+      <!-- <source-file src="src/ios/audio-plugin/frameworks/libTheAmazingAudioEngine.a" framework="true"/> -->
     </platform>
 </plugin>

@@ -55,7 +55,7 @@ angular.module('start', ['ionic'])
   $scope.selectIndex = function(index) {
     StartUIState.setLastActiveIndex(index);
     $scope.content = StartUIState.content[index];
-    Alert.iosalert('alert', ''+index, 'Okay', null);
+    AudioPlugin.iosalert('alert', ''+index, 'Okay', null);
   };
 
   $scope.tabTitles = StartUIState.tabTitles;
