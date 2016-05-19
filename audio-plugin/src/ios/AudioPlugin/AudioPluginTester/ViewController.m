@@ -7,16 +7,29 @@
 //
 
 #import "ViewController.h"
+#import "APAudioManager.h"
 
 @interface ViewController ()
-
+@property (nonatomic, strong) APAudioManager *audioManager;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    self.audioManager = [[APAudioManager alloc] init];
+    [self.audioManager start];
+    
+    CADisplayLink *lnk = [CADisplayLink displayLinkWithTarget:self selector:@selector(printCurrentCoefficients)];
+    [lnk addToRunLoop:[NSRunLoop currentRunLoop]
+              forMode:NSRunLoopCommonModes];
+}
+
+- (void) printCurrentCoefficients
+{
+    NSArray *coeffs = [self.audioManager lpcCoefficients];
+    NSLog(@"Coefficients: %@", coeffs);
 }
 
 - (void)didReceiveMemoryWarning {

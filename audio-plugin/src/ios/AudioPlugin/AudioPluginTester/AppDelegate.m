@@ -19,14 +19,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    MyAlertView *myAV = [[MyAlertView alloc] initWithTitle:@"Title"
-                                                   message:@"Message"
-                                                  delegate:nil
-                                         cancelButtonTitle:@"Cancel"
-                                         otherButtonTitles:nil
-                         ];
-    [myAV show];
-    
     return YES;
 }
 

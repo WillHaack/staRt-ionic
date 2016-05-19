@@ -12,7 +12,7 @@
 		<key>AudioPluginTester.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>5</integer>
+			<integer>3</integer>
 		</dict>
 		<key>UniversalLib.xcscheme</key>
 		<dict>
