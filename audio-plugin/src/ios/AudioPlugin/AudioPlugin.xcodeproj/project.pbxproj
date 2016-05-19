@@ -23,6 +23,14 @@
 /* Begin PBXBuildFile section */
 		083A41931CEA4553008AF1A0 /* AudioPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 083A41921CEA4553008AF1A0 /* AudioPlugin.m */; };
 		083A419B1CEA49A7008AF1A0 /* MyAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 083A419A1CEA49A7008AF1A0 /* MyAlertView.m */; };
+		08A3840E1CEE0E3C00E6DA6D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3840D1CEE0E3C00E6DA6D /* main.m */; };
+		08A384111CEE0E3C00E6DA6D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A384101CEE0E3C00E6DA6D /* AppDelegate.m */; };
+		08A384141CEE0E3C00E6DA6D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A384131CEE0E3C00E6DA6D /* ViewController.m */; };
+		08A384171CEE0E3C00E6DA6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08A384151CEE0E3C00E6DA6D /* Main.storyboard */; };
+		08A384191CEE0E3C00E6DA6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08A384181CEE0E3C00E6DA6D /* Assets.xcassets */; };
+		08A3841C1CEE0E3C00E6DA6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08A3841A1CEE0E3C00E6DA6D /* LaunchScreen.storyboard */; };
+		08A384231CEE0EB200E6DA6D /* libAudioPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 083A417D1CEA44EA008AF1A0 /* libAudioPlugin.a */; };
+		C007999DC50FCCF27EFCF208 /* libPods-AudioPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2BED9AD8BD12A920599D75 /* libPods-AudioPlugin.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +47,34 @@
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = CordovaLib;
+		};
+		08A384001CEE0DCF00E6DA6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08A383FB1CEE0DCE00E6DA6D /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BD742662DD39071B9CFBA49E3F1CBB71;
+			remoteInfo = "Pods-AudioPlugin";
+		};
+		08A384021CEE0DCF00E6DA6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08A383FB1CEE0DCE00E6DA6D /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 95624C9CCDD6064F9F0930A6CE801CFB;
+			remoteInfo = TheAmazingAudioEngine;
+		};
+		08A384041CEE0DD400E6DA6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08A383FB1CEE0DCE00E6DA6D /* Pods.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = EA61B7247414793F3FCBE433DE212233;
+			remoteInfo = "Pods-AudioPlugin";
+		};
+		08A384211CEE0E4700E6DA6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 083A41751CEA44EA008AF1A0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 083A417C1CEA44EA008AF1A0;
+			remoteInfo = AudioPlugin;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -61,6 +97,20 @@
 		083A41921CEA4553008AF1A0 /* AudioPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlugin.m; sourceTree = "<group>"; };
 		083A41991CEA49A7008AF1A0 /* MyAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAlertView.h; sourceTree = "<group>"; };
 		083A419A1CEA49A7008AF1A0 /* MyAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAlertView.m; sourceTree = "<group>"; };
+		08A383FB1CEE0DCE00E6DA6D /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
+		08A3840A1CEE0E3C00E6DA6D /* AudioPluginTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioPluginTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		08A3840D1CEE0E3C00E6DA6D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		08A3840F1CEE0E3C00E6DA6D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		08A384101CEE0E3C00E6DA6D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		08A384121CEE0E3C00E6DA6D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		08A384131CEE0E3C00E6DA6D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		08A384161CEE0E3C00E6DA6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		08A384181CEE0E3C00E6DA6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		08A3841B1CEE0E3C00E6DA6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		08A3841D1CEE0E3C00E6DA6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2CA209475722A612A98F4E21 /* Pods-AudioPlugin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioPlugin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AudioPlugin/Pods-AudioPlugin.debug.xcconfig"; sourceTree = "<group>"; };
+		4A2BED9AD8BD12A920599D75 /* libPods-AudioPlugin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AudioPlugin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D92B5795D52AB2D6DA9BFD33 /* Pods-AudioPlugin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioPlugin.release.xcconfig"; path = "Pods/Target Support Files/Pods-AudioPlugin/Pods-AudioPlugin.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +118,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C007999DC50FCCF27EFCF208 /* libPods-AudioPlugin.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08A384071CEE0E3C00E6DA6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08A384231CEE0EB200E6DA6D /* libAudioPlugin.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,8 +137,12 @@
 			isa = PBXGroup;
 			children = (
 				083A417F1CEA44EA008AF1A0 /* AudioPlugin */,
+				08A3840B1CEE0E3C00E6DA6D /* AudioPluginTester */,
 				083A417E1CEA44EA008AF1A0 /* Products */,
 				083A41891CEA452E008AF1A0 /* CordovaLib.xcodeproj */,
+				08A383FB1CEE0DCE00E6DA6D /* Pods.xcodeproj */,
+				0C03780792F350AD1AC73581 /* Pods */,
+				7480FD24EC61FEDDE5A1350A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				083A417D1CEA44EA008AF1A0 /* libAudioPlugin.a */,
+				08A3840A1CEE0E3C00E6DA6D /* AudioPluginTester.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -110,6 +174,56 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		08A383FC1CEE0DCE00E6DA6D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				08A384011CEE0DCF00E6DA6D /* libPods-AudioPlugin.a */,
+				08A384031CEE0DCF00E6DA6D /* libTheAmazingAudioEngine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		08A3840B1CEE0E3C00E6DA6D /* AudioPluginTester */ = {
+			isa = PBXGroup;
+			children = (
+				08A3840F1CEE0E3C00E6DA6D /* AppDelegate.h */,
+				08A384101CEE0E3C00E6DA6D /* AppDelegate.m */,
+				08A384121CEE0E3C00E6DA6D /* ViewController.h */,
+				08A384131CEE0E3C00E6DA6D /* ViewController.m */,
+				08A384151CEE0E3C00E6DA6D /* Main.storyboard */,
+				08A384181CEE0E3C00E6DA6D /* Assets.xcassets */,
+				08A3841A1CEE0E3C00E6DA6D /* LaunchScreen.storyboard */,
+				08A3841D1CEE0E3C00E6DA6D /* Info.plist */,
+				08A3840C1CEE0E3C00E6DA6D /* Supporting Files */,
+			);
+			path = AudioPluginTester;
+			sourceTree = "<group>";
+		};
+		08A3840C1CEE0E3C00E6DA6D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				08A3840D1CEE0E3C00E6DA6D /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0C03780792F350AD1AC73581 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2CA209475722A612A98F4E21 /* Pods-AudioPlugin.debug.xcconfig */,
+				D92B5795D52AB2D6DA9BFD33 /* Pods-AudioPlugin.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7480FD24EC61FEDDE5A1350A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4A2BED9AD8BD12A920599D75 /* libPods-AudioPlugin.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -117,19 +231,40 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 083A41861CEA44EA008AF1A0 /* Build configuration list for PBXNativeTarget "AudioPlugin" */;
 			buildPhases = (
+				F9E970B7A8085FEDFAF3585A /* 📦 Check Pods Manifest.lock */,
 				083A41791CEA44EA008AF1A0 /* Sources */,
 				083A417A1CEA44EA008AF1A0 /* Frameworks */,
 				083A417B1CEA44EA008AF1A0 /* CopyFiles */,
+				CF9EC9D525CDCAE4F5F7BF24 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				08A384051CEE0DD400E6DA6D /* PBXTargetDependency */,
 				083A41901CEA4535008AF1A0 /* PBXTargetDependency */,
 			);
 			name = AudioPlugin;
 			productName = AudioPlugin;
 			productReference = 083A417D1CEA44EA008AF1A0 /* libAudioPlugin.a */;
 			productType = "com.apple.product-type.library.static";
+		};
+		08A384091CEE0E3C00E6DA6D /* AudioPluginTester */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08A3841E1CEE0E3C00E6DA6D /* Build configuration list for PBXNativeTarget "AudioPluginTester" */;
+			buildPhases = (
+				08A384061CEE0E3C00E6DA6D /* Sources */,
+				08A384071CEE0E3C00E6DA6D /* Frameworks */,
+				08A384081CEE0E3C00E6DA6D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				08A384221CEE0E4700E6DA6D /* PBXTargetDependency */,
+			);
+			name = AudioPluginTester;
+			productName = AudioPluginTester;
+			productReference = 08A3840A1CEE0E3C00E6DA6D /* AudioPluginTester.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -146,6 +281,9 @@
 					083A41D11CEA5075008AF1A0 = {
 						CreatedOnToolsVersion = 7.2;
 					};
+					08A384091CEE0E3C00E6DA6D = {
+						CreatedOnToolsVersion = 7.2;
+					};
 				};
 			};
 			buildConfigurationList = 083A41781CEA44EA008AF1A0 /* Build configuration list for PBXProject "AudioPlugin" */;
@@ -154,6 +292,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 083A41741CEA44EA008AF1A0;
 			productRefGroup = 083A417E1CEA44EA008AF1A0 /* Products */;
@@ -163,11 +302,16 @@
 					ProductGroup = 083A418A1CEA452E008AF1A0 /* Products */;
 					ProjectRef = 083A41891CEA452E008AF1A0 /* CordovaLib.xcodeproj */;
 				},
+				{
+					ProductGroup = 08A383FC1CEE0DCE00E6DA6D /* Products */;
+					ProjectRef = 08A383FB1CEE0DCE00E6DA6D /* Pods.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
 				083A417C1CEA44EA008AF1A0 /* AudioPlugin */,
 				083A41D11CEA5075008AF1A0 /* UniversalLib */,
+				08A384091CEE0E3C00E6DA6D /* AudioPluginTester */,
 			);
 		};
 /* End PBXProject section */
@@ -180,7 +324,34 @@
 			remoteRef = 083A418D1CEA452E008AF1A0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		08A384011CEE0DCF00E6DA6D /* libPods-AudioPlugin.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libPods-AudioPlugin.a";
+			remoteRef = 08A384001CEE0DCF00E6DA6D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		08A384031CEE0DCF00E6DA6D /* libTheAmazingAudioEngine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libTheAmazingAudioEngine.a;
+			remoteRef = 08A384021CEE0DCF00E6DA6D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		08A384081CEE0E3C00E6DA6D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08A3841C1CEE0E3C00E6DA6D /* LaunchScreen.storyboard in Resources */,
+				08A384191CEE0E3C00E6DA6D /* Assets.xcassets in Resources */,
+				08A384171CEE0E3C00E6DA6D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		083A41D51CEA5098008AF1A0 /* ShellScript */ = {
@@ -194,7 +365,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# define output folder environment variable\nUNIVERSAL_OUTPUTFOLDER=${PROJECT_DIR}/lib\n\n# Step 1. Build Device and Simulator versions\nxcodebuild -target AudioPlugin ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\nxcodebuild -target AudioPlugin ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphonesimulator -arch i386 -arch x86_64 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 2. Create universal binary file using lipo\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\"";
+			shellScript = "# define output folder environment variable\nUNIVERSAL_OUTPUTFOLDER=${PROJECT_DIR}/lib\n\n# Step 1. Build Device and Simulator versions\nxcodebuild -target AudioPlugin ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos -arch armv7 -arch arm64 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\nxcodebuild -target AudioPlugin ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphonesimulator -arch i386 -arch x86_64 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 2. Create universal binary file using lipo\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\"";
+		};
+		CF9EC9D525CDCAE4F5F7BF24 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AudioPlugin/Pods-AudioPlugin-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F9E970B7A8085FEDFAF3585A /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -208,6 +409,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		08A384061CEE0E3C00E6DA6D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08A384141CEE0E3C00E6DA6D /* ViewController.m in Sources */,
+				08A384111CEE0E3C00E6DA6D /* AppDelegate.m in Sources */,
+				08A3840E1CEE0E3C00E6DA6D /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -216,7 +427,36 @@
 			name = CordovaLib;
 			targetProxy = 083A418F1CEA4535008AF1A0 /* PBXContainerItemProxy */;
 		};
+		08A384051CEE0DD400E6DA6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-AudioPlugin";
+			targetProxy = 08A384041CEE0DD400E6DA6D /* PBXContainerItemProxy */;
+		};
+		08A384221CEE0E4700E6DA6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 083A417C1CEA44EA008AF1A0 /* AudioPlugin */;
+			targetProxy = 08A384211CEE0E4700E6DA6D /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		08A384151CEE0E3C00E6DA6D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				08A384161CEE0E3C00E6DA6D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		08A3841A1CEE0E3C00E6DA6D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				08A3841B1CEE0E3C00E6DA6D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		083A41841CEA44EA008AF1A0 /* Debug */ = {
@@ -301,29 +541,31 @@
 		};
 		083A41871CEA44EA008AF1A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2CA209475722A612A98F4E21 /* Pods-AudioPlugin.debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				DEPLOYMENT_LOCATION = NO;
+				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(PROJECT_DIR)/$(PROJECT_NAME).dst";
 				INSTALL_PATH = /lib;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
 			};
 			name = Debug;
 		};
 		083A41881CEA44EA008AF1A0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D92B5795D52AB2D6DA9BFD33 /* Pods-AudioPlugin.release.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				DEPLOYMENT_LOCATION = NO;
+				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(PROJECT_DIR)/$(PROJECT_NAME).dst";
 				INSTALL_PATH = /lib;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
 			};
 			name = Release;
@@ -334,6 +576,7 @@
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(PROJECT_DIR)/$(PROJECT_NAME).dst";
 				INSTALL_PATH = /lib;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 			};
@@ -347,6 +590,30 @@
 				INSTALL_PATH = /lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
+			};
+			name = Release;
+		};
+		08A3841F1CEE0E3C00E6DA6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = AudioPluginTester/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.girlfriendslabs.AudioPluginTester;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		08A384201CEE0E3C00E6DA6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = AudioPluginTester/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.girlfriendslabs.AudioPluginTester;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -376,6 +643,15 @@
 			buildConfigurations = (
 				083A41D31CEA5075008AF1A0 /* Debug */,
 				083A41D41CEA5075008AF1A0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		08A3841E1CEE0E3C00E6DA6D /* Build configuration list for PBXNativeTarget "AudioPluginTester" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08A3841F1CEE0E3C00E6DA6D /* Debug */,
+				08A384201CEE0E3C00E6DA6D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
