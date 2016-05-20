@@ -22,7 +22,8 @@
 
 /* Begin PBXBuildFile section */
 		083A41931CEA4553008AF1A0 /* AudioPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 083A41921CEA4553008AF1A0 /* AudioPlugin.m */; };
-		083A419B1CEA49A7008AF1A0 /* MyAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 083A419A1CEA49A7008AF1A0 /* MyAlertView.m */; };
+		085D97671CEF9FAE00998A81 /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 085D97651CEF9FAE00998A81 /* AudioManager.cpp */; };
+		085D976B1CEFB17C00998A81 /* LPCDisplayManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 085D97691CEFB17C00998A81 /* LPCDisplayManager.cpp */; };
 		08A3840E1CEE0E3C00E6DA6D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3840D1CEE0E3C00E6DA6D /* main.m */; };
 		08A384111CEE0E3C00E6DA6D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A384101CEE0E3C00E6DA6D /* AppDelegate.m */; };
 		08A384141CEE0E3C00E6DA6D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A384131CEE0E3C00E6DA6D /* ViewController.m */; };
@@ -30,7 +31,7 @@
 		08A384191CEE0E3C00E6DA6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08A384181CEE0E3C00E6DA6D /* Assets.xcassets */; };
 		08A3841C1CEE0E3C00E6DA6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08A3841A1CEE0E3C00E6DA6D /* LaunchScreen.storyboard */; };
 		08A384261CEE0FE500E6DA6D /* APAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A384251CEE0FE500E6DA6D /* APAudioManager.m */; };
-		08A384291CEE11E700E6DA6D /* APLPCCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A384281CEE11E700E6DA6D /* APLPCCalculator.m */; };
+		08A384291CEE11E700E6DA6D /* APLPCCalculator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 08A384281CEE11E700E6DA6D /* APLPCCalculator.mm */; };
 		08F7C0B41CEE20F300D8F1BA /* AEAudioBufferManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F7C08B1CEE20F300D8F1BA /* AEAudioBufferManager.m */; };
 		08F7C0B51CEE20F300D8F1BA /* AEAudioController+Audiobus.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F7C08D1CEE20F300D8F1BA /* AEAudioController+Audiobus.m */; };
 		08F7C0B61CEE20F300D8F1BA /* AEAudioController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F7C0901CEE20F300D8F1BA /* AEAudioController.m */; };
@@ -96,8 +97,10 @@
 		083A41891CEA452E008AF1A0 /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = ../../../../staRt/platforms/ios/CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
 		083A41911CEA4553008AF1A0 /* AudioPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlugin.h; sourceTree = "<group>"; };
 		083A41921CEA4553008AF1A0 /* AudioPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlugin.m; sourceTree = "<group>"; };
-		083A41991CEA49A7008AF1A0 /* MyAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAlertView.h; sourceTree = "<group>"; };
-		083A419A1CEA49A7008AF1A0 /* MyAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAlertView.m; sourceTree = "<group>"; };
+		085D97651CEF9FAE00998A81 /* AudioManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioManager.cpp; sourceTree = "<group>"; };
+		085D97661CEF9FAE00998A81 /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioManager.h; sourceTree = "<group>"; };
+		085D97691CEFB17C00998A81 /* LPCDisplayManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LPCDisplayManager.cpp; sourceTree = "<group>"; };
+		085D976A1CEFB17C00998A81 /* LPCDisplayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPCDisplayManager.h; sourceTree = "<group>"; };
 		08A3840A1CEE0E3C00E6DA6D /* AudioPluginTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioPluginTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08A3840D1CEE0E3C00E6DA6D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		08A3840F1CEE0E3C00E6DA6D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -111,7 +114,7 @@
 		08A384241CEE0FE500E6DA6D /* APAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAudioManager.h; sourceTree = "<group>"; };
 		08A384251CEE0FE500E6DA6D /* APAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAudioManager.m; sourceTree = "<group>"; };
 		08A384271CEE11E700E6DA6D /* APLPCCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLPCCalculator.h; sourceTree = "<group>"; };
-		08A384281CEE11E700E6DA6D /* APLPCCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLPCCalculator.m; sourceTree = "<group>"; };
+		08A384281CEE11E700E6DA6D /* APLPCCalculator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = APLPCCalculator.mm; sourceTree = "<group>"; };
 		08A3842D1CEE1A4600E6DA6D /* libAudioPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAudioPlugin.a; path = lib/libAudioPlugin.a; sourceTree = "<group>"; };
 		08F7C08A1CEE20F300D8F1BA /* AEAudioBufferManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AEAudioBufferManager.h; sourceTree = "<group>"; };
 		08F7C08B1CEE20F300D8F1BA /* AEAudioBufferManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AEAudioBufferManager.m; sourceTree = "<group>"; };
@@ -208,12 +211,14 @@
 			children = (
 				083A41911CEA4553008AF1A0 /* AudioPlugin.h */,
 				083A41921CEA4553008AF1A0 /* AudioPlugin.m */,
-				083A41991CEA49A7008AF1A0 /* MyAlertView.h */,
-				083A419A1CEA49A7008AF1A0 /* MyAlertView.m */,
+				085D97661CEF9FAE00998A81 /* AudioManager.h */,
+				085D97651CEF9FAE00998A81 /* AudioManager.cpp */,
 				08A384241CEE0FE500E6DA6D /* APAudioManager.h */,
 				08A384251CEE0FE500E6DA6D /* APAudioManager.m */,
 				08A384271CEE11E700E6DA6D /* APLPCCalculator.h */,
-				08A384281CEE11E700E6DA6D /* APLPCCalculator.m */,
+				08A384281CEE11E700E6DA6D /* APLPCCalculator.mm */,
+				085D976A1CEFB17C00998A81 /* LPCDisplayManager.h */,
+				085D97691CEFB17C00998A81 /* LPCDisplayManager.cpp */,
 			);
 			path = AudioPlugin;
 			sourceTree = "<group>";
@@ -461,16 +466,17 @@
 				083A41931CEA4553008AF1A0 /* AudioPlugin.m in Sources */,
 				08F7C0B81CEE20F300D8F1BA /* AEAudioFilePlayer.m in Sources */,
 				08A384261CEE0FE500E6DA6D /* APAudioManager.m in Sources */,
-				08A384291CEE11E700E6DA6D /* APLPCCalculator.m in Sources */,
+				08A384291CEE11E700E6DA6D /* APLPCCalculator.mm in Sources */,
 				08F7C0BD1CEE20F300D8F1BA /* AEBlockChannel.m in Sources */,
 				08F7C0C31CEE20F300D8F1BA /* AEUtilities.m in Sources */,
-				083A419B1CEA49A7008AF1A0 /* MyAlertView.m in Sources */,
 				08F7C0B61CEE20F300D8F1BA /* AEAudioController.m in Sources */,
 				08F7C0B91CEE20F300D8F1BA /* AEAudioFileWriter.m in Sources */,
 				08F7C0BB1CEE20F300D8F1BA /* AEAudioUnitFilter.m in Sources */,
 				08F7C0B41CEE20F300D8F1BA /* AEAudioBufferManager.m in Sources */,
+				085D976B1CEFB17C00998A81 /* LPCDisplayManager.cpp in Sources */,
 				08F7C0BA1CEE20F300D8F1BA /* AEAudioUnitChannel.m in Sources */,
 				08F7C0B71CEE20F300D8F1BA /* AEAudioFileLoaderOperation.m in Sources */,
+				085D97671CEF9FAE00998A81 /* AudioManager.cpp in Sources */,
 				08F7C0C51CEE20F300D8F1BA /* TPCircularBuffer+AudioBufferList.c in Sources */,
 				08F7C0BF1CEE20F300D8F1BA /* AEBlockScheduler.m in Sources */,
 				08F7C0BE1CEE20F300D8F1BA /* AEBlockFilter.m in Sources */,

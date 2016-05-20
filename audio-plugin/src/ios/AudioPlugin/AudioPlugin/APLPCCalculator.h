@@ -10,5 +10,6 @@
 #import "TheAmazingAudioEngine.h"
 
 @interface APLPCCalculator : NSObject <AEAudioReceiver>
+- (id) initWithAudioController:(AEAudioController *)audioController;
 - (NSArray *) getCurrentCoefficients;
 @end

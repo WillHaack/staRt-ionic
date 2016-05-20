@@ -10,5 +10,5 @@
 #import <Cordova/CDV.h>
 
 @interface AudioPlugin : CDVPlugin <UIAlertViewDelegate> {}
-- (void)alert:(CDVInvokedUrlCommand*)command;
+- (void)getLPCCoefficients:(CDVInvokedUrlCommand*)command;
 @end

@@ -34,20 +34,6 @@ angular.module('start', ['ionic'])
   };
 })
 
-.controller('LPCCtrl', function($scope){
-  $scope.drawRandomPoints = function() {
-    var pntCnt = 50;
-    var points = [];
-    for (var i=0; i<pntCnt; ++i) {
-      var x = i / (pntCnt-1);
-      var y = Math.random();
-      points.push([x,y,0.0]);
-    }
-    drawLPC(points);
-    console.log(points);
-  };
-})
-
 .controller('StartCtrl', function($scope, $timeout, StartUIState) {
 
   $scope.startUIState = StartUIState.getLastActiveIndex();
@@ -59,6 +45,63 @@ angular.module('start', ['ionic'])
   };
 
   $scope.tabTitles = StartUIState.tabTitles;
+
+  $scope.getLPCCoefficients = function(cb) {
+    if (window.AudioPlugin !== undefined) {
+      AudioPlugin.getLPCCoefficients(cb);
+    }
+  };
+
+	//Start lpc drawer
+	var sketch = function(lpc) {
+
+		var url;
+		var myCanvas;
+		var myFrameRate = 30;
+		var running = true;
+    var points = [];
+
+    lpc.coefficentCallback = function(msg) {
+      points = msg;
+    };
+
+		lpc.preload = function() {
+		};
+
+		lpc.setup = function() {
+			myCanvas = lpc.createCanvas(screen.width, screen.height/2);
+      myCanvas.parent(document.getElementById('lpc-container'));
+			lpc.frameRate(myFrameRate);
+		};
+
+		lpc.draw = function() {
+			lpc.background('#ffffff');
+      $scope.getLPCCoefficients(lpc.coefficentCallback);
+      lpc.stroke('#000000');
+      lpc.strokeWeight(3);
+      lpc.beginShape();
+      for (var i=0; i<points.length; i++) {
+        var px = i / (points.length) * myCanvas.width;
+        var py = points[i] * (myCanvas.height/2) + (myCanvas.height/2);
+        lpc.curveVertex(px, py);
+      }
+      lpc.endShape();
+		};
+
+		lpc.mouseClicked = function() {
+		};
+
+		lpc.stopDraw = function() {
+			lpc.noLoop();
+			running = false;
+		};
+
+		lpc.startDraw = function() {
+			lpc.loop();
+			running = true;
+		};
+	};
+	$scope.myP5 = new p5(sketch);
 })
 
 // This is all automatic boilerplate, none of which is apparently necessary for

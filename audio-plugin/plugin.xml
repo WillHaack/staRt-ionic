@@ -22,7 +22,10 @@
         </feature>
       </config-file>
       <source-file src="src/ios/AudioPlugin/lib/libAudioPlugin.a" framework="true"/>
-      <header-file src="src/ios/AudioPlugin/AudioPlugin/MyAlertView.h"/>
+      <framework src="Foundation.framework" weak="true" />
+      <framework src="AVFoundation.framework" weak="true" />
+      <framework src="Accelerate.framework" weak="true" />
+      <framework src="AudioToolbox.framework" weak="true" />
       <header-file src="src/ios/AudioPlugin/AudioPlugin/AudioPlugin.h"/>
       <!-- <source-file src="src/ios/AudioPlugin/AudioPlugin/AudioPlugin.m"/> -->
       <!-- <source-file src="src/ios/audio-plugin/frameworks/libTheAmazingAudioEngine.a" framework="true"/> -->

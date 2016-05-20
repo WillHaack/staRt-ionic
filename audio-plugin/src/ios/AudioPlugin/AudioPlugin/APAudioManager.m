@@ -20,9 +20,9 @@
 - (void) start
 {
     self.audioController = [[AEAudioController alloc]
-                            initWithAudioDescription:AEAudioStreamBasicDescriptionInterleaved16BitStereo
+                            initWithAudioDescription:AEAudioStreamBasicDescriptionNonInterleavedFloatStereo
                             inputEnabled:YES];
-    self.lpcCalculator = [[APLPCCalculator alloc] init];
+    self.lpcCalculator = [[APLPCCalculator alloc] initWithAudioController:self.audioController];
     [self.audioController addInputReceiver:self.lpcCalculator];
     [self.audioController start:nil];
 }

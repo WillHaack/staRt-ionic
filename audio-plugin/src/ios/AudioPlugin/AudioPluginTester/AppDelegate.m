@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "MyAlertView.h"
 
 @interface AppDelegate ()
 
