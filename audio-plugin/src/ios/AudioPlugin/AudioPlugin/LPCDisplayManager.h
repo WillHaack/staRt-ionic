@@ -47,18 +47,7 @@ public:
     Float32 getNormalizedFreq(Float32 freq);
 
     /**
-     * Perform OpenGL initialization
-     */
-    void initOpenGL();
-    
-    /**
-     * Render LPC magnitude spectrum to OpenGL using member OpenGL SceneVertex arrays
-     * @param[in] lpc_mag_buffer LPC magnitude buffer to draw
-     */
-    void render(Float32 *lpc_mag_buffer);
-
-    /**
-     * Render LPC magnitude spectrum to OpenGL using externally declared OpenGL SceneVertex arrays
+     * Assign 3D points from lpc magnitude data
      * @param[in] lpc_mag_buffer LPC magnitude buffer to draw
      * @param[out] freqVertices Vector3 containing points defining LPC magnitude spectrum
      * @param[out] peakVertices Vector3 containing points defining lines indicating peaks in LPC magnitude spectrum
@@ -66,7 +55,7 @@ public:
     void render(Float32 *lpc_mag_buffer, Vector3 *freqVertices, Vector3 *peakVertices);
 
     /**
-     * Render target formant frequency lines to OpenGL using externally declared OpenGL SceneVertex arrays
+     * Assign target formant frequency lines from target formant frequencies
      * @param[out] targFreqVertices SceneVertex containing points defining lines indicating target formant frequencies in LPC magnitude spectrum
      * @param[in] targFormantFreqs array containing frequencies in Hz indicating target formant frequencies
      * @param[in] maxNumTargFormantFreqs number of target formant frequencies
