@@ -11,4 +11,5 @@
 @interface APAudioManager : NSObject
 - (void) start;
 - (NSArray *) lpcCoefficients;
+- (double) frequencyScaling;
 @end

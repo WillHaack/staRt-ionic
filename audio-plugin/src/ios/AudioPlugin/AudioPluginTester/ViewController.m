@@ -30,6 +30,8 @@
 {
     NSArray *coeffs = [self.audioManager lpcCoefficients];
     NSLog(@"Coefficients: %@", coeffs);
+    double frequencyScaling = [self.audioManager frequencyScaling];
+    NSLog(@"Frequency scaling: %f", frequencyScaling);
 }
 
 - (void)didReceiveMemoryWarning {

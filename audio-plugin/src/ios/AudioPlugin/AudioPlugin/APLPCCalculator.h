@@ -12,4 +12,5 @@
 @interface APLPCCalculator : NSObject <AEAudioReceiver>
 - (id) initWithAudioController:(AEAudioController *)audioController;
 - (NSArray *) getCurrentCoefficients;
+- (double) frequencyScaling;
 @end
