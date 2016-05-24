@@ -39,4 +39,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)startRecording:(id)sender
+{
+    [self.audioManager startRecording:@"ballsballsballs"];
+}
+
+- (IBAction)stopRecording:(id)sender
+{
+    [self.audioManager stopRecording];
+}
+
 @end

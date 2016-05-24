@@ -33,4 +33,14 @@
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
+- (void)startRecording:(CDVInvokedUrlCommand *)command
+{
+    [self.audioManager startRecording:@"ballsballsballs"];
+}
+
+- (void)stopRecording:(CDVInvokedUrlCommand *)command
+{
+    [self.audioManager stopRecording];
+}
+
 @end

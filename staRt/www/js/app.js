@@ -3,15 +3,16 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('start', ['ionic'])
+angular.module('start', ['ionic', 'LocalForageModule'])
 
 .factory("StartUIState", function() {
   return {
-    getLastActiveIndex: function() {
-      return parseInt(window.localStorage.lastActiveIndex) || 0;
+    getLastActiveIndex: function(lf) {
+      return lf.getItem("lastActiveIndex");
+      // return parseInt(window.localStorage.lastActiveIndex) || 0;
     },
-    setLastActiveIndex: function(index) {
-      window.localStorage.lastActiveIndex = index;
+    setLastActiveIndex: function(lf, index) {
+      return lf.setItem("lastActiveIndex", index);
     },
     tabTitles: [
       "Profiles",
@@ -34,14 +35,15 @@ angular.module('start', ['ionic'])
   };
 })
 
-.controller('StartCtrl', function($scope, $timeout, StartUIState) {
+.controller('StartCtrl', function($scope, $timeout, $localForage, StartUIState) {
 
-  $scope.startUIState = StartUIState.getLastActiveIndex();
+  StartUIState.getLastActiveIndex($localForage).then(function(data) {
+    $scope.startUIState = data;
+  });
 
   $scope.selectIndex = function(index) {
-    StartUIState.setLastActiveIndex(index);
+    StartUIState.setLastActiveIndex($localForage, index);
     $scope.content = StartUIState.content[index];
-    AudioPlugin.iosalert('alert', ''+index, 'Okay', null);
   };
 
   $scope.tabTitles = StartUIState.tabTitles;

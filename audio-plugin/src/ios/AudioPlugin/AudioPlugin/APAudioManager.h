@@ -12,4 +12,6 @@
 - (void) start;
 - (NSArray *) lpcCoefficients;
 - (double) frequencyScaling;
+- (void) startRecording:(NSString *)uuidString;
+- (void) stopRecording;
 @end

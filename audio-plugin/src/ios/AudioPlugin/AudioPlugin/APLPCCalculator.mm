@@ -127,9 +127,6 @@ static void receiverCallback(__unsafe_unretained APLPCCalculator *THIS,
 #else
     THIS->audioManager->grabAudioData(inA);
     THIS->audioManager->computeLPC();
-    
-    memset(inA, 0, frames*sizeof(Float32));
-    memset(inB, 0, frames*sizeof(Float32));
 #endif
 }
 
