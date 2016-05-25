@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "APAudioManager.h"
+#import "LPCAccountDescription.h"
 
 @interface ViewController ()
 @property (nonatomic, strong) APAudioManager *audioManager;
@@ -41,7 +42,19 @@
 
 - (IBAction)startRecording:(id)sender
 {
-    [self.audioManager startRecording:@"ballsballsballs"];
+    NSDictionary *descDict = @{
+                               LPCAccountDescriptionKeyAge: @(13),
+                               LPCAccountDescriptionKeyGender: @"M",
+                               LPCAccountDescriptionKeyHeightFeet: @(5),
+                               LPCAccountDescriptionKeyHeightInches: @(11),
+                               LPCAccountDescriptionKeyName: @"Testerman",
+                               LPCAccountDescriptionKeyStdevF3: @(100),
+                               LPCAccountDescriptionKeyTargetF3: @(1100),
+                               LPCAccountDescriptionKeyTargetLPCOrder: @(32),
+                               LPCAccountDescriptionKeyUUID: @"SomethingVeryUnique"
+                               };
+    LPCAccountDescription *desc = [LPCAccountDescription accountDescriptionWithDictionary:descDict];
+    [self.audioManager startRecordingForAccountDescription:desc];
 }
 
 - (IBAction)stopRecording:(id)sender

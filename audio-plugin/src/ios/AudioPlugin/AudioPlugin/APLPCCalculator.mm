@@ -9,7 +9,10 @@
 #import "APLPCCalculator.h"
 #import "AudioManager.h"
 #import "LPCDisplayManager.h"
+#import "LPCRecordingSession.h"
+#import "LPCRecordingSessionData.h"
 #import <AVFoundation/AVFoundation.h>
+#include <mach/mach_time.h>
 
 #define LPC_ORDER (18)                  /**< default number LPC coefficients */
 #define LPC_NUM_DISPLAY_BINS (256)      /**< resolution of LPC magnitude spectrum */
@@ -24,7 +27,8 @@
     AudioManager *audioManager;
     Float32 sampleRate;
     LPCDisplayManager *lpcDisplayManager;
-    
+    FILE *m_lpcOutputFile;
+    bool m_isRecording;
     
     Vector3 _freqVertices[NUM_LPC_DISPLAY_BINS];          /**< OpenGL vertices for drawing LPC magnitude spectrum */
     Vector3 _peakVertices[2*NUM_LPC_DISPLAY_BINS];        /**< OpenGL vertices for drawing peaks in LPC magnitude spectrum */
@@ -39,6 +43,31 @@
 @end
 
 @implementation APLPCCalculator
+
+static OSStatus WriteLPCCoefficients(__unsafe_unretained APLPCCalculator *THIS,
+                                     const AudioTimeStamp  *inTimeStamp,
+                                     UInt32                inNumberCoeffs,
+                                     const double          *lpcCoefficients)
+{
+    static mach_timebase_info_data_t timeBaseInfo;
+    static double time2nsFactor;
+    if (timeBaseInfo.denom == 0) {
+        (void) mach_timebase_info(&timeBaseInfo);
+        time2nsFactor = (double) timeBaseInfo.numer / timeBaseInfo.denom;
+        time2nsFactor /= pow(10, 9);
+    }
+    double timeStamp = (inTimeStamp->mHostTime * time2nsFactor);
+    
+    fprintf(THIS->m_lpcOutputFile, "%f,", timeStamp);
+    for (UInt32 i=0; i<inNumberCoeffs; ++i) {
+        if (i==inNumberCoeffs-1)
+            fprintf(THIS->m_lpcOutputFile, "%f\n", lpcCoefficients[i]);
+        else
+            fprintf(THIS->m_lpcOutputFile, "%f,", lpcCoefficients[i]);
+    }
+    
+    return 0;
+}
 
 - (id) initWithAudioController:(AEAudioController *)audioController
 {
@@ -128,6 +157,73 @@ static void receiverCallback(__unsafe_unretained APLPCCalculator *THIS,
     THIS->audioManager->grabAudioData(inA);
     THIS->audioManager->computeLPC();
 #endif
+    
+    if (THIS->m_isRecording) {
+        WriteLPCCoefficients(THIS, time, THIS->audioManager->m_lpc_order, THIS->audioManager->m_lpc_coeffs);
+    }
+}
+
+- (NSInteger) lpcOrder
+{
+    return self->audioManager->m_lpc_order;
+}
+
+- (void) setLpcOrder:(NSInteger)lpcOrder
+{
+    self->audioManager->setLPCOrder(lpcOrder);
+}
+
+- (void) beginRecordingLPCWithRecordingSessionData:(LPCRecordingSessionData *)sessionData error:(NSError *__autoreleasing *)error
+{
+    FILE *metadataFile = fopen(sessionData->metadata_path, "w");
+    if (!metadataFile) {
+        printf("LPCSessionRecorder: Could not open metadata file at path %s\n", sessionData->metadata_path);
+        if (error)
+            *error = [NSError errorWithDomain:@"LPCRecorder" code:-50 userInfo:nil];
+        return;
+    }
+    
+    const char *metadataHeader = "stream_sample_rate, uuid, deviceID, username, gender, age, heightFeet, heightInches, start_date, lpc_order\n";
+    fwrite(metadataHeader, sizeof(char), strlen(metadataHeader)+1, metadataFile);
+    fprintf(metadataFile,
+            "%f, %s, %s, %s, %s, %d, %d, %d, %s, %d",
+            sampleRate,
+            sessionData->accountUUID,
+            sessionData->identifier,
+            sessionData->username,
+            sessionData->gender,
+            sessionData->ageInYears,
+            sessionData->heightFeet,
+            sessionData->heightInches,
+            sessionData->date_string,
+            sessionData->lpc_order);
+    fclose(metadataFile);
+    
+    m_lpcOutputFile = fopen(sessionData->lpc_path, "w");
+    if (!m_lpcOutputFile) {
+        printf("LPCSessionRecorder: Could not open LPC file at path %s\n", sessionData->lpc_path);
+        if (error)
+            *error = [NSError errorWithDomain:@"LPCRecorder" code:-50 userInfo:nil];
+        return;
+    }
+    fprintf(m_lpcOutputFile, "sample_time");
+    for (int i=0; i<sessionData->lpc_order; ++i) {
+        fprintf(m_lpcOutputFile, ",lpc_%d", i);
+    }
+    fprintf(m_lpcOutputFile, "\n");
+    
+    m_isRecording = true;
+    
+    if (error)
+        *error = nil;
+    return;
+}
+
+- (void) finishRecording
+{
+    m_isRecording = false;
+    fclose(m_lpcOutputFile);
+    m_lpcOutputFile = NULL;
 }
 
 -(AEAudioReceiverCallback)receiverCallback

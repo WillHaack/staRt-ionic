@@ -8,10 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class LPCAccountDescription;
+
 @interface APAudioManager : NSObject
++ (NSString *) applicationAppSupportDirectory;
 - (void) start;
 - (NSArray *) lpcCoefficients;
 - (double) frequencyScaling;
-- (void) startRecording:(NSString *)uuidString;
+- (void) startRecordingForAccountDescription:(LPCAccountDescription *)description;
 - (void) stopRecording;
 @end

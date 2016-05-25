@@ -49,6 +49,8 @@
 		08661D1D1CF4F21B00A95E30 /* README.markdown in Sources */ = {isa = PBXBuildFile; fileRef = 08661D021CF4F21B00A95E30 /* README.markdown */; };
 		08661D1E1CF4F21B00A95E30 /* TPCircularBuffer+AudioBufferList.c in Sources */ = {isa = PBXBuildFile; fileRef = 08661D031CF4F21B00A95E30 /* TPCircularBuffer+AudioBufferList.c */; };
 		08661D1F1CF4F21B00A95E30 /* TPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 08661D051CF4F21B00A95E30 /* TPCircularBuffer.c */; };
+		08661D261CF651D700A95E30 /* LPCRecordingSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 08661D251CF651D700A95E30 /* LPCRecordingSession.m */; };
+		08661D2A1CF6527600A95E30 /* LPCAccountDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 08661D291CF6527600A95E30 /* LPCAccountDescription.m */; };
 		08A3840E1CEE0E3C00E6DA6D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3840D1CEE0E3C00E6DA6D /* main.m */; };
 		08A384111CEE0E3C00E6DA6D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A384101CEE0E3C00E6DA6D /* AppDelegate.m */; };
 		08A384141CEE0E3C00E6DA6D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A384131CEE0E3C00E6DA6D /* ViewController.m */; };
@@ -175,6 +177,12 @@
 		08661D041CF4F21B00A95E30 /* TPCircularBuffer+AudioBufferList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TPCircularBuffer+AudioBufferList.h"; sourceTree = "<group>"; };
 		08661D051CF4F21B00A95E30 /* TPCircularBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TPCircularBuffer.c; sourceTree = "<group>"; };
 		08661D061CF4F21B00A95E30 /* TPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCircularBuffer.h; sourceTree = "<group>"; };
+		08661D231CF6501800A95E30 /* LPCRecordingSessionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPCRecordingSessionData.h; sourceTree = "<group>"; };
+		08661D241CF651D700A95E30 /* LPCRecordingSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPCRecordingSession.h; sourceTree = "<group>"; };
+		08661D251CF651D700A95E30 /* LPCRecordingSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPCRecordingSession.m; sourceTree = "<group>"; };
+		08661D271CF651EB00A95E30 /* LPCUploadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPCUploadable.h; sourceTree = "<group>"; };
+		08661D281CF6527600A95E30 /* LPCAccountDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPCAccountDescription.h; sourceTree = "<group>"; };
+		08661D291CF6527600A95E30 /* LPCAccountDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPCAccountDescription.m; sourceTree = "<group>"; };
 		08A3840A1CEE0E3C00E6DA6D /* AudioPluginTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioPluginTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08A3840D1CEE0E3C00E6DA6D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		08A3840F1CEE0E3C00E6DA6D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -291,8 +299,14 @@
 				08A384251CEE0FE500E6DA6D /* APAudioManager.m */,
 				08A384271CEE11E700E6DA6D /* APLPCCalculator.h */,
 				08A384281CEE11E700E6DA6D /* APLPCCalculator.mm */,
+				08661D241CF651D700A95E30 /* LPCRecordingSession.h */,
+				08661D251CF651D700A95E30 /* LPCRecordingSession.m */,
+				08661D281CF6527600A95E30 /* LPCAccountDescription.h */,
+				08661D291CF6527600A95E30 /* LPCAccountDescription.m */,
+				08661D271CF651EB00A95E30 /* LPCUploadable.h */,
 				085D976A1CEFB17C00998A81 /* LPCDisplayManager.h */,
 				085D97691CEFB17C00998A81 /* LPCDisplayManager.cpp */,
+				08661D231CF6501800A95E30 /* LPCRecordingSessionData.h */,
 			);
 			path = AudioPlugin;
 			sourceTree = "<group>";
@@ -624,6 +638,7 @@
 				08661D111CF4F21B00A95E30 /* AEDelayFilter.m in Sources */,
 				08661D1F1CF4F21B00A95E30 /* TPCircularBuffer.c in Sources */,
 				08661D0B1CF4F21B00A95E30 /* AEPlaythroughChannel.m in Sources */,
+				08661D2A1CF6527600A95E30 /* LPCAccountDescription.m in Sources */,
 				08661D151CF4F21B00A95E30 /* AEHighShelfFilter.m in Sources */,
 				08661D101CF4F21B00A95E30 /* AEBandpassFilter.m in Sources */,
 				083A41931CEA4553008AF1A0 /* AudioPlugin.m in Sources */,
@@ -644,6 +659,7 @@
 				08661D121CF4F21B00A95E30 /* AEDistortionFilter.m in Sources */,
 				08F7C0BB1CEE20F300D8F1BA /* AEAudioUnitFilter.m in Sources */,
 				08661D181CF4F21B00A95E30 /* AENewTimePitchFilter.m in Sources */,
+				08661D261CF651D700A95E30 /* LPCRecordingSession.m in Sources */,
 				08661D141CF4F21B00A95E30 /* AEHighPassFilter.m in Sources */,
 				08F7C0B41CEE20F300D8F1BA /* AEAudioBufferManager.m in Sources */,
 				085D976B1CEFB17C00998A81 /* LPCDisplayManager.cpp in Sources */,

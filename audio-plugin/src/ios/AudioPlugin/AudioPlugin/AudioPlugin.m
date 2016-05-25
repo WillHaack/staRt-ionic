@@ -8,6 +8,7 @@
 
 #import "AudioPlugin.h"
 #import "APAudioManager.h"
+#import "LPCAccountDescription.h"
 
 @interface AudioPlugin ()
 @property (nonatomic, strong) APAudioManager *audioManager;
@@ -35,7 +36,8 @@
 
 - (void)startRecording:(CDVInvokedUrlCommand *)command
 {
-    [self.audioManager startRecording:@"ballsballsballs"];
+    LPCAccountDescription *description;
+    [self.audioManager startRecordingForAccountDescription:description];
 }
 
 - (void)stopRecording:(CDVInvokedUrlCommand *)command

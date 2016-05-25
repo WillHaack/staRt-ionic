@@ -10,10 +10,15 @@
 #import "APLPCCalculator.h"
 #import "TheAmazingAudioEngine.h"
 #import "AERecorder.h"
+#import "LPCAccountDescription.h"
+#import "LPCRecordingSession.h"
+#import "LPCRecordingSessionData.h"
 
 @interface APAudioManager ()
 @property (nonatomic, strong) AEAudioController *audioController;
 @property (nonatomic, strong) APLPCCalculator *lpcCalculator;
+@property (nonatomic, strong) LPCAccountDescription *recordingAccount;
+@property (nonatomic, strong) LPCRecordingSession *currentRecordingSession;
 @property (nonatomic, strong) AERecorder *recorder;
 @end
 
@@ -23,7 +28,7 @@
 {
     // got to make sure this exists
     NSFileManager *manager = [NSFileManager defaultManager];
-    NSString *appSupportDir = [self applicationAppSupportDirectory];
+    NSString *appSupportDir = [APAudioManager applicationAppSupportDirectory];
     if(![manager fileExistsAtPath:appSupportDir]) {
         __autoreleasing NSError *error;
         BOOL ret = [manager createDirectoryAtPath:appSupportDir withIntermediateDirectories:NO attributes:nil error:&error];
@@ -34,7 +39,7 @@
     }
 }
 
-- (NSString *) applicationAppSupportDirectory
++ (NSString *) applicationAppSupportDirectory
 {
     return [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
 }
@@ -68,18 +73,22 @@
 
 - (NSString *) recordingPathForUUID:(NSString *)uuid
 {
-    return [NSString stringWithFormat:@"%@/%@.aiff", [self applicationAppSupportDirectory], uuid];
+    return [NSString stringWithFormat:@"%@/%@.aiff", [APAudioManager applicationAppSupportDirectory], uuid];
 }
 
-- (void) startRecording:(NSString *)uuidString
+- (void) startRecordingForAccountDescription:(LPCAccountDescription *)description
 {
-    NSString *path = [self recordingPathForUUID:uuidString];
+    LPCRecordingSession *session = [LPCRecordingSession sessionWithAccountDescription:description];
+    LPCRecordingSessionData sessionData = [session dataWithLpcOrder:self.lpcCalculator.lpcOrder];
+    NSString *path = [NSString stringWithCString:sessionData.audio_path encoding:NSUTF8StringEncoding];
+    [self.lpcCalculator beginRecordingLPCWithRecordingSessionData:&sessionData error:nil];
     [self.recorder beginRecordingToFileAtPath:path fileType:kAudioFileAIFFType error:nil];
 }
 
 - (void) stopRecording
 {
     [self.recorder finishRecording];
+    [self.lpcCalculator finishRecording];
 }
 
 @end
