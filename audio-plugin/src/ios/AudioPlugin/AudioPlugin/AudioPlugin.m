@@ -19,6 +19,7 @@
 {
     self.audioManager = [[APAudioManager alloc] init];
     [self.audioManager start];
+    NSLog(@"Initializing AudioPlugin, saving to dir %@", [APAudioManager applicationAppSupportDirectory]);
 }
 
 - (void)getLPCCoefficients:(CDVInvokedUrlCommand *)command
@@ -37,7 +38,15 @@
 - (void)startRecording:(CDVInvokedUrlCommand *)command
 {
     LPCAccountDescription *description;
-    [self.audioManager startRecordingForAccountDescription:description];
+    NSDictionary *accountAsDict = [command argumentAtIndex:0 withDefault:nil andClass:[NSDictionary class]];
+    if (accountAsDict) {
+        description = [LPCAccountDescription accountDescriptionWithDictionary:accountAsDict];
+        [self.audioManager startRecordingForAccountDescription:description];
+    } else {
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_INVALID_ACTION
+                                                    messageAsString:@"Must pass valid JSON description of account to record"];
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    }
 }
 
 - (void)stopRecording:(CDVInvokedUrlCommand *)command

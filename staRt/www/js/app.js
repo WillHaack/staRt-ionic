@@ -54,6 +54,33 @@ angular.module('start', ['ionic', 'LocalForageModule'])
     }
   };
 
+  $scope.recordingSuccessCB = function(status) {
+
+  };
+
+  $scope.recordingErrorCB = function(status) {
+
+  };
+
+  $scope.startRecordingDefault = function() {
+    console.log("Start recording");
+
+    if (window.AudioPlugin !== undefined) {
+      var defaultDescription = {
+        "age": "13",
+        "gender": "M",
+        "heightFeet": "5",
+        "heightInches": "11",
+        "name": "Testerman",
+        "stdevF3": "100",
+        "targetF3": "1100",
+        "targetLPCOrder": "32",
+        "uuid": "SomethingVeryUnique"
+      };
+      AudioPlugin.startRecording(defaultDescription, $scope.recordingSuccessCB, $scope.recordingErrorCB);
+    }
+  };
+
 	//Start lpc drawer
 	var sketch = function(lpc) {
 

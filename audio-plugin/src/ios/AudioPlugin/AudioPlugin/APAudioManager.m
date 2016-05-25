@@ -29,6 +29,9 @@
     // got to make sure this exists
     NSFileManager *manager = [NSFileManager defaultManager];
     NSString *appSupportDir = [APAudioManager applicationAppSupportDirectory];
+    
+    NSLog(@"Audio plugin recording files to: %@", appSupportDir);
+    
     if(![manager fileExistsAtPath:appSupportDir]) {
         __autoreleasing NSError *error;
         BOOL ret = [manager createDirectoryAtPath:appSupportDir withIntermediateDirectories:NO attributes:nil error:&error];
@@ -46,6 +49,7 @@
 
 - (void) start
 {
+    NSLog(@"Starting APAudioManader");
     [self createApplicationSupportDirectoryIfNecessary];
     
     AudioStreamBasicDescription asbd = AEAudioStreamBasicDescriptionNonInterleavedFloatStereo;
