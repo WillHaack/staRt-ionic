@@ -4,7 +4,8 @@ var start = angular.module('start',
 [
     'ionic',
     'LocalForageModule',
-    'startStateService'
+    'startStateService',
+    'lpcDirective'
 ]);
 
 start.controller('StartCtrl', function($scope, $timeout, $localForage, StartUIState) {
