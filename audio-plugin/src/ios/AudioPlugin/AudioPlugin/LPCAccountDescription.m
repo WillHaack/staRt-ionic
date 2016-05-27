@@ -60,7 +60,7 @@ static NSArray *metadataParams;
 
 + (instancetype) accountDescriptionWithRecordingMetadataURL:(NSURL *)url
 {
-    NSArray<CHCSVOrderedDictionary *> *rows = [NSArray arrayWithContentsOfCSVURL:url options:CHCSVParserOptionsUsesFirstLineAsKeys];
+    NSArray<CHCSVOrderedDictionary *> *rows = [NSArray arrayWithContentsOfCSVURL:url options:CHCSVParserOptionsUsesFirstLineAsKeys|CHCSVParserOptionsSanitizesFields|CHCSVParserOptionsTrimsWhitespace];
     if (!rows)
         return nil;
     LPCAccountDescription *desc = [[LPCAccountDescription alloc] init];

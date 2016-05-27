@@ -184,7 +184,7 @@ static void receiverCallback(__unsafe_unretained APLPCCalculator *THIS,
     }
     
     const char *metadataHeader = "stream_sample_rate, uuid, deviceID, username, gender, age, heightFeet, heightInches, targetF3, stdevF3, targetLPCOrder, start_date, lpc_order, lpc_file, audio_file\n";
-    fwrite(metadataHeader, sizeof(char), strlen(metadataHeader)+1, metadataFile);
+    fwrite(metadataHeader, sizeof(char), strlen(metadataHeader), metadataFile);
     fprintf(metadataFile,
             "%f, %s, %s, %s, %s, %d, %d, %d, %f, %f, %d, %s, %d, %s, %s",
             sampleRate,

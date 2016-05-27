@@ -95,6 +95,21 @@ angular.module('start', ['ionic', 'LocalForageModule'])
     }
   };
 
+  $scope.listRecordingsDefault = function() {
+    var defaultDescription = {
+      "age": "13",
+      "gender": "M",
+      "heightFeet": "5",
+      "heightInches": "11",
+      "name": "Testerman",
+      "stdevF3": "100",
+      "targetF3": "1100",
+      "targetLPCOrder": "32",
+      "uuid": "SomethingVeryUnique"
+    };
+    AudioPlugin.recordingsForAccount(defaultDescription, $scope.recordingSuccessCB, $scope.recordingErrorCB);
+  };
+
 	//Start lpc drawer
 	var sketch = function(lpc) {
 

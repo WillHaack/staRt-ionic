@@ -73,9 +73,13 @@
     NSDateFormatter *dateFormatter = [LPCRecordingSession recordingSessionDateFormatter];
     session.metadataFilename = metadata;
     NSString *applicationSupportDirectory = [APAudioManager applicationAppSupportDirectory];
-    NSString *urlSafeString = [[applicationSupportDirectory stringByAppendingPathComponent:metadata] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
-    NSURL *metadataURL = [NSURL URLWithString:urlSafeString];
-    NSArray<CHCSVOrderedDictionary *> *rows = [NSArray arrayWithContentsOfCSVURL:metadataURL options:CHCSVParserOptionsUsesFirstLineAsKeys];
+    NSString *urlSafeString = [applicationSupportDirectory stringByAppendingPathComponent:metadata];
+    NSURL *metadataURL = [NSURL fileURLWithPath:urlSafeString];
+    NSError *error = nil;
+    NSArray<CHCSVOrderedDictionary *> *rows = [NSArray arrayWithContentsOfCSVURL:metadataURL options:CHCSVParserOptionsUsesFirstLineAsKeys|CHCSVParserOptionsSanitizesFields|CHCSVParserOptionsTrimsWhitespace];
+    if (error) {
+        NSLog(@"%@", [error localizedDescription]);
+    }
     
     session.dateString = [rows[0] objectForKey:@"start_date"];
     session.lpcFilename = [[rows[0] objectForKey:@"lpc_file"] lastPathComponent];
@@ -83,6 +87,25 @@
     session.accountDescription = [LPCAccountDescription accountDescriptionWithRecordingMetadataURL:metadataURL];
     session.date = [dateFormatter dateFromString:session.dateString];
     return session;
+}
+
++ (NSArray<LPCRecordingSession *> *) recordingsForAccount:(LPCAccountDescription *)account
+{
+    NSMutableArray *retArray = [NSMutableArray array];
+    NSString *applicationSupportDirectory = [APAudioManager applicationAppSupportDirectory];
+    
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSArray *fileList = [manager directoryContentsAtPath:applicationSupportDirectory];
+    for (NSString *s in fileList){
+        if ([s hasSuffix:@"-meta.csv"]) {
+            LPCRecordingSession *session = [LPCRecordingSession sessionWithMetadataFile:s];
+            if (session && [session.accountDescription.uuid isEqualToString:account.uuid]) {
+                [retArray addObject:[session recordingFilesDictionary]];
+            }
+        }
+    }
+    
+    return [NSArray arrayWithArray:retArray];
 }
 
 - (LPCRecordingSessionData) dataWithLpcOrder:(uint16_t)lpcOrder

@@ -12,6 +12,7 @@
 
 - (IBAction)startRecording:(id)sender;
 - (IBAction)stopRecording:(id)sender;
+- (IBAction)listRecordings:(id)sender;
 
 @end
 

@@ -38,6 +38,12 @@
 
 - (void)startRecording:(CDVInvokedUrlCommand *)command
 {
+    if (self.audioManager.currentRecordingSession != nil) {
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_INVALID_ACTION
+                                                    messageAsString:@"Can't start recording--already recording"];
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    }
+    
     LPCAccountDescription *description;
     NSDictionary *accountAsDict = [command argumentAtIndex:0 withDefault:nil andClass:[NSDictionary class]];
     if (accountAsDict) {
@@ -80,7 +86,18 @@
 
 - (void)recordingsForAccount:(CDVInvokedUrlCommand *)command
 {
-    
+    LPCAccountDescription *description;
+    NSDictionary *accountAsDict = [command argumentAtIndex:0 withDefault:nil andClass:[NSDictionary class]];
+    if (accountAsDict) {
+        description = [LPCAccountDescription accountDescriptionWithDictionary:accountAsDict];
+        NSArray *recordings = [LPCRecordingSession recordingsForAccount:description];
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:recordings];
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    } else {
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_INVALID_ACTION
+                                                    messageAsString:@"Must pass valid JSON description of account"];
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+    }
 }
 
 - (void)deleteRecording:(CDVInvokedUrlCommand *)command

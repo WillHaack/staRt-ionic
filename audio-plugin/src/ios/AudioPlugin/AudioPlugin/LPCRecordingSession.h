@@ -17,6 +17,8 @@
 @property (nonatomic, readonly) NSString *audioFilename;
 
 + (instancetype) sessionWithAccountDescription:(LPCAccountDescription *)account;
++ (instancetype) sessionWithMetadataFile:(NSString *)metadata;
++ (NSArray<LPCRecordingSession *> *) recordingsForAccount:(LPCAccountDescription *)account;
 - (LPCRecordingSessionData) dataWithLpcOrder:(uint16_t)lpcOrder;
 - (NSDictionary *)recordingFilesDictionary;
 

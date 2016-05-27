@@ -25,6 +25,7 @@
 		085D97671CEF9FAE00998A81 /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 085D97651CEF9FAE00998A81 /* AudioManager.cpp */; };
 		085D976B1CEFB17C00998A81 /* LPCDisplayManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 085D97691CEFB17C00998A81 /* LPCDisplayManager.cpp */; };
 		08651F791CF8940C004C44E4 /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08651F781CF8940C004C44E4 /* CHCSVParser.m */; };
+		08651F841CF8C261004C44E4 /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08651F781CF8940C004C44E4 /* CHCSVParser.m */; };
 		08661D071CF4F21B00A95E30 /* AEExpanderFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 08661CD41CF4F21B00A95E30 /* AEExpanderFilter.m */; };
 		08661D081CF4F21B00A95E30 /* AELimiter.m in Sources */ = {isa = PBXBuildFile; fileRef = 08661CD61CF4F21B00A95E30 /* AELimiter.m */; };
 		08661D091CF4F21B00A95E30 /* AELimiterFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 08661CD81CF4F21B00A95E30 /* AELimiterFilter.m */; };
@@ -701,6 +702,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08651F841CF8C261004C44E4 /* CHCSVParser.m in Sources */,
 				08A384141CEE0E3C00E6DA6D /* ViewController.m in Sources */,
 				08A384111CEE0E3C00E6DA6D /* AppDelegate.m in Sources */,
 				08A3840E1CEE0E3C00E6DA6D /* main.m in Sources */,
