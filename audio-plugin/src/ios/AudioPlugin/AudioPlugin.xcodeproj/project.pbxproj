@@ -24,6 +24,7 @@
 		083A41931CEA4553008AF1A0 /* AudioPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 083A41921CEA4553008AF1A0 /* AudioPlugin.m */; };
 		085D97671CEF9FAE00998A81 /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 085D97651CEF9FAE00998A81 /* AudioManager.cpp */; };
 		085D976B1CEFB17C00998A81 /* LPCDisplayManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 085D97691CEFB17C00998A81 /* LPCDisplayManager.cpp */; };
+		08651F791CF8940C004C44E4 /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08651F781CF8940C004C44E4 /* CHCSVParser.m */; };
 		08661D071CF4F21B00A95E30 /* AEExpanderFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 08661CD41CF4F21B00A95E30 /* AEExpanderFilter.m */; };
 		08661D081CF4F21B00A95E30 /* AELimiter.m in Sources */ = {isa = PBXBuildFile; fileRef = 08661CD61CF4F21B00A95E30 /* AELimiter.m */; };
 		08661D091CF4F21B00A95E30 /* AELimiterFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 08661CD81CF4F21B00A95E30 /* AELimiterFilter.m */; };
@@ -128,6 +129,8 @@
 		085D97661CEF9FAE00998A81 /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioManager.h; sourceTree = "<group>"; };
 		085D97691CEFB17C00998A81 /* LPCDisplayManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LPCDisplayManager.cpp; sourceTree = "<group>"; };
 		085D976A1CEFB17C00998A81 /* LPCDisplayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPCDisplayManager.h; sourceTree = "<group>"; };
+		08651F771CF8940C004C44E4 /* CHCSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVParser.h; sourceTree = "<group>"; };
+		08651F781CF8940C004C44E4 /* CHCSVParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCSVParser.m; sourceTree = "<group>"; };
 		08661CD31CF4F21B00A95E30 /* AEExpanderFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AEExpanderFilter.h; sourceTree = "<group>"; };
 		08661CD41CF4F21B00A95E30 /* AEExpanderFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AEExpanderFilter.m; sourceTree = "<group>"; };
 		08661CD51CF4F21B00A95E30 /* AELimiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AELimiter.h; sourceTree = "<group>"; };
@@ -270,6 +273,7 @@
 		083A41741CEA44EA008AF1A0 = {
 			isa = PBXGroup;
 			children = (
+				08651F761CF8940C004C44E4 /* CHCSVParser */,
 				08F7C0891CEE20F300D8F1BA /* TheAmazingAudioEngine */,
 				083A417F1CEA44EA008AF1A0 /* AudioPlugin */,
 				08A3840B1CEE0E3C00E6DA6D /* AudioPluginTester */,
@@ -317,6 +321,15 @@
 				083A418E1CEA452E008AF1A0 /* libCordova.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		08651F761CF8940C004C44E4 /* CHCSVParser */ = {
+			isa = PBXGroup;
+			children = (
+				08651F771CF8940C004C44E4 /* CHCSVParser.h */,
+				08651F781CF8940C004C44E4 /* CHCSVParser.m */,
+			);
+			path = CHCSVParser;
 			sourceTree = "<group>";
 		};
 		08661CD21CF4F21A00A95E30 /* Modules */ = {
@@ -671,6 +684,7 @@
 				08F7C0BF1CEE20F300D8F1BA /* AEBlockScheduler.m in Sources */,
 				08661D0D1CF4F21B00A95E30 /* AESequencerBeat.m in Sources */,
 				08F7C0BE1CEE20F300D8F1BA /* AEBlockFilter.m in Sources */,
+				08651F791CF8940C004C44E4 /* CHCSVParser.m in Sources */,
 				08661D1B1CF4F21B00A95E30 /* AEReverbFilter.m in Sources */,
 				08661D0F1CF4F21B00A95E30 /* AESequencerChannelSequence.m in Sources */,
 				08661D1C1CF4F21B00A95E30 /* AEVarispeedFilter.m in Sources */,

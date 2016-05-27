@@ -80,19 +80,20 @@
     return [NSString stringWithFormat:@"%@/%@.aiff", [APAudioManager applicationAppSupportDirectory], uuid];
 }
 
-- (void) startRecordingForAccountDescription:(LPCAccountDescription *)description
+- (void) startRecordingForRecordingSession:(LPCRecordingSession *)session
 {
-    LPCRecordingSession *session = [LPCRecordingSession sessionWithAccountDescription:description];
     LPCRecordingSessionData sessionData = [session dataWithLpcOrder:self.lpcCalculator.lpcOrder];
     NSString *path = [NSString stringWithCString:sessionData.audio_path encoding:NSUTF8StringEncoding];
     [self.lpcCalculator beginRecordingLPCWithRecordingSessionData:&sessionData error:nil];
     [self.recorder beginRecordingToFileAtPath:path fileType:kAudioFileAIFFType error:nil];
+    self.currentRecordingSession = session;
 }
 
 - (void) stopRecording
 {
     [self.recorder finishRecording];
     [self.lpcCalculator finishRecording];
+    self.currentRecordingSession = nil;
 }
 
 @end

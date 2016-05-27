@@ -55,11 +55,11 @@ angular.module('start', ['ionic', 'LocalForageModule'])
   };
 
   $scope.recordingSuccessCB = function(status) {
-
+    console.log(status);
   };
 
   $scope.recordingErrorCB = function(status) {
-
+    console.log(status);
   };
 
   $scope.startRecordingDefault = function() {
@@ -78,6 +78,20 @@ angular.module('start', ['ionic', 'LocalForageModule'])
         "uuid": "SomethingVeryUnique"
       };
       AudioPlugin.startRecording(defaultDescription, $scope.recordingSuccessCB, $scope.recordingErrorCB);
+    }
+  };
+
+  $scope.stopRecording = function () {
+    console.log("Stop recording");
+    if (window.AudioPlugin !== undefined) {
+      AudioPlugin.stopRecording($scope.recordingSuccessCB, $scope.recordingErrorCB);
+    }
+  };
+
+  $scope.isRecording = function () {
+    console.log("Is recording?");
+    if (window.AudioPlugin !== undefined) {
+      AudioPlugin.isRecording($scope.recordingSuccessCB, $scope.recordingErrorCB);
     }
   };
 

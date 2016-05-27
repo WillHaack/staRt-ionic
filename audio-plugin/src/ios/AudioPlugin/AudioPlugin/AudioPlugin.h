@@ -11,8 +11,10 @@
 
 @interface AudioPlugin : CDVPlugin <UIAlertViewDelegate> {}
 - (void)getLPCCoefficients:(CDVInvokedUrlCommand *)command;
-
-// Recording should take an options array, which includes whether or not you want to store LPC coefficients alongside it.
 - (void)startRecording:(CDVInvokedUrlCommand *)command;
 - (void)stopRecording:(CDVInvokedUrlCommand *)command;
+- (void)isRecording:(CDVInvokedUrlCommand *)command;
+- (void)recordingsForAccount:(CDVInvokedUrlCommand *)command;
+- (void)deleteRecording:(CDVInvokedUrlCommand *)command;
+- (void)deleteAllRecordings:(CDVInvokedUrlCommand *)command;
 @end

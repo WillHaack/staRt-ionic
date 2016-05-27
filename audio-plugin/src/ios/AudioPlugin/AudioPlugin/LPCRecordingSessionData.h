@@ -16,6 +16,9 @@ typedef struct {
     int16_t     ageInYears; // -1 if undefined
     int16_t     heightFeet; // -1 if undefined
     int16_t     heightInches; // -1 if undefined
+    double      targetF3;
+    double      stdevF3;
+    int16_t     targetLPCOrder;
     const char  *date_string;
     const char  *metadata_path;
     const char  *lpc_path;

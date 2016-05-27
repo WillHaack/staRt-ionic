@@ -20,12 +20,12 @@ FOUNDATION_EXPORT NSString *const LPCAccountDescriptionKeyTargetLPCOrder;
 
 @interface LPCAccountDescription : NSObject
 @property (nonatomic, readonly) NSString *uuid;
-@property (nonatomic, readonly) NSString *name;
 @property (nonatomic, readonly) NSDictionary *metadata;
-@property (nonatomic, readonly) NSInteger targetF3;
-@property (nonatomic, readonly) NSInteger stdevF3;
+@property (nonatomic, readonly) double targetF3;
+@property (nonatomic, readonly) double stdevF3;
 @property (nonatomic, readonly) NSInteger targetLPCOrder;
 
 + (instancetype) accountDescriptionWithDictionary:(NSDictionary *)dictionary;
++ (instancetype) accountDescriptionWithRecordingMetadataURL:(NSURL *)url;
 
 @end

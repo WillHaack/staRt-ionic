@@ -183,10 +183,10 @@ static void receiverCallback(__unsafe_unretained APLPCCalculator *THIS,
         return;
     }
     
-    const char *metadataHeader = "stream_sample_rate, uuid, deviceID, username, gender, age, heightFeet, heightInches, start_date, lpc_order\n";
+    const char *metadataHeader = "stream_sample_rate, uuid, deviceID, username, gender, age, heightFeet, heightInches, targetF3, stdevF3, targetLPCOrder, start_date, lpc_order, lpc_file, audio_file\n";
     fwrite(metadataHeader, sizeof(char), strlen(metadataHeader)+1, metadataFile);
     fprintf(metadataFile,
-            "%f, %s, %s, %s, %s, %d, %d, %d, %s, %d",
+            "%f, %s, %s, %s, %s, %d, %d, %d, %f, %f, %d, %s, %d, %s, %s",
             sampleRate,
             sessionData->accountUUID,
             sessionData->identifier,
@@ -195,8 +195,13 @@ static void receiverCallback(__unsafe_unretained APLPCCalculator *THIS,
             sessionData->ageInYears,
             sessionData->heightFeet,
             sessionData->heightInches,
+            sessionData->targetF3,
+            sessionData->stdevF3,
+            sessionData->targetLPCOrder,
             sessionData->date_string,
-            sessionData->lpc_order);
+            sessionData->lpc_order,
+            sessionData->lpc_path,
+            sessionData->audio_path);
     fclose(metadataFile);
     
     m_lpcOutputFile = fopen(sessionData->lpc_path, "w");

@@ -11,12 +11,13 @@
 #include "LPCUploadable.h"
 #include "LPCAccountDescription.h"
 
-@interface LPCRecordingSession : NSObject <NSCoding, LPCUploadable>
+@interface LPCRecordingSession : NSObject <LPCUploadable>
 @property (nonatomic, readonly) NSString *metadataFilename;
 @property (nonatomic, readonly) NSString *lpcFilename;
 @property (nonatomic, readonly) NSString *audioFilename;
 
 + (instancetype) sessionWithAccountDescription:(LPCAccountDescription *)account;
 - (LPCRecordingSessionData) dataWithLpcOrder:(uint16_t)lpcOrder;
+- (NSDictionary *)recordingFilesDictionary;
 
 @end

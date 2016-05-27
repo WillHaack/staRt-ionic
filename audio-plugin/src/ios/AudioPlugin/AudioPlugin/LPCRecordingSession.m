@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LPCRecordingSession.h"
 #import "APAudioManager.h"
+#import "CHCSVParser.h"
 
 #define kMetadataKey            @"Metadata"
 #define kLPCKey                 @"LPC"
@@ -20,17 +21,25 @@
 @interface LPCRecordingSession ()
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) NSString *dateString;
-@property (nonatomic, strong) NSString *accountUUID, *metadataFilename, *lpcFilename, *audioFilename;
-@property (nonatomic, strong) NSDictionary *accountMetadata;
+@property (nonatomic, strong) NSString *metadataFilename, *lpcFilename, *audioFilename;
+@property (nonatomic, strong) LPCAccountDescription *accountDescription;
 @end
 
 @implementation LPCRecordingSession
 
++ (NSDateFormatter *) recordingSessionDateFormatter
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+    [dateFormatter setLocale:enUSPOSIXLocale];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH-mm-ss"];
+    return dateFormatter;
+}
+
 + (instancetype) sessionWithAccountDescription:(LPCAccountDescription *)account
 {
     LPCRecordingSession *session = [[LPCRecordingSession alloc] init];
-    session.accountUUID = account.uuid;
-    session.accountMetadata = account.metadata;
+    session.accountDescription = account;
     session.date = [NSDate date];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -39,19 +48,40 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH-mm-ss"];
     
     session.dateString = [dateFormatter stringFromDate:session.date];
-    session.metadataFilename = [NSString stringWithFormat:@"%@-%@-meta.csv", session.accountUUID, session.dateString];
-    session.lpcFilename = [NSString stringWithFormat:@"%@-%@-lpc.csv", session.accountUUID, session.dateString];
-    session.audioFilename = [NSString stringWithFormat:@"%@-%@-audio.caf", session.accountUUID, session.dateString];
+    session.metadataFilename = [NSString stringWithFormat:@"%@-%@-meta.csv", session.accountDescription.uuid, session.dateString];
+    session.lpcFilename = [NSString stringWithFormat:@"%@-%@-lpc.csv", session.accountDescription.uuid, session.dateString];
+    session.audioFilename = [NSString stringWithFormat:@"%@-%@-audio.caf", session.accountDescription.uuid, session.dateString];
     
     return session;
 }
 
-+ (instancetype) sessionWithMetadataFile:(NSString *)metadata lpcFile:(NSString *)lpcFile audioFile:(NSString *)audioFile
++ (NSDictionary *) metadataDictionaryFromMetadataCSVDictionary:(NSDictionary *)metadataFileDict
+{
+    NSMutableDictionary *retDict = [NSMutableDictionary dictionary];
+    [retDict setObject:[metadataFileDict objectForKey:@"username"] forKey:LPCAccountDescriptionKeyName];
+    [retDict setObject:[metadataFileDict objectForKey:@"gender"] forKey:LPCAccountDescriptionKeyGender];
+    [retDict setObject:[metadataFileDict objectForKey:@"age"] forKey:LPCAccountDescriptionKeyAge];
+    [retDict setObject:[metadataFileDict objectForKey:@"heightFeet"] forKey:LPCAccountDescriptionKeyHeightFeet];
+    [retDict setObject:[metadataFileDict objectForKey:@"heightInches"] forKey:LPCAccountDescriptionKeyHeightInches];
+    [retDict setObject:[metadataFileDict objectForKey:@"gender"] forKey:LPCAccountDescriptionKeyGender];
+    return [NSDictionary dictionaryWithDictionary:retDict];
+}
+
++ (instancetype) sessionWithMetadataFile:(NSString *)metadata
 {
     LPCRecordingSession *session = [[LPCRecordingSession alloc] init];
+    NSDateFormatter *dateFormatter = [LPCRecordingSession recordingSessionDateFormatter];
     session.metadataFilename = metadata;
-    session.lpcFilename = lpcFile;
-    session.audioFilename = audioFile;
+    NSString *applicationSupportDirectory = [APAudioManager applicationAppSupportDirectory];
+    NSString *urlSafeString = [[applicationSupportDirectory stringByAppendingPathComponent:metadata] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
+    NSURL *metadataURL = [NSURL URLWithString:urlSafeString];
+    NSArray<CHCSVOrderedDictionary *> *rows = [NSArray arrayWithContentsOfCSVURL:metadataURL options:CHCSVParserOptionsUsesFirstLineAsKeys];
+    
+    session.dateString = [rows[0] objectForKey:@"start_date"];
+    session.lpcFilename = [[rows[0] objectForKey:@"lpc_file"] lastPathComponent];
+    session.audioFilename = [[rows[0] objectForKey:@"audio_file"] lastPathComponent];
+    session.accountDescription = [LPCAccountDescription accountDescriptionWithRecordingMetadataURL:metadataURL];
+    session.date = [dateFormatter dateFromString:session.dateString];
     return session;
 }
 
@@ -64,34 +94,37 @@
     NSURL *metadataFileURL = [[NSURL URLWithString:escapedSupportDir] URLByAppendingPathComponent:self.metadataFilename];
     
     LPCRecordingSessionData data;
-    data.accountUUID = [self.accountUUID cStringUsingEncoding:NSUTF8StringEncoding];
+    data.accountUUID = [self.accountDescription.uuid cStringUsingEncoding:NSUTF8StringEncoding];
     
-    if ([self.accountMetadata objectForKey:LPCAccountDescriptionKeyName]) {
-        data.username = [[self.accountMetadata objectForKey:LPCAccountDescriptionKeyName] cStringUsingEncoding:NSUTF8StringEncoding];
+    if ([self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyName]) {
+        data.username = [[self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyName] cStringUsingEncoding:NSUTF8StringEncoding];
     } else {
         data.username = nil;
     }
-    if ([self.accountMetadata objectForKey:LPCAccountDescriptionKeyGender]) {
-        data.gender = [[self.accountMetadata objectForKey:LPCAccountDescriptionKeyGender] cStringUsingEncoding:NSUTF8StringEncoding];
+    if ([self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyGender]) {
+        data.gender = [[self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyGender] cStringUsingEncoding:NSUTF8StringEncoding];
     } else {
         data.gender = nil;
     }
-    if ([self.accountMetadata objectForKey:LPCAccountDescriptionKeyAge]) {
-        data.ageInYears = [[self.accountMetadata objectForKey:LPCAccountDescriptionKeyAge] integerValue];
+    if ([self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyAge]) {
+        data.ageInYears = [[self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyAge] integerValue];
     } else {
         data.ageInYears = -1;
     }
-    if ([self.accountMetadata objectForKey:LPCAccountDescriptionKeyHeightFeet]) {
-        data.heightFeet = [[self.accountMetadata objectForKey:LPCAccountDescriptionKeyHeightFeet] integerValue];
+    if ([self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyHeightFeet]) {
+        data.heightFeet = [[self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyHeightFeet] integerValue];
     } else {
         data.ageInYears = -1;
     }
-    if ([self.accountMetadata objectForKey:LPCAccountDescriptionKeyHeightInches]) {
-        data.heightInches = [[self.accountMetadata objectForKey:LPCAccountDescriptionKeyHeightInches] integerValue];
+    if ([self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyHeightInches]) {
+        data.heightInches = [[self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyHeightInches] integerValue];
     } else {
         data.ageInYears = -1;
     }
     
+    data.targetF3 = self.accountDescription.targetF3;
+    data.stdevF3 = self.accountDescription.stdevF3;
+    data.targetLPCOrder = self.accountDescription.targetLPCOrder;
     data.audio_path = [[[audioFileURL absoluteString] stringByRemovingPercentEncoding] cStringUsingEncoding:NSUTF8StringEncoding];
     data.lpc_path = [[[lpcFileURL absoluteString] stringByRemovingPercentEncoding] cStringUsingEncoding:NSUTF8StringEncoding];
     data.metadata_path = [[[metadataFileURL absoluteString] stringByRemovingPercentEncoding] cStringUsingEncoding:NSUTF8StringEncoding];
@@ -102,31 +135,14 @@
     return data;
 }
 
-#pragma mark - NSCoding
-
-- (id) initWithCoder:(NSCoder *)aDecoder
+- (NSDictionary *)recordingFilesDictionary
 {
-    self = [super init];
-    if (self) {
-        self.date = [[NSDate alloc] initWithCoder:aDecoder];
-        self.metadataFilename = [aDecoder decodeObjectForKey:kMetadataKey];
-        self.lpcFilename = [aDecoder decodeObjectForKey:kLPCKey];
-        self.audioFilename = [aDecoder decodeObjectForKey:kAudioKey];
-        self.accountUUID = [aDecoder decodeObjectForKey:kAccountUUIDKey];
-        self.accountMetadata = [aDecoder decodeObjectForKey:kAccountMetadataKey];
-        self.dateString = [aDecoder decodeObjectForKey:kDateKey];
-    } return self;
-}
-
-- (void) encodeWithCoder:(NSCoder *)aCoder
-{
-    [aCoder encodeObject:self.metadataFilename forKey:kMetadataKey];
-    [aCoder encodeObject:self.lpcFilename forKey:kLPCKey];
-    [aCoder encodeObject:self.audioFilename forKey:kAudioKey];
-    [aCoder encodeObject:self.accountUUID forKey:kAccountUUIDKey];
-    [aCoder encodeObject:self.accountMetadata forKey:kAccountMetadataKey];
-    [aCoder encodeObject:self.dateString forKey:kDateKey];
-    [self.date encodeWithCoder:aCoder];
+    NSString *applicationSupportDirectory = [APAudioManager applicationAppSupportDirectory];
+    NSMutableDictionary *mutRep = [NSMutableDictionary dictionary];
+    [mutRep setObject:[applicationSupportDirectory stringByAppendingPathComponent:self.metadataFilename] forKey:kMetadataKey];
+    [mutRep setObject:[applicationSupportDirectory stringByAppendingPathComponent:self.lpcFilename] forKey:kLPCKey];
+    [mutRep setObject:[applicationSupportDirectory stringByAppendingPathComponent:self.audioFilename] forKey:kAudioKey];
+    return mutRep;
 }
 
 #pragma mark - LPCUploadable

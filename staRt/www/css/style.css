@@ -58,3 +58,11 @@
 
 item {
 }
+
+.testbutton {
+  background-color: lightblue;
+}
+
+.testbutton:active {
+  background-color: darkblue;
+}
