@@ -11,9 +11,10 @@
 #import "APAudioManager.h"
 #import "CHCSVParser.h"
 
-#define kMetadataKey            @"Metadata"
-#define kLPCKey                 @"LPC"
-#define kAudioKey               @"Audio"
+NSString *const LPCRecordingSessionMetadataKey = @"Metadata";
+NSString *const LPCRecordingSessionLPCKey = @"LPC";
+NSString *const LPCRecordingSessionAudioKey = @"Audio";
+
 #define kAccountUUIDKey         @"AccountUUID"
 #define kAccountMetadataKey     @"AccountMetadata"
 #define kDateKey                @"Date"
@@ -72,13 +73,17 @@
     LPCRecordingSession *session = [[LPCRecordingSession alloc] init];
     NSDateFormatter *dateFormatter = [LPCRecordingSession recordingSessionDateFormatter];
     session.metadataFilename = metadata;
-    NSString *applicationSupportDirectory = [APAudioManager applicationAppSupportDirectory];
-    NSString *urlSafeString = [applicationSupportDirectory stringByAppendingPathComponent:metadata];
+    NSString *recordingDirectory = [LPCRecordingSession recordingDirectory];
+    NSString *urlSafeString = [recordingDirectory stringByAppendingPathComponent:metadata];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:urlSafeString])
+        return nil;
+    
     NSURL *metadataURL = [NSURL fileURLWithPath:urlSafeString];
     NSError *error = nil;
     NSArray<CHCSVOrderedDictionary *> *rows = [NSArray arrayWithContentsOfCSVURL:metadataURL options:CHCSVParserOptionsUsesFirstLineAsKeys|CHCSVParserOptionsSanitizesFields|CHCSVParserOptionsTrimsWhitespace];
     if (error) {
         NSLog(@"%@", [error localizedDescription]);
+        return nil;
     }
     
     session.dateString = [rows[0] objectForKey:@"start_date"];
@@ -92,10 +97,10 @@
 + (NSArray<LPCRecordingSession *> *) recordingsForAccount:(LPCAccountDescription *)account
 {
     NSMutableArray *retArray = [NSMutableArray array];
-    NSString *applicationSupportDirectory = [APAudioManager applicationAppSupportDirectory];
+    NSString *recordingDirectory = [LPCRecordingSession recordingDirectory];
     
     NSFileManager *manager = [NSFileManager defaultManager];
-    NSArray *fileList = [manager directoryContentsAtPath:applicationSupportDirectory];
+    NSArray *fileList = [manager contentsOfDirectoryAtPath:recordingDirectory error:nil];
     for (NSString *s in fileList){
         if ([s hasSuffix:@"-meta.csv"]) {
             LPCRecordingSession *session = [LPCRecordingSession sessionWithMetadataFile:s];
@@ -108,10 +113,26 @@
     return [NSArray arrayWithArray:retArray];
 }
 
++ (NSString *) recordingDirectory
+{
+    NSString *applicationSupportDirectory = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *recordingDirectory = [applicationSupportDirectory stringByAppendingPathComponent:@"recordings"];
+    NSFileManager *manager = [NSFileManager defaultManager];
+    if(![manager fileExistsAtPath:recordingDirectory]) {
+        __autoreleasing NSError *error;
+        BOOL ret = [manager createDirectoryAtPath:recordingDirectory withIntermediateDirectories:YES attributes:nil error:&error];
+        if(!ret) {
+            NSLog(@"ERROR app support: %@", error);
+            exit(0);
+        }
+    }
+    return recordingDirectory;
+}
+
 - (LPCRecordingSessionData) dataWithLpcOrder:(uint16_t)lpcOrder
 {
-    NSString *applicationSupportDirectory = [APAudioManager applicationAppSupportDirectory];
-    NSString *escapedSupportDir = [applicationSupportDirectory stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
+    NSString *recordingDirectory = [LPCRecordingSession recordingDirectory];
+    NSString *escapedSupportDir = [recordingDirectory stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
     NSURL *audioFileURL = [[NSURL URLWithString:escapedSupportDir] URLByAppendingPathComponent:self.audioFilename];
     NSURL *lpcFileURL = [[NSURL URLWithString:escapedSupportDir] URLByAppendingPathComponent:self.lpcFilename];
     NSURL *metadataFileURL = [[NSURL URLWithString:escapedSupportDir] URLByAppendingPathComponent:self.metadataFilename];
@@ -160,12 +181,21 @@
 
 - (NSDictionary *)recordingFilesDictionary
 {
-    NSString *applicationSupportDirectory = [APAudioManager applicationAppSupportDirectory];
+    NSString *recordingDirectory = [LPCRecordingSession recordingDirectory];
     NSMutableDictionary *mutRep = [NSMutableDictionary dictionary];
-    [mutRep setObject:[applicationSupportDirectory stringByAppendingPathComponent:self.metadataFilename] forKey:kMetadataKey];
-    [mutRep setObject:[applicationSupportDirectory stringByAppendingPathComponent:self.lpcFilename] forKey:kLPCKey];
-    [mutRep setObject:[applicationSupportDirectory stringByAppendingPathComponent:self.audioFilename] forKey:kAudioKey];
+    [mutRep setObject:[recordingDirectory stringByAppendingPathComponent:self.metadataFilename] forKey:LPCRecordingSessionMetadataKey];
+    [mutRep setObject:[recordingDirectory stringByAppendingPathComponent:self.lpcFilename] forKey:LPCRecordingSessionLPCKey];
+    [mutRep setObject:[recordingDirectory stringByAppendingPathComponent:self.audioFilename] forKey:LPCRecordingSessionAudioKey];
     return mutRep;
+}
+
+- (void)deleteFiles
+{
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSString *recordingDirectory = [LPCRecordingSession recordingDirectory];
+    [manager removeItemAtPath:[recordingDirectory stringByAppendingPathComponent:self.metadataFilename] error:nil];
+    [manager removeItemAtPath:[recordingDirectory stringByAppendingPathComponent:self.lpcFilename] error:nil];
+    [manager removeItemAtPath:[recordingDirectory stringByAppendingPathComponent:self.audioFilename] error:nil];
 }
 
 #pragma mark - LPCUploadable
@@ -217,8 +247,8 @@
 - (NSData *) dataForAttachmentAtIndex:(NSUInteger)index
 {
     NSData *data = nil;
-    NSString *applicationSupportDirectory = [APAudioManager applicationAppSupportDirectory];
-    NSURL *dd = [NSURL URLWithString:applicationSupportDirectory];
+    NSString *recordingDirectory = [LPCRecordingSession recordingDirectory];
+    NSURL *dd = [NSURL URLWithString:recordingDirectory];
     NSString *filename = [self nameForAttachmentAtIndex:index];
     if (filename) {
         NSURL *fileURL = [NSURL fileURLWithPath:[dd.absoluteString stringByAppendingPathComponent:filename]];

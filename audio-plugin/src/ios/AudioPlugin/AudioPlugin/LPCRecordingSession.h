@@ -11,6 +11,10 @@
 #include "LPCUploadable.h"
 #include "LPCAccountDescription.h"
 
+FOUNDATION_EXPORT NSString *const LPCRecordingSessionMetadataKey;
+FOUNDATION_EXPORT NSString *const LPCRecordingSessionLPCKey;
+FOUNDATION_EXPORT NSString *const LPCRecordingSessionAudioKey;
+
 @interface LPCRecordingSession : NSObject <LPCUploadable>
 @property (nonatomic, readonly) NSString *metadataFilename;
 @property (nonatomic, readonly) NSString *lpcFilename;
@@ -19,7 +23,9 @@
 + (instancetype) sessionWithAccountDescription:(LPCAccountDescription *)account;
 + (instancetype) sessionWithMetadataFile:(NSString *)metadata;
 + (NSArray<LPCRecordingSession *> *) recordingsForAccount:(LPCAccountDescription *)account;
++ (NSString *) recordingDirectory;
 - (LPCRecordingSessionData) dataWithLpcOrder:(uint16_t)lpcOrder;
 - (NSDictionary *)recordingFilesDictionary;
+- (void)deleteFiles;
 
 @end

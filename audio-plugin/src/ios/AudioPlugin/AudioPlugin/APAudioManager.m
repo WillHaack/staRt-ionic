@@ -24,33 +24,9 @@
 
 @implementation APAudioManager
 
-- (void) createApplicationSupportDirectoryIfNecessary
-{
-    // got to make sure this exists
-    NSFileManager *manager = [NSFileManager defaultManager];
-    NSString *appSupportDir = [APAudioManager applicationAppSupportDirectory];
-    
-    NSLog(@"Audio plugin recording files to: %@", appSupportDir);
-    
-    if(![manager fileExistsAtPath:appSupportDir]) {
-        __autoreleasing NSError *error;
-        BOOL ret = [manager createDirectoryAtPath:appSupportDir withIntermediateDirectories:NO attributes:nil error:&error];
-        if(!ret) {
-            NSLog(@"ERROR app support: %@", error);
-            exit(0);
-        }
-    }
-}
-
-+ (NSString *) applicationAppSupportDirectory
-{
-    return [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
-}
-
 - (void) start
 {
     NSLog(@"Starting APAudioManader");
-    [self createApplicationSupportDirectoryIfNecessary];
     
     AudioStreamBasicDescription asbd = AEAudioStreamBasicDescriptionNonInterleavedFloatStereo;
     asbd.mSampleRate = 22050.0;

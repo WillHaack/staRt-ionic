@@ -11,7 +11,6 @@
 @class LPCRecordingSession;
 
 @interface APAudioManager : NSObject
-+ (NSString *) applicationAppSupportDirectory;
 - (void) start;
 - (NSDictionary *) lpcCoefficients;
 - (double) frequencyScaling;

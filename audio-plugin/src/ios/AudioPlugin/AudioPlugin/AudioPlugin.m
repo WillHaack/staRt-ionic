@@ -20,7 +20,14 @@
 {
     self.audioManager = [[APAudioManager alloc] init];
     [self.audioManager start];
-    NSLog(@"Initializing AudioPlugin, saving to dir %@", [APAudioManager applicationAppSupportDirectory]);
+    NSLog(@"Initializing AudioPlugin, saving to dir %@", [LPCRecordingSession recordingDirectory]);
+}
+
+- (void)sendInvalidActionResultWithMessage:(NSString *)message command:(CDVInvokedUrlCommand *)command
+{
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_INVALID_ACTION
+                                                messageAsString:message];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
 - (void)getLPCCoefficients:(CDVInvokedUrlCommand *)command
@@ -105,12 +112,23 @@
 
 - (void)deleteRecording:(CDVInvokedUrlCommand *)command
 {
+    NSDictionary *recordingAsDict = [command argumentAtIndex:0 withDefault:nil andClass:[NSDictionary class]];
+    if (!recordingAsDict) {
+        [self sendInvalidActionResultWithMessage:@"Must pass valid JSON description of a recording" command:command];
+        return;
+    }
+    
+    NSString *metadataFile = [[recordingAsDict objectForKey:LPCRecordingSessionMetadataKey] lastPathComponent];
+    LPCRecordingSession *session = [LPCRecordingSession sessionWithMetadataFile:metadataFile];
+    [session deleteFiles];
     
 }
 
 - (void)deleteAllRecordings:(CDVInvokedUrlCommand *)command
 {
-    
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSString *recordingDirectory = [LPCRecordingSession recordingDirectory];
+    [manager removeItemAtPath:recordingDirectory error:nil];
 }
 
 @end
