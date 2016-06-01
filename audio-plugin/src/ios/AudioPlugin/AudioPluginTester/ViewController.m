@@ -50,6 +50,7 @@ static NSDictionary *s_descDict;
     double frequencyScaling = [self.audioManager frequencyScaling];
     [self.lpcDisplayView setFrequencyScaling:frequencyScaling];
     [self.lpcDisplayView setLPCCoefficients:[coeffs objectForKey:@"coefficients"]];
+    [self.lpcDisplayView setPeakPoints:[coeffs objectForKey:@"peaks"]];
 }
 
 - (void)didReceiveMemoryWarning {

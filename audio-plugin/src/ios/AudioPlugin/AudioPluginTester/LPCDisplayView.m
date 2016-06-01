@@ -30,6 +30,11 @@
     [self setNeedsDisplay];
 }
 
+- (void) setPeakPoints:(NSArray *)peakPoints
+{
+    self.peakPointsPairs = peakPoints;
+}
+
 - (void) drawRect:(CGRect)rect
 {
     CGContextRef ctx =  UIGraphicsGetCurrentContext();
@@ -54,9 +59,17 @@
     
     for (int i=0; i<self.peakPointsPairs.count; i+=2) {
         CGPoint p1, p2;
-        CGPointMakeWithDictionaryRepresentation(self.peakPointsPairs[i], &p1);
-        CGPointMakeWithDictionaryRepresentation(self.peakPointsPairs[i+1], &p2);
+        CGPointMakeWithDictionaryRepresentation((__bridge CFDictionaryRef) self.peakPointsPairs[i], &p1);
+        CGPointMakeWithDictionaryRepresentation((__bridge CFDictionaryRef) self.peakPointsPairs[i+1], &p2);
+        p1.x = (p1.x/2.0 + 0.5) * self.frequencyScaling * self.frame.size.width;
+        p2.x = (p2.x/2.0 + 0.5) * self.frequencyScaling * self.frame.size.width;
+        p1.y *= (-1.0 * self.frame.size.height);
+        p2.y *= (-1.0 * self.frame.size.height);
+        CGContextMoveToPoint(ctx, p1.x, p1.y);
+        CGContextAddLineToPoint(ctx, p2.x, p2.y);
     }
+    CGContextSetStrokeColorWithColor(ctx, [UIColor greenColor].CGColor);
+    CGContextStrokePath(ctx);
 }
 
 @end

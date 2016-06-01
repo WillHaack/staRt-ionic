@@ -110,20 +110,11 @@ static OSStatus WriteLPCCoefficients(__unsafe_unretained APLPCCalculator *THIS,
         Vector3 *v = _peakVertices + i;
         if (v->x == 0.0 && v->y == 0.0)
             continue;
-        [peakArray addObject:@{@"x":@(v->x), @"y":@(v->y)}];
+        CGPoint p = CGPointMake(v->x, v->y);
+        [peakArray addObject:(__bridge NSDictionary *) CGPointCreateDictionaryRepresentation(p)];
     }
     
     return @{@"coefficients":coeffArray, @"peaks":peakArray};
-}
-
-- (NSArray *) getFrequencyPeaks
-{
-    lpcDisplayManager->renderTargetFormantFreqs(_targetFreqVertices, m_targetFormantFreqs, MAX_NUM_TARG_FORMANTS);
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (int i=0; i<MAX_NUM_TARG_FORMANTS; ++i) {
-        [array addObject:@(_targetFreqVertices[i].x)];
-    }
-    return array;
 }
 
 - (double) frequencyScaling

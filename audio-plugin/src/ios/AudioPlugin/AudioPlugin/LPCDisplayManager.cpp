@@ -10,7 +10,7 @@
 #include "LPCDisplayManager.h"
 #include "AudioManager.h"
 
-#define LPC_HIST_LEN (8)        /**< number of buffers used for LPC magnitude spectrum history */
+#define LPC_HIST_LEN (16)        /**< number of buffers used for LPC magnitude spectrum history */
 //#define LPC_NUM_DISPLAY_BINS (256)  // <-- this shouldn't need to change if sample rate is changed
 
 #define MAX_DB_VAL (10.0)       /**< maximum level of LPC magnitude spectrum (dB) */
