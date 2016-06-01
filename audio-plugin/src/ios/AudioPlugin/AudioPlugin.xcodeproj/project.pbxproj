@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		082BA1671CFCC40F0096A03F /* LPCDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 082BA1661CFCC40F0096A03F /* LPCDisplayView.m */; };
 		083A41931CEA4553008AF1A0 /* AudioPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 083A41921CEA4553008AF1A0 /* AudioPlugin.m */; };
 		085D97671CEF9FAE00998A81 /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 085D97651CEF9FAE00998A81 /* AudioManager.cpp */; };
 		085D976B1CEFB17C00998A81 /* LPCDisplayManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 085D97691CEFB17C00998A81 /* LPCDisplayManager.cpp */; };
@@ -122,6 +123,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		082BA1651CFCC40F0096A03F /* LPCDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPCDisplayView.h; sourceTree = "<group>"; };
+		082BA1661CFCC40F0096A03F /* LPCDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPCDisplayView.m; sourceTree = "<group>"; };
 		083A417D1CEA44EA008AF1A0 /* libAudioPlugin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAudioPlugin.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		083A41891CEA452E008AF1A0 /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = ../../../../staRt/platforms/ios/CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
 		083A41911CEA4553008AF1A0 /* AudioPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlugin.h; sourceTree = "<group>"; };
@@ -420,6 +423,8 @@
 				08A384101CEE0E3C00E6DA6D /* AppDelegate.m */,
 				08A384121CEE0E3C00E6DA6D /* ViewController.h */,
 				08A384131CEE0E3C00E6DA6D /* ViewController.m */,
+				082BA1651CFCC40F0096A03F /* LPCDisplayView.h */,
+				082BA1661CFCC40F0096A03F /* LPCDisplayView.m */,
 				08A384151CEE0E3C00E6DA6D /* Main.storyboard */,
 				08A384181CEE0E3C00E6DA6D /* Assets.xcassets */,
 				08A3841A1CEE0E3C00E6DA6D /* LaunchScreen.storyboard */,
@@ -702,6 +707,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				082BA1671CFCC40F0096A03F /* LPCDisplayView.m in Sources */,
 				08651F841CF8C261004C44E4 /* CHCSVParser.m in Sources */,
 				08A384141CEE0E3C00E6DA6D /* ViewController.m in Sources */,
 				08A384111CEE0E3C00E6DA6D /* AppDelegate.m in Sources */,

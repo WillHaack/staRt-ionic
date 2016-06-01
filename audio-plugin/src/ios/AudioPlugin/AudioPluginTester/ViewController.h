@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class LPCDisplayView;
+
 @interface ViewController : UIViewController
+@property (nonatomic, strong) IBOutlet LPCDisplayView *lpcDisplayView;
 
 - (IBAction)startRecording:(id)sender;
 - (IBAction)stopRecording:(id)sender;

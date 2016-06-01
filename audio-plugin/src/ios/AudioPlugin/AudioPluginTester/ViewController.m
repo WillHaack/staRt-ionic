@@ -11,6 +11,7 @@
 #import "LPCAccountDescription.h"
 #import "LPCRecordingSession.h"
 #import "CHCSVParser.h"
+#import "LPCDisplayView.h"
 
 static NSDictionary *s_descDict;
 
@@ -38,18 +39,17 @@ static NSDictionary *s_descDict;
     self.audioManager = [[APAudioManager alloc] init];
     [self.audioManager start];
     
-    CADisplayLink *lnk = [CADisplayLink displayLinkWithTarget:self selector:@selector(printCurrentCoefficients)];
+    CADisplayLink *lnk = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateLPCDisplay)];
     [lnk addToRunLoop:[NSRunLoop currentRunLoop]
               forMode:NSRunLoopCommonModes];
 }
 
-- (void) printCurrentCoefficients
+- (void) updateLPCDisplay
 {
-    return;
-    NSArray *coeffs = [self.audioManager lpcCoefficients];
-    NSLog(@"Coefficients: %@", coeffs);
+    NSDictionary *coeffs = [self.audioManager lpcCoefficients];
     double frequencyScaling = [self.audioManager frequencyScaling];
-    NSLog(@"Frequency scaling: %f", frequencyScaling);
+    [self.lpcDisplayView setFrequencyScaling:frequencyScaling];
+    [self.lpcDisplayView setLPCCoefficients:[coeffs objectForKey:@"coefficients"]];
 }
 
 - (void)didReceiveMemoryWarning {

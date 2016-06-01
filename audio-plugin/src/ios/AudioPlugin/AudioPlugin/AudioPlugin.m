@@ -26,10 +26,13 @@
 - (void)getLPCCoefficients:(CDVInvokedUrlCommand *)command
 {
     NSNumber *xScaleFactor = @([self.audioManager frequencyScaling]);
-    NSArray *audioCoefficients = [self.audioManager lpcCoefficients];
+    NSDictionary *coefficientsDict = [self.audioManager lpcCoefficients];
+    NSArray *audioCoefficients = [coefficientsDict objectForKey:@"coefficients"];
+    NSArray *frequencyPeaks = [coefficientsDict objectForKey:@"peaks"];
     NSDictionary *resultDict = @{
                                  @"freqScale" : xScaleFactor,
-                                 @"coefficients" : audioCoefficients
+                                 @"coefficients" : audioCoefficients,
+                                 @"freqPeaks" : frequencyPeaks
                                  };
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                             messageAsDictionary:resultDict];

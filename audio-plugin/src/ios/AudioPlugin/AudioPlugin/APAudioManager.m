@@ -65,9 +65,9 @@
     [self.audioController addInputReceiver:self.recorder];
 }
 
-- (NSArray *) lpcCoefficients
+- (NSDictionary *) lpcCoefficients
 {
-    return [self.lpcCalculator getCurrentCoefficients];
+    return [self.lpcCalculator fetchCurrentCoefficients];
 }
 
 - (double) frequencyScaling

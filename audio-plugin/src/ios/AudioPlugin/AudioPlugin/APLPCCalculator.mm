@@ -84,7 +84,7 @@ static OSStatus WriteLPCCoefficients(__unsafe_unretained APLPCCalculator *THIS,
     return self;
 }
 
-- (NSArray *) getCurrentCoefficients
+- (NSDictionary *) fetchCurrentCoefficients
 {
     // Get the LPC data
     int lpcSize = audioManager->m_lpc_magSpecResolution;  //audioManager->m_lpc_BufferSize;
@@ -98,9 +98,30 @@ static OSStatus WriteLPCCoefficients(__unsafe_unretained APLPCCalculator *THIS,
     lpcDisplayManager->render(lpc_mag_buffer, _freqVertices, _peakVertices);
     lpcDisplayManager->renderTargetFormantFreqs(_targetFreqVertices, m_targetFormantFreqs, MAX_NUM_TARG_FORMANTS);
     
-    NSMutableArray *array = [[NSMutableArray alloc] init];
+    // Write the freqency curve points
+    NSMutableArray *coeffArray = [[NSMutableArray alloc] init];
     for (int i=0; i<lpcDisplayManager->_numDisplayBins; i++) {
-        [array addObject:@(_freqVertices[i].y)];
+        [coeffArray addObject:@(_freqVertices[i].y)];
+    }
+    
+    // Write the peak points
+    NSMutableArray *peakArray = [[NSMutableArray alloc] init];
+    for (int i=0; i<lpcDisplayManager->_numDisplayBins; i++) {
+        Vector3 *v = _peakVertices + i;
+        if (v->x == 0.0 && v->y == 0.0)
+            continue;
+        [peakArray addObject:@{@"x":@(v->x), @"y":@(v->y)}];
+    }
+    
+    return @{@"coefficients":coeffArray, @"peaks":peakArray};
+}
+
+- (NSArray *) getFrequencyPeaks
+{
+    lpcDisplayManager->renderTargetFormantFreqs(_targetFreqVertices, m_targetFormantFreqs, MAX_NUM_TARG_FORMANTS);
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for (int i=0; i<MAX_NUM_TARG_FORMANTS; ++i) {
+        [array addObject:@(_targetFreqVertices[i].x)];
     }
     return array;
 }

@@ -13,7 +13,7 @@
 @interface APAudioManager : NSObject
 + (NSString *) applicationAppSupportDirectory;
 - (void) start;
-- (NSArray *) lpcCoefficients;
+- (NSDictionary *) lpcCoefficients;
 - (double) frequencyScaling;
 - (void) startRecordingForRecordingSession:(LPCRecordingSession *)session;
 - (void) stopRecording;

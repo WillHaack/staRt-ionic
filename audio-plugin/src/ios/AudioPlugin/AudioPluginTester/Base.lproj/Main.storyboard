@@ -3,6 +3,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,39 +20,55 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="35M-MH-vDg">
-                                <rect key="frame" x="246" y="285" width="108" height="30"/>
+                                <rect key="frame" x="131" y="537" width="108" height="30"/>
                                 <state key="normal" title="Start Recording"/>
                                 <connections>
                                     <action selector="startRecording:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aE3-Xy-omi"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldc-eC-Wp1">
-                                <rect key="frame" x="247" y="350" width="106" height="30"/>
+                                <rect key="frame" x="247" y="537" width="106" height="30"/>
                                 <state key="normal" title="Stop Recording"/>
                                 <connections>
                                     <action selector="stopRecording:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fjt-8H-obD"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zcG-TC-CSd">
-                                <rect key="frame" x="247" y="416" width="106" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zcG-TC-CSd">
+                                <rect key="frame" x="361" y="537" width="106" height="30"/>
                                 <state key="normal" title="List Recordings"/>
                                 <connections>
                                     <action selector="listRecordings:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nio-Tu-RbY"/>
                                     <action selector="stopRecording:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qEU-CP-Pid"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q9l-eG-SzE" customClass="LPCDisplayView">
+                                <rect key="frame" x="20" y="121" width="560" height="359"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="q9l-eG-SzE" secondAttribute="height" multiplier="560:359" id="eE5-QN-ose"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="35M-MH-vDg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fy7-eQ-FhV"/>
-                            <constraint firstItem="ldc-eC-Wp1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lRI-rS-3fN"/>
-                            <constraint firstItem="35M-MH-vDg" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="mrd-ux-ldS"/>
-                            <constraint firstItem="ldc-eC-Wp1" firstAttribute="top" secondItem="35M-MH-vDg" secondAttribute="bottom" constant="35" id="wjB-y6-ITp"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="35M-MH-vDg" secondAttribute="bottom" constant="33" id="3PD-j0-O7d"/>
+                            <constraint firstItem="q9l-eG-SzE" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="6lW-RZ-SlF"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zcG-TC-CSd" secondAttribute="bottom" constant="33" id="YX0-aT-6Ih"/>
+                            <constraint firstItem="ldc-eC-Wp1" firstAttribute="leading" secondItem="35M-MH-vDg" secondAttribute="trailing" constant="8" id="gDe-e8-1Av"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ldc-eC-Wp1" secondAttribute="bottom" constant="33" id="hAd-Ii-sqm"/>
+                            <constraint firstItem="q9l-eG-SzE" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="hbV-op-p34"/>
+                            <constraint firstItem="zcG-TC-CSd" firstAttribute="leading" secondItem="ldc-eC-Wp1" secondAttribute="trailing" constant="8" id="oGe-C5-BjR"/>
+                            <constraint firstItem="ldc-eC-Wp1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yMm-Ct-s3b"/>
+                            <constraint firstItem="q9l-eG-SzE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="z2X-0b-QgZ"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="lpcDisplayView" destination="q9l-eG-SzE" id="pHa-fp-xAg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="456" y="216"/>
         </scene>
     </scenes>
 </document>

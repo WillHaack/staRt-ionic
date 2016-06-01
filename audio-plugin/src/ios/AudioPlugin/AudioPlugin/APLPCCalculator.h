@@ -13,7 +13,7 @@
 @interface APLPCCalculator : NSObject <AEAudioReceiver>
 @property (nonatomic, assign) NSInteger lpcOrder;
 - (id) initWithAudioController:(AEAudioController *)audioController;
-- (NSArray *) getCurrentCoefficients;
+- (NSDictionary *) fetchCurrentCoefficients;
 - (double) frequencyScaling;
 
 - (void) beginRecordingLPCWithRecordingSessionData:(LPCRecordingSessionData *)sessionData error:(NSError **)error;
