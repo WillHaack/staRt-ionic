@@ -119,9 +119,11 @@ angular.module('start', ['ionic', 'LocalForageModule'])
 		var running = true;
     var frequencyScaling = 1.0;
     var points = [];
+    var peaks = [];
 
     lpc.coefficentCallback = function(msg) {
       points = msg.coefficients;
+      peaks = msg.freqPeaks;
       frequencyScaling = msg.freqScale;
     };
 
@@ -140,8 +142,8 @@ angular.module('start', ['ionic', 'LocalForageModule'])
       lpc.stroke('#000000');
       lpc.strokeWeight(3);
       lpc.noFill();
-      lpc.beginShape();
 
+      lpc.beginShape();
       // Not sure exactly how the points are meant to be scaled...
       var scaleFac = -1.0;
 
@@ -152,6 +154,17 @@ angular.module('start', ['ionic', 'LocalForageModule'])
         lpc.vertex(px, py);
       }
       lpc.endShape();
+
+      lpc.strokeWeight(2);
+      for (i=0; i<peaks.length; i = i+2) {
+        var p1 = peaks[i];
+        var p2 = peaks[i+1];
+        p1.X = (p1.X/2 + 0.5) * myCanvas.width * frequencyScaling;
+        p2.X = (p2.X/2 + 0.5) * myCanvas.width * frequencyScaling;
+        p1.Y = ((p1.Y * scaleFac) + 1) * myCanvas.height/2;
+        p2.Y = ((p2.Y * scaleFac) + 1) * myCanvas.height/2;
+        lpc.line(p1.X, p1.Y, p2.X, p2.Y);
+      }
 		};
 
 		lpc.mouseClicked = function() {

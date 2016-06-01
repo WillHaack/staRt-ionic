@@ -51,11 +51,6 @@
     return self.lpcCalculator.frequencyScaling;
 }
 
-- (NSString *) recordingPathForUUID:(NSString *)uuid
-{
-    return [NSString stringWithFormat:@"%@/%@.aiff", [APAudioManager applicationAppSupportDirectory], uuid];
-}
-
 - (void) startRecordingForRecordingSession:(LPCRecordingSession *)session
 {
     LPCRecordingSessionData sessionData = [session dataWithLpcOrder:self.lpcCalculator.lpcOrder];
