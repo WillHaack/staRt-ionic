@@ -1,0 +1,23 @@
+<ion-view view-title="staRt">
+
+  <!-- Tabs -->
+  <div id="nav-container">
+    <list class="navTabs">
+      <item ng-repeat="title in tabTitles" class="navTab" ng-click="selectIndex($index)">
+        <div class="navTabText">
+          {{title}}
+        </div>
+      </item>
+    </list>
+  </div>
+
+  <!-- Content -->
+  <div id="content-container">
+    <div id="text-content">
+      <div class="navTabText title bigtext">
+        {{content}}
+      </div>
+    </div>
+    <lpc-directive></lpc-directive>
+  </div>
+</ion-view>

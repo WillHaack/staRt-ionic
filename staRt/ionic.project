@@ -1,5 +1,5 @@
 {
   "name": "staRt",
   "app_id": "",
-  "gulpStartupTasks": ["inject", "watch"]
+  "gulpStartupTasks": ["watch", "inject"]
 }

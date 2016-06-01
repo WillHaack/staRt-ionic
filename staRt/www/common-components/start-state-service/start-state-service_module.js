@@ -1,6 +1,7 @@
 var startStateService = angular.module('startStateService', []);
 
-startStateService.factory('StartUIState', function() {
+startStateService.factory('StartUIState', function()
+{
   return {
     getLastActiveIndex: function(lf) {
       return lf.getItem("lastActiveIndex");

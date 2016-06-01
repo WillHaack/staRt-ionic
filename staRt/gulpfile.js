@@ -42,10 +42,10 @@ gulp.task('inject', function()
 	var target = gulp.src( './www/index.html' );
 
 	var appJsSource = gulp.src( paths.js );
-	// var sortedAppJs = appJsSource.pipe( angularFilesort(  ) );
+	var sortedAppJs = appJsSource.pipe( angularFilesort(  ) );
 
 	return target
-		.pipe( inject( appJsSource,
+		.pipe( inject( sortedAppJs,
 			injectOptions ) )
 		.pipe( gulp.dest( './www' ) );
 		// .pipe( connect.reload() )

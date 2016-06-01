@@ -8,6 +8,6 @@ lpcDirective.directive( 'lpcDirective', function()
 
 		restrict: 'E',
 		controller: 'LpcDirectiveController',
-		templateUrl: 'common-components/directives/lpc-directive/lpc-directive_template.html'
+		templateUrl: 'common-components/lpc-directive/lpc-directive_template.html'
 	};
 } );
