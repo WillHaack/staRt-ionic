@@ -39,6 +39,11 @@
   -webkit-flex: 1;
 }
 
+.pane
+{
+  flex-flow: column;
+}
+
 .navTabs {
   background-color: lightgray;
   height: 100vh;
