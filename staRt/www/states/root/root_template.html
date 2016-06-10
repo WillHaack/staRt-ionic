@@ -1,4 +1,4 @@
-<ion-view view-title="staRt">
+<ion-view view-title="staRt" id="nav-and-content-container">
 
   <!-- Tabs -->
   <div id="nav-container">
@@ -12,12 +12,6 @@
   </div>
 
   <!-- Content -->
-  <div id="content-container">
-    <div id="text-content">
-      <div class="navTabText title bigtext">
-        {{content}}
-      </div>
-    </div>
-    <lpc-directive></lpc-directive>
-  </div>
+  <ion-nav-view name="content-view" id="content-container">
+  </ion-nav-view>
 </ion-view>

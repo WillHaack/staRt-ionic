@@ -3,10 +3,17 @@
   -webkit-flex-direction: row;
 }
 
+#nav-and-content-container
+{
+  display: flex;
+  flex-flow: row nowrap;
+}
+
 #nav-container {
   display: -webkit-flex;
   -webkit-flex-direction: column;
   width: 120px;
+  z-index: 999;
 }
 
 #content-container {
@@ -54,7 +61,4 @@
 
 .bigtext {
   font-size: 55pt;
-}
-
-item {
 }

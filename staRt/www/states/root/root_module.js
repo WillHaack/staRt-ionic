@@ -6,7 +6,14 @@
 	[ 
 		'LocalForageModule',
 		'startStateService',
-		'lpcDirective'
+		'lpcDirective',
+		'auto',
+		'freePlay',
+		'profiles',
+		'resources',
+		'syllables',
+		'tutorial',
+		'words'
 	] );
 
 	root.config( function( $stateProvider )
@@ -21,8 +28,8 @@
 					templateUrl: 'states/root/root_template.html',
 					controller: 'RootController as root'
 				}
-			},
-			// abstract: true,
+			}
+			// abstract: true
 		} );
 	} );
 
