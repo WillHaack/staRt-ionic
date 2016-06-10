@@ -13,9 +13,14 @@
     <script src="lib/localforage/localforage.min.js"></script>
     <script src="https://cdn.rawgit.com/ocombe/angular-localForage/master/dist/angular-localForage.min.js"></script>
 
+  </head>
+  <body ng-app="start">
+    <ion-nav-view name="app-view" id="app-container"></ion-nav-view>
 
-    <!-- App JS -->
-    <script src="app_module.js"></script>
+    <script src="lib/three/three.min.js"></script>
+    <script src="lib/p5/p5.dom.js"></script>
+    <script src="lib/p5/p5.min.js"></script>
+    <!-- inject:js -->
     <script src="common-components/start-state-service/start-state-service_module.js"></script>
     <script src="common-components/lpc-directive/lpc-directive_module.js"></script>
     <script src="common-components/lpc-directive/lpc-directive_controller.js"></script>
@@ -34,16 +39,8 @@
     <script src="states/root/auto/auto_module.js"></script>
     <script src="states/root/auto/auto_controller.js"></script>
     <script src="states/root/root_module.js"></script>
-    <script src="states/root/root_controller.js"></script>    
-
-  </head>
-  <body ng-app="start">
-    <ion-nav-view name="app-view" id="app-container"></ion-nav-view>
-
-    <script src="lib/three/three.min.js"></script>
-    <script src="lib/p5/p5.dom.js"></script>
-    <script src="lib/p5/p5.min.js"></script>
-    <!-- inject:js -->
+    <script src="states/root/root_controller.js"></script>
+    <script src="app_module.js"></script>
     <!-- endinject -->
   </body>
 </html>

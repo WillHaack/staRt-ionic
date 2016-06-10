@@ -10,14 +10,35 @@ startStateService.factory('StartUIState', function()
     setLastActiveIndex: function(lf, index) {
       return lf.setItem("lastActiveIndex", index);
     },
-    tabTitles: [
-      "Profiles",
-      "Tutorial",
-      "Auto",
-      "Free Play",
-      "Syllables",
-      "Words",
-      "Resources"
+    tabData: [
+      {
+        title: "Profiles",
+        sref: "profiles"
+      },
+      {
+        title: "Tutorial",
+        sref: "tutorial" 
+      },
+      {
+        title: "Auto",
+        sref: "auto"
+      },
+      {
+        title: "Free Play",
+        sref: "free-play"
+      },
+      {
+        title: "Syllables",
+        sref: "syllables"
+      },
+      {
+        title: "Words",
+        sref: "words"
+      },
+      {
+        title: "Resources",
+        sref: "resources"
+      }
     ],
     content: [
       "A whole bunch of Profles",

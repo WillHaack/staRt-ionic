@@ -3,9 +3,9 @@
   <!-- Tabs -->
   <div id="nav-container">
     <list class="navTabs">
-      <item ng-repeat="title in tabTitles" class="navTab" ng-click="selectIndex($index)">
+      <item ng-repeat="tab in tabData" class="navTab" ui-sref='{{ "root." + tab.sref }}'>
         <div class="navTabText">
-          {{title}}
+          {{tab.title}}
         </div>
       </item>
     </list>

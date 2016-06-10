@@ -19,7 +19,7 @@
 			$scope.content = StartUIState.content[index];
 		};
 
-		$scope.tabTitles = StartUIState.tabTitles;
+		$scope.tabData = StartUIState.tabData;
 	});
 
 } )(  );
