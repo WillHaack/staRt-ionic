@@ -37,7 +37,6 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		lpc.setup = function() {
 			myCanvas = lpc.createCanvas(screen.width, screen.height/2);
 			myCanvas.parent(element.children()[0]);
-			// myCanvas.parent(document.getElementById('lpc-container'));
 			lpc.frameRate(myFrameRate);
 		};
 
