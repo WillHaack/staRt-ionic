@@ -34,7 +34,7 @@
   margin: auto;
 }
 
-#text-content {
+.text-content {
   display: -webkit-flex;
   -webkit-flex: 1;
 }
