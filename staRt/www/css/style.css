@@ -12,7 +12,7 @@
 #nav-container {
   display: -webkit-flex;
   -webkit-flex-direction: column;
-  width: 120px;
+  width: 10vw;
   z-index: 999;
 }
 
@@ -21,6 +21,8 @@
   display: -webkit-flex;
   -webkit-flex: 1;
   -webkit-flex-direction: column;
+  width: 90vw;
+
 }
 
 #lpc-container {
@@ -34,9 +36,15 @@
   margin: auto;
 }
 
-.text-content {
+.text-and-lpc {
   display: -webkit-flex;
   -webkit-flex: 1;
+}
+
+.text-and-lpc__text
+{
+  font-size: 1rem;
+  margin-top: 4rem;
 }
 
 .pane

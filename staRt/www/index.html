@@ -8,19 +8,80 @@
     <link rel="stylesheet" href="lib/ionic/css/ionic.css">
     <link rel="stylesheet" href="css/style.css">
     
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <script src="cordova.js"></script>
-    <script src="lib/localforage/localforage.min.js"></script>
-    <script src="https://cdn.rawgit.com/ocombe/angular-localForage/master/dist/angular-localForage.min.js"></script>
+<!--     // <script src="lib/ionic/js/ionic.bundle.js"></script>
+    // <script src="cordova.js"></script>
+    // <script src="lib/localforage/localforage.min.js"></script>
+    // <script src="https://cdn.rawgit.com/ocombe/angular-localForage/master/dist/angular-localForage.min.js"></script> -->
 
   </head>
   <body ng-app="start">
-    <ion-nav-bar></ion-nav-bar>
     <ion-nav-view name="app-view" id="app-container"></ion-nav-view>
 
-    <script src="lib/three/three.min.js"></script>
-    <script src="lib/p5/p5.dom.js"></script>
-    <script src="lib/p5/p5.min.js"></script>
+    <!-- // <script src="lib/p5/p5.dom.js"></script> -->
+    <!-- // <script src="lib/p5/p5.min.js"></script> -->
+
+    <!-- inject:bower:js  -->
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular/index.js"></script>
+    <script src="lib/angular-animate/angular-animate.js"></script>
+    <script src="lib/angular-animate/angular-animate.min.js"></script>
+    <script src="lib/angular-animate/index.js"></script>
+    <script src="lib/angular-sanitize/angular-sanitize.js"></script>
+    <script src="lib/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="lib/angular-sanitize/index.js"></script>
+    <script src="lib/localforage/Gruntfile.js"></script>
+    <script src="lib/platform/platform.js"></script>
+    <script src="lib/angular-localforage/dist/angular-localForage.js"></script>
+    <script src="lib/angular-localforage/dist/angular-localForage.min.js"></script>
+    <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="lib/angular-ui-router/src/common.js"></script>
+    <script src="lib/angular-ui-router/src/resolve.js"></script>
+    <script src="lib/angular-ui-router/src/state.js"></script>
+    <script src="lib/angular-ui-router/src/stateDirectives.js"></script>
+    <script src="lib/angular-ui-router/src/stateFilters.js"></script>
+    <script src="lib/angular-ui-router/src/templateFactory.js"></script>
+    <script src="lib/angular-ui-router/src/urlMatcherFactory.js"></script>
+    <script src="lib/angular-ui-router/src/urlRouter.js"></script>
+    <script src="lib/angular-ui-router/src/view.js"></script>
+    <script src="lib/angular-ui-router/src/viewDirective.js"></script>
+    <script src="lib/angular-ui-router/src/viewScroll.js"></script>
+    <script src="lib/ionic/js/ionic-angular.js"></script>
+    <script src="lib/ionic/js/ionic-angular.min.js"></script>
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ionic/js/ionic.bundle.min.js"></script>
+    <script src="lib/ionic/js/ionic.js"></script>
+    <script src="lib/ionic/js/ionic.min.js"></script>
+    <script src="lib/localforage/dist/localforage.js"></script>
+    <script src="lib/localforage/dist/localforage.min.js"></script>
+    <script src="lib/localforage/dist/localforage.nopromises.js"></script>
+    <script src="lib/localforage/dist/localforage.nopromises.min.js"></script>
+    <script src="lib/localforage/src/localforage.js"></script>
+    <script src="lib/ngCordova/dist/ng-cordova-mocks.js"></script>
+    <script src="lib/ngCordova/dist/ng-cordova-mocks.min.js"></script>
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
+    <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+    <script src="lib/p5js/lib/p5.js"></script>
+    <script src="lib/p5js/lib/p5.min.js"></script>
+    <script src="lib/localforage/src/drivers/indexeddb.js"></script>
+    <script src="lib/localforage/src/drivers/localstorage.js"></script>
+    <script src="lib/localforage/src/drivers/websql.js"></script>
+    <script src="lib/localforage/src/utils/createBlob.js"></script>
+    <script src="lib/localforage/src/utils/executeCallback.js"></script>
+    <script src="lib/localforage/src/utils/executeTwoCallbacks.js"></script>
+    <script src="lib/localforage/src/utils/idb.js"></script>
+    <script src="lib/localforage/src/utils/isIndexedDBValid.js"></script>
+    <script src="lib/localforage/src/utils/isLocalStorageValid.js"></script>
+    <script src="lib/localforage/src/utils/isWebSQLValid.js"></script>
+    <script src="lib/localforage/src/utils/promise.js"></script>
+    <script src="lib/localforage/src/utils/serializer.js"></script>
+    <script src="lib/p5js/lib/addons/p5.dom.js"></script>
+    <script src="lib/p5js/lib/addons/p5.dom.min.js"></script>
+    <script src="lib/p5js/lib/addons/p5.sound.js"></script>
+    <script src="lib/p5js/lib/addons/p5.sound.min.js"></script>
+    <!-- endinject -->
+    
     <!-- inject:js -->
     <script src="common-components/start-state-service/start-state-service_module.js"></script>
     <script src="common-components/lpc-directive/lpc-directive_module.js"></script>
@@ -33,12 +94,12 @@
     <script src="states/root/syllables/syllables_controller.js"></script>
     <script src="states/root/resources/resources_module.js"></script>
     <script src="states/root/resources/resources_controller.js"></script>
-    <script src="states/root/auto/auto_module.js"></script>
-    <script src="states/root/auto/auto_controller.js"></script>
     <script src="states/root/profiles/profiles_module.js"></script>
     <script src="states/root/profiles/profiles_controller.js"></script>
     <script src="states/root/free-play/free-play_module.js"></script>
     <script src="states/root/free-play/free-play_controller.js"></script>
+    <script src="states/root/auto/auto_module.js"></script>
+    <script src="states/root/auto/auto_controller.js"></script>
     <script src="states/root/root_module.js"></script>
     <script src="states/root/root_controller.js"></script>
     <script src="app_module.js"></script>

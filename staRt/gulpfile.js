@@ -11,14 +11,15 @@ var angularFilesort = require('gulp-angular-filesort');
 var connect = require('gulp-connect');
 
 var paths = {
-	sass: ['./scss/**/*.scss'],
-	js: ['./www/app_module.js', './www/states/**/*.js', './www/common-components/**/*.js']
+	sass: ['./www/app_styles.scss'],
+	js: ['./www/app_module.js', './www/states/**/*.js', './www/common-components/**/*.js'],
+	bower: ['./www/lib/**/*.js']
 };
 
 gulp.task('default', ['sass', 'inject']);
 
 gulp.task('sass', function(done) {
-	gulp.src('./scss/ionic.app.scss')
+	gulp.src( paths.scss )
 		.pipe(sass())
 		.on('error', sass.logError)
 		.pipe(gulp.dest('./www/css/'))
@@ -39,12 +40,22 @@ gulp.task('inject', function()
 		// read: false
 	}
 
+	var bowerInjectOptions =
+	{
+		relative: true,
+		addRootSlash: false,
+		starttag: '<!-- inject:bower:{{ext}} -->'
+	};
+
 	var target = gulp.src( './www/index.html' );
 
 	var appJsSource = gulp.src( paths.js );
 	var sortedAppJs = appJsSource.pipe( angularFilesort(  ) );
 
+	var bowerSource = gulp.src( paths.bower );
+
 	return target
+		.pipe( inject( bowerSource, bowerInjectOptions ) )
 		.pipe( inject( sortedAppJs,
 			injectOptions ) )
 		.pipe( gulp.dest( './www' ) );
