@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <base href="/">
     <meta charset="utf-8">
     <title>staRt</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, height=device-height">
     <link rel="stylesheet" href="lib/ionic/css/ionic.css">
     <link rel="stylesheet" href="css/style.css">
-    
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <script src="cordova.js"></script>
-    <script src="lib/localforage/localforage.min.js"></script>
-    <script src="https://cdn.rawgit.com/ocombe/angular-localForage/master/dist/angular-localForage.min.js"></script>
-
   </head>
+
   <body ng-app="start">
-    <ion-nav-bar></ion-nav-bar>
     <ion-nav-view name="app-view" id="app-container"></ion-nav-view>
 
-    <script src="lib/three/three.min.js"></script>
-    <script src="lib/p5/p5.dom.js"></script>
-    <script src="lib/p5/p5.min.js"></script>
+    <!-- inject:bower:js  -->
+    <script src="lib/localforage/dist/localforage.js"></script>
+    <script src="lib/p5js/lib/p5.min.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular-animate/angular-animate.js"></script>
+    <script src="lib/angular-sanitize/angular-sanitize.js"></script>
+    <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="lib/angular-localforage/dist/angular-localForage.js"></script>
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
+    <script src="lib/ionic/js/ionic.js"></script>
+    <script src="lib/ionic/js/ionic-angular.js"></script>
+    <!-- endinject -->
+    
     <!-- inject:js -->
     <script src="common-components/start-state-service/start-state-service_module.js"></script>
     <script src="common-components/lpc-directive/lpc-directive_module.js"></script>
@@ -33,15 +37,18 @@
     <script src="states/root/syllables/syllables_controller.js"></script>
     <script src="states/root/resources/resources_module.js"></script>
     <script src="states/root/resources/resources_controller.js"></script>
-    <script src="states/root/auto/auto_module.js"></script>
-    <script src="states/root/auto/auto_controller.js"></script>
     <script src="states/root/profiles/profiles_module.js"></script>
     <script src="states/root/profiles/profiles_controller.js"></script>
     <script src="states/root/free-play/free-play_module.js"></script>
     <script src="states/root/free-play/free-play_controller.js"></script>
+    <script src="states/root/auto/auto_module.js"></script>
+    <script src="states/root/auto/auto_controller.js"></script>
     <script src="states/root/root_module.js"></script>
     <script src="states/root/root_controller.js"></script>
     <script src="app_module.js"></script>
     <!-- endinject -->
+
+    <script src="cordova.js"></script>
+
   </body>
 </html>

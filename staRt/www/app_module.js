@@ -9,7 +9,7 @@ var start = angular.module('start',
 start.config(function($urlRouterProvider, $locationProvider)
 {
   $urlRouterProvider.otherwise('/');
-  $locationProvider.html5Mode(true);
+  // $locationProvider.html5Mode(true);
 });
 
 // This is all automatic boilerplate, none of which is apparently necessary for
