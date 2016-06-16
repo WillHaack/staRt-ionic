@@ -8,12 +8,12 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');
 var inject = require('gulp-inject');
 var angularFilesort = require('gulp-angular-filesort');
+var mainBowerFiles = require('main-bower-files');
 var connect = require('gulp-connect');
 
 var paths = {
 	sass: ['./www/app_styles.scss'],
-	js: ['./www/app_module.js', './www/states/**/*.js', './www/common-components/**/*.js'],
-	bower: ['./www/lib/**/*.js']
+	js: ['./www/app_module.js', './www/states/**/*.js', './www/common-components/**/*.js']
 };
 
 gulp.task('default', ['sass', 'inject']);
@@ -52,7 +52,7 @@ gulp.task('inject', function()
 	var appJsSource = gulp.src( paths.js );
 	var sortedAppJs = appJsSource.pipe( angularFilesort(  ) );
 
-	var bowerSource = gulp.src( paths.bower );
+	var bowerSource = gulp.src( mainBowerFiles() );
 
 	return target
 		.pipe( inject( bowerSource, bowerInjectOptions ) )
