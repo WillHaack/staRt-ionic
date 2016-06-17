@@ -1,0 +1,21 @@
+<ion-view view-title="staRt" id="nav-and-content-container">
+
+  <!-- Tabs -->
+  <div id="nav-container">
+    <list class="navTabs">
+      <item ng-repeat="tab in tabData" class="navTab" ui-sref='{{ "root." + tab.sref }}'>
+        <div class="navTabText">
+          {{tab.title}}
+        </div>
+      </item>
+    </list>
+  </div>
+  
+  <!-- Title Bar -->
+  <ion-nav-bar></ion-nav-bar>
+
+  <!-- Content -->
+  <ion-nav-view name="content-view" id="content-container">
+  </ion-nav-view>
+  
+</ion-view>

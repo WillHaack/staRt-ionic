@@ -1,3 +1,5 @@
+@include 'states/root/root_styles';
+
 #app-container {
   display: -webkit-flex;
   -webkit-flex-direction: row;
@@ -5,15 +7,14 @@
 
 #nav-and-content-container
 {
-  display: flex;
-  flex-flow: row nowrap;
+	display: flex;
+	flex-flow: row nowrap;
 }
 
 #nav-container {
   display: -webkit-flex;
   -webkit-flex-direction: column;
-  width: 10vw;
-  z-index: 999;
+  width: 120px;
 }
 
 #content-container {
@@ -21,8 +22,6 @@
   display: -webkit-flex;
   -webkit-flex: 1;
   -webkit-flex-direction: column;
-  width: 90vw;
-
 }
 
 #lpc-container {
@@ -36,20 +35,9 @@
   margin: auto;
 }
 
-.text-and-lpc {
+#text-content {
   display: -webkit-flex;
   -webkit-flex: 1;
-}
-
-.text-and-lpc__text
-{
-  font-size: 1rem;
-  margin-top: 4rem;
-}
-
-.pane
-{
-  flex-flow: column;
 }
 
 .navTabs {
@@ -77,12 +65,4 @@
 }
 
 item {
-}
-
-.testbutton {
-  background-color: lightblue;
-}
-
-.testbutton:active {
-  background-color: darkblue;
 }
