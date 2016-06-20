@@ -59,5 +59,23 @@ module.exports = {
       "deleteAllRecordings",
       null
     );
+  },
+  getLPCOrder: function(successCallback) {
+    cordova.exec(
+      successCallback,
+      null,
+      "AudioPlugin",
+      "getLPCOrder",
+      null
+    );
+  },
+  setLPCOrder: function(newOrder, successCallback) {
+    cordova.exec(
+      successCallback,
+      null,
+      "AudioPlugin",
+      "setLPCOrder",
+      [newOrder]
+    );
   }
 };

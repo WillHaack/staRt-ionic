@@ -9,7 +9,7 @@
       <engine name="cordova" version=">=3.8.1" />
     </engines>
 
-    <js-module src="www/alert.js" name="AudioPlugin">
+    <js-module src="www/audioplugin.js" name="AudioPlugin">
       <clobbers target="AudioPlugin" />
     </js-module>
 

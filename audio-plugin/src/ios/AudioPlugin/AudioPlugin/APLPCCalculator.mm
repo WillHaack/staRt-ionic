@@ -14,7 +14,9 @@
 #import <AVFoundation/AVFoundation.h>
 #include <mach/mach_time.h>
 
-#define LPC_ORDER (18)                  /**< default number LPC coefficients */
+#define LPC_MIN (25)
+#define LPC_MAX (45)
+#define LPC_ORDER (40)                  /**< default number LPC coefficients */
 #define LPC_NUM_DISPLAY_BINS (256)      /**< resolution of LPC magnitude spectrum */
 #define MAX_NUM_TARG_FORMANTS (5)   /**< maximum number of LPC target formant frequencies */
 #define NUM_LPC_DISPLAY_BINS (256)  /**< number of points in OpenGL structure used to draw LPC magnitude spectrum */
@@ -182,6 +184,7 @@ static void receiverCallback(__unsafe_unretained APLPCCalculator *THIS,
 
 - (void) setLpcOrder:(NSInteger)lpcOrder
 {
+    lpcOrder = MAX(MIN(lpcOrder, LPC_MAX), LPC_MIN);
     self->audioManager->setLPCOrder(lpcOrder);
 }
 
