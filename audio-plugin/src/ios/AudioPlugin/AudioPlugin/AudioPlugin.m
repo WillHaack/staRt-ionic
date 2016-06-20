@@ -8,6 +8,7 @@
 
 #import "AudioPlugin.h"
 #import "APAudioManager.h"
+#import "APLPCCalculator.h"
 #import "LPCAccountDescription.h"
 #import "LPCRecordingSession.h"
 
@@ -32,8 +33,8 @@
 
 - (void)getLPCCoefficients:(CDVInvokedUrlCommand *)command
 {
-    NSNumber *xScaleFactor = @([self.audioManager frequencyScaling]);
-    NSDictionary *coefficientsDict = [self.audioManager lpcCoefficients];
+    NSNumber *xScaleFactor = @(self.audioManager.lpcCalculator.frequencyScaling);
+    NSDictionary *coefficientsDict = [self.audioManager.lpcCalculator fetchCurrentCoefficients];
     NSArray *audioCoefficients = [coefficientsDict objectForKey:@"coefficients"];
     NSArray *frequencyPeaks = [coefficientsDict objectForKey:@"peaks"];
     NSDictionary *resultDict = @{
@@ -129,6 +130,22 @@
     NSFileManager *manager = [NSFileManager defaultManager];
     NSString *recordingDirectory = [LPCRecordingSession recordingDirectory];
     [manager removeItemAtPath:recordingDirectory error:nil];
+}
+
+- (void)getLPCOrder:(CDVInvokedUrlCommand *)command
+{
+    NSInteger lpcOrder = self.audioManager.lpcCalculator.lpcOrder;
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsNSInteger:lpcOrder];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+}
+
+- (void)setLPCOrder:(CDVInvokedUrlCommand *)command
+{
+    NSNumber *orderWrp = [command argumentAtIndex:0 withDefault:@(25) andClass:[NSNumber class]];
+    NSInteger lpcOrder = [orderWrp integerValue];
+    self.audioManager.lpcCalculator.lpcOrder = lpcOrder;
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsNSInteger:lpcOrder];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
 @end

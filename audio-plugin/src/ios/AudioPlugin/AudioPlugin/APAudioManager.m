@@ -41,16 +41,6 @@
     [self.audioController addInputReceiver:self.recorder];
 }
 
-- (NSDictionary *) lpcCoefficients
-{
-    return [self.lpcCalculator fetchCurrentCoefficients];
-}
-
-- (double) frequencyScaling
-{
-    return self.lpcCalculator.frequencyScaling;
-}
-
 - (void) startRecordingForRecordingSession:(LPCRecordingSession *)session
 {
     LPCRecordingSessionData sessionData = [session dataWithLpcOrder:self.lpcCalculator.lpcOrder];

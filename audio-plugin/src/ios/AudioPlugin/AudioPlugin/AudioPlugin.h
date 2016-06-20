@@ -17,4 +17,6 @@
 - (void)recordingsForAccount:(CDVInvokedUrlCommand *)command;
 - (void)deleteRecording:(CDVInvokedUrlCommand *)command;
 - (void)deleteAllRecordings:(CDVInvokedUrlCommand *)command;
+- (void)getLPCOrder:(CDVInvokedUrlCommand *)command;
+- (void)setLPCOrder:(CDVInvokedUrlCommand *)command;
 @end
