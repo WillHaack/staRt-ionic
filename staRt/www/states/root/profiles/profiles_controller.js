@@ -24,7 +24,7 @@
 			{
 				name: 'Pooh',
 				age: 26,
-				height: '7\'2\"',
+				height: '7\'2"',
 				sex: 'Male'
 			}
 		]
@@ -33,7 +33,7 @@
 		{
 			if (res)
 			{
-				$scope.profiles = res;
+				$scope.profiles = users;
 				console.log($scope.profiles);
 			}
 			else
@@ -42,6 +42,30 @@
 				$scope.profiles = users;
 			}
 		});
+
+		$scope.logCurrentUser = function()
+		{
+			console.log($scope.data.currentUser);
+		}
+
+		// $scope.currentUser = {};
+
+		$scope.data = { 
+			currentUser: 
+			{
+				name: 'Pooh',
+				age: 26,
+				height: '7\'2\"',
+				sex: 'Male'
+			}
+		}
+
+		// $scope.currentUser = {
+		// 	name: 'Pooh',
+		// 	age: 26,
+		// 	height: '7\'2\"',
+		// 	sex: 'Male'
+		// }
 	});
 
 } )(  );

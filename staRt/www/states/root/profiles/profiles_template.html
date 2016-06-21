@@ -1,25 +1,27 @@
 <ion-view view-title="Profiles" class="text-and-lpc profiles">
+
 	<ion-list class="list profiles__list">
 
 		<h2>
 			Registered Participants
 		</h2>
 
-		<ion-radio ng-model="currentUser" ng-repeat='user in profiles' ng-value="user">
+		<ion-radio ng-model="data.currentUser" ng-repeat="user in profiles" ng-value="{{user}}" ng-change="logCurrentUser()">
 				{{ user.name }}
 		</ion-radio>
+
 	</ion-list>
 
 	<div class="profiles__info">
 		<ul class="list">
 			<li>
-				<strong>Age:</strong> {{ currentUser.age }}
+				<strong>Age:</strong> {{data.currentUser.age}}
 			</li>
 			<li>
-				<strong>Height:</strong>{{ currentUser.height }}
+				<strong>Height:</strong> {{data.currentUser.height}}
 			</li>
 			<li>
-				<strong>Sex:</strong>{{ currentUser.sex }}
+				<strong>Sex:</strong>{{data.currentUser.sex}}
 			</li>
 		</ul>
 	</div>
