@@ -12,9 +12,6 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 	$scope.getLPCCoefficients = function(cb) {
 		if (window.AudioPlugin !== undefined) {
-			AudioPlugin.getLPCOrder(function(args) {
-				console.log(args);
-			});
 			AudioPlugin.getLPCCoefficients(cb);
 		}
 	};
