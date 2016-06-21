@@ -33,7 +33,7 @@
 		{
 			if (res)
 			{
-				$scope.profiles = users;
+				$scope.profiles = res;
 				console.log($scope.profiles);
 			}
 			else
@@ -45,27 +45,13 @@
 
 		$scope.logCurrentUser = function()
 		{
-			console.log($scope.data.currentUser);
+			$localForage.setItem('currentUser', $scope.data.currentUser);
 		}
-
-		// $scope.currentUser = {};
 
 		$scope.data = { 
-			currentUser: 
-			{
-				name: 'Pooh',
-				age: 26,
-				height: '7\'2\"',
-				sex: 'Male'
-			}
+			currentUser: $localForage.getItem('currentUser')
 		}
 
-		// $scope.currentUser = {
-		// 	name: 'Pooh',
-		// 	age: 26,
-		// 	height: '7\'2\"',
-		// 	sex: 'Male'
-		// }
 	});
 
 } )(  );
