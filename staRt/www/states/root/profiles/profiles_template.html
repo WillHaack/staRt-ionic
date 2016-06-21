@@ -1,13 +1,27 @@
 <ion-view view-title="Profiles" class="text-and-lpc profiles">
-		
-	<ul class="list profiles__list">
-		<li class="item" ng-repeat='user in profiles'>
-			{{ user.name }}
-		</li>
-	</ul>
+	<ion-list class="list profiles__list">
+
+		<h2>
+			Registered Participants
+		</h2>
+
+		<ion-radio ng-model="currentUser" ng-repeat='user in profiles' ng-value="user">
+				{{ user.name }}
+		</ion-radio>
+	</ion-list>
 
 	<div class="profiles__info">
-		blah blah blah
+		<ul class="list">
+			<li>
+				<strong>Age:</strong> {{ currentUser.age }}
+			</li>
+			<li>
+				<strong>Height:</strong>{{ currentUser.height }}
+			</li>
+			<li>
+				<strong>Sex:</strong>{{ currentUser.sex }}
+			</li>
+		</ul>
 	</div>
 		
 <!-- 		<form>

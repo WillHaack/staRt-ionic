@@ -32,7 +32,7 @@
   display: -webkit-flex;
   -webkit-flex: 1;
   font-size: 1rem;
-  margin-top: 4rem; }
+  padding-top: 4rem; }
 
 .pane {
   flex-flow: column; }
@@ -70,7 +70,7 @@
   flex-flow: row nowrap; }
 
 .profiles__list {
-  flex-grow: 1; }
+  flex: 1 0 0%; }
 
 .profiles__info {
-  flex-grow: 1; }
+  flex: 1 0 0%; }

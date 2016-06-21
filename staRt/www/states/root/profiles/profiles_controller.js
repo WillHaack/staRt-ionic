@@ -10,13 +10,22 @@
 
 		var users = [
 			{
-				name: 'Eeyore'
+				name: 'Eeyore',
+				age: 16,
+				height: '5\'2\"',
+				sex: 'Male'
 			},
 			{
-				name: 'Piglet'
+				name: 'Piglet',
+				age: 4,
+				height: '3\'2\"',
+				sex: 'Male'
 			},
 			{
-				name: 'Pooh'
+				name: 'Pooh',
+				age: 26,
+				height: '7\'2\"',
+				sex: 'Male'
 			}
 		]
 
