@@ -1,5 +1,20 @@
-<ion-view view-title="Profiles" class="text-content">
-	<div class="text-and-lpc__text">
-		A whole bunch of Profles
+<ion-view view-title="Profiles" class="text-and-lpc profiles">
+		
+	<ul class="list profiles__list">
+		<li class="item" ng-repeat='user in profiles'>
+			{{ user.name }}
+		</li>
+	</ul>
+
+	<div class="profiles__info">
+		blah blah blah
 	</div>
+		
+<!-- 		<form>
+			<label class="item item-input">
+				<span class="input-label">Username</span>
+				<input type="text" ng-model="newUser.name">
+			</label>
+		</form> -->
+
 </ion-view>

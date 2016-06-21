@@ -1,0 +1,19 @@
+// .profiles-wrapper
+// {
+
+// }
+
+.profiles
+{
+	flex-flow: row nowrap;
+}
+
+.profiles__list
+{
+	flex-grow: 1;
+}
+
+.profiles__info
+{
+	flex-grow: 1;
+}

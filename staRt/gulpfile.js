@@ -19,7 +19,7 @@ var paths = {
 gulp.task('default', ['sass', 'inject']);
 
 gulp.task('sass', function(done) {
-	gulp.src( paths.scss )
+	gulp.src( paths.sass )
 		.pipe(sass())
 		.on('error', sass.logError)
 		.pipe(gulp.dest('./www/css/'))
@@ -63,7 +63,7 @@ gulp.task('inject', function()
 });
 
 gulp.task('watch', function() {
-	gulp.watch(paths.sass, ['sass']);
+	gulp.watch('./www/states/**/*.scss', ['sass']);
 });
 
 gulp.task('install', ['git-check'], function() {
