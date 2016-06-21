@@ -141,8 +141,8 @@
 
 - (void)setLPCOrder:(CDVInvokedUrlCommand *)command
 {
-    NSNumber *orderWrp = [command argumentAtIndex:0 withDefault:@(25) andClass:[NSNumber class]];
-    NSInteger lpcOrder = [orderWrp integerValue];
+    NSString *orderAsString = [command argumentAtIndex:0 withDefault:@"25" andClass:[NSString class]];
+    NSInteger lpcOrder = [orderAsString integerValue];
     self.audioManager.lpcCalculator.lpcOrder = lpcOrder;
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsNSInteger:lpcOrder];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
