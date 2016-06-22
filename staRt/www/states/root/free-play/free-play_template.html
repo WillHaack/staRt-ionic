@@ -1,6 +1,16 @@
-<ion-view view-title="Free Play" class="text-content">
+<ion-view view-title="Free Play" class="text-and-lpc">
 	<div class="text-and-lpc__text">
-		Play around for free I guess
+		<p>
+			This is the place to practice your /r/ sounds on your own.
+		</p>
+		<p>
+			There are no prompts or words to match here. It's just you and the wave.
+		</p>
 	</div>
-	<lpc-directive></lpc-directive>
+	<div class="lpc-and-range-picker">
+		<lpc-directive></lpc-directive>
+		<div class="item range">
+			<input type="range" min="0" max="4500" ng-value="{{ currentValue }}">
+		</div>
+	</div>
 </ion-view>

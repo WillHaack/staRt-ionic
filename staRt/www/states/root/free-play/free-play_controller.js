@@ -7,6 +7,8 @@
 	freePlay.controller('FreePlayController', function($scope, $timeout, $localForage, StartUIState, $rootScope, $state)
 	{
 		console.log('FreePlayController here!');
+
+		$scope.currentValue = 3000;
 	});
 
 } )(  );
