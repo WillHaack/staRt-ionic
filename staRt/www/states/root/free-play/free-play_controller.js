@@ -8,7 +8,25 @@
 	{
 		console.log('FreePlayController here!');
 
-		$scope.currentValue = 3000;
+		// Set initial LPC target
+		$localForage.getItem('lpcTarget').then(function(res)
+		{
+			if (res)
+			{
+				$scope.currentTarget = res;
+			}
+			else
+			{
+				$scope.currentTarget = 3000;
+			}
+		});
+
+		$scope.updateCurrentTarget = function()
+		{
+			$localForage.setItem('lpcTarget', $scope.currentTarget );
+		}
+
+
 	});
 
 } )(  );
