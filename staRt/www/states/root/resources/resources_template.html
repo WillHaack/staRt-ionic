@@ -3,7 +3,11 @@
 		<p>
 			Use the slider to manually adjust the LPC filter order. <strong>In general, the filter order should be between 35 and 45.</strong>
 		</p>
-		<input type="range" min="25" max="45" ng-model="lpcOrder" ng-change="updatePluginLPCOrder()"/>
+		
+		<div class="item range">
+			<input type="range" min="25" max="45" ng-model="lpcOrder" ng-change="updatePluginLPCOrder()"/>
+		</div>
+		
 		<p>
 			The filter order is now <em>{{lpcOrder}}</em>
 		</p>
