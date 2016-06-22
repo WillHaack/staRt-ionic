@@ -10,7 +10,10 @@
 	<div class="lpc-and-range-picker">
 		<lpc-directive></lpc-directive>
 		<div class="item range">
-			<input type="range" min="0" max="4500" ng-value="{{ currentValue }}">
+			<div class="value-number">
+				{{ currentValue }}
+			</div>
+			<input type="range" min="0" max="4500" ng-model="currentValue">
 		</div>
 	</div>
 </ion-view>
