@@ -33,7 +33,8 @@
 		{
 			if (res)
 			{
-				$scope.profiles = res;
+				// For now, setting it equal to 'users' as well
+				$scope.profiles = users;
 				console.log($scope.profiles);
 			}
 			else
@@ -43,7 +44,7 @@
 			}
 		});
 
-		$scope.logCurrentUser = function()
+		$scope.updateCurrentUser = function()
 		{
 			$localForage.setItem('currentUser', $scope.data.currentUser);
 		}
@@ -51,6 +52,11 @@
 		$scope.data = { 
 			currentUser: $localForage.getItem('currentUser')
 		}
+
+		$scope.$watchCollection('data', function(data)
+		{
+			console.log(data);
+		})
 
 	});
 

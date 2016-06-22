@@ -6,7 +6,11 @@
 			Registered Participants
 		</h2>
 
-		<ion-radio ng-model="data.currentUser" ng-repeat="user in profiles" ng-value="{{user}}" ng-change="logCurrentUser()">
+		<ion-radio
+			ng-model="data.currentUser"
+			ng-repeat="user in profiles"
+			ng-value="{{user}}"
+			ng-change="updateCurrentUser()">
 				{{ user.name }}
 		</ion-radio>
 
