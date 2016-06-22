@@ -1,2 +1,3 @@
-@include 'states/root/root_styles';
-@include 'states/free-play/free-play_styles';
+@import 'states/root/root_styles';
+@import 'states/root/profiles/profiles_styles';
+@import 'states/free-play/free-play_styles';

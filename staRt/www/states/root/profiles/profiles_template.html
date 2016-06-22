@@ -1,5 +1,40 @@
-<ion-view view-title="Profiles" class="text-content">
-	<div class="text-and-lpc__text">
-		A whole bunch of Profles
+<ion-view view-title="Profiles" class="text-and-lpc profiles">
+
+	<ion-list class="list profiles__list">
+
+		<h2>
+			Registered Participants
+		</h2>
+
+		<ion-radio
+			ng-model="data.currentUser"
+			ng-repeat="user in profiles"
+			ng-value="{{user}}"
+			ng-change="updateCurrentUser()">
+				{{ user.name }}
+		</ion-radio>
+
+	</ion-list>
+
+	<div class="profiles__info">
+		<ul class="list">
+			<li>
+				<strong>Age:</strong> {{data.currentUser.age}}
+			</li>
+			<li>
+				<strong>Height:</strong> {{data.currentUser.height}}
+			</li>
+			<li>
+				<strong>Sex:</strong>{{data.currentUser.sex}}
+			</li>
+		</ul>
 	</div>
+		
+<!-- 		<form>
+			<label class="item item-input">
+				<span class="input-label">Username</span>
+				<input type="text" ng-model="newUser.name">
+			</label>
+		</form> -->
+
 </ion-view>
