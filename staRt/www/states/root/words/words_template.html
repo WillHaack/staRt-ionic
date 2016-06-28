@@ -2,5 +2,17 @@
 	<div class="text-and-lpc__text">
 		Different words and stuff
 	</div>
+	<button style="margin:40px;" ng-click="beginWordPractice()" ng-hide="isPracticing">
+		Start Word Practice
+	</button>
+	<button style="margin:40px;" ng-click="endWordPractice()" ng-hide="!isPracticing">
+		Stop Word Practice
+	</button>
+	<button style="margin:40px;" ng-click="nextWord()" ng-hide="!isPracticing">
+		Next Word
+	</button>
+	<p ng-hide="!isPracticing">
+		{{currentWord}}
+	</p>
 	<lpc-directive></lpc-directive>
 </ion-view>
