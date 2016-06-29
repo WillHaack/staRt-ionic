@@ -63,11 +63,21 @@
 
 		}
 
+		function uploadPracticeSessionFiles(session, metadata, lpc, audio)
+		{
+
+		}
+
 		function recordingDidStop(files) {
 			console.log("Finished recording");
 			console.log("Metadata: " + files.Metadata);
 			console.log("LPC: " + files.LPC);
 			console.log("Audio: " + files.Audio);
+
+			// TODO: Add File Upload Here
+			uploadPracticeSessionFiles(files.Metadata, files.LPC, files.Audio, $scope.currentPracticeSession);
+			// end
+
 			$scope.isRecording = false;
 		}
 
