@@ -9,7 +9,7 @@
 #import "AudioPlugin.h"
 #import "APAudioManager.h"
 #import "APLPCCalculator.h"
-#import "LPCAccountDescription.h"
+#import "LPCProfileDescription.h"
 #import "LPCRecordingSession.h"
 
 @interface AudioPlugin ()
@@ -55,11 +55,11 @@
         [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
     }
     
-    LPCAccountDescription *description;
+    LPCProfileDescription *description;
     NSDictionary *accountAsDict = [command argumentAtIndex:0 withDefault:nil andClass:[NSDictionary class]];
     if (accountAsDict) {
-        description = [LPCAccountDescription accountDescriptionWithDictionary:accountAsDict];
-        LPCRecordingSession *session = [LPCRecordingSession sessionWithAccountDescription:description];
+        description = [LPCProfileDescription accountDescriptionWithDictionary:accountAsDict];
+        LPCRecordingSession *session = [LPCRecordingSession sessionWithProfileDescription:description];
         [self.audioManager startRecordingForRecordingSession:session];
         NSDictionary *recordingFiles = [session recordingFilesDictionary];
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
@@ -67,7 +67,7 @@
         [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
     } else {
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_INVALID_ACTION
-                                                    messageAsString:@"Must pass valid JSON description of account to record"];
+                                                    messageAsString:@"Must pass valid JSON description of profile to record"];
         [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
     }
 }
@@ -97,16 +97,16 @@
 
 - (void)recordingsForAccount:(CDVInvokedUrlCommand *)command
 {
-    LPCAccountDescription *description;
+    LPCProfileDescription *description;
     NSDictionary *accountAsDict = [command argumentAtIndex:0 withDefault:nil andClass:[NSDictionary class]];
     if (accountAsDict) {
-        description = [LPCAccountDescription accountDescriptionWithDictionary:accountAsDict];
+        description = [LPCProfileDescription accountDescriptionWithDictionary:accountAsDict];
         NSArray *recordings = [LPCRecordingSession recordingsForAccount:description];
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:recordings];
         [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
     } else {
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_INVALID_ACTION
-                                                    messageAsString:@"Must pass valid JSON description of account"];
+                                                    messageAsString:@"Must pass valid JSON description of profile"];
         [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
     }
 }

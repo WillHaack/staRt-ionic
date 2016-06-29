@@ -1,27 +1,27 @@
 //
-//  LPCAccountDescription.m
+//  LPCProfileDescription.m
 //  AudioPlugin
 //
 //  Created by Sam Tarakajian on 5/25/16.
 //  Copyright © 2016 Girlfriends Labs. All rights reserved.
 //
 
-#import "LPCAccountDescription.h"
+#import "LPCProfileDescription.h"
 #import "CHCSVParser.h"
 
-NSString *const LPCAccountDescriptionKeyName = @"name";
-NSString *const LPCAccountDescriptionKeyUUID = @"uuid";
-NSString *const LPCAccountDescriptionKeyAge = @"age";
-NSString *const LPCAccountDescriptionKeyGender = @"gender";
-NSString *const LPCAccountDescriptionKeyHeightFeet = @"heightFeet";
-NSString *const LPCAccountDescriptionKeyHeightInches = @"heightInches";
-NSString *const LPCAccountDescriptionKeyTargetF3 = @"targetF3";
-NSString *const LPCAccountDescriptionKeyStdevF3 = @"stdevF3";
-NSString *const LPCAccountDescriptionKeyTargetLPCOrder = @"targetLPCOrder";
+NSString *const LPCProfileDescriptionKeyName = @"name";
+NSString *const LPCProfileDescriptionKeyUUID = @"uuid";
+NSString *const LPCProfileDescriptionKeyAge = @"age";
+NSString *const LPCProfileDescriptionKeyGender = @"gender";
+NSString *const LPCProfileDescriptionKeyHeightFeet = @"heightFeet";
+NSString *const LPCProfileDescriptionKeyHeightInches = @"heightInches";
+NSString *const LPCProfileDescriptionKeyTargetF3 = @"targetF3";
+NSString *const LPCProfileDescriptionKeyStdevF3 = @"stdevF3";
+NSString *const LPCProfileDescriptionKeyTargetLPCOrder = @"targetLPCOrder";
 
 static NSArray *metadataParams;
 
-@interface LPCAccountDescription ()
+@interface LPCProfileDescription ()
 @property (nonatomic, strong) NSString *uuid;
 @property (nonatomic, strong) NSDictionary *metadata;
 @property (nonatomic, assign) double targetF3;
@@ -30,22 +30,22 @@ static NSArray *metadataParams;
 @property (nonatomic, strong) NSMutableDictionary *mutableMetadata;
 @end
 
-@implementation LPCAccountDescription
+@implementation LPCProfileDescription
 
 + (void) initialize
 {
     metadataParams = @[
-                       LPCAccountDescriptionKeyName,
-                       LPCAccountDescriptionKeyAge,
-                       LPCAccountDescriptionKeyGender,
-                       LPCAccountDescriptionKeyHeightFeet,
-                       LPCAccountDescriptionKeyHeightInches
+                       LPCProfileDescriptionKeyName,
+                       LPCProfileDescriptionKeyAge,
+                       LPCProfileDescriptionKeyGender,
+                       LPCProfileDescriptionKeyHeightFeet,
+                       LPCProfileDescriptionKeyHeightInches
                        ];
 }
 
 + (instancetype) accountDescriptionWithDictionary:(NSDictionary *)dictionary
 {
-    LPCAccountDescription *desc = [[LPCAccountDescription alloc] init];
+    LPCProfileDescription *desc = [[LPCProfileDescription alloc] init];
     desc.mutableMetadata = [NSMutableDictionary dictionary];
     for (NSString *key in dictionary.keyEnumerator) {
         if ([metadataParams containsObject:key]) {
@@ -63,14 +63,14 @@ static NSArray *metadataParams;
     NSArray<CHCSVOrderedDictionary *> *rows = [NSArray arrayWithContentsOfCSVURL:url options:CHCSVParserOptionsUsesFirstLineAsKeys|CHCSVParserOptionsSanitizesFields|CHCSVParserOptionsTrimsWhitespace];
     if (!rows)
         return nil;
-    LPCAccountDescription *desc = [[LPCAccountDescription alloc] init];
+    LPCProfileDescription *desc = [[LPCProfileDescription alloc] init];
     desc.mutableMetadata = [NSMutableDictionary dictionary];
     desc.uuid = [rows[0] objectForKey:@"uuid"];
-    [desc.mutableMetadata setObject:[rows[0] objectForKey:@"username"] forKey:LPCAccountDescriptionKeyName];
-    [desc.mutableMetadata setObject:[rows[0] objectForKey:@"age"] forKey:LPCAccountDescriptionKeyAge];
-    [desc.mutableMetadata setObject:[rows[0] objectForKey:@"gender"] forKey:LPCAccountDescriptionKeyGender];
-    [desc.mutableMetadata setObject:[rows[0] objectForKey:@"heightFeet"] forKey:LPCAccountDescriptionKeyHeightFeet];
-    [desc.mutableMetadata setObject:[rows[0] objectForKey:@"heightInches"] forKey:LPCAccountDescriptionKeyHeightInches];
+    [desc.mutableMetadata setObject:[rows[0] objectForKey:@"username"] forKey:LPCProfileDescriptionKeyName];
+    [desc.mutableMetadata setObject:[rows[0] objectForKey:@"age"] forKey:LPCProfileDescriptionKeyAge];
+    [desc.mutableMetadata setObject:[rows[0] objectForKey:@"gender"] forKey:LPCProfileDescriptionKeyGender];
+    [desc.mutableMetadata setObject:[rows[0] objectForKey:@"heightFeet"] forKey:LPCProfileDescriptionKeyHeightFeet];
+    [desc.mutableMetadata setObject:[rows[0] objectForKey:@"heightInches"] forKey:LPCProfileDescriptionKeyHeightInches];
     desc.targetF3 = [[rows[0] objectForKey:@"targetF3"] doubleValue];
     desc.stdevF3 = [[rows[0] objectForKey:@"stdevF3"] doubleValue];
     desc.targetLPCOrder = [[rows[0] objectForKey:@"targetLPCOrder"] integerValue];

@@ -10,14 +10,14 @@
 #import "APLPCCalculator.h"
 #import "TheAmazingAudioEngine.h"
 #import "AERecorder.h"
-#import "LPCAccountDescription.h"
+#import "LPCProfileDescription.h"
 #import "LPCRecordingSession.h"
 #import "LPCRecordingSessionData.h"
 
 @interface APAudioManager ()
 @property (nonatomic, strong) AEAudioController *audioController;
 @property (nonatomic, strong) APLPCCalculator *lpcCalculator;
-@property (nonatomic, strong) LPCAccountDescription *recordingAccount;
+@property (nonatomic, strong) LPCProfileDescription *recordingAccount;
 @property (nonatomic, strong) LPCRecordingSession *currentRecordingSession;
 @property (nonatomic, strong) AERecorder *recorder;
 @end

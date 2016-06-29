@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #include "LPCRecordingSessionData.h"
 #include "LPCUploadable.h"
-#include "LPCAccountDescription.h"
+#include "LPCProfileDescription.h"
 
 FOUNDATION_EXPORT NSString *const LPCRecordingSessionMetadataKey;
 FOUNDATION_EXPORT NSString *const LPCRecordingSessionLPCKey;
@@ -20,9 +20,9 @@ FOUNDATION_EXPORT NSString *const LPCRecordingSessionAudioKey;
 @property (nonatomic, readonly) NSString *lpcFilename;
 @property (nonatomic, readonly) NSString *audioFilename;
 
-+ (instancetype) sessionWithAccountDescription:(LPCAccountDescription *)account;
++ (instancetype) sessionWithProfileDescription:(LPCProfileDescription *)profile;
 + (instancetype) sessionWithMetadataFile:(NSString *)metadata;
-+ (NSArray<LPCRecordingSession *> *) recordingsForAccount:(LPCAccountDescription *)account;
++ (NSArray<LPCRecordingSession *> *) recordingsForAccount:(LPCProfileDescription *)profile;
 + (NSString *) recordingDirectory;
 - (LPCRecordingSessionData) dataWithLpcOrder:(uint16_t)lpcOrder;
 - (NSDictionary *)recordingFilesDictionary;

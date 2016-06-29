@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "APAudioManager.h"
-#import "LPCAccountDescription.h"
+#import "LPCProfileDescription.h"
 #import "LPCRecordingSession.h"
 #import "CHCSVParser.h"
 #import "LPCDisplayView.h"
@@ -25,15 +25,15 @@ static NSDictionary *s_descDict;
     [super viewDidLoad];
     
     s_descDict = @{
-            LPCAccountDescriptionKeyAge: @(13),
-            LPCAccountDescriptionKeyGender: @"M",
-            LPCAccountDescriptionKeyHeightFeet: @(5),
-            LPCAccountDescriptionKeyHeightInches: @(11),
-            LPCAccountDescriptionKeyName: @"Testerman",
-            LPCAccountDescriptionKeyStdevF3: @(100),
-            LPCAccountDescriptionKeyTargetF3: @(1100),
-            LPCAccountDescriptionKeyTargetLPCOrder: @(32),
-            LPCAccountDescriptionKeyUUID: @"SomethingVeryUnique"
+            LPCProfileDescriptionKeyAge: @(13),
+            LPCProfileDescriptionKeyGender: @"M",
+            LPCProfileDescriptionKeyHeightFeet: @(5),
+            LPCProfileDescriptionKeyHeightInches: @(11),
+            LPCProfileDescriptionKeyName: @"Testerman",
+            LPCProfileDescriptionKeyStdevF3: @(100),
+            LPCProfileDescriptionKeyTargetF3: @(1100),
+            LPCProfileDescriptionKeyTargetLPCOrder: @(32),
+            LPCProfileDescriptionKeyUUID: @"SomethingVeryUnique"
             };
     
     self.audioManager = [[APAudioManager alloc] init];
@@ -60,8 +60,8 @@ static NSDictionary *s_descDict;
 
 - (IBAction)startRecording:(id)sender
 {
-    LPCAccountDescription *desc = [LPCAccountDescription accountDescriptionWithDictionary:s_descDict];
-    LPCRecordingSession *session = [LPCRecordingSession sessionWithAccountDescription:desc];
+    LPCProfileDescription *desc = [LPCProfileDescription accountDescriptionWithDictionary:s_descDict];
+    LPCRecordingSession *session = [LPCRecordingSession sessionWithProfileDescription:desc];
     [self.audioManager startRecordingForRecordingSession:session];
 }
 
@@ -72,7 +72,7 @@ static NSDictionary *s_descDict;
 
 - (IBAction)listRecordings:(id)sender
 {
-    LPCAccountDescription *desc = [LPCAccountDescription accountDescriptionWithDictionary:s_descDict];
+    LPCProfileDescription *desc = [LPCProfileDescription accountDescriptionWithDictionary:s_descDict];
     NSArray<LPCRecordingSession *> *sessions = [LPCRecordingSession recordingsForAccount:desc];
     NSLog(@"%@", [sessions description]);
 }

@@ -23,7 +23,7 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) NSString *dateString;
 @property (nonatomic, strong) NSString *metadataFilename, *lpcFilename, *audioFilename;
-@property (nonatomic, strong) LPCAccountDescription *accountDescription;
+@property (nonatomic, strong) LPCProfileDescription *profileDescription;
 @end
 
 @implementation LPCRecordingSession
@@ -37,10 +37,10 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
     return dateFormatter;
 }
 
-+ (instancetype) sessionWithAccountDescription:(LPCAccountDescription *)account
++ (instancetype) sessionWithProfileDescription:(LPCProfileDescription *)profile
 {
     LPCRecordingSession *session = [[LPCRecordingSession alloc] init];
-    session.accountDescription = account;
+    session.profileDescription = profile;
     session.date = [NSDate date];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -49,9 +49,9 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH-mm-ss"];
     
     session.dateString = [dateFormatter stringFromDate:session.date];
-    session.metadataFilename = [NSString stringWithFormat:@"%@-%@-meta.csv", session.accountDescription.uuid, session.dateString];
-    session.lpcFilename = [NSString stringWithFormat:@"%@-%@-lpc.csv", session.accountDescription.uuid, session.dateString];
-    session.audioFilename = [NSString stringWithFormat:@"%@-%@-audio.caf", session.accountDescription.uuid, session.dateString];
+    session.metadataFilename = [NSString stringWithFormat:@"%@-%@-meta.csv", session.profileDescription.uuid, session.dateString];
+    session.lpcFilename = [NSString stringWithFormat:@"%@-%@-lpc.csv", session.profileDescription.uuid, session.dateString];
+    session.audioFilename = [NSString stringWithFormat:@"%@-%@-audio.caf", session.profileDescription.uuid, session.dateString];
     
     return session;
 }
@@ -59,12 +59,12 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
 + (NSDictionary *) metadataDictionaryFromMetadataCSVDictionary:(NSDictionary *)metadataFileDict
 {
     NSMutableDictionary *retDict = [NSMutableDictionary dictionary];
-    [retDict setObject:[metadataFileDict objectForKey:@"username"] forKey:LPCAccountDescriptionKeyName];
-    [retDict setObject:[metadataFileDict objectForKey:@"gender"] forKey:LPCAccountDescriptionKeyGender];
-    [retDict setObject:[metadataFileDict objectForKey:@"age"] forKey:LPCAccountDescriptionKeyAge];
-    [retDict setObject:[metadataFileDict objectForKey:@"heightFeet"] forKey:LPCAccountDescriptionKeyHeightFeet];
-    [retDict setObject:[metadataFileDict objectForKey:@"heightInches"] forKey:LPCAccountDescriptionKeyHeightInches];
-    [retDict setObject:[metadataFileDict objectForKey:@"gender"] forKey:LPCAccountDescriptionKeyGender];
+    [retDict setObject:[metadataFileDict objectForKey:@"username"] forKey:LPCProfileDescriptionKeyName];
+    [retDict setObject:[metadataFileDict objectForKey:@"gender"] forKey:LPCProfileDescriptionKeyGender];
+    [retDict setObject:[metadataFileDict objectForKey:@"age"] forKey:LPCProfileDescriptionKeyAge];
+    [retDict setObject:[metadataFileDict objectForKey:@"heightFeet"] forKey:LPCProfileDescriptionKeyHeightFeet];
+    [retDict setObject:[metadataFileDict objectForKey:@"heightInches"] forKey:LPCProfileDescriptionKeyHeightInches];
+    [retDict setObject:[metadataFileDict objectForKey:@"gender"] forKey:LPCProfileDescriptionKeyGender];
     return [NSDictionary dictionaryWithDictionary:retDict];
 }
 
@@ -89,12 +89,12 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
     session.dateString = [rows[0] objectForKey:@"start_date"];
     session.lpcFilename = [[rows[0] objectForKey:@"lpc_file"] lastPathComponent];
     session.audioFilename = [[rows[0] objectForKey:@"audio_file"] lastPathComponent];
-    session.accountDescription = [LPCAccountDescription accountDescriptionWithRecordingMetadataURL:metadataURL];
+    session.profileDescription = [LPCProfileDescription accountDescriptionWithRecordingMetadataURL:metadataURL];
     session.date = [dateFormatter dateFromString:session.dateString];
     return session;
 }
 
-+ (NSArray<LPCRecordingSession *> *) recordingsForAccount:(LPCAccountDescription *)account
++ (NSArray<LPCRecordingSession *> *) recordingsForAccount:(LPCProfileDescription *)profile
 {
     NSMutableArray *retArray = [NSMutableArray array];
     NSString *recordingDirectory = [LPCRecordingSession recordingDirectory];
@@ -104,7 +104,7 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
     for (NSString *s in fileList){
         if ([s hasSuffix:@"-meta.csv"]) {
             LPCRecordingSession *session = [LPCRecordingSession sessionWithMetadataFile:s];
-            if (session && [session.accountDescription.uuid isEqualToString:account.uuid]) {
+            if (session && [session.profileDescription.uuid isEqualToString:profile.uuid]) {
                 [retArray addObject:[session recordingFilesDictionary]];
             }
         }
@@ -138,37 +138,37 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
     NSURL *metadataFileURL = [[NSURL URLWithString:escapedSupportDir] URLByAppendingPathComponent:self.metadataFilename];
     
     LPCRecordingSessionData data;
-    data.accountUUID = [self.accountDescription.uuid cStringUsingEncoding:NSUTF8StringEncoding];
+    data.accountUUID = [self.profileDescription.uuid cStringUsingEncoding:NSUTF8StringEncoding];
     
-    if ([self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyName]) {
-        data.username = [[self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyName] cStringUsingEncoding:NSUTF8StringEncoding];
+    if ([self.profileDescription.metadata objectForKey:LPCProfileDescriptionKeyName]) {
+        data.username = [[self.profileDescription.metadata objectForKey:LPCProfileDescriptionKeyName] cStringUsingEncoding:NSUTF8StringEncoding];
     } else {
         data.username = nil;
     }
-    if ([self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyGender]) {
-        data.gender = [[self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyGender] cStringUsingEncoding:NSUTF8StringEncoding];
+    if ([self.profileDescription.metadata objectForKey:LPCProfileDescriptionKeyGender]) {
+        data.gender = [[self.profileDescription.metadata objectForKey:LPCProfileDescriptionKeyGender] cStringUsingEncoding:NSUTF8StringEncoding];
     } else {
         data.gender = nil;
     }
-    if ([self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyAge]) {
-        data.ageInYears = [[self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyAge] integerValue];
+    if ([self.profileDescription.metadata objectForKey:LPCProfileDescriptionKeyAge]) {
+        data.ageInYears = [[self.profileDescription.metadata objectForKey:LPCProfileDescriptionKeyAge] integerValue];
     } else {
         data.ageInYears = -1;
     }
-    if ([self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyHeightFeet]) {
-        data.heightFeet = [[self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyHeightFeet] integerValue];
+    if ([self.profileDescription.metadata objectForKey:LPCProfileDescriptionKeyHeightFeet]) {
+        data.heightFeet = [[self.profileDescription.metadata objectForKey:LPCProfileDescriptionKeyHeightFeet] integerValue];
     } else {
         data.ageInYears = -1;
     }
-    if ([self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyHeightInches]) {
-        data.heightInches = [[self.accountDescription.metadata objectForKey:LPCAccountDescriptionKeyHeightInches] integerValue];
+    if ([self.profileDescription.metadata objectForKey:LPCProfileDescriptionKeyHeightInches]) {
+        data.heightInches = [[self.profileDescription.metadata objectForKey:LPCProfileDescriptionKeyHeightInches] integerValue];
     } else {
         data.ageInYears = -1;
     }
     
-    data.targetF3 = self.accountDescription.targetF3;
-    data.stdevF3 = self.accountDescription.stdevF3;
-    data.targetLPCOrder = self.accountDescription.targetLPCOrder;
+    data.targetF3 = self.profileDescription.targetF3;
+    data.stdevF3 = self.profileDescription.stdevF3;
+    data.targetLPCOrder = self.profileDescription.targetLPCOrder;
     data.audio_path = [[[audioFileURL absoluteString] stringByRemovingPercentEncoding] cStringUsingEncoding:NSUTF8StringEncoding];
     data.lpc_path = [[[lpcFileURL absoluteString] stringByRemovingPercentEncoding] cStringUsingEncoding:NSUTF8StringEncoding];
     data.metadata_path = [[[metadataFileURL absoluteString] stringByRemovingPercentEncoding] cStringUsingEncoding:NSUTF8StringEncoding];
