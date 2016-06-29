@@ -46,7 +46,7 @@
     LPCRecordingSessionData sessionData = [session dataWithLpcOrder:self.lpcCalculator.lpcOrder];
     NSString *path = [NSString stringWithCString:sessionData.audio_path encoding:NSUTF8StringEncoding];
     [self.lpcCalculator beginRecordingLPCWithRecordingSessionData:&sessionData error:nil];
-    [self.recorder beginRecordingToFileAtPath:path fileType:kAudioFileAIFFType error:nil];
+    [self.recorder beginRecordingToFileAtPath:path fileType:kAudioFileM4AType error:nil];
     self.currentRecordingSession = session;
 }
 

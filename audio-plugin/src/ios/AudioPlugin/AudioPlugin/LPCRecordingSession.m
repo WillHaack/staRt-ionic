@@ -51,7 +51,7 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
     session.dateString = [dateFormatter stringFromDate:session.date];
     session.metadataFilename = [NSString stringWithFormat:@"%@-%@-meta.csv", session.profileDescription.uuid, session.dateString];
     session.lpcFilename = [NSString stringWithFormat:@"%@-%@-lpc.csv", session.profileDescription.uuid, session.dateString];
-    session.audioFilename = [NSString stringWithFormat:@"%@-%@-audio.caf", session.profileDescription.uuid, session.dateString];
+    session.audioFilename = [NSString stringWithFormat:@"%@-%@-audio.m4a", session.profileDescription.uuid, session.dateString];
     
     return session;
 }
