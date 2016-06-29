@@ -21,7 +21,7 @@
 			resolve:
 			{
 				wordListData: function($http) {
-          return $http.get('../../../data/staRt_wordlist.csv');
+          return $http.get('data/staRt_wordlist.csv');
         }
 			}
 			// abstract: true,

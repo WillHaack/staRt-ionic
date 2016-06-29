@@ -5,14 +5,20 @@
 	<button style="margin:40px;" ng-click="beginWordPractice()" ng-hide="isPracticing">
 		Start Word Practice
 	</button>
-	<button style="margin:40px;" ng-click="endWordPractice()" ng-hide="!isPracticing">
-		Stop Word Practice
-	</button>
 	<button style="margin:40px;" ng-click="nextWord()" ng-hide="!isPracticing">
 		Next Word
+	</button>
+	<button style="margin:40px;" ng-click="endWordPractice()" ng-hide="!isPracticing">
+		Stop Word Practice
 	</button>
 	<p ng-hide="!isPracticing">
 		{{currentWord}}
 	</p>
+	<p ng-hide="!isRecording">
+		Recording!!!
+	</p>
+	<ion-radio ng-model="rating" ng-value="1" ng-hide="!isPracticing">Poor</ion-radio>
+	<ion-radio ng-model="rating" ng-value="2" ng-hide="!isPracticing">Decent</ion-radio>
+	<ion-radio ng-model="rating" ng-value="3" ng-hide="!isPracticing">Great</ion-radio>
 	<lpc-directive></lpc-directive>
 </ion-view>
