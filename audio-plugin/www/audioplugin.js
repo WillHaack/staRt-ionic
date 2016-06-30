@@ -6,13 +6,13 @@ module.exports = {
                  "getLPCCoefficients",
                  null); // No arguments
   },
-  startRecording: function(accountDescription, successCallback, errorCallback) {
+  startRecording: function(profileDescription, successCallback, errorCallback) {
     cordova.exec(
       successCallback,
       errorCallback,
       "AudioPlugin",
       "startRecording",
-      [accountDescription]
+      [profileDescription]
     );
   },
   stopRecording: function(successCallback, errorCallback) {
@@ -33,13 +33,13 @@ module.exports = {
       null
     );
   },
-  recordingsForAccount: function(accountDescription, successCallback, errorCallback) {
+  recordingsForProfile: function(profileDescription, successCallback, errorCallback) {
     cordova.exec(
       successCallback,
       errorCallback,
       "AudioPlugin",
-      "recordingsForAccount",
-      [accountDescription]
+      "recordingsForProfile",
+      [profileDescription]
     );
   },
   deleteRecording: function(recordingDescription, successCallback, errorCallback) {

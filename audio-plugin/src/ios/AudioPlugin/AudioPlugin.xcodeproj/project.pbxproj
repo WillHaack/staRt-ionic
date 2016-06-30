@@ -32,7 +32,7 @@
 		08651F791CF8940C004C44E4 /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08651F781CF8940C004C44E4 /* CHCSVParser.m */; };
 		08651F841CF8C261004C44E4 /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08651F781CF8940C004C44E4 /* CHCSVParser.m */; };
 		08661D261CF651D700A95E30 /* LPCRecordingSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 08661D251CF651D700A95E30 /* LPCRecordingSession.m */; };
-		08661D2A1CF6527600A95E30 /* LPCAccountDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 08661D291CF6527600A95E30 /* LPCAccountDescription.m */; };
+		08661D2A1CF6527600A95E30 /* LPCProfileDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 08661D291CF6527600A95E30 /* LPCProfileDescription.m */; };
 		08A3840E1CEE0E3C00E6DA6D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A3840D1CEE0E3C00E6DA6D /* main.m */; };
 		08A384111CEE0E3C00E6DA6D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A384101CEE0E3C00E6DA6D /* AppDelegate.m */; };
 		08A384141CEE0E3C00E6DA6D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A384131CEE0E3C00E6DA6D /* ViewController.m */; };
@@ -126,8 +126,8 @@
 		08661D241CF651D700A95E30 /* LPCRecordingSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPCRecordingSession.h; sourceTree = "<group>"; };
 		08661D251CF651D700A95E30 /* LPCRecordingSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPCRecordingSession.m; sourceTree = "<group>"; };
 		08661D271CF651EB00A95E30 /* LPCUploadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPCUploadable.h; sourceTree = "<group>"; };
-		08661D281CF6527600A95E30 /* LPCAccountDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPCAccountDescription.h; sourceTree = "<group>"; };
-		08661D291CF6527600A95E30 /* LPCAccountDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPCAccountDescription.m; sourceTree = "<group>"; };
+		08661D281CF6527600A95E30 /* LPCProfileDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPCProfileDescription.h; sourceTree = "<group>"; };
+		08661D291CF6527600A95E30 /* LPCProfileDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPCProfileDescription.m; sourceTree = "<group>"; };
 		08A3840A1CEE0E3C00E6DA6D /* AudioPluginTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioPluginTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08A3840D1CEE0E3C00E6DA6D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		08A3840F1CEE0E3C00E6DA6D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -247,8 +247,8 @@
 				08A384281CEE11E700E6DA6D /* APLPCCalculator.mm */,
 				08661D241CF651D700A95E30 /* LPCRecordingSession.h */,
 				08661D251CF651D700A95E30 /* LPCRecordingSession.m */,
-				08661D281CF6527600A95E30 /* LPCAccountDescription.h */,
-				08661D291CF6527600A95E30 /* LPCAccountDescription.m */,
+				08661D281CF6527600A95E30 /* LPCProfileDescription.h */,
+				08661D291CF6527600A95E30 /* LPCProfileDescription.m */,
 				08661D271CF651EB00A95E30 /* LPCUploadable.h */,
 				085D976A1CEFB17C00998A81 /* LPCDisplayManager.h */,
 				085D97691CEFB17C00998A81 /* LPCDisplayManager.cpp */,
@@ -516,7 +516,7 @@
 			files = (
 				08F7C0B51CEE20F300D8F1BA /* AEAudioController+Audiobus.m in Sources */,
 				08F7C0C61CEE20F300D8F1BA /* TPCircularBuffer.c in Sources */,
-				08661D2A1CF6527600A95E30 /* LPCAccountDescription.m in Sources */,
+				08661D2A1CF6527600A95E30 /* LPCProfileDescription.m in Sources */,
 				083A41931CEA4553008AF1A0 /* AudioPlugin.m in Sources */,
 				08F7C0B81CEE20F300D8F1BA /* AEAudioFilePlayer.m in Sources */,
 				08A384261CEE0FE500E6DA6D /* APAudioManager.m in Sources */,

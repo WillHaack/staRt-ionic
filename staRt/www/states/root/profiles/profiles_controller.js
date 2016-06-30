@@ -1,3 +1,5 @@
+/*globals console:false, angular:false, window:false, alert:false */
+
 'use strict';
 
 ( function(  )
@@ -8,26 +10,43 @@
 	{
 		console.log('ProfilesController here!');
 
+		// Nota Bene: A valid profile must have the following kv pairs:
+		// "name" (string) the name of the profile
+		// "uuid" (string) some string that is unique to each account
+		// "age" (int) age in years
+		// "gender" (string) M or F
+		// "heightFeet" (int) feet portion of height
+		// "heightInches" (int) inches portion of heightInches
+		// "targetF3" (double, optional) the saved target F3 value
+		// "stdevF3" (double, optional) the saved stdeviation F3 value
+		// "targetLPCOrder" (int, optional) the saved target LPC order
+
 		var users = [
 			{
 				name: 'Eeyore',
 				age: 16,
-				height: '5\'2\"',
-				sex: 'Male'
+				heightFeet: 5,
+				heightInches: 2,
+				gender: 'Male',
+				uuid: '12345678'
 			},
 			{
 				name: 'Piglet',
 				age: 4,
-				height: '3\'2\"',
-				sex: 'Male'
+				heightFeet: 3,
+				heightInches: 2,
+				gender: 'Male',
+				uuid: '87654321'
 			},
 			{
 				name: 'Pooh',
 				age: 26,
-				height: '7\'2"',
-				sex: 'Male'
+				heightFeet: 7,
+				heightInches: 2,
+				sex: 'Male',
+				uuid: '88888888'
 			}
-		]
+		];
 
 		$localForage.getItem('profiles').then(function(res)
 		{
@@ -47,16 +66,16 @@
 		$scope.updateCurrentUser = function()
 		{
 			$localForage.setItem('currentUser', $scope.data.currentUser);
-		}
+		};
 
-		$scope.data = { 
+		$scope.data = {
 			currentUser: $localForage.getItem('currentUser')
-		}
+		};
 
 		$scope.$watchCollection('data', function(data)
 		{
 			console.log(data);
-		})
+		});
 
 	});
 
