@@ -11,25 +11,52 @@
 			ng-repeat="user in profiles"
 			ng-value="{{user}}"
 			ng-change="updateCurrentUser()">
-				{{ user.name }}
+				{{ (user.name === undefined) ? 'New Profile' : user.name }}
 		</ion-radio>
+
+		<button class="button create text-and-lpc profiles" ng-click="createProfile()">
+			Create New Profile
+		</button>
+		<button class="button danger text-and-lpc profiles" ng-click="deleteAllProfiles()">
+			Delete All Profiles
+		</button>
 
 	</ion-list>
 
 	<div class="profiles__info">
 		<ul class="list">
+			<h2>{{data.currentUser.name}}</h2>
+			<h3>uuid: {{data.currentUser.uuid}}</h3>
 			<li>
-				<strong>Age:</strong> {{data.currentUser.age}}
+				<strong>Name:</strong>
+				<input type="text" name="name" class="profiles" ng-model="data.currentUser.name" placeholder="Name" ng-class="editing" ng-disabled="!isEditing">
 			</li>
 			<li>
-				<strong>Height:</strong> {{data.currentUser.height}}
+				<strong>Age:</strong>
+				<input type="number" name="age" class="profiles" min="1" max="99" ng-model="data.currentUser.age" placeholder="Age" ng-class="editing" ng-disabled="!isEditing">
 			</li>
 			<li>
-				<strong>Sex:</strong>{{data.currentUser.sex}}
+				<strong>Height Feet:</strong>
+				<input type="number" name="heightFeet" class="profiles" min="0" max="8" ng-model="data.currentUser.heightFeet" placeholder="Feet" ng-class="editing" ng-disabled="!isEditing">
+			</li>
+			<li>
+				<strong>Inches:</strong>
+				<input type="number" name="heightInches" class="profiles" min="0" max="11" ng-model="data.currentUser.heightInches" placeholder="Inches" ng-class="editing" ng-disabled="!isEditing">
+			</li>
+			<li>
+				<strong>Sex:</strong>
+				<ion-radio ng-model="data.currentUser.gender" ng-value="'Male'" ng-class="editing" ng-disabled="!isEditing">Male</ion-radio>
+				<ion-radio ng-model="data.currentUser.gender" ng-value="'Female'" ng-class="editing" ng-disabled="!isEditing">Female</ion-radio>
+			</li>
+
+			<li>
+				<button type="button" class="button profiles" ng-click="setIsEditing(true)" ng-hide="isEditing">Edit</button>
+				<button type="button" class="button profiles" ng-click="saveProfile()" ng-hide="!isEditing">Save</button>
+				<button type="button" class="button profiles" ng-click="discardProfile()" ng-hide="!isEditing">Discard</button>
 			</li>
 		</ul>
 	</div>
-		
+
 <!-- 		<form>
 			<label class="item item-input">
 				<span class="input-label">Username</span>
