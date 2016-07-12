@@ -1,7 +1,29 @@
+/*globals console:false, angular:false, window:false, alert:false */
+/*globals THREE:false, AudioPlugin:false */
+
 'use strict';
 
-var lpcDirective = angular.module( 'lpcDirective' );
+// requestAnim shim layer by Paul Irish
+window.requestAnimFrame = (function(){
+  return  window.requestAnimationFrame       ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame    ||
+          window.oRequestAnimationFrame      ||
+          window.msRequestAnimationFrame     ||
+          function(/* function */ callback, /* DOMElement */ element){
+            window.setTimeout(callback, 1000 / 60);
+          };
+})();
 
+function linScale(v, inlow, inhigh, outlow, outhigh) {
+	var range = outhigh - outlow;
+	var domain = inhigh - inlow;
+	var ov = (v - inlow) / domain;
+	ov = (ov * range) + outlow;
+	return ov;
+}
+
+var lpcDirective = angular.module( 'lpcDirective' );
 
 lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope, $state, $stateParams, $element )
 {
@@ -9,6 +31,7 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	console.log('LpcDirectiveController active!');
 
 	var element = $element;
+	var WIDTH=800, HEIGHT=600;
 
 	$scope.getLPCCoefficients = function(cb) {
 		if (window.AudioPlugin !== undefined) {
@@ -16,81 +39,58 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		}
 	};
 
-	//Start lpc drawer
-	var sketch = function(lpc) {
+	var ASPECT = WIDTH/HEIGHT;
+	var camera = new THREE.OrthographicCamera(WIDTH/-2, WIDTH/2, HEIGHT/-2, HEIGHT/2, 1, 1000);
+	var scene = new THREE.Scene();
+	scene.add(camera);
+	camera.position.set(0, 0, 100);
+	camera.lookAt(new THREE.Vector3(0, 0, 0));
+	var renderer = new THREE.WebGLRenderer({ antialias: true });
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize(WIDTH, HEIGHT);
+	element.append(renderer.domElement);
 
-		var url;
-		var myCanvas;
-		var myFrameRate = 30;
-		var running = true;
-		var frequencyScaling = 1.0;
-		var points = [];
-		var peaks = [];
+	var line;
+	var peaks, points, frequencyScaling;
 
-		lpc.coefficentCallback = function(msg) {
-			points = msg.coefficients;
-			peaks = msg.freqPeaks;
-			frequencyScaling = msg.freqScale;
-		};
-
-		lpc.preload = function() {
-		};
-
-		lpc.setup = function() {
-			myCanvas = lpc.createCanvas(screen.width, screen.height/2, lpc.WEBGL);
-			myCanvas.parent(element.children()[0]);
-			var width = screen.width;
-			var height = screen.height/2.0;
-			lpc.ortho(-width, width, -height, height);
-			lpc.frameRate(myFrameRate);
-		};
-
-		lpc.draw = function() {
-			lpc.background('#00ff00');
-			lpc.line(-1, 0, 1, 1, 0, 1);
-			//$scope.getLPCCoefficients(lpc.coefficentCallback);
-			lpc.strokeWeight(1);
-			lpc.noFill();
-
-			return;
-
-      // Not sure exactly how the points are meant to be scaled...
-      var scaleFac = -1.0;
-
-			// First draw the peaks, so that they'll appear behind
-			lpc.stroke('#0000ff');
-			for (var i=0; i<peaks.length; i++) {
-				var px = peaks[i].X;
-				px = (px * (myCanvas.width/2) + (myCanvas.width/2)) * frequencyScaling;
-				var py = peaks[i].Y * scaleFac;
-				py = py * (myCanvas.height/2) + (myCanvas.height/2);
-				lpc.line(px, myCanvas.height, px, py);
+	$scope.lpcCoefficientCallback = function(msg) {
+		points = msg.coefficients;
+		peaks = msg.freqPeaks;
+		frequencyScaling = msg.freqScale;
+		if (line === undefined) {
+			var material = new THREE.LineBasicMaterial({
+		    color: 0x0000ff
+		  });
+			var geometry = new THREE.Geometry();
+			for (var i=0; i<points.length; i++) {
+				var point = points[i];
+				var px = linScale(i*frequencyScaling, 0, points.length-1, WIDTH/-2, WIDTH/2);
+				geometry.vertices.push(new THREE.Vector3(px, 0, 0));
 			}
+			line = new THREE.Line(geometry, material);
+			// linectx.line.geometry.dynamic = true;
+			scene.add(line);
+		}
+	};
 
-			lpc.stroke('#00ff00');
-			lpc.beginShape();
-      for (i=0; i<points.length; i++) {
-      	var px = i / (points.length) * myCanvas.width * frequencyScaling;
-      	var py = points[i] * scaleFac;
-      	py = py * (myCanvas.height/2) + (myCanvas.height/2);
-      	lpc.vertex(px, py);
-      }
-      lpc.endShape();
-  };
+	$scope.update = function() {
+		if (line !== undefined) {
+			for (var i=0; i<points.length; i++) {
+				var px = linScale(i*frequencyScaling, 0, points.length-1, WIDTH/-2, WIDTH/2);
+				var py = linScale(points[i], 1, -1, HEIGHT/-2, HEIGHT/2);
+				line.geometry.vertices[i].set(px, py, 0);
+			}
+			line.geometry.verticesNeedUpdate = true;
+		}
+	};
 
-  lpc.mouseClicked = function() {
-  };
+	$scope.animate = function() {
+		$scope.getLPCCoefficients($scope.lpcCoefficientCallback);
+		window.requestAnimFrame($scope.animate);
+		$scope.update();
+		renderer.render(scene, camera);
+	};
 
-  lpc.stopDraw = function() {
-  	lpc.noLoop();
-  	running = false;
-  };
-
-  lpc.startDraw = function() {
-  	lpc.loop();
-  	running = true;
-  };
-};
-$scope.myP5 = new p5(sketch);
+	$scope.animate();
 
 } );
