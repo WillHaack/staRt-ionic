@@ -52,6 +52,7 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 	var line;
 	var peaks, points, frequencyScaling;
+	var peakSegments;
 
 	$scope.lpcCoefficientCallback = function(msg) {
 		points = msg.coefficients;
@@ -59,8 +60,8 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		frequencyScaling = msg.freqScale;
 		if (line === undefined) {
 			var material = new THREE.LineBasicMaterial({
-		    color: 0x0000ff
-		  });
+				color: 0x0000ff
+			});
 			var geometry = new THREE.Geometry();
 			for (var i=0; i<points.length; i++) {
 				var point = points[i];
@@ -68,8 +69,17 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 				geometry.vertices.push(new THREE.Vector3(px, 0, 0));
 			}
 			line = new THREE.Line(geometry, material);
-			// linectx.line.geometry.dynamic = true;
+			line.geometry.dynamic = true;
 			scene.add(line);
+		}
+
+		if (peakSegments === undefined) {
+			var material = new THREE.LineBasicMaterial({
+				color: 0x00ff00
+			});
+			var geometry = new THREE.Geometry();
+			peakSegments = new THREE.LineSegments(geometry, material);
+			scene.add(peakSegments);
 		}
 	};
 
@@ -81,6 +91,22 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 				line.geometry.vertices[i].set(px, py, 0);
 			}
 			line.geometry.verticesNeedUpdate = true;
+		}
+
+		if (peaks !== undefined) {
+			var geometry = new THREE.Geometry();
+			for (var i=0; i<peaks.length; i++) {
+				var peak = peaks[i];
+				var px = linScale(peak.X, -1, 1, 0, frequencyScaling);
+				px = linScale(px, 0, 1, WIDTH/-2, WIDTH/2);
+				var py = linScale(peak.Y, 1, -1, HEIGHT/-2, HEIGHT/2);
+				var v1 = new THREE.Vector3(px, py, 1);
+				var v2 = new THREE.Vector3(px, HEIGHT/2, 1);
+				geometry.vertices.push(v1);
+				geometry.vertices.push(v2);
+			}
+			peakSegments.geometry = geometry;
+			peakSegments.geometry.verticesNeedUpdate = true;
 		}
 	};
 
