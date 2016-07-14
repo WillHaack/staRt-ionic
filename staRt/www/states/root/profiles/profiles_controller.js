@@ -14,14 +14,14 @@
 		// "name" (string) the name of the profile
 		// "uuid" (string) some string that is unique to each account
 		// "age" (int) age in years
-		// "gender" (string) M or F
+		// "gender" (string) Male or Female
 		// "heightFeet" (int) feet portion of height
 		// "heightInches" (int) inches portion of heightInches
 		// "targetF3" (double, optional) the saved target F3 value
 		// "stdevF3" (double, optional) the saved stdeviation F3 value
 		// "targetLPCOrder" (int, optional) the saved target LPC order
 
-		var users = [
+		var defaultUsers = [
 			{
 				name: 'Eeyore',
 				age: 16,
@@ -43,23 +43,24 @@
 				age: 26,
 				heightFeet: 7,
 				heightInches: 2,
-				sex: 'Male',
+				gender: 'Male',
 				uuid: '88888888'
 			}
 		];
+
+		$scope.isEditing = false;
 
 		$localForage.getItem('profiles').then(function(res)
 		{
 			if (res)
 			{
-				// For now, setting it equal to 'users' as well
-				$scope.profiles = users;
+				$scope.profiles = res;
 				console.log($scope.profiles);
 			}
 			else
 			{
-				$localForage.setItem('profiles', users);
-				$scope.profiles = users;
+				$localForage.setItem('profiles', defaultUsers);
+				$scope.profiles = defaultUsers;
 			}
 		});
 
@@ -76,6 +77,79 @@
 		{
 			console.log(data);
 		});
+
+		// http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript#105074
+		function guid() {
+			return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+		    s4() + '-' + s4() + s4() + s4();
+		}
+
+		function s4() {
+		  return Math.floor((1 + Math.random()) * 0x10000)
+		    .toString(16)
+		    .substring(1);
+		}
+
+		function newUserProfile() {
+			return {
+				name: undefined,
+				age: undefined,
+				heightFeet: undefined,
+				heightInches: undefined,
+				gender: undefined,
+				uuid: guid()
+			};
+		}
+
+		$scope.setIsEditing = function(isEditing)
+		{
+			$scope.isEditing = isEditing;
+			$scope.editing = isEditing ? "editing" : "";
+		};
+
+		$scope.saveProfile = function()
+		{
+			if ($scope.data.currentUser.name !== undefined &&
+				$scope.data.currentUser.age !== undefined &&
+				$scope.data.currentUser.heightFeet !== undefined &&
+				$scope.data.currentUser.heightInches !== undefined &&
+				$scope.data.currentUser.gender !== undefined)
+			{
+				var idx = $scope.profiles.findIndex(function(el) {
+					return el.uuid == this.uuid;
+				}, $scope.data.currentUser);
+				if (idx === -1) {
+					$scope.profiles.push($scope.data.currentUser);
+					idx = $scope.profiles.length - 1;
+				} else {
+					$scope.profiles[idx] = $scope.profiles.currentUser;
+				}
+				$scope.setIsEditing(false);
+				$localForage.setItem('profiles', $scope.profiles);
+				$scope.data.currentUser = $scope.profiles[idx];
+			} else {
+				alert("Profile is missing some data");
+			}
+		};
+
+		$scope.discardProfile = function()
+		{
+			$scope.setIsEditing(false);
+		};
+
+		$scope.createProfile = function()
+		{
+			var profile = newUserProfile();
+			$scope.setIsEditing(true);
+			$scope.data.currentUser = profile;
+		};
+
+		$scope.deleteAllProfiles = function()
+		{
+			$scope.data.currentUser = undefined;
+			$scope.profiles = [];
+			$localForage.setItem('profiles', undefined);
+		};
 
 	});
 
