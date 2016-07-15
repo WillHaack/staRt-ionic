@@ -441,6 +441,8 @@
 					};
 					08A384091CEE0E3C00E6DA6D = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 5DS3E6QN8H;
+						DevelopmentTeamName = "Sam Tarakajian";
 					};
 				};
 			};

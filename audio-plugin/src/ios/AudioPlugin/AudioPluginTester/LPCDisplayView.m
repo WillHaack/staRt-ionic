@@ -38,14 +38,14 @@
 - (void) drawRect:(CGRect)rect
 {
     CGContextRef ctx =  UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(ctx, [UIColor blueColor].CGColor);
+    CGContextSetFillColorWithColor(ctx, [UIColor blackColor].CGColor);
     CGContextFillRect(ctx, rect);
     
-    CGContextSetStrokeColorWithColor(ctx, [UIColor blackColor].CGColor);
-    CGContextSetLineWidth(ctx, 3);
+    CGContextSetStrokeColorWithColor(ctx, [UIColor greenColor].CGColor);
+    CGContextSetLineWidth(ctx, 1);
     for (int i=0; i<self.lpcCoefficients.count; i++) {
         CGFloat py = [[self.lpcCoefficients objectAtIndex:i] doubleValue];
-        py = (py * -1.0) * self.frame.size.height;
+        py = (1.0 - py) * (self.frame.size.height / 2.0);
         CGFloat px = i * self.frame.size.width / (self.lpcCoefficients.count - 1);
         px = px * self.frequencyScaling;
         if (px > self.frame.size.width)
@@ -63,12 +63,12 @@
         CGPointMakeWithDictionaryRepresentation((__bridge CFDictionaryRef) self.peakPointsPairs[i+1], &p2);
         p1.x = (p1.x/2.0 + 0.5) * self.frequencyScaling * self.frame.size.width;
         p2.x = (p2.x/2.0 + 0.5) * self.frequencyScaling * self.frame.size.width;
-        p1.y *= (-1.0 * self.frame.size.height);
-        p2.y *= (-1.0 * self.frame.size.height);
+        p1.y = (1.0 - p1.y) * (self.frame.size.height / 2.0);
+        p2.y = (1.0 - p2.y) * (self.frame.size.height / 2.0);
         CGContextMoveToPoint(ctx, p1.x, p1.y);
         CGContextAddLineToPoint(ctx, p2.x, p2.y);
     }
-    CGContextSetStrokeColorWithColor(ctx, [UIColor greenColor].CGColor);
+    CGContextSetStrokeColorWithColor(ctx, [UIColor blueColor].CGColor);
     CGContextStrokePath(ctx);
 }
 
