@@ -1,2 +1,9 @@
+// Common Styles
+@import 'common-styles/variables';
+@import 'common-styles/typography';
+
+
+// State-specific styles
 @import 'states/root/root_styles';
 @import 'states/root/profiles/profiles_styles';
+

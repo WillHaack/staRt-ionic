@@ -1,6 +1,7 @@
 #app-container {
   display: -webkit-flex;
   -webkit-flex-direction: row;
+  font-family: 'Quicksand', 'Helvetica Neue', sans-serif;
 }
 
 #nav-and-content-container
@@ -54,19 +55,23 @@
 }
 
 .navTabs {
-  background-color: lightgray;
   height: 100vh;
   display: -webkit-flex;
   -webkit-flex: 1;
   -webkit-flex-direction: column;
+  color: $white;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 .navTab {
-  background-color: white;
-  margin: 5px;
+  background-color: $blue;
   text-align: center;
   display: -webkit-flex;
   -webkit-flex: 1;
+  border-radius: 4px;
+  box-shadow: 1px 0px 2px #d3d3d3;
+
 }
 
 .navTabText {
