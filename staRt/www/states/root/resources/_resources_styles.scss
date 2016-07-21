@@ -1,0 +1,25 @@
+.range-container
+{
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+}
+
+.range-label
+{
+	font-weight: bold;
+	width: 40px;
+	white-space: pre-line;
+	padding: 1em 0;
+
+	&:first-child
+	{
+		padding-left: 0;
+	}
+}
+
+.resources strong
+{
+	display: block;
+	color: $blue;
+}

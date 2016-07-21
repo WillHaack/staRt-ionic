@@ -31,7 +31,7 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	}
 
 	var element = $element;
-	var WIDTH=800, HEIGHT=600;
+	var WIDTH=800, HEIGHT=400;
 
 	$scope.getLPCCoefficients = function(cb) {
 		if (window.AudioPlugin !== undefined) {

@@ -69,8 +69,7 @@ gulp.task('inject', function()
 });
 
 gulp.task('watch', function() {
-	console.log('watching' + __dirname + '/www/**/*.scss')
-	gulp.watch( __dirname + '/www/**/*.scss', ['sass']);
+	gulp.watch( [ __dirname + '/www/**/*.scss', __dirname + '/www/states/root/**/*.scss'], ['sass']);
 });
 
 gulp.task('install', ['git-check'], function() {
