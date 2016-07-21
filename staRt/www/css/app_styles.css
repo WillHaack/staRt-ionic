@@ -47,6 +47,22 @@
   font-family: 'Quicksand', 'Helvetica Neue', sans-serif;
   line-height: 1.7; }
 
+.bar-header {
+  background-color: #c5f3ff;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  padding-left: 120px; }
+
+.bar .title {
+  position: relative;
+  display: block;
+  text-transform: uppercase;
+  color: #53c8e9;
+  font-weight: bold;
+  font-size: 50px;
+  text-align: left; }
+
 #nav-and-content-container {
   display: flex;
   flex-flow: row nowrap; }

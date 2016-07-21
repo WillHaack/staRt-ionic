@@ -5,6 +5,26 @@
   line-height: 1.7;
 }
 
+.bar-header
+{
+  background-color: $light-blue;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  padding-left: 120px;
+}
+
+.bar .title
+{
+  position: relative;
+  display: block;
+  text-transform: uppercase;
+  color: $blue;
+  font-weight: bold;
+  font-size: $header-type;
+  text-align: left;
+}
+
 #nav-and-content-container
 {
   display: flex;
