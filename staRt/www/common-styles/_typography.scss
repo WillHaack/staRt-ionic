@@ -4,8 +4,8 @@
 	font-family: 'Quicksand';
 	src: url('./fonts/Quicksand-Regular.eot');
 	src: url('./fonts/Quicksand-Regular.eot?#iefix') format('embedded-opentype'),
-		url('./fonts/Quicksand-Regular.woff') format('woff'),
-		url('./fonts/Quicksand-Regular.ttf') format('truetype');
+	url('./fonts/Quicksand-Regular.woff') format('woff'),
+	url('./fonts/Quicksand-Regular.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -14,8 +14,20 @@
 	font-family: 'Quicksand';
 	src: url('./fonts/Quicksand-Bold.eot');
 	src: url('./fonts/Quicksand-Bold.eot?#iefix') format('embedded-opentype'),
-		url('./fonts/Quicksand-Bold.woff') format('woff'),
-		url('./fonts/Quicksand-Bold.ttf') format('truetype');
+	url('./fonts/Quicksand-Bold.woff') format('woff'),
+	url('./fonts/Quicksand-Bold.ttf') format('truetype');
 	font-weight: bold;
 	font-style: normal;
+}
+
+.range input
+{
+	height: 25px;
+	border-radius: 25px;
+	background-color: red;
+	box-shadow: inset 2px 2px 2px rgba(77, 77, 77, 0.25);
+	width: 560px;
+	margin: 15px;
+	border: 0px solid orange;
+	-webkit-appearance: none;
 }

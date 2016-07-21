@@ -3,32 +3,32 @@
 
 'use strict';
 
-// requestAnim shim layer by Paul Irish
-window.requestAnimFrame = (function(){
-  return  window.requestAnimationFrame       ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame    ||
-          window.oRequestAnimationFrame      ||
-          window.msRequestAnimationFrame     ||
-          function(/* function */ callback, /* DOMElement */ element){
-            window.setTimeout(callback, 1000 / 60);
-          };
-})();
-
-function linScale(v, inlow, inhigh, outlow, outhigh) {
-	var range = outhigh - outlow;
-	var domain = inhigh - inlow;
-	var ov = (v - inlow) / domain;
-	ov = (ov * range) + outlow;
-	return ov;
-}
-
 var lpcDirective = angular.module( 'lpcDirective' );
 
 lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope, $state, $stateParams, $element )
 {
 
 	console.log('LpcDirectiveController active!');
+
+	// requestAnim shim layer by Paul Irish
+	window.requestAnimFrame = (function(){
+		return  window.requestAnimationFrame       ||
+		window.webkitRequestAnimationFrame ||
+		window.mozRequestAnimationFrame    ||
+		window.oRequestAnimationFrame      ||
+		window.msRequestAnimationFrame     ||
+		function(/* function */ callback, /* DOMElement */ element){
+			window.setTimeout(callback, 1000 / 60);
+		};
+	})();
+
+	function linScale(v, inlow, inhigh, outlow, outhigh) {
+		var range = outhigh - outlow;
+		var domain = inhigh - inlow;
+		var ov = (v - inlow) / domain;
+		ov = (ov * range) + outlow;
+		return ov;
+	}
 
 	var element = $element;
 	var WIDTH=800, HEIGHT=600;

@@ -1,0 +1,22 @@
+.range input
+{
+	height: 25px;
+	border-radius: 25px;
+	background-color: #C5F3FF;
+	box-shadow: inset 2px 2px 2px rgba(77, 77, 77, 0.25);
+	width: 560px;
+	margin: 15px;
+	border: 0px solid orange;
+	-webkit-appearance: none;
+}
+
+.range input::-ms-track
+{
+	width: 100%;
+	cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent; 
+  border-color: transparent;
+  color: transparent;
+}
