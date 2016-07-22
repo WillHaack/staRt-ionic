@@ -45,7 +45,8 @@
   display: -webkit-flex;
   -webkit-flex-direction: row;
   font-family: 'Quicksand', 'Helvetica Neue', sans-serif;
-  line-height: 1.7; }
+  line-height: 1.7;
+  color: #4d4d4d; }
 
 .bar-header {
   background-color: #c5f3ff;
@@ -110,7 +111,14 @@ canvas {
   display: -webkit-flex;
   -webkit-flex: 1;
   border-radius: 4px;
-  box-shadow: 1px 0px 2px #d3d3d3; }
+  box-shadow: 1px 0px 2px #d3d3d3;
+  transition: width 0.5s ease-in-out; }
+  .navTab.active {
+    color: #53C8E9;
+    background-color: #F0F9FC;
+    box-shadow: 2px 1px 2px #d1d1d1;
+    z-index: 25;
+    width: 108px; }
 
 .navTabText {
   margin: auto; }
