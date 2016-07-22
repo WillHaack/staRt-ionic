@@ -13,6 +13,10 @@
 			$scope.startUIState = data;
 		});
 
+		$scope.state = $state;
+
+		console.log($scope.state);
+
 		$scope.selectIndex = function(index)
 		{
 			StartUIState.setLastActiveIndex($localForage, index);

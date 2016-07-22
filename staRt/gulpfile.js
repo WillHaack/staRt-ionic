@@ -10,15 +10,21 @@ var inject = require('gulp-inject');
 var angularFilesort = require('gulp-angular-filesort');
 var mainBowerFiles = require('main-bower-files');
 var connect = require('gulp-connect');
+var path = require('path');
+
+
+var pathToThisFile = __dirname;
+var root = path.dirname(pathToThisFile);
 
 var paths = {
-	sass: ['./www/app_styles.scss'],
+	sass: [ './www/app_styles.scss'],
 	js: ['./www/app_module.js', './www/states/**/*.js', './www/common-components/**/*.js']
 };
 
 gulp.task('default', ['sass', 'inject']);
 
 gulp.task('sass', function(done) {
+	console.log('sass task running');
 	gulp.src( paths.sass )
 		.pipe(sass())
 		.on('error', sass.logError)
@@ -58,12 +64,12 @@ gulp.task('inject', function()
 		.pipe( inject( bowerSource, bowerInjectOptions ) )
 		.pipe( inject( sortedAppJs,
 			injectOptions ) )
-		.pipe( gulp.dest( './www' ) );
-		// .pipe( connect.reload() )
+		.pipe( gulp.dest( './www' ) )
+		.pipe( connect.reload() );
 });
 
 gulp.task('watch', function() {
-	gulp.watch('./www/states/**/*.scss', ['sass']);
+	gulp.watch( [ __dirname + '/www/**/*.scss', __dirname + '/www/states/root/**/*.scss'], ['sass']);
 });
 
 gulp.task('install', ['git-check'], function() {

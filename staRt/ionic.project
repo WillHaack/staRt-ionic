@@ -1,5 +1,13 @@
 {
   "name": "staRt",
   "app_id": "",
-  "gulpStartupTasks": ["watch", "inject"]
+  "gulpStartupTasks": [
+    "sass",
+    "watch",
+    "inject"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
 }

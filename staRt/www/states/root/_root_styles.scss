@@ -1,6 +1,29 @@
 #app-container {
   display: -webkit-flex;
   -webkit-flex-direction: row;
+  font-family: 'Quicksand', 'Helvetica Neue', sans-serif;
+  line-height: 1.7;
+  color: $grey;
+}
+
+.bar-header
+{
+  background-color: $light-blue;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  padding-left: 120px;
+}
+
+.bar .title
+{
+  position: relative;
+  display: block;
+  text-transform: uppercase;
+  color: $blue;
+  font-weight: bold;
+  font-size: $header-type;
+  text-align: left;
 }
 
 #nav-and-content-container
@@ -25,17 +48,6 @@
 
 }
 
-#lpc-container {
-  display: -webkit-flex;
-  -webkit-flex: 1;
-}
-
-#lpc-canvas {
-  width: 300px;
-  height: 200px;
-  margin: auto;
-}
-
 canvas {
   background-color: #000000;
 }
@@ -58,19 +70,37 @@ canvas {
 }
 
 .navTabs {
-  background-color: lightgray;
   height: 100vh;
   display: -webkit-flex;
   -webkit-flex: 1;
   -webkit-flex-direction: column;
+  color: $white;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 .navTab {
-  background-color: white;
-  margin: 5px;
+  background-color: $blue;
   text-align: center;
   display: -webkit-flex;
   -webkit-flex: 1;
+  border-radius: 4px;
+  box-shadow: 1px 0px 2px #d3d3d3;
+  transition: width 0.5s ease-in-out;
+  width: 100px;
+  padding-top: 10%;
+  padding-bottom: 5%;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+
+  &.active
+  {
+    color: #53C8E9;
+    background-color: #F0F9FC;
+    box-shadow: 2px 1px 2px #d1d1d1;
+    z-index: 25;
+    width: 108px;
+  }
 }
 
 .navTabText {

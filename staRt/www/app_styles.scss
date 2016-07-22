@@ -1,2 +1,12 @@
+// Common Styles
+@import 'common-styles/variables';
+@import 'common-styles/typography';
+@import 'common-styles/ui';
+
+// State styles
 @import 'states/root/root_styles';
 @import 'states/root/profiles/profiles_styles';
+@import 'states/root/resources/resources_styles';
+
+// Directive styles
+@import 'common-components/lpc-directive/lpc-directive_styles';
