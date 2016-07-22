@@ -50,7 +50,7 @@
 
 .bar-header {
   background-color: #c5f3ff;
-  height: 100px;
+  height: 110px;
   display: flex;
   align-items: center;
   padding-left: 120px; }
@@ -112,7 +112,12 @@ canvas {
   -webkit-flex: 1;
   border-radius: 4px;
   box-shadow: 1px 0px 2px #d3d3d3;
-  transition: width 0.5s ease-in-out; }
+  transition: width 0.5s ease-in-out;
+  width: 100px;
+  padding-top: 10%;
+  padding-bottom: 5%;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px; }
   .navTab.active {
     color: #53C8E9;
     background-color: #F0F9FC;
