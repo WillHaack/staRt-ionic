@@ -12,6 +12,7 @@
 
 @interface APAudioManager : NSObject
 - (void) start;
+- (void) stop;
 - (void) startRecordingForRecordingSession:(LPCRecordingSession *)session;
 - (void) stopRecording;
 

@@ -20,7 +20,6 @@
 - (void)pluginInitialize
 {
     self.audioManager = [[APAudioManager alloc] init];
-    [self.audioManager start];
     NSLog(@"Initializing AudioPlugin, saving to dir %@", [LPCRecordingSession recordingDirectory]);
 }
 
@@ -29,6 +28,16 @@
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_INVALID_ACTION
                                                 messageAsString:message];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+}
+
+- (void)startAudio:(CDVInvokedUrlCommand *)command
+{
+    [self.audioManager start];
+}
+
+- (void)stopAudio:(CDVInvokedUrlCommand *)command
+{
+    [self.audioManager stop];
 }
 
 - (void)getLPCCoefficients:(CDVInvokedUrlCommand *)command

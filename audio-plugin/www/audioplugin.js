@@ -1,4 +1,18 @@
 module.exports = {
+  startAudio: function(successCallback) {
+    cordova.exec(successCallback,
+                 null, // No failure callback
+                 "AudioPlugin",
+                 "startAudio",
+                 null); // No arguments
+  },
+  stopAudio: function(successCallback) {
+    cordova.exec(successCallback,
+                 null, // No failure callback
+                 "AudioPlugin",
+                 "stopAudio",
+                 null); // No arguments
+  },
   getLPCCoefficients: function(successCallback) {
     cordova.exec(successCallback,
                  null, // No failure callback

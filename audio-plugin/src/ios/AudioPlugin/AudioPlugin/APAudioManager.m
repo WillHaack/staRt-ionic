@@ -20,14 +20,13 @@
 @property (nonatomic, strong) LPCProfileDescription *recordingAccount;
 @property (nonatomic, strong) LPCRecordingSession *currentRecordingSession;
 @property (nonatomic, strong) AERecorder *recorder;
+@property (nonatomic, assign) BOOL isSetup;
 @end
 
 @implementation APAudioManager
 
-- (void) start
+- (void) setup
 {
-    NSLog(@"Starting APAudioManader");
-    
     AudioStreamBasicDescription asbd = AEAudioStreamBasicDescriptionNonInterleavedFloatStereo;
     asbd.mSampleRate = 22050.0;
     self.audioController = [[AEAudioController alloc]
@@ -36,9 +35,22 @@
     self.audioController.preferredBufferDuration = 512.0f / asbd.mSampleRate;
     self.lpcCalculator = [[APLPCCalculator alloc] initWithAudioController:self.audioController];
     [self.audioController addInputReceiver:self.lpcCalculator];
-    [self.audioController start:nil];
     self.recorder = [[AERecorder alloc] initWithAudioController:self.audioController];
     [self.audioController addInputReceiver:self.recorder];
+    self.isSetup = YES;
+}
+
+- (void) start
+{
+    if (!self.isSetup)
+        [self setup];
+    
+    [self.audioController start:nil];
+}
+
+- (void) stop
+{
+    [self.audioController stop];
 }
 
 - (void) startRecordingForRecordingSession:(LPCRecordingSession *)session
