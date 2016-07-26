@@ -28,6 +28,14 @@ extern "C" {
  * @param[out] result buffer containing result of autocorrelation
  */
 void autocorr(long size,float *data, float *result);
+    
+/**
+ * Compute autocorrelation of data buffer
+ * @param[in] size size of data buffer
+ * @param[in] data buffer of data to compute
+ * @param[out] result buffer containing result of autocorrelation
+ */
+void vautocorr(long size,float *data, float *result);
 
 /**
  * Invert matrix
@@ -36,6 +44,13 @@ void autocorr(long size,float *data, float *result);
  * @return rank matrix rank (not currently used)
  */
 long minvert(long size, double mat[][MAX_LPC_ORDER]);
+    
+/**
+ * Invert matrix
+ * @param[in] size number of rows in matrix mat
+ * @param[in] mat matrix to invert
+ */
+void vminvert(long rows, double mat[][MAX_LPC_ORDER]);
 
 /**
  * Compute LPC coefficients from data buffer
@@ -143,6 +158,12 @@ public:
      * @param[in] gain gain level of audio signal
      */
     void computeLPCFreqResp(Float32 gain);
+    
+    /**
+     * Hardware-accelecrated, compute the LPC magnitude spectrum from the LPC coefficients
+     * @param[in] gain gain level of audio signal
+     */
+    void computeLPCFreqRespV(Float32 gain);
 
     /**
      * Compute the RMS of an audio buffer

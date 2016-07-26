@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>EEA42516-B1CD-4FB2-B807-FBB1E3618DB2</string>
+	<key>IDESourceControlProjectName</key>
+	<string>AudioPlugin</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>979A9CF779966B8017CB668B4FDF3BEDEFBDCDDB</key>
+		<string>https://github.com/Girlfriends/staRt-ionic.git</string>
+		<key>F1BC4876811AFC3F9EBAC1327B95940A459E2E4A</key>
+		<string>github.com:TheAmazingAudioEngine/TheAmazingAudioEngine.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>audio-plugin/src/ios/AudioPlugin/AudioPlugin.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>979A9CF779966B8017CB668B4FDF3BEDEFBDCDDB</key>
+		<string>../../../../../..</string>
+		<key>F1BC4876811AFC3F9EBAC1327B95940A459E2E4A</key>
+		<string>../../../../../..audio-plugin/src/ios/TheAmazingAudioEngine/</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Girlfriends/staRt-ionic.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>979A9CF779966B8017CB668B4FDF3BEDEFBDCDDB</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>979A9CF779966B8017CB668B4FDF3BEDEFBDCDDB</string>
+			<key>IDESourceControlWCCName</key>
+			<string>staRt-ionic</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F1BC4876811AFC3F9EBAC1327B95940A459E2E4A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>TheAmazingAudioEngine</string>
+		</dict>
+	</array>
+</dict>
+</plist>

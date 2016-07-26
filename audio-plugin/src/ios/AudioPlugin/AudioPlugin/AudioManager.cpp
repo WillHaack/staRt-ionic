@@ -159,7 +159,7 @@ void AudioManager::computeLPC()
     }
 
     Float32 gain = 0.5;
-    this->computeLPCFreqResp(gain);
+    this->computeLPCFreqRespV(gain);
 }
 
 void AudioManager::computeLPCFreqResp(Float32 gain)
@@ -173,6 +173,29 @@ void AudioManager::computeLPCFreqResp(Float32 gain)
         double angle = ((double)k)*incr;
         for (int j=0; j<m_lpc_order+1; j++) {
             tmp_sum += m_lpc_coeffs[j] * exp(angle*j*I);
+        }
+        m_lpc_mag_buffer[k] = gain/(abs(tmp_sum) + 1e-20);
+    }
+}
+
+void AudioManager::computeLPCFreqRespV(Float32 gain)
+{
+    double incr = M_PI / ((double)m_lpc_magSpecResolution - 1.0);
+    float vin[m_lpc_magSpecResolution][(m_lpc_order+1)*2];
+    float vout[m_lpc_magSpecResolution][(m_lpc_order+1)*2];
+    
+    for (int k=0; k<m_lpc_magSpecResolution; k++) {
+        double angle = ((double)k)*incr;
+        for (int j=0; j<m_lpc_order+1; j++) {
+            vin[k][2*j] = m_lpc_coeffs[j];
+            vin[k][2*j+1] = angle*j;
+        }
+    }
+    vDSP_rect((float *)vin, 2, (float *)vout, 2, (m_lpc_order+1) * m_lpc_magSpecResolution);
+    for (int k=0; k<m_lpc_magSpecResolution; k++) {
+        std::complex<double> tmp_sum(0.0,0.0);
+        for (int j=0; j<m_lpc_order+1; j++) {
+            tmp_sum += std::complex<double>(vout[k][2*j], vout[k][2*j+1]);
         }
         m_lpc_mag_buffer[k] = gain/(abs(tmp_sum) + 1e-20);
     }
@@ -199,6 +222,21 @@ void lpc_from_data(long order, long size, float *data, double *coeffs)
     float corr[MAX_BLOCK_SIZE];
     
     autocorr(size,data,corr);
+    
+    // New, hardware accelerated matrix inverse
+    for (i=1;i<order;i++) {
+        for (j=1;j<order;j++) r_mat[(i-1)][(j-1)] = corr[abs(i-j)];
+    }
+    vminvert(order-1,r_mat);
+    for (i=0;i<order-1;i++)     {
+        coeffs[i] = 0.0;
+        for (j=0;j<order-1;j++)	{
+            coeffs[i] += r_mat[i][j] * corr[1+j];
+        }
+    }
+    
+    // Old, non-hardware accelerated inverse
+    /*
     for (i=1;i<order;i++) {
         for (j=1;j<order;j++) r_mat[i][j] = corr[abs(i-j)];
     }
@@ -209,6 +247,7 @@ void lpc_from_data(long order, long size, float *data, double *coeffs)
             coeffs[i] += r_mat[i+1][j+1] * corr[1+j];
         }
     }
+    */
 }
 
 void autocorr(long size, float *data, float *result)
@@ -216,18 +255,70 @@ void autocorr(long size, float *data, float *result)
     long i,j,k;
     double temp,norm;
     
-    for (i=0;i<size/2;i++)      {
+    for (i=0;i<size/2;i++) {
         result[i] = 0.0;
         for (j=0;j<size-i-1;j++)	{
             result[i] += data[i+j] * data[j];
         }
     }
+    
+    // find positive slope, store in j
     temp = result[0];
     j = (long) size*0.02;
     while (result[j]<temp && j < size/2)	{
         temp = result[j];
         j += 1;
     }
+    
+    temp = 0.0;
+    for (i=j;i<size*0.5;i++) {
+        if (result[i]>temp) {
+            j = i;
+            temp = result[i];
+        }
+    }
+    norm = 1.0 / size;
+    k = size/2;
+    for (i=0;i<size/2;i++)
+        result[i] *=  (k - i) * norm;
+    if (result[j] == 0) j = 0;
+    else if ((result[j] / result[0]) < 0.4) j = 0;
+    else if (j > size/4) j = 0;
+}
+
+void vautocorr(long size, float *data, float *result)
+{
+    long i,j,k;
+    double temp,norm;
+    float *signal, *filter;
+    uint32_t lenSignal, filterLength, resultLength;
+    
+    filterLength = size;
+    resultLength = filterLength;
+    lenSignal = ((filterLength + 3) & 0xFFFFFFFC) + resultLength;
+    
+    signal = (float *) calloc(lenSignal, sizeof(float));
+    filter = (float *) malloc(filterLength * sizeof(float));
+    
+    for (i = 0; i < filterLength; i++)
+        filter[i] = data[i];
+    
+    for (i = 0; i < resultLength; i++)
+        if (i >=resultLength- filterLength)
+            signal[i] = filter[i - filterLength+1];
+    
+    vDSP_conv(signal, 1, filter, 1, result, 1, resultLength, filterLength);
+    free(signal);
+    free(filter);
+    
+    // find positive slope, store in j
+    temp = result[0];
+    j = (long) size*0.02;
+    while (result[j]<temp && j < size/2)	{
+        temp = result[j];
+        j += 1;
+    }
+    
     temp = 0.0;
     for (i=j;i<size*0.5;i++) {
         if (result[i]>temp) {
@@ -322,6 +413,29 @@ long minvert(long size, double mat[][MAX_LPC_ORDER])
         }
     }
     return rank;
+}
+
+void vminvert(long size, double mat[][MAX_LPC_ORDER])
+{
+    __CLPK_integer error=0;
+    __CLPK_integer lda = MAX_LPC_ORDER;
+    __CLPK_integer pivot[MAX_LPC_ORDER];
+    __CLPK_doublereal workspace[MAX_LPC_ORDER];
+    __CLPK_integer N = size;
+    
+    /*  LU factorisation */
+    dgetrf_(&N, &N, (__CLPK_doublereal *)mat, &lda, pivot, &error);
+    
+    if (error != 0) {
+        // handle the error
+    }
+    
+    /*  matrix inversion */
+    dgetri_(&N, (__CLPK_doublereal *)mat, &lda, pivot, workspace, &N, &error);
+    
+    if (error != 0) {
+        // handle the second error
+    }
 }
 
 

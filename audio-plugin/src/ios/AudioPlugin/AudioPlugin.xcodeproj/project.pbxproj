@@ -29,6 +29,9 @@
 		083A41931CEA4553008AF1A0 /* AudioPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 083A41921CEA4553008AF1A0 /* AudioPlugin.m */; };
 		085D97671CEF9FAE00998A81 /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 085D97651CEF9FAE00998A81 /* AudioManager.cpp */; };
 		085D976B1CEFB17C00998A81 /* LPCDisplayManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 085D97691CEFB17C00998A81 /* LPCDisplayManager.cpp */; };
+		0865125E1D46BA5E0052AD4D /* AudioOptimizationTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0865125D1D46BA5E0052AD4D /* AudioOptimizationTests.mm */; };
+		086512601D46BA5E0052AD4D /* libAudioPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 083A417D1CEA44EA008AF1A0 /* libAudioPlugin.a */; };
+		086512661D46C37B0052AD4D /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F7C0CF1CEE26AD00D8F1BA /* Accelerate.framework */; };
 		08651F791CF8940C004C44E4 /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08651F781CF8940C004C44E4 /* CHCSVParser.m */; };
 		08651F841CF8C261004C44E4 /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08651F781CF8940C004C44E4 /* CHCSVParser.m */; };
 		08661D261CF651D700A95E30 /* LPCRecordingSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 08661D251CF651D700A95E30 /* LPCRecordingSession.m */; };
@@ -80,6 +83,13 @@
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = CordovaLib;
 		};
+		086512611D46BA5E0052AD4D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 083A41751CEA44EA008AF1A0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 083A417C1CEA44EA008AF1A0;
+			remoteInfo = AudioPlugin;
+		};
 		08A3842F1CEE1A5200E6DA6D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 083A41751CEA44EA008AF1A0 /* Project object */;
@@ -120,6 +130,9 @@
 		085D97661CEF9FAE00998A81 /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioManager.h; sourceTree = "<group>"; };
 		085D97691CEFB17C00998A81 /* LPCDisplayManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LPCDisplayManager.cpp; sourceTree = "<group>"; };
 		085D976A1CEFB17C00998A81 /* LPCDisplayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPCDisplayManager.h; sourceTree = "<group>"; };
+		0865125B1D46BA5E0052AD4D /* AudioOptimizationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioOptimizationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0865125D1D46BA5E0052AD4D /* AudioOptimizationTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioOptimizationTests.mm; sourceTree = "<group>"; };
+		0865125F1D46BA5E0052AD4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08651F771CF8940C004C44E4 /* CHCSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVParser.h; sourceTree = "<group>"; };
 		08651F781CF8940C004C44E4 /* CHCSVParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCSVParser.m; sourceTree = "<group>"; };
 		08661D231CF6501800A95E30 /* LPCRecordingSessionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPCRecordingSessionData.h; sourceTree = "<group>"; };
@@ -198,6 +211,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		086512581D46BA5E0052AD4D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				086512661D46C37B0052AD4D /* Accelerate.framework in Frameworks */,
+				086512601D46BA5E0052AD4D /* libAudioPlugin.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		08A384071CEE0E3C00E6DA6D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -219,6 +241,7 @@
 				08F7C0891CEE20F300D8F1BA /* TheAmazingAudioEngine */,
 				083A417F1CEA44EA008AF1A0 /* AudioPlugin */,
 				08A3840B1CEE0E3C00E6DA6D /* AudioPluginTester */,
+				0865125C1D46BA5E0052AD4D /* AudioOptimizationTests */,
 				083A417E1CEA44EA008AF1A0 /* Products */,
 				083A41891CEA452E008AF1A0 /* CordovaLib.xcodeproj */,
 				7480FD24EC61FEDDE5A1350A /* Frameworks */,
@@ -230,6 +253,7 @@
 			children = (
 				083A417D1CEA44EA008AF1A0 /* libAudioPlugin.a */,
 				08A3840A1CEE0E3C00E6DA6D /* AudioPluginTester.app */,
+				0865125B1D46BA5E0052AD4D /* AudioOptimizationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -263,6 +287,15 @@
 				083A418E1CEA452E008AF1A0 /* libCordova.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		0865125C1D46BA5E0052AD4D /* AudioOptimizationTests */ = {
+			isa = PBXGroup;
+			children = (
+				0865125D1D46BA5E0052AD4D /* AudioOptimizationTests.mm */,
+				0865125F1D46BA5E0052AD4D /* Info.plist */,
+			);
+			path = AudioOptimizationTests;
 			sourceTree = "<group>";
 		};
 		08651F761CF8940C004C44E4 /* CHCSVParser */ = {
@@ -406,6 +439,24 @@
 			productReference = 083A417D1CEA44EA008AF1A0 /* libAudioPlugin.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		0865125A1D46BA5E0052AD4D /* AudioOptimizationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 086512631D46BA5E0052AD4D /* Build configuration list for PBXNativeTarget "AudioOptimizationTests" */;
+			buildPhases = (
+				086512571D46BA5E0052AD4D /* Sources */,
+				086512581D46BA5E0052AD4D /* Frameworks */,
+				086512591D46BA5E0052AD4D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				086512621D46BA5E0052AD4D /* PBXTargetDependency */,
+			);
+			name = AudioOptimizationTests;
+			productName = AudioOptimizationTests;
+			productReference = 0865125B1D46BA5E0052AD4D /* AudioOptimizationTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		08A384091CEE0E3C00E6DA6D /* AudioPluginTester */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 08A3841E1CEE0E3C00E6DA6D /* Build configuration list for PBXNativeTarget "AudioPluginTester" */;
@@ -439,6 +490,9 @@
 					083A41D11CEA5075008AF1A0 = {
 						CreatedOnToolsVersion = 7.2;
 					};
+					0865125A1D46BA5E0052AD4D = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
 					08A384091CEE0E3C00E6DA6D = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 5DS3E6QN8H;
@@ -468,6 +522,7 @@
 				083A417C1CEA44EA008AF1A0 /* AudioPlugin */,
 				083A41D11CEA5075008AF1A0 /* UniversalLib */,
 				08A384091CEE0E3C00E6DA6D /* AudioPluginTester */,
+				0865125A1D46BA5E0052AD4D /* AudioOptimizationTests */,
 			);
 		};
 /* End PBXProject section */
@@ -483,6 +538,13 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		086512591D46BA5E0052AD4D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		08A384081CEE0E3C00E6DA6D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -549,6 +611,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		086512571D46BA5E0052AD4D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0865125E1D46BA5E0052AD4D /* AudioOptimizationTests.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		08A384061CEE0E3C00E6DA6D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -568,6 +638,11 @@
 			isa = PBXTargetDependency;
 			name = CordovaLib;
 			targetProxy = 083A418F1CEA4535008AF1A0 /* PBXContainerItemProxy */;
+		};
+		086512621D46BA5E0052AD4D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 083A417C1CEA44EA008AF1A0 /* AudioPlugin */;
+			targetProxy = 086512611D46BA5E0052AD4D /* PBXContainerItemProxy */;
 		};
 		08A384301CEE1A5200E6DA6D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -735,6 +810,30 @@
 			};
 			name = Release;
 		};
+		086512641D46BA5E0052AD4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = AudioOptimizationTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.girlfriendslabs.AudioOptimizationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		086512651D46BA5E0052AD4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = AudioOptimizationTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.girlfriendslabs.AudioOptimizationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		08A3841F1CEE0E3C00E6DA6D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -804,6 +903,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		086512631D46BA5E0052AD4D /* Build configuration list for PBXNativeTarget "AudioOptimizationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				086512641D46BA5E0052AD4D /* Debug */,
+				086512651D46BA5E0052AD4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		08A3841E1CEE0E3C00E6DA6D /* Build configuration list for PBXNativeTarget "AudioPluginTester" */ = {
 			isa = XCConfigurationList;

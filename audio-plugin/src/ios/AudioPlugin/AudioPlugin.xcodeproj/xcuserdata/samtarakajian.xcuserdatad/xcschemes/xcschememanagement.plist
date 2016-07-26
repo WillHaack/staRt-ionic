@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AudioOptimizationTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>AudioPlugin.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -43,6 +48,11 @@
 			<true/>
 		</dict>
 		<key>083A41D11CEA5075008AF1A0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0865125A1D46BA5E0052AD4D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
