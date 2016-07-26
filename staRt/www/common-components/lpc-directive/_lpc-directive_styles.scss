@@ -1,12 +1,47 @@
 lpc-directive
 {
-  display: -webkit-flex;
-  -webkit-flex: 1;
-  margin: auto;
+	display: -webkit-flex;
+	-webkit-flex: 1;
+	margin: auto;
+	position: absolute;
+	bottom: 0;
+	flex-flow: column;
 }
 
 #lpc-canvas {
-  width: 300px;
-  height: 200px;
-  margin: auto;
+	width: 300px;
+	height: 200px;
+	margin: auto;
+}
+
+.lpc-container .range
+{
+	height: 300px;
+
+	input
+	{
+		background: transparent;
+	}
+}
+
+.lpc-container input[type='range']
+{
+	background-color: transparent;
+	box-shadow: none;
+	overflow: visible;
+
+	&::-webkit-slider-thumb
+	{
+		height: 300px;
+		width: 50px;
+		display: block;
+		background: url('http://chalkidiki-now.com/static/images/starfish.gif') no-repeat;
+		background-size: 50px 50px;
+		background-position: center bottom;
+		box-shadow: none;
+		border-right: 1px solid red;
+		border-radius: 0;
+		position: relative;
+		bottom: 100px;
+	}
 }

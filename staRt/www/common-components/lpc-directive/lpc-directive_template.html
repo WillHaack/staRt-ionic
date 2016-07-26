@@ -1,3 +1,6 @@
 <div class="lpc-container">
-  <!-- <canvas id="lpc-canvas" ng-click="drawRandomPoints()"></canvas> -->
+	<!-- <canvas id="lpc-canvas" ng-click="drawRandomPoints()"></canvas> -->
+	<div ng-if="slider" class="item range">
+		<input type="range" min="25" max="45" ng-model="lpcOrder" ng-change="updatePluginLPCOrder()"/>
+	</div>
 </div>

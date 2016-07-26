@@ -10,6 +10,8 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 	console.log('LpcDirectiveController active!');
 
+	console.log($scope);
+
 	// requestAnim shim layer by Paul Irish
 	window.requestAnimFrame = (function(){
 		return  window.requestAnimationFrame       ||
