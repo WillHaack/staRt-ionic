@@ -5,7 +5,7 @@
 
 var lpcDirective = angular.module( 'lpcDirective' );
 
-lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope, $state, $stateParams, $element )
+lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope, $state, $stateParams, $element, $timeout )
 {
 
 	console.log('LpcDirectiveController active!');
@@ -121,6 +121,8 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 	$scope.animate();
 
+	// $scope.updateFilter();
+
 	$scope.updateFilter = function()
 	{
 		var wrappedElement = angular.element(element);
@@ -147,5 +149,10 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		.css('left', 'calc(' + position + '% - ' + positionOffset + 'px)')
 		.text(controlVal);
 	}
+
+	$timeout(function()
+	{
+		$scope.updateFilter();
+	});
 
 } );
