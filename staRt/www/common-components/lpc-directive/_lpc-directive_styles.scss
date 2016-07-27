@@ -14,9 +14,17 @@ lpc-directive
 	margin: auto;
 }
 
+.lpc-container
+{
+	position: absolute;
+	bottom: 0;
+	width: 800px;
+}
+
 .lpc-container .range
 {
-	height: 300px;
+	height: 400px;
+	background-color: transparent;
 
 	input
 	{
@@ -29,10 +37,12 @@ lpc-directive
 	background-color: transparent;
 	box-shadow: none;
 	overflow: visible;
+	position: absolute;
+	bottom: 72px;
 
 	&::-webkit-slider-thumb
 	{
-		height: 300px;
+		height: 400px;
 		width: 50px;
 		display: block;
 		background: url('http://chalkidiki-now.com/static/images/starfish.gif') no-repeat;
