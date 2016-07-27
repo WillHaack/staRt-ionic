@@ -192,7 +192,9 @@ lpc-directive {
   box-shadow: none;
   overflow: visible;
   position: absolute;
-  bottom: 72px; }
+  bottom: 72px;
+  left: 0;
+  width: 100%; }
   .lpc-container input[type='range']::-webkit-slider-thumb {
     height: 400px;
     width: 50px;
@@ -220,6 +222,6 @@ lpc-directive {
   line-height: 24px;
   text-align: center; }
 
-.lpc-container input[type=range]:active + output {
+.lpc-container input[type='range']:active + output {
   display: block;
   transform: translateX(-50%); }

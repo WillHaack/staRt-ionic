@@ -140,14 +140,12 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		var positionOffset = Math.round(controlThumbWidth * position / 100) - (controlThumbWidth / 2);
 		var output = control.next('output');
 
-		// 'calc(' + position + '% - ' + positionOffset + 'px)'
 		console.log('position: ', position);
 		console.log('positionOffset: ', positionOffset);
 
 		output
 		.css('left', 'calc(' + position + '% - ' + positionOffset + 'px)')
 		.text(controlVal);
-		// debugger;
 	}
 
 } );
