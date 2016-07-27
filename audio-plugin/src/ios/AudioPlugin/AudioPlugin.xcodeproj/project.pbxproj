@@ -911,6 +911,7 @@
 				086512651D46BA5E0052AD4D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		08A3841E1CEE0E3C00E6DA6D /* Build configuration list for PBXNativeTarget "AudioPluginTester" */ = {
 			isa = XCConfigurationList;

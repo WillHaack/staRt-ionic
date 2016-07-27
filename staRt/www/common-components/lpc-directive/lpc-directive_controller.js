@@ -31,7 +31,6 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	}
 
 	var element = $element;
-	var WIDTH=800, HEIGHT=400;
 
 	$scope.getLPCCoefficients = function(cb) {
 		if (window.AudioPlugin !== undefined) {
@@ -39,22 +38,29 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		}
 	};
 
+	var canvas = document.getElementById("lpc-canvas");
+	var renderer = new THREE.WebGLRenderer({ antialias: true, canvas: canvas });
+	var WIDTH=canvas.clientWidth, HEIGHT=canvas.clientHeight;
 	var ASPECT = WIDTH/HEIGHT;
 	var camera = new THREE.OrthographicCamera(WIDTH/-2, WIDTH/2, HEIGHT/-2, HEIGHT/2, 1, 1000);
 	var scene = new THREE.Scene();
 	scene.add(camera);
 	camera.position.set(0, 0, 100);
 	camera.lookAt(new THREE.Vector3(0, 0, 0));
-	var renderer = new THREE.WebGLRenderer({ antialias: true });
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize(WIDTH, HEIGHT);
-	element.append(renderer.domElement);
+
+	$scope.canvas = canvas;
+	$scope.renderer = renderer;
+	$scope.camera = camera;
 
 	var line;
 	var peaks, points, frequencyScaling;
 	var peakSegments;
 
 	$scope.lpcCoefficientCallback = function(msg) {
+		var WIDTH = renderer.getSize().width;
+		var HEIGHT = renderer.getSize().height;
 		points = msg.coefficients;
 		peaks = msg.freqPeaks;
 		frequencyScaling = msg.freqScale;
@@ -84,6 +90,8 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	};
 
 	$scope.update = function() {
+		var WIDTH = renderer.getSize().width;
+		var HEIGHT = renderer.getSize().height;
 		if (line !== undefined) {
 			for (var i=0; i<points.length; i++) {
 				var px = linScale(i*frequencyScaling, 0, points.length-1, WIDTH/-2, WIDTH/2);
@@ -116,6 +124,25 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		$scope.update();
 		renderer.render(scene, camera);
 	};
+
+	$scope.scaleContext = function() {
+		var renderer = $scope.renderer;
+		var canvas = $scope.canvas;
+		var camera = $scope.camera;
+		var WIDTH = parseInt(renderer.domElement.clientWidth);
+		var HEIGHT = parseInt(renderer.domElement.clientHeight);
+
+		if (renderer.getSize().width != WIDTH ||
+			renderer.getSize().height != HEIGHT) 
+		{	
+			renderer.setSize(WIDTH, HEIGHT);
+			camera.left = -WIDTH/2;
+	        camera.right = WIDTH/2;
+	        camera.top = -HEIGHT/2;
+	        camera.bottom = HEIGHT/2;
+	        camera.updateProjectionMatrix();
+	    }
+	}
 
 	$scope.animate();
 

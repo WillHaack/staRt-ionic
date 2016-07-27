@@ -12,7 +12,8 @@
     "angular-localforage": "~1.2.5",
     "ngCordova": "~0.1.26-alpha",
     "angular": "~1.5.7",
-    "three.js": "threejs#*"
+    "three.js": "threejs#*",
+    "ng-resize": "^1.2.0"
   },
   "resolutions": {
     "angular-ui-router": "~0.3.0",
