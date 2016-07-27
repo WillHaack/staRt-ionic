@@ -121,4 +121,33 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 	$scope.animate();
 
+	$scope.updateFilter = function()
+	{
+		var wrappedElement = angular.element(element);
+		var control = wrappedElement.find('input');
+
+		var controlMin = control.attr('min')
+		var controlMax = control.attr('max')
+		var controlVal = control.val()
+		var controlThumbWidth = control.attr('data-thumbwidth');
+
+		var range = controlMax - controlMin;
+
+		var position = ((controlVal - controlMin) / range) * 100;
+
+		console.log(position, controlThumbWidth)
+
+		var positionOffset = Math.round(controlThumbWidth * position / 100) - (controlThumbWidth / 2);
+		var output = control.next('output');
+
+		// 'calc(' + position + '% - ' + positionOffset + 'px)'
+		console.log('position: ', position);
+		console.log('positionOffset: ', positionOffset);
+
+		output
+		.css('left', 'calc(' + position + '% - ' + positionOffset + 'px)')
+		.text(controlVal);
+		// debugger;
+	}
+
 } );
