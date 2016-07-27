@@ -1,0 +1,16 @@
+An upload test server, to verify that file uploads from the app are working correctly
+
+Before you run the server, to set up the python environment, do:
+
+virtualenv /tmp/srvr
+source /tmp/srvr/bin/activate
+pip install -r requirements.txt
+
+Then, to run the server, just do
+python application.py
+
+Which will start listening for POST requests on localhost:5000
+
+To end the virtual environment, after closing the server, just run
+
+deactivate
