@@ -1,7 +1,13 @@
+<!-- LPC stuff wrapper -->
 <div class="lpc-container">
-	<!-- <canvas id="lpc-canvas" ng-click="drawRandomPoints()"></canvas> -->
+
+	<!-- LPC itself -->
+	<canvas id="lpc-canvas"></canvas>
+
+	<!-- Slider -->
 	<div ng-if="slider" class="item range">
-		<input type="range" min="0" max="4500" ng-model="lpc" ng-change="updateFilter()" data-thumbwidth="50" value="3000"/>
+		<input type="range" min="0" max="4500" ng-model="lpc" ng-change="updateTarget()" data-thumbwidth="50" value="3000"/>
 		<output name="rangeVal">50</output>
 	</div>
+
 </div>
