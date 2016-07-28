@@ -5,10 +5,12 @@
 
 var lpcDirective = angular.module( 'lpcDirective' );
 
-lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope, $state, $stateParams, $element )
+lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope, $state, $stateParams, $element, $timeout, $localForage )
 {
 
 	console.log('LpcDirectiveController active!');
+
+	console.log($scope);
 
 	// requestAnim shim layer by Paul Irish
 	window.requestAnimFrame = (function(){
@@ -146,5 +148,40 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	}
 
 	$scope.animate();
+
+	$scope.updateTarget = function()
+	{	
+		// Move value bubble
+		var wrappedElement = angular.element(element);
+		var control = wrappedElement.find('input');
+
+		var controlMin = control.attr('min')
+		var controlMax = control.attr('max')
+		var controlVal = control.val()
+		var controlThumbWidth = control.attr('data-thumbwidth');
+
+		var range = controlMax - controlMin;
+
+		var position = ((controlVal - controlMin) / range) * 100;
+
+		var positionOffset = Math.round(controlThumbWidth * position / 100) - (controlThumbWidth / 2);
+		var output = control.next('output');
+
+		output
+		.css('left', 'calc(' + position + '% - ' + positionOffset + 'px)')
+		.text(controlVal);
+
+		// Update current user's Target F3
+
+
+	}
+
+	// Set initial LPC 
+	$timeout(function()
+	{
+		$scope.updateTarget();
+	});
+
+
 
 } );
