@@ -5,10 +5,12 @@
 
 var lpcDirective = angular.module( 'lpcDirective' );
 
-lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope, $state, $stateParams, $element )
+lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope, $state, $stateParams, $element, $timeout )
 {
 
 	console.log('LpcDirectiveController active!');
+
+	console.log($scope);
 
 	// requestAnim shim layer by Paul Irish
 	window.requestAnimFrame = (function(){
@@ -145,5 +147,37 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	}
 
 	$scope.animate();
+
+	$scope.updateFilter = function()
+	{
+		var wrappedElement = angular.element(element);
+		var control = wrappedElement.find('input');
+
+		var controlMin = control.attr('min')
+		var controlMax = control.attr('max')
+		var controlVal = control.val()
+		var controlThumbWidth = control.attr('data-thumbwidth');
+
+		var range = controlMax - controlMin;
+
+		var position = ((controlVal - controlMin) / range) * 100;
+
+		console.log(position, controlThumbWidth)
+
+		var positionOffset = Math.round(controlThumbWidth * position / 100) - (controlThumbWidth / 2);
+		var output = control.next('output');
+
+		console.log('position: ', position);
+		console.log('positionOffset: ', positionOffset);
+
+		output
+		.css('left', 'calc(' + position + '% - ' + positionOffset + 'px)')
+		.text(controlVal);
+	}
+
+	$timeout(function()
+	{
+		$scope.updateFilter();
+	});
 
 } );
