@@ -121,8 +121,6 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 	$scope.animate();
 
-	// $scope.updateFilter();
-
 	$scope.updateFilter = function()
 	{
 		var wrappedElement = angular.element(element);
