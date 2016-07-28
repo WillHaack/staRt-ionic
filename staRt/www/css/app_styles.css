@@ -200,7 +200,7 @@ lpc-directive {
     display: block;
     background: url("http://chalkidiki-now.com/static/images/starfish.gif") no-repeat;
     background-size: 50px 50px;
-    background-position: right bottom;
+    background-position: center bottom;
     box-shadow: none;
     border-radius: 0;
     position: relative;
@@ -221,12 +221,15 @@ lpc-directive {
   text-align: center; }
   .lpc-container output:after {
     content: '';
-    height: 400px;
+    height: 500px;
     width: 2px;
     background-color: white;
     display: block;
     margin-left: 50%;
-    margin-right: 50%; }
+    margin-right: 50%;
+    position: absolute;
+    top: -30px;
+    z-index: -1; }
 
 .lpc-container input[type='range']:active + output {
   display: block;
