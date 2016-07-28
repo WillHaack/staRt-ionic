@@ -92,6 +92,7 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	$scope.update = function() {
 		var WIDTH = renderer.getSize().width;
 		var HEIGHT = renderer.getSize().height;
+		
 		if (line !== undefined) {
 			for (var i=0; i<points.length; i++) {
 				var px = linScale(i*frequencyScaling, 0, points.length-1, WIDTH/-2, WIDTH/2);

@@ -29,7 +29,9 @@
     {
       "locator": "../audio-plugin",
       "id": "site.girlfriends.start.audio"
-    }
+    },
+    "cordova-plugin-file",
+    "cordova-plugin-file-transfer"
   ],
   "cordovaPlatforms": [
     "ios"
