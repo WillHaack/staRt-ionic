@@ -57,7 +57,7 @@
 			return {ratings:[]};
 		}
 
-		function recordingDidStart() {
+		function recordingDidStart(profileDescArray) {
 			$scope.isRecording = true;
 		}
 
@@ -82,7 +82,6 @@
 			resolveLocalFileSystemURL("file://" + absolutePath, function(fileEntry) {
 				fileEntry.file( function(file) {
 					var options = new FileUploadOptions();
-					options.fileKey = "csv";
 					options.fileName = absolutePath.substr(absolutePath.lastIndexOf('/') + 1);
 					options.mimeType = mimeType;
 
@@ -101,9 +100,47 @@
 			});
 		}
 
+		function createFile(dirEntry, fileName, dataObj, successCb) {
+		    // Creates a new file or returns the file if it already exists.
+		    dirEntry.getFile(fileName, {create: true, exclusive: false}, function(fileEntry) {
+		        writeFile(fileEntry, dataObj, successCb);
+		    });
+
+		}
+
+		function writeFile(fileEntry, dataObj, successCb) {
+		    // Create a FileWriter object for our FileEntry (log.txt).
+		    fileEntry.createWriter(function (fileWriter) {
+
+		        fileWriter.onwriteend = function() {
+		            console.log("Successful file read...");
+		            successCb();
+		        };
+
+		        fileWriter.onerror = function (e) {
+		            console.log("Failed file read: " + e.toString());
+		        };
+
+		        fileWriter.write(dataObj);
+		    });
+		}
+
+		function saveJSON(jsonObject, absolutePath, successCb)
+		{
+			var storageDir = absolutePath.substring(0, absolutePath.lastIndexOf('/')+1);
+			var filename = absolutePath.substr(absolutePath.lastIndexOf('/') + 1);
+			resolveLocalFileSystemURL("file://" + storageDir, function(dirEntry) {
+				createFile(dirEntry, filename, JSON.stringify(jsonObject), successCb);
+			});
+		}
+
 		// Wow. Sandboxing makes this much trickier than one would hope
 		function uploadPracticeSessionFiles(session, metadata, lpc, audio)
 		{
+			var jsonPath = metadata.replace("-meta.csv", "-ratings.json");
+			saveJSON(session.ratings, metadata.replace("-meta.csv", "-ratings.json"), function() {
+				uploadFile(jsonPath, 'text/json');
+			});
 			uploadFile(metadata, 'text/csv');
 			uploadFile(lpc, 'text/csv');
 			uploadFile(audio, 'audio/wav');
