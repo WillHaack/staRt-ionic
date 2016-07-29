@@ -30,6 +30,7 @@
 		    return arr;
 		}
 
+		$scope.active = false;
 		$scope.isPracticing = false;
 		$scope.currentWord = null;
 		$scope.rating = 0;
@@ -45,6 +46,17 @@
 		for (var i=0; i<wordList.length; ++i) {
 			wordOrder.push(i);
 		}
+
+		$scope.$on("$ionicView.enter", function() {
+			$scope.active = true;
+		})
+
+		$scope.$on("$ionicView.beforeLeave", function() {
+			$scope.active = false;
+			if ($scope.isRecording) {
+				$scope.endWordPractice();
+			}
+		})
 
 		function scrambleArray(array) {
 			for (var i=0; i<array.length; ++i) {
@@ -179,7 +191,7 @@
 			console.log("Audio: " + files.Audio);
 			var jsonPath = files.Metadata.replace("-meta.csv", "-ratings.json");
 
-			if ($scope.currentPracticeSession.ratings.length > 0) {
+			if ($scope.active && $scope.currentPracticeSession.ratings.length > 0) {
 				saveJSON($scope.currentPracticeSession.ratings, jsonPath, function() {
 					files.Ratings = jsonPath;
 					$scope.currentPracticeSession.files = files;
