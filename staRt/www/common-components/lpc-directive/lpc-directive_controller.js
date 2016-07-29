@@ -12,6 +12,8 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 	console.log($scope);
 
+	$scope.targetF3;
+
 	// requestAnim shim layer by Paul Irish
 	window.requestAnimFrame = (function(){
 		return  window.requestAnimationFrame       ||
@@ -183,16 +185,20 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	}
 
 	$scope.resetF3 = function() {
-		$localForage.getItem('currentUser').then(
-				function(res) {
-					if (res) {
-						res.targetF3 = $rootScope.lookupDefaultF3(res);
+		ProfileService.getCurrentProfile().then(function(res)
+		{
+			if(res)
+			{
+				$scope.targetF3 = ProfileService.lookupDefaultF3(res);
+				$scope.updateTarget();
+				console.log($scope.targetF3);
+				// $scope.targetF3 = res.targetF3;
+				// ProfileService.saveProfile(res);
+			}
 
-						// TODO: Save this change
-						// TODO: update the slider
-					} 
-				}, null
-		);
+		})
+
+		// $scope.updateTarget();
 	}
 
 	// Set initial LPC 

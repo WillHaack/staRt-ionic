@@ -6,10 +6,11 @@ var start = angular.module('start',
     'root'
 ]);
 
-start.config(function($urlRouterProvider, $locationProvider)
+start.config(function($urlRouterProvider, $locationProvider, $ionicConfigProvider)
 {
   $urlRouterProvider.otherwise('/');
   // $locationProvider.html5Mode(true);
+  $ionicConfigProvider.views.maxCache(0);
 });
 
 // This is all automatic boilerplate, none of which is apparently necessary for
