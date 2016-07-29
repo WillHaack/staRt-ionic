@@ -151,6 +151,32 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 	$scope.animate();
 
+	function setInitialTarget()
+	{
+		ProfileService.getCurrentProfile().then(function(res)
+		{
+			console.log('currentProfile:',res)
+			if (res.targetF3)
+			{
+				$scope.targetF3 = res.targetF3;
+				console.log('existing targetf3:', res.targetF3)
+			}
+			else
+			{
+				$scope.targetF3 = ProfileService.lookupDefaultF3(res);
+				console.log('going w default tf3:', $scope.targetF3);
+			}
+
+			// Set initial LPC 
+			$timeout(function()
+			{
+				$scope.updateTarget();
+			});
+		})
+	}
+
+	setInitialTarget();
+
 	$scope.updateTarget = function()
 	{	
 		// Move value bubble
@@ -159,7 +185,7 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 		var controlMin = control.attr('min')
 		var controlMax = control.attr('max')
-		var controlVal = control.val()
+		var controlVal = control.val();
 		var controlThumbWidth = control.attr('data-thumbwidth');
 
 		var range = controlMax - controlMin;
@@ -180,33 +206,32 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 			currentProfile.targetF3 = $scope.targetF3;
 			ProfileService.saveProfile(currentProfile);
 		})
-
-
 	}
 
 	$scope.resetF3 = function() {
 		ProfileService.getCurrentProfile().then(function(res)
 		{
-			if(res)
+			$scope.targetF3 = 50;
+			// $scope.$evalAsync('updateTarget');
+			$timeout(function()
 			{
-				$scope.targetF3 = ProfileService.lookupDefaultF3(res);
 				$scope.updateTarget();
-				console.log($scope.targetF3);
-				// $scope.targetF3 = res.targetF3;
-				// ProfileService.saveProfile(res);
-			}
-
+			})
+			// if(res)
+			// {
+			// 	$scope.targetF3 = ProfileService.lookupDefaultF3(res);
+			// 	$scope.updateTarget();
+			// 	console.log($scope.targetF3);
+			// 	// $scope.targetF3 = res.targetF3;
+			// 	// ProfileService.saveProfile(res);
+			// }
 		})
-
-		// $scope.updateTarget();
 	}
 
-	// Set initial LPC 
-	$timeout(function()
+	$scope.$watch('targetF3', function()
 	{
+		console.log('target changed to: ', $scope.targetF3);
 		$scope.updateTarget();
-	});
-
-
+	})
 
 } );
