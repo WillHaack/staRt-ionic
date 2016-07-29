@@ -31,7 +31,8 @@
       "id": "site.girlfriends.start.audio"
     },
     "cordova-plugin-file",
-    "cordova-plugin-file-transfer"
+    "cordova-plugin-file-transfer",
+    "cordova-plugin-dialogs"
   ],
   "cordovaPlatforms": [
     "ios"

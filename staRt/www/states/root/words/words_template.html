@@ -17,6 +17,9 @@
 	<p ng-hide="!isRecording">
 		Recording!!!
 	</p>
+	<p ng-hide="!isUploading">
+		Uploading {{uploadProgress * 100}}
+	</p>
 	<ion-radio ng-model="rating" ng-value="1" ng-hide="!isPracticing">Poor</ion-radio>
 	<ion-radio ng-model="rating" ng-value="2" ng-hide="!isPracticing">Decent</ion-radio>
 	<ion-radio ng-model="rating" ng-value="3" ng-hide="!isPracticing">Great</ion-radio>

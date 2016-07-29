@@ -182,6 +182,19 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 	}
 
+	$scope.resetF3 = function() {
+		$localForage.getItem('currentUser').then(
+				function(res) {
+					if (res) {
+						res.targetF3 = $rootScope.lookupDefaultF3(res);
+
+						// TODO: Save this change
+						// TODO: update the slider
+					} 
+				}, null
+		);
+	}
+
 	// Set initial LPC 
 	$timeout(function()
 	{

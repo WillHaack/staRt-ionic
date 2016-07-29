@@ -30,10 +30,13 @@
 		    return arr;
 		}
 
+		$scope.active = false;
 		$scope.isPracticing = false;
 		$scope.currentWord = null;
 		$scope.rating = 0;
 		$scope.isRecording = false;
+		$scope.isUploading = false;
+		$scope.uploadProgress = 0;
 		var wordList = parseCSV(wordListData.data).slice(1).map(function(w) {
 			return w[0];
 		});
@@ -43,6 +46,17 @@
 		for (var i=0; i<wordList.length; ++i) {
 			wordOrder.push(i);
 		}
+
+		$scope.$on("$ionicView.enter", function() {
+			$scope.active = true;
+		})
+
+		$scope.$on("$ionicView.beforeLeave", function() {
+			$scope.active = false;
+			if ($scope.isRecording) {
+				$scope.endWordPractice();
+			}
+		})
 
 		function scrambleArray(array) {
 			for (var i=0; i<array.length; ++i) {
@@ -65,12 +79,14 @@
 
 		}
 
-		function uploadFile(absolutePath, mimeType) 
+		function uploadFile(absolutePath, mimeType, progressCb, completeCb) 
 		{
 			var win = function (r) {
 			    console.log("Code = " + r.responseCode);
 			    console.log("Response = " + r.response);
 			    console.log("Sent = " + r.bytesSent);
+			    if (completeCb)
+			    	completeCb(r);
 			}
 
 			var fail = function (error) {
@@ -89,6 +105,7 @@
 					options.headers = headers;
 
 					var ft = new FileTransfer();
+					ft.onProgress = progressCb;
 					ft.upload(fileEntry.toInternalURL(), encodeURI(uploadURL), win, fail, options);
 
 				}, function(error) {
@@ -134,16 +151,37 @@
 			});
 		}
 
-		// Wow. Sandboxing makes this much trickier than one would hope
-		function uploadPracticeSessionFiles(session, metadata, lpc, audio)
+		function uploadCallbackForSession(session, idx) {
+			return function uploadProgressHandler(progressEvent) {
+				session.uploadProgress[idx] = progressEvent.loaded / progressEvent.total;
+				$scope.uploadProgress = session.uploadProgress.reduce(function(x,y){return x+y;})/4;
+			}
+		}
+
+		function completeCallbackForSession(session, idx) {
+			return function completeProgressHandler(response) {
+				session.uploadsComplete[idx] = true;
+				if (session.uploadsComplete.lastIndexOf(false) === -1) {
+					$scope.isUploading = false;
+					navigator.notification.alert(null, null, "Upload Complete");
+				}
+			}
+		}
+
+		function uploadPracticeSessionFiles(session)
 		{
-			var jsonPath = metadata.replace("-meta.csv", "-ratings.json");
-			saveJSON(session.ratings, metadata.replace("-meta.csv", "-ratings.json"), function() {
-				uploadFile(jsonPath, 'text/json');
-			});
-			uploadFile(metadata, 'text/csv');
-			uploadFile(lpc, 'text/csv');
-			uploadFile(audio, 'audio/wav');
+			session.uploadProgress = [0, 0, 0, 0];
+			session.uploadsComplete = [false, false, false, false];
+			var filesToUpload = [session.files.Ratings, session.files.Metadata, session.files.LPC, session.files.Audio];
+			var mimeTypes = ["text/json", "text/csv", "text/csv", "audio/wav"];
+			for (var i=0; i<4; i++) {
+				uploadFile(filesToUpload[i],
+					mimeTypes[i],
+					uploadCallbackForSession(session, i),
+					completeCallbackForSession(session, i)
+				);
+			}
+			$scope.isUploading = true;
 		}
 
 		function recordingDidStop(files) {
@@ -151,7 +189,21 @@
 			console.log("Metadata: " + files.Metadata);
 			console.log("LPC: " + files.LPC);
 			console.log("Audio: " + files.Audio);
-			uploadPracticeSessionFiles($scope.currentPracticeSession, files.Metadata, files.LPC, files.Audio);
+			var jsonPath = files.Metadata.replace("-meta.csv", "-ratings.json");
+
+			if ($scope.active && $scope.currentPracticeSession.ratings.length > 0) {
+				saveJSON($scope.currentPracticeSession.ratings, jsonPath, function() {
+					files.Ratings = jsonPath;
+					$scope.currentPracticeSession.files = files;
+					navigator.notification.confirm("Would you like to upload this word practice session?",
+						function (index) {
+							if (index == 1) {
+								uploadPracticeSessionFiles($scope.currentPracticeSession);
+							}
+						}, "Upload",
+						["OK", "Discard"]);
+				});
+			}
 
 			$scope.isRecording = false;
 		}
@@ -168,7 +220,7 @@
 		function advanceWord() {
 			if ($scope.currentWord !== null) {
 				if ($scope.rating === 0) {
-					alert("Rate pronunciation before advancing!");
+					navigator.notification.alert("Rate pronunciation before advancing!", null, "Word not rated");
 					return;
 				}
 				$scope.currentPracticeSession.ratings.push([$scope.currentWord, $scope.rating]);
