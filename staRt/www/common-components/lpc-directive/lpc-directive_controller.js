@@ -5,7 +5,7 @@
 
 var lpcDirective = angular.module( 'lpcDirective' );
 
-lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope, $state, $stateParams, $element, $timeout, $localForage )
+lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope, $state, $stateParams, $element, $timeout, $localForage, ProfileService )
 {
 
 	console.log('LpcDirectiveController active!');
@@ -172,6 +172,12 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		.text(controlVal);
 
 		// Update current user's Target F3
+		ProfileService.getCurrentProfile().then(function(res)
+		{
+			var currentProfile = res;
+			currentProfile.targetF3 = $scope.targetF3;
+			ProfileService.saveProfile(currentProfile);
+		})
 
 
 	}

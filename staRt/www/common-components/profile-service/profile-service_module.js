@@ -60,7 +60,7 @@ profileService.factory('ProfileService', function($localForage)
 				}
 				else
 				{
-					throw 'Profile doesn\'t exist';
+					profiles.push(profile);
 				}
 				$localForage.setItem('profiles', profiles);
 			});
@@ -68,13 +68,7 @@ profileService.factory('ProfileService', function($localForage)
 
 		createProfile: function()
 		{
-			var profile = newUserProfile();
-			$localForage.getItem('profiles').then(function(profiles)
-			{
-				profiles.append(profile);
-				$localForage.setItem('profiles', profiles);
-			});
-			return profile;
+			return newUserProfile();
 		},
 
 		deleteProfile: function(profile)
