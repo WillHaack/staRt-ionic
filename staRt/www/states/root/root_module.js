@@ -6,6 +6,7 @@
 	[ 
 		'LocalForageModule',
 		'startStateService',
+		'profileService',
 		'lpcDirective',
 		'auto',
 		'freePlay',

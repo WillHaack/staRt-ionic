@@ -1,33 +1,54 @@
 var profileService = angular.module('profileService', []);
 
-profileService.factory('ProfileService', function($rootScope, $scope, $localForage)
+profileService.factory('ProfileService', function($localForage)
 {
 
-	return
-	{
-		function getAllProfiles()
+	function guid() {
+		return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+		s4() + '-' + s4() + s4() + s4();
+	};
+
+	function s4() {
+		return Math.floor((1 + Math.random()) * 0x10000)
+		.toString(16)
+		.substring(1);
+	};
+
+	function newUserProfile() {
+		return {
+			name: undefined,
+			age: undefined,
+			heightFeet: undefined,
+			heightInches: undefined,
+			gender: undefined,
+			uuid: guid()
+		};
+	};
+
+	return {
+		getAllProfiles: function()
 		{
 			return $localForage.getItem('profiles');
-		}
+		},
 
-		function deleteAllProfiles()
+		deleteAllProfiles: function()
 		{
 			return $localForage.setItem('profiles', undefined);
-		}
+		},
 
-		function getCurrentProfile()
+		getCurrentProfile: function()
 		{
 			return $localForage.getItem('currentProfile');
-		}
+		},
 
-		function setCurrentProfile(profile)
+		setCurrentProfile: function(profile)
 		{
 			return $localForage.setItem('currentProfile', profile);
-		}
+		},
 
-		function saveProfile(profile)
+		saveProfile: function(profile)
 		{
-			$localForage.getItem('profiles').then(function(profiles)
+			return $localForage.getItem('profiles').then(function(profiles)
 			{
 				var idx = profiles.findIndex(function(el)
 				{
@@ -39,20 +60,41 @@ profileService.factory('ProfileService', function($rootScope, $scope, $localFora
 				}
 				else
 				{
-					alert('Profile doesn\'t exist!');
+					throw 'Profile doesn\'t exist';
 				}
 				$localForage.setItem('profiles', profiles);
 			});
-		}
+		},
 
-		function createProfile(profile)
+		createProfile: function()
 		{
+			var profile = newUserProfile();
+			$localForage.getItem('profiles').then(function(profiles)
+			{
+				profiles.append(profile);
+				$localForage.setItem('profiles', profiles);
+			});
+			return profile;
+		},
 
-		}
-
-		function deleteProfile(profile)
+		deleteProfile: function(profile)
 		{
-
+			return $localForage.getItem('profiles').then(function(profiles)
+			{
+				var idx = profiles.findIndex(function(el)
+				{
+					return el.uuid == this.uuid;
+				}, profile);
+				if (idx !== -1)
+				{
+					profiles.splice(idx, 1);
+				}
+				else
+				{
+					throw 'Profile doesn\'t exist!';
+				}
+				$localForage.setItem('profiles', profiles);
+			});
 		}
 	}
 
