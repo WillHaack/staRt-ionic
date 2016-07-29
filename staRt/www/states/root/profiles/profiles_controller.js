@@ -10,6 +10,23 @@
 	{
 		console.log('ProfilesController here!');
 
+		function parseCSV(str) {
+		    var arr = [];
+		    var quote = false;
+				var row=0, col=0, c=0;
+		    for (; c < str.length; c++) {
+		        var cc = str[c], nc = str[c+1];
+		        arr[row] = arr[row] || [];
+		        arr[row][col] = arr[row][col] || '';
+		        if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
+		        if (cc == '"') { quote = !quote; continue; }
+		        if (cc == ',' && !quote) { ++col; continue; }
+		        if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+		        arr[row][col] += cc;
+		    }
+		    return arr;
+		}
+
 		// Nota Bene: A valid profile must have the following kv pairs:
 		// "name" (string) the name of the profile
 		// "uuid" (string) some string that is unique to each account
@@ -91,7 +108,7 @@
 		}
 
 		function newUserProfile() {
-			return {
+			var profile = {
 				name: undefined,
 				age: undefined,
 				heightFeet: undefined,
@@ -99,6 +116,7 @@
 				gender: undefined,
 				uuid: guid()
 			};
+			return profile;
 		}
 
 		$scope.setIsEditing = function(isEditing)
