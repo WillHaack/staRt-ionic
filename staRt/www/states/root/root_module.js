@@ -6,6 +6,7 @@
 	[ 
 		'LocalForageModule',
 		'startStateService',
+		'profileService',
 		'lpcDirective',
 		'auto',
 		'freePlay',
@@ -28,12 +29,6 @@
 					templateUrl: 'states/root/root_template.html',
 					controller: 'RootController as root'
 				}
-			},
-			resolve:
-			{
-				normsData: function($http) {
-	          		return $http.get('data/F3r_norms_Lee_et_al_1999.csv');
-	        	}
 			}
 			// abstract: true
 		});

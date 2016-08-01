@@ -10,11 +10,13 @@
 
 		$scope.lpcOrder = 25;
 
-		$scope.logPluginLPCOrder = function(order) {
+		$scope.logPluginLPCOrder = function(order)
+		{
 			console.log("Plugin LPC order is now: " + order);
 		}
 
-		$scope.setLPCOrder = function(order) {
+		$scope.setLPCOrder = function(order)
+		{
 			$scope.lpcOrder = order;
 		};
 
@@ -24,9 +26,15 @@
 			}
 		}
 
-		if (window.AudioPlugin !== undefined) {
-			AudioPlugin.getLPCOrder($scope.setLPCOrder);
-		}
+		$scope.$on('$ionicView.afterEnter', function(event)
+		{
+			console.log('view content loaded!');
+			if (window.AudioPlugin !== undefined)
+			{
+				AudioPlugin.getLPCOrder($scope.setLPCOrder);
+			};
+		});
+
 	});
 
 } )(  );

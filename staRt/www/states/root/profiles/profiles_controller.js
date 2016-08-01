@@ -6,26 +6,9 @@
 {
 	var profiles = angular.module( 'profiles' );
 
-	profiles.controller('ProfilesController', function($scope, $timeout, $localForage, StartUIState, $rootScope, $state)
+	profiles.controller('ProfilesController', function($scope, $timeout, $localForage, StartUIState, ProfileService, $rootScope, $state)
 	{
 		console.log('ProfilesController here!');
-
-		function parseCSV(str) {
-		    var arr = [];
-		    var quote = false;
-				var row=0, col=0, c=0;
-		    for (; c < str.length; c++) {
-		        var cc = str[c], nc = str[c+1];
-		        arr[row] = arr[row] || [];
-		        arr[row][col] = arr[row][col] || '';
-		        if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
-		        if (cc == '"') { quote = !quote; continue; }
-		        if (cc == ',' && !quote) { ++col; continue; }
-		        if (cc == '\n' && !quote) { ++row; col = 0; continue; }
-		        arr[row][col] += cc;
-		    }
-		    return arr;
-		}
 
 		// Nota Bene: A valid profile must have the following kv pairs:
 		// "name" (string) the name of the profile
@@ -65,59 +48,31 @@
 			}
 		];
 
-		$scope.isEditing = false;
-
-		$localForage.getItem('profiles').then(function(res)
+		function init()
 		{
-			if (res)
-			{
+			ProfileService.getAllProfiles().then( function(res) {
 				$scope.profiles = res;
-				console.log($scope.profiles);
-			}
-			else
+			});
+			
+			$scope.isEditing = false;
+
+			ProfileService.getCurrentProfile().then(function(res)
 			{
-				$localForage.setItem('profiles', defaultUsers);
-				$scope.profiles = defaultUsers;
-			}
-		});
+				$scope.data = {
+					currentProfile: res
+				}
+			});
 
-		$scope.updateCurrentUser = function()
+			$scope.$watchCollection('data', function(data)
+			{
+				console.log(data);
+			});
+		}
+
+		$scope.updateCurrentProfile = function()
 		{
-			$localForage.setItem('currentUser', $scope.data.currentUser);
+			ProfileService.setCurrentProfile($scope.data.currentProfile);
 		};
-
-		$scope.data = {
-			currentUser: $localForage.getItem('currentUser')
-		};
-
-		$scope.$watchCollection('data', function(data)
-		{
-			console.log(data);
-		});
-
-		// http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript#105074
-		function guid() {
-			return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-		    s4() + '-' + s4() + s4() + s4();
-		}
-
-		function s4() {
-		  return Math.floor((1 + Math.random()) * 0x10000)
-		    .toString(16)
-		    .substring(1);
-		}
-
-		function newUserProfile() {
-			var profile = {
-				name: undefined,
-				age: undefined,
-				heightFeet: undefined,
-				heightInches: undefined,
-				gender: undefined,
-				uuid: guid()
-			};
-			return profile;
-		}
 
 		$scope.setIsEditing = function(isEditing)
 		{
@@ -127,47 +82,49 @@
 
 		$scope.saveProfile = function()
 		{
-			if ($scope.data.currentUser.name !== undefined &&
-				$scope.data.currentUser.age !== undefined &&
-				$scope.data.currentUser.heightFeet !== undefined &&
-				$scope.data.currentUser.heightInches !== undefined &&
-				$scope.data.currentUser.gender !== undefined)
+			if ($scope.data.currentProfile.name !== undefined &&
+				$scope.data.currentProfile.age !== undefined &&
+				$scope.data.currentProfile.heightFeet !== undefined &&
+				$scope.data.currentProfile.heightInches !== undefined &&
+				$scope.data.currentProfile.gender !== undefined)
 			{
-				var idx = $scope.profiles.findIndex(function(el) {
-					return el.uuid == this.uuid;
-				}, $scope.data.currentUser);
-				if (idx === -1) {
-					$scope.profiles.push($scope.data.currentUser);
-					idx = $scope.profiles.length - 1;
-				} else {
-					$scope.profiles[idx] = $scope.profiles.currentUser;
-				}
-				$scope.setIsEditing(false);
-				$localForage.setItem('profiles', $scope.profiles);
-				$scope.data.currentUser = $scope.profiles[idx];
+				ProfileService.saveProfile($scope.data.currentProfile);
+
+				ProfileService.getAllProfiles().then(function(res)
+				{
+					$scope.profiles = res;
+				})
+
+				$scope.setIsEditing(false);				
 			} else {
 				alert("Profile is missing some data");
 			}
+
+			console.log($scope.profiles);
 		};
 
 		$scope.discardProfile = function()
 		{
+			ProfileService.getCurrentProfile().then( function(res) {
+				$scope.data.currentProfile = res;
+			});
 			$scope.setIsEditing(false);
 		};
 
 		$scope.createProfile = function()
 		{
-			var profile = newUserProfile();
+			$scope.data.currentProfile = ProfileService.createProfile();
 			$scope.setIsEditing(true);
-			$scope.data.currentUser = profile;
 		};
 
 		$scope.deleteAllProfiles = function()
 		{
-			$scope.data.currentUser = undefined;
+			$scope.data.currentProfile = undefined;
 			$scope.profiles = [];
-			$localForage.setItem('profiles', undefined);
+			ProfileService.deleteAllProfiles();
 		};
+
+		init();
 
 	});
 

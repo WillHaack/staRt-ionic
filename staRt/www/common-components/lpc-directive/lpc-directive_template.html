@@ -1,17 +1,25 @@
 <!-- LPC stuff wrapper -->
+<button style="margin:40px;" ng-click="resetF3()">
+	Reset F3
+</button>
 <div class="lpc-container">
 
-	<button style="margin:40px;" ng-click="resetF3()">
-		Reset F3
-	</button>
-
-	<!-- LPC itself -->
-	<canvas id="lpc-canvas"></canvas>
+	<!-- Renderer will be inserted here -->
 
 	<!-- Slider -->
 	<div ng-if="slider" class="item range">
-		<input type="range" min="0" max="4500" ng-model="lpc" ng-change="updateTarget()" data-thumbwidth="50" value="3000"/>
-		<output name="rangeVal">50</output>
+
+		<input
+			type="range"
+			min="0"
+			max="4500"
+			ng-model="data.targetF3"
+			ng-change="updateTarget()"
+			data-thumbwidth="50"/>
+
+		<output name="rangeVal"></output>
 	</div>
 
 </div>
+
+<!--  -->
