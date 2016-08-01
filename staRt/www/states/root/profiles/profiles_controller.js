@@ -35,6 +35,7 @@
 				if (res)
 				{				
 					$scope.data.currentProfile = res;
+					$scope.data.currentProfileUUID = res.uuid;
 				}
 			});
 
@@ -44,9 +45,15 @@
 			});
 		}
 
-		$scope.updateCurrentProfile = function()
+		$scope.updateCurrentProfile = function(profile)
 		{
-			ProfileService.setCurrentProfile($scope.data.currentProfile);
+			ProfileService.setCurrentProfile(profile).then(function() {
+				ProfileService.getCurrentProfile().then(function(res) {
+					if (res) {
+						$scope.data.currentProfile = res;
+					}
+				});
+			});
 		};
 
 		$scope.setIsEditing = function(isEditing)

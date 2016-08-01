@@ -64,7 +64,7 @@ profileService.factory('ProfileService', function($localForage, $http)
 
 		getCurrentProfile: function()
 		{
-			return $localForage.getItem('currentProfileID').then(function(currentID)
+			return $localForage.getItem('currentProfileUUID').then(function(currentID)
 			{
 				return $localForage.getItem('profiles').then(function(profiles)
 				{
@@ -90,7 +90,7 @@ profileService.factory('ProfileService', function($localForage, $http)
 
 		setCurrentProfile: function(profile)
 		{
-			$localForage.setItem('currentProfileID', profile.uuid);
+			return $localForage.setItem('currentProfileUUID', profile.uuid);
 		},
 
 		saveProfile: function(profile)
@@ -107,14 +107,8 @@ profileService.factory('ProfileService', function($localForage, $http)
 				}, profile);
 				if (idx !== -1)
 				{
-					// profiles[idx] = profile;
-					for(var prop in profile)
-					{
-						if(profile.hasOwnProperty(prop))
-						{
-							profiles[idx].prop = profile.prop;
-						}
-					}
+					profiles[idx] = profile;
+
 				}
 				else
 				{

@@ -8,10 +8,10 @@
 
 		<ion-radio
 			name="name"
-			ng-model="data.currentProfile"
+			ng-model="data.currentProfileUUID"
 			ng-repeat="profile in data.profiles"
-			ng-value="{{profile}}"
-			ng-change="updateCurrentProfile()">
+			ng-value="profile.uuid"
+			ng-change="updateCurrentProfile(profile)">
 				{{ (profile.name === undefined) ? 'New Profile' : profile.name }}
 		</ion-radio>
 
