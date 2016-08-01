@@ -90,7 +90,7 @@ profileService.factory('ProfileService', function($localForage, $http)
 
 		setCurrentProfile: function(profile)
 		{
-			return $localForage.setItem('currentProfileUUID', profile.uuid);
+			return $localForage.setItem('currentProfileUUID', profile ? profile.uuid : null);
 		},
 
 		saveProfile: function(profile)
@@ -129,7 +129,7 @@ profileService.factory('ProfileService', function($localForage, $http)
 			{
 				var idx = profiles.findIndex(function(el)
 				{
-					return el.uuid == this.uuid;
+					return el.uuid === this.uuid;
 				}, profile);
 				if (idx !== -1)
 				{

@@ -39,9 +39,12 @@
 				}
 			});
 
-			$scope.$watchCollection('data', function(data)
+			$scope.$watchCollection('data.currentProfile', function(data)
 			{
-				console.log(data);
+				if(data)
+				{
+					$scope.data.currentProfileUUID = $scope.data.currentProfile.uuid;
+				}
 			});
 		}
 
@@ -87,7 +90,7 @@
 
 		};
 
-		$scope.discardProfile = function()
+		$scope.cancelEdit = function()
 		{
 			ProfileService.getCurrentProfile().then( function(res) {
 				$scope.data.currentProfile = res;
@@ -101,9 +104,43 @@
 			$scope.setIsEditing(true);
 		};
 
+		$scope.deleteProfile = function(profile)
+		{
+			ProfileService.deleteProfile(profile).then(function()
+			{
+				var profileIdx = $scope.data.profiles.indexOf(profile);
+
+				// Make sure profile index is always
+				// Bigger than or equal to 0, and always equal to the length minus 1
+				if(profileIdx == $scope.data.profiles.length - 1)
+				{
+					profileIdx -= 1;
+				}
+				if(profileIdx < 0)
+				{
+					profileIdx = 0;
+				}
+
+				ProfileService.getAllProfiles().then(function(res)
+				{
+					$scope.data.profiles = res;
+					if(!res.length)
+					{
+						$scope.data.currentProfile = null;
+						$scope.updateCurrentProfile(null);
+					}
+					else
+					{
+						$scope.data.currentProfile = $scope.data.profiles[profileIdx];
+						$scope.updateCurrentProfile($scope.data.currentProfile);
+					}
+				})
+			})
+		}
+
 		$scope.deleteAllProfiles = function()
 		{
-			var doDelete = function()
+			function doDelete()
 			{
 				$scope.data.currentProfile = undefined;
 				$scope.data.profiles = [];
