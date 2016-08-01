@@ -64,12 +64,26 @@ profileService.factory('ProfileService', function($localForage, $http)
 
 		getCurrentProfile: function()
 		{
-			return $localForage.getItem('currentProfile');
+			return $localForage.getItem('currentProfileID').then(function(currentID)
+			{
+				return $localForage.getItem('profiles').then(function(profiles)
+				{
+					var idx = profiles.findIndex(function(el)
+					{
+						return el.uuid === currentID;
+					});
+					if (idx === -1)
+					{
+						return null
+					}
+					return profile = profiles[idx];
+				})
+			})
 		},
 
 		setCurrentProfile: function(profile)
 		{
-			return $localForage.setItem('currentProfile', profile);
+			$localForage.setItem('currentProfileID', profile.uuid);
 		},
 
 		saveProfile: function(profile)

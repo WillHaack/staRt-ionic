@@ -12,8 +12,6 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 	console.log($scope);
 
-	$scope.targetF3;
-
 	// requestAnim shim layer by Paul Irish
 	window.requestAnimFrame = (function(){
 		return  window.requestAnimationFrame       ||
@@ -150,6 +148,7 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	}
 
 	$scope.animate();
+	$scope.data = {};
 
 	function setInitialTarget()
 	{
@@ -158,13 +157,13 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 			console.log('currentProfile:',res)
 			if (res.targetF3)
 			{
-				$scope.targetF3 = res.targetF3;
+				$scope.data.targetF3 = res.targetF3;
 				console.log('existing targetf3:', res.targetF3)
 			}
 			else
 			{
-				$scope.targetF3 = ProfileService.lookupDefaultF3(res);
-				console.log('going w default tf3:', $scope.targetF3);
+				$scope.data.targetF3 = ProfileService.lookupDefaultF3(res);
+				console.log('going w default tf3:', $scope.data.targetF3);
 			}
 
 			// Set initial LPC 
@@ -203,7 +202,7 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		ProfileService.getCurrentProfile().then(function(res)
 		{
 			var currentProfile = res;
-			currentProfile.targetF3 = $scope.targetF3;
+			currentProfile.targetF3 = parseInt($scope.data.targetF3);
 			ProfileService.saveProfile(currentProfile);
 		})
 	}
@@ -211,27 +210,15 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	$scope.resetF3 = function() {
 		ProfileService.getCurrentProfile().then(function(res)
 		{
-			$scope.targetF3 = 50;
-			// $scope.$evalAsync('updateTarget');
-			$timeout(function()
+			if(res)
 			{
-				$scope.updateTarget();
-			})
-			// if(res)
-			// {
-			// 	$scope.targetF3 = ProfileService.lookupDefaultF3(res);
-			// 	$scope.updateTarget();
-			// 	console.log($scope.targetF3);
-			// 	// $scope.targetF3 = res.targetF3;
-			// 	// ProfileService.saveProfile(res);
-			// }
+				$scope.data.targetF3 = ProfileService.lookupDefaultF3(res);
+				$timeout(function()
+				{
+					$scope.updateTarget();
+				})
+			}
 		})
 	}
-
-	$scope.$watch('targetF3', function()
-	{
-		console.log('target changed to: ', $scope.targetF3);
-		$scope.updateTarget();
-	})
 
 } );
