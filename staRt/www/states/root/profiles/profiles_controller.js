@@ -34,9 +34,7 @@
 			{
 				if (res)
 				{				
-					$scope.data = {
-						currentProfile: res
-					}
+					$scope.data.currentProfile = res;
 				}
 			});
 
@@ -65,19 +63,22 @@
 				$scope.data.currentProfile.heightInches !== undefined &&
 				$scope.data.currentProfile.gender !== undefined)
 			{
-				ProfileService.saveProfile($scope.data.currentProfile);
+				ProfileService.saveProfile($scope.data.currentProfile).then(function()
+					{
+						ProfileService.getAllProfiles().then(function(res)
+						{
+							$scope.data.profiles = res;
+							console.log('profiles after save: ', $scope.data.profiles);
+						});
+					});
 
-				ProfileService.getAllProfiles().then(function(res)
-				{
-					$scope.data.profiles = res;
-				})
 
-				$scope.setIsEditing(false);				
+				$scope.setIsEditing(false);
+				ProfileService.setCurrentProfile($scope.data.currentProfile);		
 			} else {
 				alert("Profile is missing some data");
 			}
 
-			console.log($scope.data.profiles);
 		};
 
 		$scope.discardProfile = function()
