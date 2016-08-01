@@ -11,6 +11,7 @@ start.config(function($urlRouterProvider, $locationProvider, $ionicConfigProvide
   $urlRouterProvider.otherwise('/');
   // $locationProvider.html5Mode(true);
   $ionicConfigProvider.views.maxCache(0);
+  // $ionicConfigProvider.views.transition('none');
 });
 
 // This is all automatic boilerplate, none of which is apparently necessary for
