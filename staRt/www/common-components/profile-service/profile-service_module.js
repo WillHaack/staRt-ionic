@@ -59,7 +59,7 @@ profileService.factory('ProfileService', function($localForage, $http)
 
 		deleteAllProfiles: function()
 		{
-			return $localForage.setItem('profiles', undefined);
+			return $localForage.setItem('profiles', []);
 		},
 
 		getCurrentProfile: function()
@@ -68,15 +68,22 @@ profileService.factory('ProfileService', function($localForage, $http)
 			{
 				return $localForage.getItem('profiles').then(function(profiles)
 				{
-					var idx = profiles.findIndex(function(el)
+					if(profiles)
 					{
-						return el.uuid === currentID;
-					});
-					if (idx === -1)
-					{
-						return null
+						var idx = profiles.findIndex(function(el)
+						{
+							return el.uuid === currentID;
+						});
+						if (idx === -1)
+						{
+							return null
+						}
+						return profile = profiles[idx];
 					}
-					return profile = profiles[idx];
+					else
+					{
+						return null;
+					}
 				})
 			})
 		},
@@ -90,6 +97,10 @@ profileService.factory('ProfileService', function($localForage, $http)
 		{
 			return $localForage.getItem('profiles').then(function(profiles)
 			{
+				if (!profiles)
+				{
+					profiles = [];
+				}
 				var idx = profiles.findIndex(function(el)
 				{
 					return el.uuid == this.uuid;

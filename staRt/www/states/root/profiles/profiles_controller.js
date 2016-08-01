@@ -21,45 +21,22 @@
 		// "stdevF3" (double, optional) the saved stdeviation F3 value
 		// "targetLPCOrder" (int, optional) the saved target LPC order
 
-		var defaultUsers = [
-			{
-				name: 'Eeyore',
-				age: 16,
-				heightFeet: 5,
-				heightInches: 2,
-				gender: 'Male',
-				uuid: '12345678'
-			},
-			{
-				name: 'Piglet',
-				age: 4,
-				heightFeet: 3,
-				heightInches: 2,
-				gender: 'Male',
-				uuid: '87654321'
-			},
-			{
-				name: 'Pooh',
-				age: 26,
-				heightFeet: 7,
-				heightInches: 2,
-				gender: 'Male',
-				uuid: '88888888'
-			}
-		];
-
 		function init()
 		{
 			ProfileService.getAllProfiles().then( function(res) {
-				$scope.profiles = res;
+				$scope.data.profiles = res;
 			});
 			
 			$scope.isEditing = false;
+			$scope.data = {};
 
 			ProfileService.getCurrentProfile().then(function(res)
 			{
-				$scope.data = {
-					currentProfile: res
+				if (res)
+				{				
+					$scope.data = {
+						currentProfile: res
+					}
 				}
 			});
 
@@ -92,7 +69,7 @@
 
 				ProfileService.getAllProfiles().then(function(res)
 				{
-					$scope.profiles = res;
+					$scope.data.profiles = res;
 				})
 
 				$scope.setIsEditing(false);				
@@ -100,7 +77,7 @@
 				alert("Profile is missing some data");
 			}
 
-			console.log($scope.profiles);
+			console.log($scope.data.profiles);
 		};
 
 		$scope.discardProfile = function()
@@ -119,9 +96,26 @@
 
 		$scope.deleteAllProfiles = function()
 		{
-			$scope.data.currentProfile = undefined;
-			$scope.profiles = [];
-			ProfileService.deleteAllProfiles();
+			var doDelete = function()
+			{
+				$scope.data.currentProfile = undefined;
+				$scope.data.profiles = [];
+				ProfileService.deleteAllProfiles();
+			}
+			if(navigator.notification)
+			{
+				navigator.notification.confirm("Are you sure you want to delete all profiles?", function(i)
+				{
+					if(i == 1)
+					{			
+						doDelete();
+					}
+				}, "Delete All", ["OK", "Cancel"]);
+			}
+			else
+			{
+				doDelete();
+			}
 		};
 
 		init();
