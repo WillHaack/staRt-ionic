@@ -107,7 +107,14 @@ profileService.factory('ProfileService', function($localForage, $http)
 				}, profile);
 				if (idx !== -1)
 				{
-					profiles[idx] = profile;
+					// profiles[idx] = profile;
+					for(var prop in profile)
+					{
+						if(profile.hasOwnProperty(prop))
+						{
+							profiles[idx].prop = profile.prop;
+						}
+					}
 				}
 				else
 				{

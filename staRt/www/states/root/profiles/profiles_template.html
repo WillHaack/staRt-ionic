@@ -7,6 +7,7 @@
 		</h2>
 
 		<ion-radio
+			name="name"
 			ng-model="data.currentProfile"
 			ng-repeat="profile in data.profiles"
 			ng-value="{{profile}}"
@@ -88,6 +89,7 @@
 			<li>
 				<strong>Sex:</strong>
 				<ion-radio
+					name="sex"
 					ng-model="data.currentProfile.gender"
 					ng-value="'Male'"
 					ng-class="editing"
@@ -95,6 +97,7 @@
 					Male
 				</ion-radio>
 				<ion-radio
+					name="sex"
 					ng-model="data.currentProfile.gender"
 					ng-value="'Female'"
 					ng-class="editing"
