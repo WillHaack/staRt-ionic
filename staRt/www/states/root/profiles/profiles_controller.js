@@ -104,36 +104,54 @@
 
 		$scope.deleteProfile = function(profile)
 		{
-			ProfileService.deleteProfile(profile).then(function()
+			function doDelete()
 			{
-				var profileIdx = $scope.data.profiles.indexOf(profile);
+				ProfileService.deleteProfile(profile).then(function()
+				{
+					var profileIdx = $scope.data.profiles.indexOf(profile);
 
-				// Make sure profile index is always
-				// Bigger than or equal to 0, and always equal to the length minus 1
-				if(profileIdx == $scope.data.profiles.length - 1)
-				{
-					profileIdx -= 1;
-				}
-				if(profileIdx < 0)
-				{
-					profileIdx = 0;
-				}
+					// Reassign currentProfile
+					if(profileIdx == $scope.data.profiles.length - 1)
+					{
+						profileIdx -= 1;
+					}
+					if(profileIdx < 0)
+					{
+						profileIdx = 0;
+					}
 
-				ProfileService.getAllProfiles().then(function(res)
+					ProfileService.getAllProfiles().then(function(res)
+					{
+						$scope.data.profiles = res;
+						if(!res.length)
+						{
+							$scope.data.currentProfile = null;
+							$scope.updateCurrentProfile(null);
+						}
+						else
+						{
+							$scope.data.currentProfile = $scope.data.profiles[profileIdx];
+							$scope.updateCurrentProfile($scope.data.currentProfile);
+						}
+					});
+				});
+			}
+
+			// Check if we're in the browser or in iOS
+			if(navigator.notification)
+			{
+				navigator.notification.confirm("Are you sure you want to delete " + profile.name + "?" , function(i)
 				{
-					$scope.data.profiles = res;
-					if(!res.length)
-					{
-						$scope.data.currentProfile = null;
-						$scope.updateCurrentProfile(null);
+					if(i == 1)
+					{			
+						doDelete();
 					}
-					else
-					{
-						$scope.data.currentProfile = $scope.data.profiles[profileIdx];
-						$scope.updateCurrentProfile($scope.data.currentProfile);
-					}
-				})
-			})
+				}, "Delete All", ["OK", "Cancel"]);
+			}
+			else
+			{
+				doDelete();
+			}
 		}
 
 		$scope.deleteAllProfiles = function()
