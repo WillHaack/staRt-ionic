@@ -7,7 +7,7 @@
 {
 	var words = angular.module( 'words' );
 
-	words.controller('WordsController', function($scope, $timeout, $localForage, StartUIState, wordListData, $rootScope, $state)
+	words.controller('WordsController', function($scope, $timeout, $localForage, ProfileService, StartUIState, wordListData, $rootScope, $state)
 	{
 		console.log('WordsController here!');
 
@@ -275,20 +275,23 @@
 			console.log("Beginning to practice words");
 
 			if (window.AudioPlugin === undefined) {
-				alert("Can't record word practice --- no Audio");
+				if (navigator.notification)
+					navigator.notification.alert("Can't start work practice: no audio" , null, "Error");
 			}
 
-			$localForage.getItem('currentProfile').then(
+			ProfileService.getCurrentProfile().then( 
 				function(res) {
 					if (res) {
 						beginPracticeForUser(res);
 					} else {
-						alert("Can't start word practice -- no current user");
+						if (navigator.notification)
+							navigator.notification.alert("Can't start word practice -- create a profile first", null, "No profile");
+					} 
+				}, function (err) {
+						if (navigator.notification)
+							navigator.notification.alert("Can't start work practice: " + err, null, "Error");
 					}
-				}, function(err) {
-					alert("Error starting word practice: " + err);
-				}
-			);
+				);
 		};
 
 		$scope.endWordPractice = function() {
