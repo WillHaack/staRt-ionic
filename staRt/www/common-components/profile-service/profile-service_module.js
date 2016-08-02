@@ -114,7 +114,7 @@ profileService.factory('ProfileService', function($localForage, $http)
 				{
 					profiles.push(profile);
 				}
-				$localForage.setItem('profiles', profiles);
+				return $localForage.setItem('profiles', profiles);
 			});
 		},
 

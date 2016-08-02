@@ -78,8 +78,6 @@
 					ProfileService.getAllProfiles().then(function(res)
 					{
 						$scope.data.profiles = res;
-						console.log('profiles after save: ', $scope.data.profiles);
-
 						$scope.setIsEditing(false);
 						ProfileService.setCurrentProfile($scope.data.currentProfile);
 					});
