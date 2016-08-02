@@ -278,7 +278,7 @@
 				alert("Can't record word practice --- no Audio");
 			}
 
-			$localForage.getItem('currentUser').then(
+			$localForage.getItem('currentProfile').then(
 				function(res) {
 					if (res) {
 						beginPracticeForUser(res);
