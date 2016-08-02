@@ -21,57 +21,42 @@
 		// "stdevF3" (double, optional) the saved stdeviation F3 value
 		// "targetLPCOrder" (int, optional) the saved target LPC order
 
-		var defaultUsers = [
-			{
-				name: 'Eeyore',
-				age: 16,
-				heightFeet: 5,
-				heightInches: 2,
-				gender: 'Male',
-				uuid: '12345678'
-			},
-			{
-				name: 'Piglet',
-				age: 4,
-				heightFeet: 3,
-				heightInches: 2,
-				gender: 'Male',
-				uuid: '87654321'
-			},
-			{
-				name: 'Pooh',
-				age: 26,
-				heightFeet: 7,
-				heightInches: 2,
-				gender: 'Male',
-				uuid: '88888888'
-			}
-		];
-
 		function init()
 		{
 			ProfileService.getAllProfiles().then( function(res) {
-				$scope.profiles = res;
+				$scope.data.profiles = res;
 			});
 			
 			$scope.isEditing = false;
+			$scope.data = {};
 
 			ProfileService.getCurrentProfile().then(function(res)
 			{
-				$scope.data = {
-					currentProfile: res
+				if (res)
+				{				
+					$scope.data.currentProfile = res;
+					$scope.data.currentProfileUUID = res.uuid;
 				}
 			});
 
-			$scope.$watchCollection('data', function(data)
+			$scope.$watchCollection('data.currentProfile', function(data)
 			{
-				console.log(data);
+				if(data)
+				{
+					$scope.data.currentProfileUUID = $scope.data.currentProfile.uuid;
+				}
 			});
 		}
 
-		$scope.updateCurrentProfile = function()
+		$scope.updateCurrentProfile = function(profile)
 		{
-			ProfileService.setCurrentProfile($scope.data.currentProfile);
+			ProfileService.setCurrentProfile(profile).then(function() {
+				ProfileService.getCurrentProfile().then(function(res) {
+					if (res) {
+						$scope.data.currentProfile = res;
+					}
+				});
+			});
 		};
 
 		$scope.setIsEditing = function(isEditing)
@@ -88,22 +73,22 @@
 				$scope.data.currentProfile.heightInches !== undefined &&
 				$scope.data.currentProfile.gender !== undefined)
 			{
-				ProfileService.saveProfile($scope.data.currentProfile);
-
-				ProfileService.getAllProfiles().then(function(res)
+				ProfileService.saveProfile($scope.data.currentProfile).then(function()
 				{
-					$scope.profiles = res;
-				})
-
-				$scope.setIsEditing(false);				
+					ProfileService.getAllProfiles().then(function(res)
+					{
+						$scope.data.profiles = res;
+						$scope.setIsEditing(false);
+						ProfileService.setCurrentProfile($scope.data.currentProfile);
+					});
+				});		
 			} else {
 				alert("Profile is missing some data");
 			}
 
-			console.log($scope.profiles);
 		};
 
-		$scope.discardProfile = function()
+		$scope.cancelEdit = function()
 		{
 			ProfileService.getCurrentProfile().then( function(res) {
 				$scope.data.currentProfile = res;
@@ -117,11 +102,75 @@
 			$scope.setIsEditing(true);
 		};
 
+		function clamp(x, lo, hi) 
+		{
+			return (x < lo ? lo : (x > hi ? hi : x));
+		}
+
+		$scope.deleteProfile = function(profile)
+		{
+			function doDelete()
+			{
+				var profileIdx = $scope.data.profiles.indexOf(profile);
+				profileIdx = clamp(profileIdx, 0, $scope.data.profiles.length - 2);
+				ProfileService.deleteProfile(profile).then(function()
+				{
+					ProfileService.getAllProfiles().then(function(res)
+					{
+						$scope.data.profiles = res;
+						if(!res.length)
+						{
+							$scope.data.currentProfile = null;
+							$scope.updateCurrentProfile(null);
+						}
+						else
+						{
+							$scope.data.currentProfile = $scope.data.profiles[profileIdx];
+							$scope.updateCurrentProfile($scope.data.currentProfile);
+						}
+					});
+				});
+			}
+
+			// Check if we're in the browser or in iOS
+			if(navigator.notification)
+			{
+				navigator.notification.confirm("Are you sure you want to delete " + profile.name + "?" , function(i)
+				{
+					if(i == 1)
+					{			
+						doDelete();
+					}
+				}, "Delete All", ["OK", "Cancel"]);
+			}
+			else
+			{
+				doDelete();
+			}
+		}
+
 		$scope.deleteAllProfiles = function()
 		{
-			$scope.data.currentProfile = undefined;
-			$scope.profiles = [];
-			ProfileService.deleteAllProfiles();
+			function doDelete()
+			{
+				$scope.data.currentProfile = undefined;
+				$scope.data.profiles = [];
+				ProfileService.deleteAllProfiles();
+			}
+			if(navigator.notification)
+			{
+				navigator.notification.confirm("Are you sure you want to delete all profiles?", function(i)
+				{
+					if(i == 1)
+					{			
+						doDelete();
+					}
+				}, "Delete All", ["OK", "Cancel"]);
+			}
+			else
+			{
+				doDelete();
+			}
 		};
 
 		init();

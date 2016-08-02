@@ -59,37 +59,48 @@ profileService.factory('ProfileService', function($localForage, $http)
 
 		deleteAllProfiles: function()
 		{
-			return $localForage.setItem('profiles', undefined);
+			return $localForage.setItem('profiles', []);
 		},
 
 		getCurrentProfile: function()
 		{
-			return $localForage.getItem('currentProfileID').then(function(currentID)
+			return $localForage.getItem('currentProfileUUID').then(function(currentID)
 			{
 				return $localForage.getItem('profiles').then(function(profiles)
 				{
-					var idx = profiles.findIndex(function(el)
+					if(profiles)
 					{
-						return el.uuid === currentID;
-					});
-					if (idx === -1)
-					{
-						return null
+						var idx = profiles.findIndex(function(el)
+						{
+							return el.uuid === currentID;
+						});
+						if (idx === -1)
+						{
+							return null
+						}
+						return profile = profiles[idx];
 					}
-					return profile = profiles[idx];
+					else
+					{
+						return null;
+					}
 				})
 			})
 		},
 
 		setCurrentProfile: function(profile)
 		{
-			$localForage.setItem('currentProfileID', profile.uuid);
+			return $localForage.setItem('currentProfileUUID', profile ? profile.uuid : null);
 		},
 
 		saveProfile: function(profile)
 		{
 			return $localForage.getItem('profiles').then(function(profiles)
 			{
+				if (!profiles)
+				{
+					profiles = [];
+				}
 				var idx = profiles.findIndex(function(el)
 				{
 					return el.uuid == this.uuid;
@@ -97,12 +108,13 @@ profileService.factory('ProfileService', function($localForage, $http)
 				if (idx !== -1)
 				{
 					profiles[idx] = profile;
+
 				}
 				else
 				{
 					profiles.push(profile);
 				}
-				$localForage.setItem('profiles', profiles);
+				return $localForage.setItem('profiles', profiles);
 			});
 		},
 
@@ -117,7 +129,7 @@ profileService.factory('ProfileService', function($localForage, $http)
 			{
 				var idx = profiles.findIndex(function(el)
 				{
-					return el.uuid == this.uuid;
+					return el.uuid === this.uuid;
 				}, profile);
 				if (idx !== -1)
 				{
@@ -127,7 +139,7 @@ profileService.factory('ProfileService', function($localForage, $http)
 				{
 					throw 'Profile doesn\'t exist!';
 				}
-				$localForage.setItem('profiles', profiles);
+				return $localForage.setItem('profiles', profiles);
 			});
 		},
 

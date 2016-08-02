@@ -7,17 +7,26 @@
 		</h2>
 
 		<ion-radio
-			ng-model="data.currentProfile"
-			ng-repeat="profile in profiles"
-			ng-value="{{profile}}"
-			ng-change="updateCurrentProfile()">
+			name="name"
+			ng-model="data.currentProfileUUID"
+			ng-repeat="profile in data.profiles"
+			ng-value="profile.uuid"
+			ng-change="updateCurrentProfile(profile)">
 				{{ (profile.name === undefined) ? 'New Profile' : profile.name }}
 		</ion-radio>
 
-		<button class="button create text-and-lpc profiles" ng-click="createProfile()">
+		<button
+			class="button create text-and-lpc profiles"
+			ng-click="createProfile()"
+			ng-disabled="isEditing"
+			ng-hide="isEditing">
 			Create New Profile
 		</button>
-		<button class="button danger text-and-lpc profiles" ng-click="deleteAllProfiles()">
+		<button
+			class="button danger text-and-lpc profiles"
+			ng-click="deleteAllProfiles()"
+			ng-disabled="isEditing"
+			ng-hide="isEditing">
 			Delete All Profiles
 		</button>
 
@@ -26,42 +35,103 @@
 	<div class="profiles__info">
 		<ul class="list">
 			<h2>{{data.currentProfile.name}}</h2>
-			<h3>uuid: {{data.currentProfile.uuid}}</h3>
+			<button ng-click="deleteProfile(data.currentProfile)">Discard</button>
 			<li>
 				<strong>Name:</strong>
-				<input type="text" name="name" class="profiles" ng-model="data.currentProfile.name" placeholder="Name" ng-class="editing" ng-disabled="!isEditing">
+				<input
+					type="text"
+					name="name"
+					class="profiles"
+					ng-model="data.currentProfile.name"
+					placeholder="Name"
+					ng-class="editing"
+					ng-disabled="!isEditing">
 			</li>
 			<li>
 				<strong>Age:</strong>
-				<input type="number" name="age" class="profiles" min="1" max="99" ng-model="data.currentProfile.age" placeholder="Age" ng-class="editing" ng-disabled="!isEditing">
+				<input
+					type="number"
+					name="age"
+					class="profiles"
+					min="1"
+					max="99"
+					ng-model="data.currentProfile.age"
+					placeholder="Age"
+					ng-class="editing"
+					ng-disabled="!isEditing">
 			</li>
 			<li>
 				<strong>Height Feet:</strong>
-				<input type="number" name="heightFeet" class="profiles" min="0" max="8" ng-model="data.currentProfile.heightFeet" placeholder="Feet" ng-class="editing" ng-disabled="!isEditing">
+				<input
+					type="number"
+					name="heightFeet"
+					class="profiles"
+					min="0"
+					max="8"
+					ng-model="data.currentProfile.heightFeet"
+					placeholder="Feet"
+					ng-class="editing"
+					ng-disabled="!isEditing">
 			</li>
 			<li>
 				<strong>Inches:</strong>
-				<input type="number" name="heightInches" class="profiles" min="0" max="11" ng-model="data.currentProfile.heightInches" placeholder="Inches" ng-class="editing" ng-disabled="!isEditing">
+				<input
+					type="number"
+					name="heightInches"
+					class="profiles"
+					min="0"
+					max="11"
+					ng-model="data.currentProfile.heightInches"
+					placeholder="Inches"
+					ng-class="editing"
+					ng-disabled="!isEditing">
 			</li>
 			<li>
 				<strong>Sex:</strong>
-				<ion-radio ng-model="data.currentProfile.gender" ng-value="'Male'" ng-class="editing" ng-disabled="!isEditing">Male</ion-radio>
-				<ion-radio ng-model="data.currentProfile.gender" ng-value="'Female'" ng-class="editing" ng-disabled="!isEditing">Female</ion-radio>
+				<ion-radio
+					name="sex"
+					ng-model="data.currentProfile.gender"
+					ng-value="'Male'"
+					ng-class="editing"
+					ng-disabled="!isEditing">
+					Male
+				</ion-radio>
+				<ion-radio
+					name="sex"
+					ng-model="data.currentProfile.gender"
+					ng-value="'Female'"
+					ng-class="editing"
+					ng-disabled="!isEditing">
+					Female
+				</ion-radio>
 			</li>
 
 			<li>
-				<button type="button" class="button profiles" ng-click="setIsEditing(true)" ng-hide="isEditing">Edit</button>
-				<button type="button" class="button profiles" ng-click="saveProfile()" ng-hide="!isEditing">Save</button>
-				<button type="button" class="button profiles" ng-click="discardProfile()" ng-hide="!isEditing">Discard</button>
+				<button
+					type="button"
+					class="button profiles"
+					ng-click="setIsEditing(true)"
+					ng-hide="isEditing"
+					ng-disabled="!data.currentProfile"
+					ng-hide="!data.currentProfile">
+					Edit
+				</button>
+				<button 
+					type="button" 
+					class="button profiles" 
+					ng-click="saveProfile()" 
+					ng-hide="!isEditing">
+					Save
+				</button>
+				<button
+					type="button"
+					class="button profiles"
+					ng-click="cancelEdit()"
+					ng-hide="!isEditing">
+					Cancel
+				</button>
 			</li>
 		</ul>
 	</div>
-
-<!-- 		<form>
-			<label class="item item-input">
-				<span class="input-label">Username</span>
-				<input type="text" ng-model="newUser.name">
-			</label>
-		</form> -->
 
 </ion-view>
