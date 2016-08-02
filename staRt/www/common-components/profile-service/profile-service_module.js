@@ -139,7 +139,7 @@ profileService.factory('ProfileService', function($localForage, $http)
 				{
 					throw 'Profile doesn\'t exist!';
 				}
-				$localForage.setItem('profiles', profiles);
+				return $localForage.setItem('profiles', profiles);
 			});
 		},
 

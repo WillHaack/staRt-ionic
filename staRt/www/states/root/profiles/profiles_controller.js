@@ -102,24 +102,19 @@
 			$scope.setIsEditing(true);
 		};
 
+		function clamp(x, lo, hi) 
+		{
+			return (x < lo ? lo : (x > hi ? hi : x));
+		}
+
 		$scope.deleteProfile = function(profile)
 		{
 			function doDelete()
 			{
+				var profileIdx = $scope.data.profiles.indexOf(profile);
+				profileIdx = clamp(profileIdx, 0, $scope.data.profiles.length - 2);
 				ProfileService.deleteProfile(profile).then(function()
 				{
-					var profileIdx = $scope.data.profiles.indexOf(profile);
-
-					// Reassign currentProfile
-					if(profileIdx == $scope.data.profiles.length - 1)
-					{
-						profileIdx -= 1;
-					}
-					if(profileIdx < 0)
-					{
-						profileIdx = 0;
-					}
-
 					ProfileService.getAllProfiles().then(function(res)
 					{
 						$scope.data.profiles = res;
