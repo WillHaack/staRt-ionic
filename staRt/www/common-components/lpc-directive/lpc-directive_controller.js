@@ -177,15 +177,17 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		ProfileService.getCurrentProfile().then(function(res)
 		{
 			console.log('currentProfile:',res)
-			if (res.targetF3)
-			{
-				$scope.data.targetF3 = res.targetF3;
-				console.log('existing targetf3:', res.targetF3)
-			}
-			else
-			{
-				$scope.data.targetF3 = ProfileService.lookupDefaultF3(res);
-				console.log('going w default tf3:', $scope.data.targetF3);
+			if (res) {
+				if (res.targetF3)
+				{
+					$scope.data.targetF3 = res.targetF3;
+					console.log('existing targetf3:', res.targetF3)
+				}
+				else
+				{
+					$scope.data.targetF3 = ProfileService.lookupDefaultF3(res);
+					console.log('going w default tf3:', $scope.data.targetF3);
+				}
 			}
 
 			// Set initial LPC 
@@ -223,9 +225,11 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		// Update current user's Target F3
 		ProfileService.getCurrentProfile().then(function(res)
 		{
-			var currentProfile = res;
-			currentProfile.targetF3 = parseInt($scope.data.targetF3);
-			ProfileService.saveProfile(currentProfile);
+			if (res) {
+				var currentProfile = res;
+				currentProfile.targetF3 = parseInt($scope.data.targetF3);
+				ProfileService.saveProfile(currentProfile);
+			}
 		})
 	}
 
