@@ -8,8 +8,6 @@
 	{
 		console.log('ResourcesController here!');
 
-		$scope.lpcOrder = 25;
-
 		$scope.logPluginLPCOrder = function(order)
 		{
 			console.log("Plugin LPC order is now: " + order);
