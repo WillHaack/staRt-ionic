@@ -11,7 +11,30 @@
 	{
 		console.log('WordsController here!');
 
-		var uploadURL = "http://127.0.0.1:5000";
+		var uploadURLs = [
+			"https://byunlab.com/start/session/ratings",
+			"https://byunlab.com/start/session/metadata",
+			"https://byunlab.com/start/session/lpc",
+			"https://byunlab.com/start/session/audio"
+		];
+
+		// var uploadURLs = [
+		// 	"http://localhost:5000",
+		// 	"http://localhost:5000",
+		// 	"http://localhost:5000",
+		// 	"http://localhost:5000"
+		// ];
+
+		function guid() {
+			return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+			s4() + '-' + s4() + s4() + s4();
+		};
+
+		function s4() {
+			return Math.floor((1 + Math.random()) * 0x10000)
+			.toString(16)
+			.substring(1);
+		};
 
 		function parseCSV(str) {
 		    var arr = [];
@@ -68,7 +91,10 @@
 		}
 
 		function initialPracticeSession() {
-			return {ratings:[]};
+			return {
+				id: guid(),
+				ratings: []
+			};
 		}
 
 		function recordingDidStart(profileDescArray) {
@@ -79,7 +105,7 @@
 
 		}
 
-		function uploadFile(absolutePath, mimeType, progressCb, completeCb) 
+		function uploadFile(absolutePath, destURL, mimeType, sessionID, progressCb, completeCb) 
 		{
 			var win = function (r) {
 			    console.log("Code = " + r.responseCode);
@@ -100,13 +126,23 @@
 					var options = new FileUploadOptions();
 					options.fileName = absolutePath.substr(absolutePath.lastIndexOf('/') + 1);
 					options.mimeType = mimeType;
+					options.chunkedMode = false;
 
-					var headers={'filename':options.fileName};
+					var headers={
+						'filename':options.fileName
+					};
 					options.headers = headers;
+					var params = {
+						"session_id": sessionID
+					};
+					options.params = params;
+
+					// HACK: Add the session id to the URL, so that the server will recognize it
+					destURL = destURL + "?session_id=" + sessionID;
 
 					var ft = new FileTransfer();
 					ft.onProgress = progressCb;
-					ft.upload(fileEntry.toInternalURL(), encodeURI(uploadURL), win, fail, options);
+					ft.upload(fileEntry.toInternalURL(), encodeURI(destURL), win, fail, options);
 
 				}, function(error) {
 					console.log(error);
@@ -176,7 +212,9 @@
 			var mimeTypes = ["text/json", "text/csv", "text/csv", "audio/wav"];
 			for (var i=0; i<4; i++) {
 				uploadFile(filesToUpload[i],
+					uploadURLs[i],
 					mimeTypes[i],
+					session.id,
 					uploadCallbackForSession(session, i),
 					completeCallbackForSession(session, i)
 				);
