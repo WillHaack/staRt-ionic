@@ -13,6 +13,9 @@
   font-weight: bold;
   font-style: normal; }
 
+button {
+  font-weight: bold; }
+
 .range {
   padding: 1em; }
 
@@ -41,10 +44,12 @@
 .item {
   border-color: transparent; }
 
+* {
+  font-family: 'Quicksand', 'Helvetica Neue', sans-serif !important; }
+
 #app-container {
   display: -webkit-flex;
   -webkit-flex-direction: row;
-  font-family: 'Quicksand', 'Helvetica Neue', sans-serif;
   line-height: 1.7;
   color: #4d4d4d; }
 
@@ -79,7 +84,9 @@
   display: -webkit-flex;
   -webkit-flex: 1;
   -webkit-flex-direction: column;
-  width: 90vw; }
+  height: 85vh;
+  width: 90vw;
+  margin-top: 110px; }
 
 canvas {
   background-color: #000000; }
@@ -87,8 +94,7 @@ canvas {
 .text-and-lpc {
   display: -webkit-flex;
   -webkit-flex: 1;
-  font-size: 1rem;
-  padding-top: 8rem; }
+  font-size: 1rem; }
 
 .pane {
   flex-flow: column; }
