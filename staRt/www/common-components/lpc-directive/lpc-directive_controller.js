@@ -72,7 +72,7 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	$scope.canvas = canvas;
 	$scope.renderer = renderer;
 	$scope.camera = camera;
-	$scope.active = true;
+	$scope.active = false;
 
 	var line;
 	var peaks, points, frequencyScaling;
@@ -247,14 +247,19 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		})
 	}
 
-	$scope.$on('$destroy', function() {
-        $scope.active = false;
+	$scope.$parent.$on('$ionicView.afterEnter', function() {
+		$scope.active = true;
+		$scope.animate();
+	});
+
+	$scope.$parent.$on('$ionicView.beforeLeave', function() {
+		$scope.active = false;
 	});
 
 	$scope.$watch('targetF3', function()
 	{
 		console.log('target changed to: ', $scope.targetF3);
 		$scope.updateTarget();
-	})
+	});
 
 } );
