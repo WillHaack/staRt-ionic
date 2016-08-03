@@ -33,62 +33,89 @@
 	</ion-list>
 
 	<div class="profiles__info">
-		<ul class="list">
+		<!-- <ul class="list"> -->
 			<h2>{{data.currentProfile.name}}</h2>
 			<button ng-click="deleteProfile(data.currentProfile)">Discard</button>
-			<li>
-				<strong>Name:</strong>
-				<input
-					type="text"
-					name="name"
-					class="profiles"
-					ng-model="data.currentProfile.name"
-					placeholder="Name"
-					ng-class="editing"
-					ng-disabled="!isEditing">
-			</li>
-			<li>
-				<strong>Age:</strong>
-				<input
-					type="number"
-					name="age"
-					class="profiles"
-					min="1"
-					max="99"
-					ng-model="data.currentProfile.age"
-					placeholder="Age"
-					ng-class="editing"
-					ng-disabled="!isEditing">
-			</li>
-			<li>
-				<strong>Height Feet:</strong>
-				<input
-					type="number"
-					name="heightFeet"
-					class="profiles"
-					min="0"
-					max="8"
-					ng-model="data.currentProfile.heightFeet"
-					placeholder="Feet"
-					ng-class="editing"
-					ng-disabled="!isEditing">
-			</li>
-			<li>
-				<strong>Inches:</strong>
-				<input
-					type="number"
-					name="heightInches"
-					class="profiles"
-					min="0"
-					max="11"
-					ng-model="data.currentProfile.heightInches"
-					placeholder="Inches"
-					ng-class="editing"
-					ng-disabled="!isEditing">
-			</li>
-			<li>
-				<strong>Sex:</strong>
-				<ion-radio
+				<label class="item item-input">
+					<span class="input-label">
+						Name
+					</span>
+					<input
+						type="text"
+						name="name"
+						class="profiles"
+						ng-model="data.currentProfile.name"
+						placeholder="Name"
+						ng-class="editing"
+						ng-disabled="!isEditing">
+				</label>
+				<label class="item item-input">
+					<span class="input-label">
+						Age
+					</span>
+					<input
+						type="number"
+						name="age"
+						class="profiles"
+						min="1"
+						max="99"
+						ng-model="data.currentProfile.age"
+						placeholder="Age"
+						ng-class="editing"
+						ng-disabled="!isEditing">
+				</label>
+				<label class="item item-input">
+					<span class="input-label">
+						Height (Feet)
+					</span>
+					<input
+						type="number"
+						name="heightFeet"
+						class="profiles"
+						min="0"
+						max="8"
+						ng-model="data.currentProfile.heightFeet"
+						placeholder="Feet"
+						ng-class="editing"
+						ng-disabled="!isEditing">
+				</label>
+				<label class="item item-input">
+					<span class="input-label">
+						Inches
+					</span>
+					<input
+						type="number"
+						name="heightInches"
+						class="profiles"
+						min="0"
+						max="11"
+						ng-model="data.currentProfile.heightInches"
+						placeholder="Inches"
+						ng-class="editing"
+						ng-disabled="!isEditing">
+				</label>
+				<label class="input item-input">
+					<div class="input-label">
+						Sex
+					</div>
+					<ion-radio
+						name="sex"
+						ng-model="data.currentProfile.gender"
+						ng-value="'Male'"
+						ng-class="editing"
+						ng-disabled="!isEditing">
+						Male
+					</ion-radio>
+					<ion-radio
+						name="sex"
+						ng-model="data.currentProfile.gender"
+						ng-value="'Female'"
+						ng-class="editing"
+						ng-disabled="!isEditing">
+						Female
+					</ion-radio>
+				</label>
+				<!-- <ion-radio
 					name="sex"
 					ng-model="data.currentProfile.gender"
 					ng-value="'Male'"
@@ -103,10 +130,10 @@
 					ng-class="editing"
 					ng-disabled="!isEditing">
 					Female
-				</ion-radio>
-			</li>
+				</ion-radio> -->
+			<!-- </li> -->
 
-			<li>
+			<!-- <li> -->
 				<button
 					type="button"
 					class="button profiles"
@@ -130,8 +157,8 @@
 					ng-hide="!isEditing">
 					Cancel
 				</button>
-			</li>
-		</ul>
+			<!-- </li> -->
+		<!-- </ul> -->
 	</div>
 
 </ion-view>

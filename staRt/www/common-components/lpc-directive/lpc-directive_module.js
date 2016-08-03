@@ -17,7 +17,8 @@ lpcDirective.directive( 'lpcDirective', function()
 		controller: 'LpcDirectiveController',
 		scope:
 		{
-			slider: '='
+			slider: '=',
+			f3: '='
 		},
 		templateUrl: 'common-components/lpc-directive/lpc-directive_template.html'
 		// link: function(scope, element, attrs) {
