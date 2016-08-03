@@ -16,25 +16,27 @@
 		</ion-radio>
 
 		<button
-			class="button create text-and-lpc profiles"
+			class="button button-calm"
 			ng-click="createProfile()"
 			ng-disabled="isEditing"
 			ng-hide="isEditing">
+			<i class="icon ion-person-add"></i>
 			Create New Profile
 		</button>
 		<button
-			class="button danger text-and-lpc profiles"
+			class="button button-stable"
 			ng-click="deleteAllProfiles()"
 			ng-disabled="isEditing"
-			ng-hide="isEditing">
+			ng-hide="isEditing || !data.currentProfile">
+			<i class="icon ion-trash-b"></i>
 			Delete All Profiles
 		</button>
 
 	</ion-list>
 
-	<div class="profiles__info">
-		<!-- <ul class="list"> -->
-			<h2>{{data.currentProfile.name}}</h2>
+	<div
+		class="profiles__info"
+		ng-hide="!data.currentProfile">
 				<label class="item item-input">
 					<span class="input-label">
 						Name
@@ -116,7 +118,7 @@
 				</label>
 				<button
 					type="button"
-					class="button profiles"
+					class="button button-balanced profiles"
 					ng-click="setIsEditing(true)"
 					ng-hide="isEditing"
 					ng-disabled="!data.currentProfile"
@@ -128,7 +130,8 @@
 					type="button"
 					class="button button-assertive profiles"
 					ng-click="deleteProfile(data.currentProfile)"
-					ng-show="!isEditing">
+					ng-show="!isEditing"
+					ng-disabled="!data.currentProfile">
 					<i class="icon ion-trash-b"></i>
 					Discard
 				</button>
