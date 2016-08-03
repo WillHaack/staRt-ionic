@@ -35,7 +35,6 @@
 	<div class="profiles__info">
 		<!-- <ul class="list"> -->
 			<h2>{{data.currentProfile.name}}</h2>
-			<button ng-click="deleteProfile(data.currentProfile)">Discard</button>
 				<label class="item item-input">
 					<span class="input-label">
 						Name
@@ -101,39 +100,20 @@
 					<ion-radio
 						name="sex"
 						ng-model="data.currentProfile.gender"
-						ng-value="'Male'"
-						ng-class="editing"
-						ng-disabled="!isEditing">
-						Male
-					</ion-radio>
-					<ion-radio
-						name="sex"
-						ng-model="data.currentProfile.gender"
 						ng-value="'Female'"
 						ng-class="editing"
 						ng-disabled="!isEditing">
 						Female
 					</ion-radio>
+					<ion-radio
+						name="sex"
+						ng-model="data.currentProfile.gender"
+						ng-value="'Male'"
+						ng-class="editing"
+						ng-disabled="!isEditing">
+						Male
+					</ion-radio>
 				</label>
-				<!-- <ion-radio
-					name="sex"
-					ng-model="data.currentProfile.gender"
-					ng-value="'Male'"
-					ng-class="editing"
-					ng-disabled="!isEditing">
-					Male
-				</ion-radio>
-				<ion-radio
-					name="sex"
-					ng-model="data.currentProfile.gender"
-					ng-value="'Female'"
-					ng-class="editing"
-					ng-disabled="!isEditing">
-					Female
-				</ion-radio> -->
-			<!-- </li> -->
-
-			<!-- <li> -->
 				<button
 					type="button"
 					class="button profiles"
@@ -141,7 +121,16 @@
 					ng-hide="isEditing"
 					ng-disabled="!data.currentProfile"
 					ng-hide="!data.currentProfile">
+					<i class="icon ion-edit"></i>
 					Edit
+				</button>
+				<button
+					type="button"
+					class="button button-assertive profiles"
+					ng-click="deleteProfile(data.currentProfile)"
+					ng-show="!isEditing">
+					<i class="icon ion-trash-b"></i>
+					Discard
 				</button>
 				<button 
 					type="button" 
@@ -157,8 +146,6 @@
 					ng-hide="!isEditing">
 					Cancel
 				</button>
-			<!-- </li> -->
-		<!-- </ul> -->
 	</div>
 
 </ion-view>
