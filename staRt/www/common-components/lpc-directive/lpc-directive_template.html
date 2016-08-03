@@ -1,13 +1,18 @@
-<!-- LPC stuff wrapper -->
-<button style="margin:40px;" ng-click="resetF3()">
+<button
+	ng-if="f3"
+	style="margin:40px;"
+	ng-click="resetF3()">
 	Reset F3
 </button>
+
 <div class="lpc-container">
 
 	<!-- Renderer will be inserted here -->
 
 	<!-- Slider -->
-	<div ng-if="slider" class="item range">
+	<div
+		ng-if="slider"
+		class="item range">
 
 		<input
 			type="range"
@@ -21,5 +26,3 @@
 	</div>
 
 </div>
-
-<!--  -->
