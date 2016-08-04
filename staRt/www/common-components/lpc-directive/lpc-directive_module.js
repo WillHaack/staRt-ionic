@@ -21,14 +21,5 @@ lpcDirective.directive( 'lpcDirective', function()
 			f3: '='
 		},
 		templateUrl: 'common-components/lpc-directive/lpc-directive_template.html'
-		// link: function(scope, element, attrs) {
-	 //      cleanup = $rootScope.$on('locale-changed', function(locale) {
-	 //        element.text(LocaleService.getTranslation(originalText, attrs.locale || locale));
-	 //      });
-	 //      scope.$on('$destroy', function() {
-	 //        console.log("destroy");
-	 //        cleanup();
-	 //      });
-	 //    }
 	};
 } );
