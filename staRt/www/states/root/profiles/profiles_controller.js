@@ -44,6 +44,12 @@
 				if(data)
 				{
 					$scope.data.currentProfileUUID = $scope.data.currentProfile.uuid;
+					if (window.AudioPlugin !== undefined)
+					{
+						if ($scope.data.currentProfile.lpcOrder) {
+							AudioPlugin.setLPCOrder($scope.data.currentProfile.lpcOrder, null);
+						}
+					};
 				}
 			});
 		}

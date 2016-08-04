@@ -4,7 +4,7 @@
 {
 	var resources = angular.module( 'resources' );
 
-	resources.controller('ResourcesController', function($scope, $timeout, $localForage, StartUIState, $rootScope, $state)
+	resources.controller('ResourcesController', function($scope, $timeout, $localForage, ProfileService, StartUIState, $rootScope, $state)
 	{
 		console.log('ResourcesController here!');
 
@@ -20,7 +20,13 @@
 
 		$scope.updatePluginLPCOrder = function() {
 			if (window.AudioPlugin !== undefined) {
-					AudioPlugin.setLPCOrder($scope.lpcOrder, $scope.logPluginLPCOrder);
+				AudioPlugin.setLPCOrder($scope.lpcOrder, $scope.logPluginLPCOrder);
+				ProfileService.getCurrentProfile().then(function (res) {
+					if (res) {
+						res.lpcOrder = $scope.lpcOrder;
+						ProfileService.saveProfile(res);
+					}
+				});
 			}
 		}
 
@@ -29,7 +35,14 @@
 			console.log('view content loaded!');
 			if (window.AudioPlugin !== undefined)
 			{
-				AudioPlugin.getLPCOrder($scope.setLPCOrder);
+				ProfileService.getCurrentProfile().then( function(res) {
+					if (res && res.lpcOrder) {
+						$scope.lpcOrder = res.lpcOrder;
+						AudioPlugin.setLPCOrder($scope.lpcOrder, $scope.logPluginLPCOrder);
+					} else {
+						AudioPlugin.getLPCOrder($scope.setLPCOrder);
+					}
+				});
 			};
 		});
 
