@@ -19,7 +19,7 @@ button {
 .range {
   padding: 1em; }
 
-.range input[type=range] {
+input[type=range] {
   -webkit-appearance: none;
   height: 25px;
   border-radius: 25px;
@@ -28,9 +28,10 @@ button {
   width: 560px;
   margin: 15px;
   border: 0px solid orange;
-  overflow: visible; }
+  overflow: visible;
+  background-size: 0; }
 
-.range input[type=range]::-webkit-slider-thumb {
+input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   margin-top: 0px;
   width: 50px;
@@ -95,6 +96,10 @@ canvas {
   display: -webkit-flex;
   -webkit-flex: 1;
   font-size: 1rem; }
+
+.text-and-lpc__text {
+  font-size: 20pt;
+  font-weight: bold; }
 
 .pane {
   flex-flow: column; }

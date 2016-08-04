@@ -10,7 +10,7 @@ button
 	padding: 1em;
 }
 
-.range input[type=range] {
+input[type=range] {
 	-webkit-appearance: none;
 	height: 25px;
 	border-radius: 25px;
@@ -20,9 +20,10 @@ button
 	margin: 15px;
 	border: 0px solid orange;
 	overflow: visible;
+	background-size: 0;
 }
 
-.range input[type=range]::-webkit-slider-thumb {
+input[type=range]::-webkit-slider-thumb {
 	-webkit-appearance: none;
 	margin-top: 0px;
 	width: 50px;
