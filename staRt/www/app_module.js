@@ -8,7 +8,8 @@ var start = angular.module('start',
 
 start.config(function($urlRouterProvider, $locationProvider, $ionicConfigProvider)
 {
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/free-play');
+  
   // $locationProvider.html5Mode(true);
   // $ionicConfigProvider.views.maxCache(0);
   $ionicConfigProvider.views.transition('none');
