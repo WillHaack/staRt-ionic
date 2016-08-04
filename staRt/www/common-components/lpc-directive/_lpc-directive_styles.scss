@@ -22,7 +22,7 @@ lpc-directive
 	height: 400px;
 }
 
-.lpc-container .range
+.lpc-container .lpc-range
 {
 	height: 400px;
 	background-color: transparent;
@@ -93,7 +93,7 @@ lpc-directive
 
 }
 
-.lpc-container input[type='range']:active + output {
-	display: block;
-	transform: translateX(-50%);
-}
+// .lpc-container input[type='range']:active + output {
+// 	display: block;
+// 	transform: translateX(-50%);
+// }
