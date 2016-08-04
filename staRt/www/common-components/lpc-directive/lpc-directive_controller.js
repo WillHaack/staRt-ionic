@@ -250,6 +250,8 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	$scope.$parent.$on('$ionicView.afterEnter', function() {
 		$scope.active = true;
 		$scope.animate();
+
+		setInitialTarget();
 	});
 
 	$scope.$parent.$on('$ionicView.beforeLeave', function() {
