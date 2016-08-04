@@ -193,7 +193,7 @@ lpc-directive {
   width: 800px;
   height: 400px; }
 
-.lpc-container .range {
+.lpc-container .lpc-range {
   height: 400px;
   background-color: transparent;
   position: absolute;
@@ -202,7 +202,7 @@ lpc-directive {
   left: 0;
   height: 100%;
   width: 100%; }
-  .lpc-container .range input {
+  .lpc-container .lpc-range input {
     background: transparent; }
 
 .lpc-container input[type='range'] {
@@ -248,7 +248,3 @@ lpc-directive {
     position: absolute;
     top: -30px;
     z-index: -1; }
-
-.lpc-container input[type='range']:active + output {
-  display: block;
-  transform: translateX(-50%); }
