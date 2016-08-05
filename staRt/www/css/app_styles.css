@@ -89,13 +89,17 @@ input[type=range]::-webkit-slider-thumb {
   width: 90vw;
   margin-top: 110px; }
 
+.text-content {
+  padding: 3rem; }
+
 canvas {
   background-color: #000000; }
 
 .text-and-lpc {
   display: -webkit-flex;
   -webkit-flex: 1;
-  font-size: 1rem; }
+  font-size: 1rem;
+  padding: 3rem; }
 
 .text-and-lpc__text {
   font-size: 20pt;
@@ -178,8 +182,6 @@ lpc-directive {
   display: -webkit-flex;
   -webkit-flex: 1;
   margin: auto;
-  position: absolute;
-  bottom: 0;
   flex-flow: column; }
 
 #lpc-canvas {
@@ -190,10 +192,19 @@ lpc-directive {
 
 .lpc-container {
   position: relative;
+  position: relative;
   width: 800px;
-  height: 400px; }
+  height: 400px;
+  margin: 0;
+  padding: 0;
+  border-radius: 4px;
+  display: block;
+  background-color: #F0F9FC;
+  border: 15px solid #F0F9FC;
+  border-bottom: 25px solid #F0F9FC;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15); }
 
-.lpc-container .lpc-range {
+.lpc-range {
   height: 400px;
   background-color: transparent;
   position: absolute;
@@ -202,7 +213,7 @@ lpc-directive {
   left: 0;
   height: 100%;
   width: 100%; }
-  .lpc-container .lpc-range input {
+  .lpc-range input {
     background: transparent; }
 
 .lpc-container input[type='range'] {
@@ -212,7 +223,8 @@ lpc-directive {
   position: absolute;
   bottom: 72px;
   left: 0;
-  width: 100%; }
+  width: 100%;
+  z-index: 3; }
   .lpc-container input[type='range']::-webkit-slider-thumb {
     height: 400px;
     display: block;
@@ -235,11 +247,12 @@ lpc-directive {
   border-radius: 3px;
   color: #4d4d4d;
   font-size: .8em;
+  font-weight: bold;
   line-height: 24px;
   text-align: center; }
   .lpc-container output:after {
     content: '';
-    height: 500px;
+    height: 350px;
     width: 2px;
     background-color: white;
     display: block;
@@ -248,3 +261,12 @@ lpc-directive {
     position: absolute;
     top: -30px;
     z-index: -1; }
+
+#sand {
+  height: 60px;
+  display: block;
+  position: absolute;
+  left: -1px;
+  bottom: -1px;
+  width: 100.2%;
+  background-color: #ffeccb; }

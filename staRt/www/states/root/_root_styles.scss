@@ -54,6 +54,11 @@
 
 }
 
+.text-content
+{
+    padding: 3rem;
+}
+
 canvas {
   background-color: #000000;
 }
@@ -62,6 +67,7 @@ canvas {
   display: -webkit-flex;
   -webkit-flex: 1;
   font-size: 1rem;
+  padding: 3rem;
 }
 
 .text-and-lpc__text

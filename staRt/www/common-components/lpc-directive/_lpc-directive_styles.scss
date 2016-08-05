@@ -3,8 +3,6 @@ lpc-directive
 	display: -webkit-flex;
 	-webkit-flex: 1;
 	margin: auto;
-	position: absolute;
-	bottom: 0;
 	flex-flow: column;
 }
 
@@ -18,11 +16,20 @@ lpc-directive
 .lpc-container
 {
 	position: relative;
+	position: relative;
 	width: 800px;
 	height: 400px;
+	margin: 0;
+	padding: 0;
+	border-radius: 4px;
+	display: block;
+	background-color: #F0F9FC;
+	border: 15px solid #F0F9FC;
+	border-bottom: 25px solid #F0F9FC;
+	box-shadow: 1px 1px 1px rgba(0,0,0,0.15);
 }
 
-.lpc-container .lpc-range
+.lpc-range
 {
 	height: 400px;
 	background-color: transparent;
@@ -48,6 +55,7 @@ lpc-directive
 	bottom: 72px;
 	left: 0;
 	width: 100%;
+	z-index: 3;
 
 	&::-webkit-slider-thumb
 	{
@@ -74,13 +82,14 @@ lpc-directive
 	border-radius: 3px;
 	color: $grey;
 	font-size: .8em;
+	font-weight: bold;
 	line-height: 24px;
 	text-align: center;
 
 	&:after
 	{
 		content: '';
-		height: 500px;
+		height: 350px;
 		width: 2px;
 		background-color: white;
 		display: block;
@@ -91,4 +100,15 @@ lpc-directive
 		z-index: -1;
 	}
 
+}
+
+#sand
+{
+	height: 60px;
+	display: block;
+	position: absolute;
+	left: -1px;
+	bottom: -1px;
+	width: 100.2%;
+	background-color: $yellow;
 }
