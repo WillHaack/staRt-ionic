@@ -56,7 +56,7 @@ input[type=range]::-webkit-slider-thumb {
 
 .bar-header {
   background-color: #c5f3ff;
-  height: 110px;
+  height: 14vh !important;
   display: flex;
   align-items: center;
   padding-left: 120px; }
@@ -213,6 +213,8 @@ lpc-directive {
   width: 88%;
   position: absolute;
   left: 0; }
+  .slider-and-canvas.full-width {
+    width: 100%; }
 
 .lpc-buttons {
   display: inline-block;
