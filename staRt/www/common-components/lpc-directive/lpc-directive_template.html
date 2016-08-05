@@ -27,10 +27,23 @@
 	</div>
 
 	<div class="lpc-buttons">
+		<div class="rate-box" ng-if="rate">
+			<button>
+				Great
+			</button>
+			<button>
+				OK
+			</button>
+			<button>
+				Try Again
+			</button>
+		</div>
+		
 		<button
 			ng-click="resetF3()"
-			class="reset-button">
-			Reset F3
+			class="reset-button"
+			ng-if="reset">
+			Reset Target
 		</button>
 	</div>
 

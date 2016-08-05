@@ -5,12 +5,34 @@ staRt as a (potentially) cross-platform speech therapy app, powered by Ionic
 
 The start-ionic app has two parts: an web plugin that manages everything audio related, and an Ionic app that comprises the interface. The audio plugin must be built separately before it can be loaded into the main app
 
-#### building the plugin
+#### First time setup
+Before you can do anything, you need to install and setup a few dependencies. First, you'll need Ionic. Follow the instructions at http://ionicframework.com/getting-started/, which boil down to running
 
 ```
-git submodule --update --init
+npm install -g cordova ionic
 ```
-This downloads TheAmazingAudioEngine as a git submodule
+Next you'll need the TheAmazingAudioEngine submodle, so run
+
+```
+git submodule update --init
+```
+This downloads TheAmazingAudioEngine as a git submodule. Next, download all of the dependencies from npm and bower
+
+```
+cd staRt
+npm install
+bower install
+```
+
+Finally, add the iOS platform, which you need to build the audio plugin
+
+```
+ionic platform add ios
+```
+
+There may be a couple of errors or something, don't sweat it.
+
+#### Building the plugin
 
 ```
 open audio-plugin/src/ios/AudioPlugin/AudioPlugin.xcodeproj
@@ -24,7 +46,7 @@ The audio plugin Xcode project has a couple of different targets. You can see al
 
 So, to build the plugin, simply select the UniversalLib target and build it.
 
-#### buliding the ionic app
+#### Buliding the ionic app
 
 ```
 cd staRt
