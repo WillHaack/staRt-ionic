@@ -26,7 +26,7 @@ input[type=range] {
   background-color: #C5F3FF;
   box-shadow: inset 2px 2px 2px rgba(77, 77, 77, 0.25);
   width: 560px;
-  margin: 15px;
+  margin: 23px;
   border: 0px solid orange;
   overflow: visible;
   background-size: 0; }
@@ -68,7 +68,8 @@ input[type=range]::-webkit-slider-thumb {
   color: #53c8e9;
   font-weight: bold;
   font-size: 50px;
-  text-align: left; }
+  text-align: left;
+  overflow: visible; }
 
 #nav-and-content-container {
   display: flex;
@@ -192,7 +193,6 @@ lpc-directive {
 
 .lpc-container {
   position: relative;
-  position: relative;
   width: 800px;
   height: 400px;
   margin: 0;
@@ -203,6 +203,18 @@ lpc-directive {
   border: 15px solid #F0F9FC;
   border-bottom: 25px solid #F0F9FC;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15); }
+
+.slider-and-canvas {
+  display: inline-block;
+  width: 90%;
+  position: absolute;
+  left: 0; }
+
+.lpc-buttons {
+  display: inline-block;
+  position: absolute;
+  width: 10%;
+  right: 0; }
 
 .lpc-range {
   height: 400px;

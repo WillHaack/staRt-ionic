@@ -16,7 +16,6 @@ lpc-directive
 .lpc-container
 {
 	position: relative;
-	position: relative;
 	width: 800px;
 	height: 400px;
 	margin: 0;
@@ -27,6 +26,22 @@ lpc-directive
 	border: 15px solid #F0F9FC;
 	border-bottom: 25px solid #F0F9FC;
 	box-shadow: 1px 1px 1px rgba(0,0,0,0.15);
+}
+
+.slider-and-canvas
+{
+	display: inline-block;
+    width: 90%;
+    position: absolute;
+    left: 0;
+}
+
+.lpc-buttons
+{
+	display: inline-block;
+    position: absolute;
+    width: 10%;
+    right: 0;
 }
 
 .lpc-range

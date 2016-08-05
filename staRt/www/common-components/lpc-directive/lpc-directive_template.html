@@ -1,28 +1,38 @@
-<button
-	ng-if="f3"
-	style="margin:40px;"
-	ng-click="resetF3()">
-	Reset F3
-</button>
-
 <div class="lpc-container">
 
-	<!-- Renderer will be inserted here -->
-
-	<!-- Slider -->
-	<div
-		ng-if="slider"
-		class="lpc-range">
-
-		<input
+	<div class="slider-and-canvas">
+		<!-- Renderer will be inserted here -->
+		
+		<!-- Slider -->
+		<div
 			ng-if="slider"
-			type="range"
-			min="0"
-			max="4500"
-			ng-model="data.targetF3"
-			ng-change="updateTarget()"
-			data-thumbwidth="50"/>
-		<output name="rangeVal"></output>
+			class="lpc-range">
+		
+			<!-- Starfish -->
+			<input
+				ng-if="slider"
+				type="range"
+				min="0"
+				max="4500"
+				ng-model="data.targetF3"
+				ng-change="updateTarget()"
+				data-thumbwidth="50"/>
+			
+			<!-- Line + numbers -->
+			<output name="rangeVal"></output>
+			
+			<div id="sand"></div>
+		
+		</div>
+	</div>
 
-		<div id="sand"></div>
+	<div class="lpc-buttons">
+		<button
+			style="margin:40px;"
+			ng-click="resetF3()">
+			Reset F3
+		</button>
+	</div>
+
+
 </div>
