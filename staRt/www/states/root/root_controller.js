@@ -8,11 +8,11 @@
 	{
 		console.log('RootController here!');
 
-		ProfileService.getAllProfiles().then(function (res) {
-		    if (!res || res.length == 0) {
-		    	$state.go('^.profiles');
-		    }
-		});
+		// ProfileService.getAllProfiles().then(function (res) {
+		//     if (!res || res.length == 0) {
+		//     	$state.go('^.profiles');
+		//     }
+		// });
 
 		// Initialize UI
 		StartUIState.getLastActiveIndex($localForage).then(function(data)
