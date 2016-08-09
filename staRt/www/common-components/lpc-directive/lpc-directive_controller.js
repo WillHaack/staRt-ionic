@@ -12,6 +12,12 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 	console.log($scope);
 
+	var dummyPointCount = 256;
+	var dummyPoints = [];
+	for (var i=0; i<dummyPointCount; i++)
+		dummyPoints.push(0);
+	var dummyNoisiness = 0.05
+
 	// requestAnim shim layer by Paul Irish
 	window.requestAnimFrame = (function(){
 		return  window.requestAnimationFrame       ||
@@ -37,8 +43,46 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	$scope.getLPCCoefficients = function(cb) {
 		if (window.AudioPlugin !== undefined) {
 			AudioPlugin.getLPCCoefficients(cb);
+		} else {
+			$scope.getDummyLPCCoefficients(cb);
 		}
 	};
+
+	$scope.getDummyLPCCoefficients = function(cb) {
+		var msg = {};
+		msg.coefficients = [];
+		msg.freqPeaks = [];
+		var pointCount = dummyPointCount;
+		for (var i=0; i<pointCount; i++) {
+			if (i==0 || i==(pointCount-1))
+				dummyPoints[i] = 0;
+			else {
+				var p = (Math.random() - 0.5) * dummyNoisiness;
+				dummyPoints[i] = dummyPoints[i] + p;
+			}
+		}
+		for (var i=0; i<pointCount; i++) {
+			if (i==0 || i==(pointCount-1))
+				msg.coefficients.push(dummyPoints[i])
+			else {
+				var vrg = dummyPoints[i-1] + dummyPoints[i] + dummyPoints[i+1]
+				msg.coefficients.push(vrg/3);
+			}
+		}
+		for (var i=0; i<pointCount; i++) {
+			if (i>0 && i<(pointCount-1)) {
+				if (dummyPoints[i-1] > dummyPoints[i] && dummyPoints[i] < dummyPoints[i+1]) {
+					msg.freqPeaks.push({
+						X: linScale(i, 0, pointCount-1, -1, 1),
+						Y: msg.coefficients[i]
+					});
+				}
+			}
+		}
+		msg.freqScale = 2.2;
+		if (cb)
+			cb(msg);
+	}
 
 	var containerDiv;
 	for (var i=0; i<element.children().length; i++) {
