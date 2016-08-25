@@ -8,9 +8,14 @@ var lpcDirective = angular.module( 'lpcDirective' );
 lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope, $state, $stateParams, $element, $timeout, $localForage, ProfileService )
 {
 
-	console.log('LpcDirectiveController active!');
+	$scope.data = {};
 
-	console.log($scope);
+	$scope.$watchCollection('data', function()
+	{
+		$scope.$emit('ratingChange', $scope.data.rating);
+	})
+
+	console.log('LpcDirectiveController active!');
 
 	var dummyPointCount = 256;
 	var dummyPoints = [];

@@ -309,6 +309,12 @@
 			if ($scope.isPracticing)
 				advanceWord();
 		};
+
+		$scope.$on('ratingChange', function(event, data)
+		{
+			$scope.rating = data;
+		});
+		
 	});
 
 } )(  );

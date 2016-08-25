@@ -28,14 +28,14 @@
 
 	<div class="lpc-buttons">
 		<div class="rate-box" ng-if="rate">
-			<button>
+			<button ng-click="data.rating = 1">
+				Poor
+			</button>
+			<button ng-click="data.rating = 2">
+				Decent
+			</button>
+			<button ng-click="data.rating = 3">
 				Great
-			</button>
-			<button>
-				OK
-			</button>
-			<button>
-				Try Again
 			</button>
 		</div>
 		
