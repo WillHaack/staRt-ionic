@@ -260,6 +260,8 @@ lpc-directive {
   z-index: 99;
   border: 0;
   display: block; }
+  .rate-box button:active {
+    background-color: #26bae3; }
 
 .lpc-range {
   height: 400px;
