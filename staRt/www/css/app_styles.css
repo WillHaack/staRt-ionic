@@ -183,6 +183,12 @@ canvas {
 .resources p {
   margin: 0; }
 
+.words-word {
+  font-size: 3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.5; }
+
 lpc-directive {
   display: -webkit-flex;
   -webkit-flex: 1;

@@ -5,10 +5,15 @@
 	<button style="margin:40px;" ng-click="nextWord()" ng-hide="!isPracticing">
 		Next Word
 	</button>
-	<button style="margin:40px;" ng-click="endWordPractice()" ng-hide="!isPracticing">
+	<button
+		style="margin:40px;"
+		ng-click="endWordPractice()"
+		ng-hide="!isPracticing">
 		Stop Word Practice
 	</button>
-	<p ng-hide="!isPracticing">
+	<p
+		ng-hide="!isPracticing"
+		class="words-word">
 		{{currentWord}}
 	</p>
 	<p ng-hide="!isRecording">
