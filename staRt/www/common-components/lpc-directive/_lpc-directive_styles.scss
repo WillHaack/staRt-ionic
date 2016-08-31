@@ -90,6 +90,11 @@ lpc-directive
     z-index: 99;
     border: 0;
     display: block;
+
+    &:active
+    {
+    	background-color: darken(#53C8E9, 10%);
+    }
 }
 
 .lpc-range
