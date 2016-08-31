@@ -4,7 +4,8 @@
   <div id="nav-container">
     <list class="navTabs">
       <item
-        ng-repeat="tab in tabData" class="navTab"
+        ng-repeat="tab in tabData"
+        class="navTab"
         ui-sref="{{ 'root.' + tab.sref }}"
         ng-class="{ 'active': state.current.url === tab.sref }">
         <div class="navTabText">
