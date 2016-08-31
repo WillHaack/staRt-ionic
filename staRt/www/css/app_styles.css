@@ -154,7 +154,10 @@ canvas {
 
 .nav-svg {
   height: 65px;
-  width: 65px; }
+  width: 65px;
+  display: block;
+  margin: 0 auto;
+  padding-bottom: 5px; }
 
 .profiles {
   flex-flow: row nowrap; }
