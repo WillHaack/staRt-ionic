@@ -152,6 +152,10 @@ canvas {
 .testbutton:active {
   background-color: darkblue; }
 
+.nav-svg {
+  height: 65px;
+  width: 65px; }
+
 .profiles {
   flex-flow: row nowrap; }
 
