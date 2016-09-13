@@ -17,11 +17,10 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 	console.log('LpcDirectiveController active!');
 
-	var dummyPointCount = 256;
-	var dummyPoints = [];
-	for (var i=0; i<dummyPointCount; i++)
-		dummyPoints.push(0);
-	var dummyNoisiness = 0.05
+
+	////////////////////////////
+	//  Helpers
+	////////////////////////////
 
 	// requestAnim shim layer by Paul Irish
 	window.requestAnimFrame = (function(){
@@ -49,15 +48,21 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		if (window.AudioPlugin !== undefined) {
 			AudioPlugin.getLPCCoefficients(cb);
 		} else {
-			$scope.getDummyLPCCoefficients(cb);
+			$scope.makeDummyData(cb);
 		}
 	};
 
-	$scope.getDummyLPCCoefficients = function(cb) {
+	$scope.makeDummyData = function(cb) {
+		var pointCount = 256;
+		var dummyPoints = [];
+		for (var i=0; i<pointCount; i++)
+			dummyPoints.push(0);
+		var dummyNoisiness = 0.05
+	
 		var msg = {};
 		msg.coefficients = [];
 		msg.freqPeaks = [];
-		var pointCount = dummyPointCount;
+
 		for (var i=0; i<pointCount; i++) {
 			if (i==0 || i==(pointCount-1))
 				dummyPoints[i] = 0;
@@ -89,121 +94,143 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 			cb(msg);
 	}
 
-	var containerDiv;
-	for (var i=0; i<element.children().length; i++) {
-		var e = element.children()[i];
-		if (e.nodeName === "DIV" && e.classList.contains("lpc-container"))
-			containerDiv = e;
-	}
-	var firstElt;
-	// var containerDiv;
-	// for (var i=0; i<element.children().length; i++) {
-	// 	var e = element.children()[i];
-	// 	if (e.nodeName === "DIV" && e.classList.contains("slider-and-canvas"))
-	// 		containerDiv = e;
-	// }
-	var containerDiv = angular.element(element[0].querySelector('.slider-and-canvas'))[0];
+	////////////////////////////
+	//  Setup
+	////////////////////////////
 
-	var firstElt = null;
-	if (containerDiv.children.length > 0)
-		firstElt = containerDiv.children[0];
-
-	var renderer = new THREE.WebGLRenderer({ antialias: true });
-	if (firstElt) {
-		containerDiv.insertBefore(firstElt, renderer.domElement);
-	} else {
-		containerDiv.appendChild(renderer.domElement);
-	}
-
-	var canvas = renderer.domElement;
-	canvas.id = "lpc-canvas";
-	var WIDTH=canvas.clientWidth, HEIGHT=canvas.clientHeight;
-	var ASPECT = WIDTH/HEIGHT;
-	var camera = new THREE.OrthographicCamera(WIDTH/-2, WIDTH/2, HEIGHT/-2, HEIGHT/2, 1, 1000);
-	var scene = new THREE.Scene();
-	scene.add(camera);
-	camera.position.set(0, 0, 100);
-	camera.lookAt(new THREE.Vector3(0, 0, 0));
-	renderer.setPixelRatio( window.devicePixelRatio );
-	renderer.setSize(WIDTH, HEIGHT);
-
-	$scope.canvas = canvas;
-	$scope.renderer = renderer;
-	$scope.camera = camera;
-	$scope.active = false;
-
-	var line;
-	var peaks, points, frequencyScaling;
-	var peakSegments;
-
-	$scope.lpcCoefficientCallback = function(msg) {
-		if ($scope.active) {
-			var WIDTH = renderer.getSize().width;
-			var HEIGHT = renderer.getSize().height;
-			points = msg.coefficients;
-			peaks = msg.freqPeaks;
-			frequencyScaling = msg.freqScale;
-			if (line === undefined) {
-				var material = new THREE.LineBasicMaterial({
-					color: 0x0000ff
-				});
-				var geometry = new THREE.Geometry();
-				for (var i=0; i<points.length; i++) {
-					var point = points[i];
-					var px = linScale(i*frequencyScaling, 0, points.length-1, WIDTH/-2, WIDTH/2);
-					geometry.vertices.push(new THREE.Vector3(px, 0, 0));
-				}
-				line = new THREE.Line(geometry, material);
-				line.geometry.dynamic = true;
-				scene.add(line);
-			}
-
-			if (peakSegments === undefined) {
-				var material = new THREE.LineBasicMaterial({
-					color: 0x00ff00
-				});
-				var geometry = new THREE.Geometry();
-				peakSegments = new THREE.LineSegments(geometry, material);
-				scene.add(peakSegments);
-			}
+		var containerDiv;
+		for (var i=0; i<element.children().length; i++) {
+			var e = element.children()[i];
+			if (e.nodeName === "DIV" && e.classList.contains("lpc-container"))
+				containerDiv = e;
 		}
-	};
+		var firstElt;
+		// var containerDiv;
+		// for (var i=0; i<element.children().length; i++) {
+		// 	var e = element.children()[i];
+		// 	if (e.nodeName === "DIV" && e.classList.contains("slider-and-canvas"))
+		// 		containerDiv = e;
+		// }
+		var containerDiv = angular.element(element[0].querySelector('.slider-and-canvas'))[0];
 
-	$scope.update = function() {
-		var WIDTH = renderer.getSize().width;
-		var HEIGHT = renderer.getSize().height;
+		var firstElt = null;
+		if (containerDiv.children.length > 0)
+			firstElt = containerDiv.children[0];
+
+		var renderer = new THREE.WebGLRenderer({ antialias: true });
+		if (firstElt) {
+			containerDiv.insertBefore(firstElt, renderer.domElement);
+		} else {
+			containerDiv.appendChild(renderer.domElement);
+		}
+
+		var canvas = renderer.domElement;
+		canvas.id = "lpc-canvas";
+		var WIDTH=canvas.clientWidth;
+		var HEIGHT=canvas.clientHeight;
+		var ASPECT = WIDTH/HEIGHT;
+		var camera = new THREE.OrthographicCamera(WIDTH/-2, WIDTH/2, HEIGHT/-2, HEIGHT/2, 1, 1000);
+		var scene = new THREE.Scene();
+		scene.add(camera);
+		camera.position.set(0, 0, 100);
+		camera.lookAt(new THREE.Vector3(0, 0, 0));
+		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setClearColor(0xc5f3ff, 1.0);
+		renderer.setSize(WIDTH, HEIGHT);
+
+		$scope.canvas = canvas;
+		$scope.renderer = renderer;
+		$scope.camera = camera;
+		$scope.active = false;
+
+	////////////////////////////
+	//  Draw
+	////////////////////////////
+		var leftEdge, rightEdge, topEdge, bottomEdge;  // scene boundaries
+		var peaks, points, frequencyScaling; // incoming data
+		var waveMesh, peakSegments; // drawing objects
 		
-		if (line !== undefined) {
-			for (var i=0; i<points.length; i++) {
-				var px = linScale(i*frequencyScaling, 0, points.length-1, WIDTH/-2, WIDTH/2);
-				var py = linScale(points[i], 1, -1, HEIGHT/-2, HEIGHT/2);
-				line.geometry.vertices[i].set(px, py, 0);
-			}
-			line.geometry.verticesNeedUpdate = true;
-		}
+		$scope.lpcCoefficientCallback = function(msg) {
+			if ($scope.active) {
+				WIDTH = renderer.getSize().width;
+				HEIGHT = renderer.getSize().height;
+				leftEdge = WIDTH/-2;
+				rightEdge = WIDTH/2;
+				topEdge = HEIGHT/-2;
+				bottomEdge = HEIGHT/2;
 
-		if (peaks !== undefined) {
-			var geometry = new THREE.Geometry();
-			for (var i=0; i<peaks.length; i++) {
-				var peak = peaks[i];
-				var px = linScale(peak.X, -1, 1, 0, frequencyScaling);
-				px = linScale(px, 0, 1, WIDTH/-2, WIDTH/2);
-				var py = linScale(peak.Y, 1, -1, HEIGHT/-2, HEIGHT/2);
-				var v1 = new THREE.Vector3(px, py, 1);
-				var v2 = new THREE.Vector3(px, HEIGHT/2, 1);
-				geometry.vertices.push(v1);
-				geometry.vertices.push(v2);
+				points = msg.coefficients;
+				peaks = msg.freqPeaks;
+				frequencyScaling = msg.freqScale;
+
+				// materials
+				var waveMat = new THREE.MeshBasicMaterial({ color: 0x53C8E9 });
+				waveMat.side = THREE.DoubleSide;
+				var peakMat = new THREE.LineBasicMaterial({ color: 0x2095b6 });
+
+				// make shape array
+				var shapeArr = [];
+				var shapeStart = new THREE.Vector2(leftEdge, bottomEdge); 
+				var shapeEnd = new THREE.Vector2(rightEdge, bottomEdge);
+
+				shapeArr.push(shapeStart);
+		    	for (var i=0; i<points.length; i++) {
+		    		var point = points[i] * HEIGHT/-2;
+		    		var px = linScale(i * frequencyScaling, 0, points.length-1, WIDTH/-2, WIDTH/2);
+		    		shapeArr.push(new THREE.Vector2(px, point));
+		    	}
+		    	shapeArr.push(shapeEnd);
+		    	shapeArr.push(shapeStart);
+
+		    	// draw the wave shape
+		    	var waveShape = new THREE.Shape();
+		    	for(var i=0; i<shapeArr.length; i++) {
+		    		if (i == 0) {
+		    			waveShape.moveTo(shapeArr[i].x, shapeArr[i].y);
+		    		} else {
+		    			waveShape.lineTo(shapeArr[i].x, shapeArr[i].y);
+		    		}
+		    	};
+
+		    	// create and update the mesh
+		    	var waveGeom = new THREE.ShapeGeometry(waveShape);
+				var mesh = scene.getObjectByName('wave');
+				if (mesh) {
+					scene.remove(scene.getObjectByName("wave"));
+				}
+				waveMesh = new THREE.Mesh(waveGeom, waveMat);
+				waveMesh.name = "wave";
+				scene.add( waveMesh );
+
+
+				// add & update peaks
+				if (peakSegments === undefined) {
+					var geometry = new THREE.Geometry();
+					peakSegments = new THREE.LineSegments(geometry, peakMat);
+					peakSegments.geometry.verticesNeedUpdate = true;
+					scene.add(peakSegments);
+				} else if (peakSegments !== undefined) {
+					var geometry = new THREE.Geometry();
+					for (var i=0; i<peaks.length; i++) {
+						var peak = peaks[i];
+						var px = linScale(peak.X, -1, 1, 0, frequencyScaling);
+						px = linScale(px, 0, 1, WIDTH/-2, WIDTH/2);
+						var py = linScale(peak.Y, 1, -1, HEIGHT/-2, HEIGHT/2);
+						var v1 = new THREE.Vector3(px, py, 1);
+						var v2 = new THREE.Vector3(px, HEIGHT/2, 1);
+						geometry.vertices.push(v1);
+						geometry.vertices.push(v2);
+					}
+					peakSegments.geometry = geometry;
+					peakSegments.geometry.verticesNeedUpdate = true;
+				}
 			}
-			peakSegments.geometry = geometry;
-			peakSegments.geometry.verticesNeedUpdate = true;
-		}
-	};
+		};
 
 	$scope.animate = function() {
 		if ($scope.active) {
 			$scope.getLPCCoefficients($scope.lpcCoefficientCallback);
 			window.requestAnimFrame($scope.animate);
-			$scope.update();
 			renderer.render(scene, camera);
 		}
 	};
@@ -229,6 +256,11 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 	$scope.animate();
 	$scope.data = {};
+
+
+	////////////////////////////
+	//  Interaction & Targets
+	////////////////////////////
 
 	function setInitialTarget()
 	{
