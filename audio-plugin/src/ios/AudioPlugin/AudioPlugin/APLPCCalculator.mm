@@ -113,7 +113,9 @@ static OSStatus WriteLPCCoefficients(__unsafe_unretained APLPCCalculator *THIS,
         if (v->x == 0.0 && v->y == 0.0)
             continue;
         CGPoint p = CGPointMake(v->x, v->y);
-        [peakArray addObject:(__bridge NSDictionary *) CGPointCreateDictionaryRepresentation(p)];
+		CFDictionaryRef pr = CGPointCreateDictionaryRepresentation(p);
+        [peakArray addObject:(__bridge NSDictionary *) pr];
+		CFRelease(pr);
     }
     
     return @{@"coefficients":coeffArray, @"peaks":peakArray};
