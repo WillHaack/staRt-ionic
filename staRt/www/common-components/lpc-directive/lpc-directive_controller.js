@@ -52,12 +52,14 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		}
 	};
 
+
+	var pointCount = 256;
+	var dummyPoints = [];
+	for (var i=0; i<pointCount; i++)
+		dummyPoints.push(0);
+	var dummyNoisiness = 0.05
+
 	$scope.makeDummyData = function(cb) {
-		var pointCount = 256;
-		var dummyPoints = [];
-		for (var i=0; i<pointCount; i++)
-			dummyPoints.push(0);
-		var dummyNoisiness = 0.05
 	
 		var msg = {};
 		msg.coefficients = [];
@@ -143,6 +145,11 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		$scope.camera = camera;
 		$scope.active = false;
 
+		// materials
+		var waveMat = new THREE.MeshBasicMaterial({ color: 0x53C8E9 });
+		waveMat.side = THREE.DoubleSide;
+		var peakMat = new THREE.LineBasicMaterial({ color: 0x2095b6 });
+
 	////////////////////////////
 	//  Draw
 	////////////////////////////
@@ -163,11 +170,6 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 				peaks = msg.freqPeaks;
 				frequencyScaling = msg.freqScale;
 
-				// materials
-				var waveMat = new THREE.MeshBasicMaterial({ color: 0x53C8E9 });
-				waveMat.side = THREE.DoubleSide;
-				var peakMat = new THREE.LineBasicMaterial({ color: 0x2095b6 });
-
 				// make shape array
 				var shapeArr = [];
 				var shapeStart = new THREE.Vector2(leftEdge, bottomEdge); 
@@ -182,6 +184,8 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		    	shapeArr.push(shapeEnd);
 		    	shapeArr.push(shapeStart);
 
+		    	/// HERERERERE
+
 		    	// draw the wave shape
 		    	var waveShape = new THREE.Shape();
 		    	for(var i=0; i<shapeArr.length; i++) {
@@ -194,14 +198,16 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 		    	// create and update the mesh
 		    	var waveGeom = new THREE.ShapeGeometry(waveShape);
-				var mesh = scene.getObjectByName('wave');
-				if (mesh) {
-					scene.remove(scene.getObjectByName("wave"));
-				}
-				waveMesh = new THREE.Mesh(waveGeom, waveMat);
-				waveMesh.name = "wave";
-				scene.add( waveMesh );
-
+		    	if (waveMesh === undefined) {
+		    		waveMesh = new THREE.Mesh(waveGeom, waveMat);
+					waveMesh.name = "wave";
+					scene.add( waveMesh );
+		    	} else {
+		    		var oldGeom = waveMesh.geometry;
+		    		waveMesh.geometry = waveGeom;
+		    		waveMesh.geometry.verticesNeedUpdate = true;
+		    		oldGeom.dispose();
+		    	}
 
 				// add & update peaks
 				if (peakSegments === undefined) {
@@ -221,8 +227,10 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 						geometry.vertices.push(v1);
 						geometry.vertices.push(v2);
 					}
+					var oldGeom = peakSegments.geometry;
 					peakSegments.geometry = geometry;
 					peakSegments.geometry.verticesNeedUpdate = true;
+					oldGeom.dispose();
 				}
 			}
 		};

@@ -48,7 +48,7 @@ static NSDictionary *s_descDict;
 
 - (void) updateLPCDisplay
 {
-    NSDictionary *coeffs = [self.audioManager.lpcCalculator fetchCurrentCoefficients];
+	NSDictionary *coeffs = [self.audioManager.lpcCalculator fetchCurrentCoefficients];
     double frequencyScaling = [self.audioManager.lpcCalculator frequencyScaling];
     [self.lpcDisplayView setFrequencyScaling:frequencyScaling];
     [self.lpcDisplayView setLPCCoefficients:[coeffs objectForKey:@"coefficients"]];
