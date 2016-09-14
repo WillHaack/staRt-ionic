@@ -6,4 +6,3 @@ platforms/
 plugins/
 www/lib/
 www/css/
-audio-plugin/src/ios/AudioPlugin/AudioPlugin.xcodeproj/**
