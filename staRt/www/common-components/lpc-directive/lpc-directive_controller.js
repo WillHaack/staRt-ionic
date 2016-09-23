@@ -155,9 +155,18 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	////////////////////////////
 		var leftEdge, rightEdge, topEdge, bottomEdge;  // scene boundaries
 		var peaks, points, frequencyScaling; // incoming data
-		var waveGeometry = new THREE.Geometry();
-		waveGeometry.dynamic = true;
-		var waveMesh, peakSegments; // drawing objects
+
+		var waveGeometry = undefined; // created on demand with first peaks
+		var peakGeometry = new THREE.Geometry();
+		var maxNumPeaks = 20;
+		for (var i=0; i<maxNumPeaks; i++) {
+			peakGeometry.vertices.push(new THREE.Vector3(0,0,1));
+			peakGeometry.vertices.push(new THREE.Vector3(0,0,1));
+		}
+		var peakSegments = new THREE.LineSegments(peakGeometry, peakMat);
+		peakSegments.geometry.dynamic = true;
+		scene.add(peakSegments);
+		var waveMesh;
 		
 		$scope.lpcCoefficientCallback = function(msg) {
 
@@ -182,21 +191,51 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		    	}
 
 		    	// Setup the geometry and its faces
-		    	if (waveGeometry.vertices.length == 0) {
-			    	for (var i=0; i<shapeArr.length; i++) {
-			    		waveGeometry.vertices.push(new THREE.Vector3(shapeArr[i][0], bottomEdge, 0));
-			    		waveGeometry.vertices.push(new THREE.Vector3(shapeArr[i][0], shapeArr[i][1], 0));
-			    		if (i>0) {
-				    		waveGeometry.faces.push(new THREE.Face3((i-1)*2, (i-1)*2 + 1, (i-1)*2 + 2));
-				    		waveGeometry.faces.push(new THREE.Face3((i-1)*2 + 2, (i-1)*2 + 1, (i-1)*2 + 3));
+		    	if (waveGeometry === undefined) {
+		    		var tmpGeometry = new THREE.Geometry();
+		    		for (var i=1; i<shapeArr.length; i++) {
+			    		tmpGeometry.vertices.push(new THREE.Vector3(shapeArr[i-1][0], bottomEdge, 0));
+			    		tmpGeometry.vertices.push(new THREE.Vector3(shapeArr[i][0], shapeArr[i][1], 0));
+			    		if (i>0) {shapeArr[i][0]
+				    		tmpGeometry.faces.push(new THREE.Face3((i-1)*2, (i-1)*2 + 1, (i-1)*2 + 2));
+				    		tmpGeometry.faces.push(new THREE.Face3((i-1)*2 + 2, (i-1)*2 + 1, (i-1)*2 + 3));
 				    	}
 					}
-				} else {
-					for (var i=0; i<shapeArr.length; i++) {
-		    			waveGeometry.vertices[2*i+1].y = shapeArr[i][1];
-		    		}
-		    		waveGeometry.verticesNeedUpdate = true;
-				}
+		    		waveGeometry = new THREE.BufferGeometry().fromGeometry( tmpGeometry );
+		    		waveGeometry.dynamic = true;
+		    	}
+
+		    	// All this does is explicitly update all of the triangles that are being used to draw the 
+		    	// wave geometry. Imagine that between every two adjacent points along the top curve we draw
+		    	// a long rectangle with a slanted top. The top-left corner of that rectangle is wave[i-1],
+		    	// the top-right corner is wave[i], and the bottom left and bottom right are the same points
+		    	// but on the bottom edge of the image. This rectangle strip has four points, but we draw it
+		    	// as two triangles. Each of those triangles has three points, so there are 3 * 3 vertices
+		    	// to update, for each of 2 triangles, for a total of 18 vertices per every point on the
+		    	// wave curve.
+		    	for (var i=1; i<shapeArr.length; i++) {
+		    		var p = waveGeometry.attributes.position.array;
+		    		var idx = (i-1) * 18;
+		    		p[idx++] = shapeArr[i-1][0]; // Bottom-left
+		    		p[idx++] = bottomEdge;
+		    		p[idx++] = 0;
+		    		p[idx++] = shapeArr[i-1][0]; // Top-left
+		    		p[idx++] = shapeArr[i-1][1];
+		    		p[idx++] = 0;
+		    		p[idx++] = shapeArr[i][0]; // Top-right
+		    		p[idx++] = shapeArr[i][1];
+		    		p[idx++] = 0;
+		    		p[idx++] = shapeArr[i-1][0]; // Bottom-left
+		    		p[idx++] = bottomEdge;
+		    		p[idx++] = 0;
+		    		p[idx++] = shapeArr[i][0]; // Bottom-right
+		    		p[idx++] = bottomEdge;
+		    		p[idx++] = 0;
+		    		p[idx++] = shapeArr[i][0]; // Top-right
+		    		p[idx++] = shapeArr[i][1];
+		    		p[idx++] = 0;
+		    	}
+		    	waveGeometry.attributes.position.needsUpdate = true;
 
 		    	if (waveMesh === undefined) {
 		    		waveMesh = new THREE.Mesh(waveGeometry, waveMat);
@@ -204,29 +243,21 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 					scene.add( waveMesh );
 		    	}
 
-				// add & update peaks
-				if (peakSegments === undefined) {
-					var geometry = new THREE.Geometry();
-					peakSegments = new THREE.LineSegments(geometry, peakMat);
-					peakSegments.geometry.verticesNeedUpdate = true;
-					scene.add(peakSegments);
-				} else if (peakSegments !== undefined) {
-					var geometry = new THREE.Geometry();
-					for (var i=0; i<peaks.length; i++) {
+				// Update peaks
+				for (var i=0; i<maxNumPeaks; i++) {
+					var px=0, py=HEIGHT/2;
+					if (i < peaks.length) {
 						var peak = peaks[i];
-						var px = linScale(peak.X, -1, 1, 0, frequencyScaling);
+						px = linScale(peak.X, -1, 1, 0, frequencyScaling);
 						px = linScale(px, 0, 1, WIDTH/-2, WIDTH/2);
-						var py = linScale(peak.Y, 1, -1, HEIGHT/-2, HEIGHT/2);
-						var v1 = new THREE.Vector3(px, py, 1);
-						var v2 = new THREE.Vector3(px, HEIGHT/2, 1);
-						geometry.vertices.push(v1);
-						geometry.vertices.push(v2);
+						py = linScale(peak.Y, 1, -1, HEIGHT/-2, HEIGHT/2);
 					}
-					var oldGeom = peakSegments.geometry;
-					peakSegments.geometry = geometry;
-					peakSegments.geometry.verticesNeedUpdate = true;
-					oldGeom.dispose();
+					peakGeometry.vertices[2*i].x = px;
+					peakGeometry.vertices[2*i].y = py;
+					peakGeometry.vertices[2*i+1].x = px;
+					peakGeometry.vertices[2*i+1].y = HEIGHT/2;
 				}
+				peakGeometry.verticesNeedUpdate = true;
 			}
 		};
 
