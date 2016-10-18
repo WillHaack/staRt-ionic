@@ -23,7 +23,10 @@
 
 		function init()
 		{
+			console.log("hi");
+
 			ProfileService.getAllProfiles().then( function(res) {
+				console.log(res);
 				$scope.data.profiles = res;
 			});
 			
@@ -32,6 +35,7 @@
 
 			ProfileService.getCurrentProfile().then(function(res)
 			{
+				console.log(res);
 				if (res)
 				{				
 					$scope.data.currentProfile = res;

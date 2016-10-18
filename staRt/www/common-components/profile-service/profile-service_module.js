@@ -26,6 +26,7 @@ profileService.factory('ProfileService', function($localForage, $http)
 
 	var normsData;
 	var norms;
+	var profilesCache;
 
 	$http.get('data/F3r_norms_Lee_et_al_1999.csv').then(function(res)
 	{
@@ -51,70 +52,104 @@ profileService.factory('ProfileService', function($localForage, $http)
 		return arr;
 	}
 
+	function commitCache() {
+		var promises = [];
+		return profilesCache.then(function(res) {
+			for (var k in res) {
+				if (res.hasOwnProperty(k)) {
+					promises.push($localForage.setItem(k, res[k]));
+				}
+			}
+			return Promise.all(promises);
+		});
+	}
+
+	function loadCache() {
+		return $localForage.keys().then(function(keys, err) {
+			var profilePromises = [];
+			keys.forEach(function(key) {
+				profilePromises.push( $localForage.getItem(key) );
+			});
+
+			return Promise.all(profilePromises).then( function(result) {
+				var retVal = {};
+				for (var i=0; i<result.length; i++) {
+					retVal[keys[i]] = result[i];
+				}
+				console.log(retVal);
+				return retVal;
+			});
+		});
+	}
+
+	profilesCache = loadCache();
+
 	return {
 		getAllProfiles: function()
 		{
-			return $localForage.getItem('profiles');
+			return profilesCache.then(function(res)
+				{
+					return res.profiles;
+				});
 		},
 
 		deleteAllProfiles: function()
 		{
-			return $localForage.setItem('profiles', []);
+			return profilesCache.then(function(res){
+				res.profiles = Promise.resolve([]);
+				commitCache();
+				return res.profiles;
+			});
 		},
 
 		getCurrentProfile: function()
 		{
-			return $localForage.getItem('currentProfileUUID').then(function(currentID)
-			{
-				return $localForage.getItem('profiles').then(function(profiles)
-				{
-					if(profiles)
-					{
-						var idx = profiles.findIndex(function(el)
-						{
-							return el.uuid === currentID;
-						});
-						if (idx === -1)
-						{
-							return null
-						}
-						return profile = profiles[idx];
-					}
-					else
-					{
-						return null;
-					}
-				})
-			})
+			return profilesCache.then( function(res) {
+				var currentID = res['currentProfileUUID'];
+				var profiles = res['profiles'];
+				var currentProfile = null;
+
+				if (profiles) {
+					var idx = profiles.findIndex(function(el) {
+						return el.uuid === currentID;
+					});
+					if (idx !== -1) currentProfile = profiles[idx];
+				}
+
+				return currentProfile;
+			});
 		},
 
 		setCurrentProfile: function(profile)
 		{
-			return $localForage.setItem('currentProfileUUID', profile ? profile.uuid : null);
+			return profilesCache.then( function (res) {
+				res['currentProfileUUID'] = profile ? profile.uuid : null;
+				commitCache();
+				return res['currentProfileUUID'];
+			});
 		},
 
 		saveProfile: function(profile)
 		{
-			return $localForage.getItem('profiles').then(function(profiles)
-			{
-				if (!profiles)
-				{
+			return profilesCache.then( function(res) {
+				var profiles = res['profiles'];
+				if (!profiles) {
 					profiles = [];
 				}
-				var idx = profiles.findIndex(function(el)
-				{
+
+				var idx = profiles.findIndex( function(el) {
 					return el.uuid == this.uuid;
 				}, profile);
-				if (idx !== -1)
-				{
-					profiles[idx] = profile;
 
-				}
-				else
-				{
+				if (idx !== -1) {
+					profiles[idx] = profile;
+				} else {
 					profiles.push(profile);
 				}
-				return $localForage.setItem('profiles', profiles);
+
+				res['profiles'] = profiles;
+				commitCache();
+				return res['profiles'];
 			});
 		},
 
@@ -125,22 +160,26 @@ profileService.factory('ProfileService', function($localForage, $http)
 
 		deleteProfile: function(profile)
 		{
-			return $localForage.getItem('profiles').then(function(profiles)
-			{
-				var idx = profiles.findIndex(function(el)
-				{
-					return el.uuid === this.uuid;
+			return profilesCache.then(function(res){
+				var profiles = res['profiles'];
+				if (!profiles) {
+					profiles = [];
+				}
+
+				var idx = profiles.findIndex( function(el) {
+					return el.uuid == this.uuid;
 				}, profile);
-				if (idx !== -1)
-				{
+
+				if (idx !== -1) {
 					profiles.splice(idx, 1);
+				} else {
+					throw 'Profile doesn\'t exist';
 				}
-				else
-				{
-					throw 'Profile doesn\'t exist!';
-				}
-				return $localForage.setItem('profiles', profiles);
-			});
+
+				res['profiles'] = profiles;
+				commitCache();
+				return res['profiles'];
+			})
 		},
 
 		lookupDefaultF3: function(profile) {
