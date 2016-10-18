@@ -1,6 +1,7 @@
 *
 {
   font-family: 'Quicksand', 'Helvetica Neue', sans-serif !important;
+    -webkit-user-select: none;
 }
 
 #app-container {
@@ -8,6 +9,7 @@
   -webkit-flex-direction: row;
   line-height: 1.7;
   color: $grey;
+
 }
 
 .bar-header
