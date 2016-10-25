@@ -82,4 +82,9 @@ static NSArray *metadataParams;
     return self.mutableMetadata;
 }
 
+// Just in case javascript sends us a poorly formatted dictionary, we don't necessarily want to vomit an exception
+- (void) setValue:(id)value forUndefinedKey:(NSString *)key {
+	NSLog(@"LPCProfileDescription: Ignoring undefined key: %@", key);
+}
+
 @end
