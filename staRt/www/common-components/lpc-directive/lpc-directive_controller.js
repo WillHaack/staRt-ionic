@@ -12,7 +12,7 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 	$scope.$watchCollection('data', function()
 	{
-		//$scope.$emit('ratingChange', $scope.data.rating);
+		$scope.$emit('ratingChange', $scope.data.rating);
 	})
 
 	console.log('LpcDirectiveController active!');
@@ -155,9 +155,12 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		// USER INTERACTION
 			raycaster = new THREE.Raycaster();
 	    	mouse = new THREE.Vector2();
+	    	$scope.data = {}; // holds user data, like F3 target
+
+	    	// #ST is scope supposed to handle this in ionic??
 	    	//canvas.addEventListener('mousemove', onMouseMove, false );
-			//canvas.addEventListener('mousedown', onMouseDown, false );
-			//canvas.addEventListener('mouseup', onMouseUp, false );
+			canvas.addEventListener('mousedown', onMouseDown, false );
+			canvas.addEventListener('mouseup', onMouseUp, false );
 			//canvas.addEventListener('touchstart', onTouchStart, false );
 			//canvas.addEventListener('touchmove', onTouchMove, false); 
 			
@@ -173,6 +176,7 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		    	//initGridHelper();
 
 		// RENDER
+			// had to put all this stuff in the RENDER section at the end of the sketch
 
 
 	// END INIT
@@ -364,7 +368,6 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	///////////////////////////////////
 	//  DRAW THE WAVE
 	///////////////////////////////////
-		//var leftEdge, rightEdge, topEdge, bottomEdge;  // scene boundaries
 		var peaks, points, frequencyScaling; // incoming data
 
 		var waveGeometry = undefined; // created on demand with first peaks
@@ -449,9 +452,6 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		    	}
 
 		    	waveGeometry.attributes.position.needsUpdate = true;
-		    	// if (waveGeometry != undefined) {
-	    		// 	waveGeometry.attributes.position.needsUpdate = true;
-	    		// }
 
 		    	if (waveMesh === undefined) {
 		    		waveMesh = new THREE.Mesh(waveGeometry, blueMat);
@@ -475,330 +475,271 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 				}
 				peakGeometry.verticesNeedUpdate = true;
 			}
-		};
-
-
-
-
-
-
+		}; // end lpcCoefficientCallback()
 
 
 	///////////////////////////////////
 	//  TOUCH HANDLERS
 	///////////////////////////////////
+		function onMouseDown( event ) {
+			event.preventDefault();		
 
+			canvas.addEventListener( 'mousemove', onMouseMove, false );
+			canvas.addEventListener( 'mouseup', onMouseUp, false );
+			canvas.addEventListener( 'mouseout', onMouseOut, false ); 
+
+			// NDC for raycaster. raycaster will ONLY accept NDC for mouse events 
+			mouse.x = ( event.clientX / canvas.clientWidth ) * 2 - 1;
+			mouse.y = (( event.clientY / canvas.clientHeight ) * -1) * 2 + 1; // GOTTA FLIP FOR DOM COORDS! tres important!!!
+			// #st - maybe these are wrong
+
+			// RAYCASTER
+			raycaster.setFromCamera(mouse, camera); // gives the raycaster coords from mouse (NDC) & cam (world) positions
+
+			var intersects = raycaster.intersectObjects(scene.children, true); // cast a ray & get an array of things that it hits. 'recursive = true' is necessary to autoloop thru the descendants of grouped objs (i.e. scence.children's children)
+			console.log(intersects.length);
+
+			if (intersects.length > 0) { // if the ray hits things
+				for ( var i = 0; i < intersects.length; i++ ) {
+					
+					INTERSECTED = intersects[i];
+					console.log(intersects[ i ].object.name);
+
+					if (INTERSECTED.object.name === "pauseBtn") {
+						if(pause === false) {
+							pause = true;
+							console.log('wave is paused.');
+						} else {
+							pause = false;
+							console.log('wave is running');
+						}
+
+					} else if (INTERSECTED.object.name === "targetBtn") {
+
+						if (sliderFz != savedTarget) {
+
+							// reposition slider
+							var target = (linScale(savedTarget, 4500, 0, LEFT, RIGHT));
+							slider.position.setX(target);
+
+							// update canvas2d
+							label.remove( textSprite );
+							textSprite = makeTextSprite(savedTarget); 
+							textSprite.position.set(0,10,9);
+							label.add( textSprite );
+						}
+
+					// } else if (INTERSECTED.object.name === "star") {
+					// 	console.log('star');
+					// } 
+
+					} // end if targetBtn
+				} // end forLoop 
+			} else {
+				INTERSECTED = null;  // clear your ray gun
+			}
+		} // end onMouseDown
+
+		function onMouseMove( event ) {
+			event.preventDefault();
+			 
+			 	// #st if positioned using css you need to add offset to event.clientX. However the offset shouldn't go thru linScale, so not sure how to solve
+				mouseX = linScale(event.clientX, 0, WIDTH, LEFT, RIGHT); 
+
+				if (mouseX >= (LEFT+(padH)) && mouseX <= (sliderWidth-(padH))) {
+					slider.position.setX(mouseX);
+					
+					// map fz range for slider
+					sliderFz = Math.ceil(linScale(mouseX, LEFT, RIGHT, 4500, 0));
+					renderTextSprite = true;
+				}
+		} // end onMouseMove
+
+		function onMouseUp( event ) {
+			canvas.removeEventListener( 'mousemove', onMouseMove, false );
+			canvas.removeEventListener( 'mouseup', onMouseUp, false );
+			canvas.removeEventListener( 'mouseout', onMouseOut, false );
+			renderTextSprite = false;
+		}
+
+		function onMouseOut( event ) {
+			canvas.removeEventListener( 'mousemove', onMouseMove, false );
+			canvas.removeEventListener( 'mouseup', onMouseUp, false );
+			canvas.removeEventListener( 'mouseout', onMouseOut, false );
+		}
+
+		//ref: https://developer.mozilla.org/en-US/docs/Web/API/Touch/clientX
+		// #hc - look this up
+
+			function onTouchStart( event ) {
+				if ( event.touches.length === 1 ) {
+					event.preventDefault();
+					//mouseXOnMouseDown = event.touches[ 0 ].pageX - halfX;
+				}
+			}
+
+			function onTouchMove( event ) {
+				if ( event.touches.length === 1 ) {
+					event.preventDefault();
+					//mouseX = event.touches[ 0 ].pageX - halfX;
+					//starSprite.position.set(mouseX, waveBottom+(yOffset/2), 10);
+					//slider.position.setX(mouseX)
+					// needele update
+					// text label update
+				}
+		}
 
 
 	///////////////////////////////////
 	//  RENDER
 	///////////////////////////////////
+		$scope.animate = function() {
+			if ($scope.active) {
+				if (renderTextSprite) {
+					if ( textSprite == undefined ) {
+						textSprite = makeTextSprite(sliderFz); 
+						textSprite.position.set(0,10,9);
+						label.add( textSprite );
+					} else {
+						label.remove( textSprite );
+						textSprite = makeTextSprite(sliderFz); 
+						textSprite.position.set(0,10,9);
+						label.add( textSprite );
+					}
+				}
 
-
+				if (pause == false) {
+					$scope.getLPCCoefficients($scope.lpcCoefficientCallback);
+				}
+				
+				//stats.update();
+				window.requestAnimFrame($scope.animate);
+				renderer.render(scene, camera);
+				
+				//$scope.updateTarget();
+			}
+		};
+		$scope.animate(); 
 
 	///////////////////////////////////
 	//  MISC UTILS
 	///////////////////////////////////
+		$scope.scaleContext = function() {
+			var renderer = $scope.renderer;
+			var canvas = $scope.canvas;
+			var camera = $scope.camera;
+			getDrawingDim(); 
+			// var WIDTH = parseInt(renderer.domElement.clientWidth);
+			// var HEIGHT = parseInt(renderer.domElement.clientHeight);
 
-
+			if (renderer.getSize().width != WIDTH ||
+				renderer.getSize().height != HEIGHT) 
+			{	
+				renderer.setSize(WIDTH, HEIGHT);
+				camera.left = -WIDTH/2;
+		        camera.right = WIDTH/2;
+		        camera.top = -HEIGHT/2;
+		        camera.bottom = HEIGHT/2;
+		        camera.updateProjectionMatrix();
+		    }
+		}
 
 
 //--------------------------------------------------------------
 
 	////////////////////////////
-	//  Setup
-	////////////////////////////
-
-		// var containerDiv;
-		// for (var i=0; i<element.children().length; i++) {
-		// 	var e = element.children()[i];
-		// 	if (e.nodeName === "DIV" && e.classList.contains("lpc-container"))
-		// 		containerDiv = e;
-		// }
-		// var firstElt;
-		// // var containerDiv;
-		// // for (var i=0; i<element.children().length; i++) {
-		// // 	var e = element.children()[i];
-		// // 	if (e.nodeName === "DIV" && e.classList.contains("slider-and-canvas"))
-		// // 		containerDiv = e;
-		// // }
-		// var containerDiv = angular.element(element[0].querySelector('.slider-and-canvas'))[0];
-
-		// var firstElt = null;
-		// if (containerDiv.children.length > 0)
-		// 	firstElt = containerDiv.children[0];
-
-		// var renderer = new THREE.WebGLRenderer({ antialias: true });
-		// if (firstElt) {
-		// 	containerDiv.insertBefore(firstElt, renderer.domElement);
-		// } else {
-		// 	containerDiv.appendChild(renderer.domElement);
-		// }
-
-		// var canvas = renderer.domElement;
-		// canvas.id = "lpc-canvas";
-		// var WIDTH=canvas.clientWidth;
-		// var HEIGHT=canvas.clientHeight;
-		// var ASPECT = WIDTH/HEIGHT;
-		// var camera = new THREE.OrthographicCamera(WIDTH/-2, WIDTH/2, HEIGHT/-2, HEIGHT/2, 1, 1000);
-		// var scene = new THREE.Scene();
-		// scene.add(camera);
-		// camera.position.set(0, 0, 100);
-		// camera.lookAt(new THREE.Vector3(0, 0, 0));
-		// renderer.setPixelRatio( window.devicePixelRatio );
-		// renderer.setClearColor(0xc5f3ff, 1.0);
-		// renderer.setSize(WIDTH, HEIGHT);
-
-		// $scope.canvas = canvas;
-		// $scope.renderer = renderer;
-		// $scope.camera = camera;
-		// $scope.active = false;
-
-		// // materials
-		// var waveMat = new THREE.MeshBasicMaterial({ color: 0x53C8E9 });
-		// waveMat.side = THREE.DoubleSide;
-		// var peakMat = new THREE.LineBasicMaterial({ color: 0x2095b6 });
-
-	////////////////////////////
-	//  Draw
-	////////////////////////////
-		// var leftEdge, rightEdge, topEdge, bottomEdge;  // scene boundaries
-		// var peaks, points, frequencyScaling; // incoming data
-
-		// var waveGeometry = undefined; // created on demand with first peaks
-		// var peakGeometry = new THREE.Geometry();
-		// var maxNumPeaks = 20;
-		// for (var i=0; i<maxNumPeaks; i++) {
-		// 	peakGeometry.vertices.push(new THREE.Vector3(0,0,1));
-		// 	peakGeometry.vertices.push(new THREE.Vector3(0,0,1));
-		// }
-		// var peakSegments = new THREE.LineSegments(peakGeometry, peakMat);
-		// peakSegments.geometry.dynamic = true;
-		// scene.add(peakSegments);
-		// var waveMesh;
-		
-		// $scope.lpcCoefficientCallback = function(msg) {
-
-		// 	if ($scope.active) {
-		// 		WIDTH = renderer.getSize().width;
-		// 		HEIGHT = renderer.getSize().height;
-		// 		leftEdge = WIDTH/-2;
-		// 		rightEdge = WIDTH/2;
-		// 		topEdge = HEIGHT/-2;
-		// 		bottomEdge = HEIGHT/2;
-
-		// 		points = msg.coefficients;
-		// 		peaks = msg.freqPeaks;
-		// 		frequencyScaling = msg.freqScale;
-
-		// 		// Make an array of all the topmost points
-		// 		var shapeArr = [];
-		//     	for (var i=0; i<points.length; i++) {
-		//     		var point = points[i] * HEIGHT/-2;
-		//     		var px = linScale(i * frequencyScaling, 0, points.length-1, WIDTH/-2, WIDTH/2);
-		//     		shapeArr.push([px, point]);
-		//     	}
-
-		//     	// Setup the geometry and its faces
-		//     	if (waveGeometry === undefined) {
-		//     		var tmpGeometry = new THREE.Geometry();
-		//     		for (var i=1; i<shapeArr.length; i++) {
-		// 	    		tmpGeometry.vertices.push(new THREE.Vector3(shapeArr[i-1][0], bottomEdge, 0));
-		// 	    		tmpGeometry.vertices.push(new THREE.Vector3(shapeArr[i][0], shapeArr[i][1], 0));
-		// 	    		if (i>0) {shapeArr[i][0]
-		// 		    		tmpGeometry.faces.push(new THREE.Face3((i-1)*2, (i-1)*2 + 1, (i-1)*2 + 2));
-		// 		    		tmpGeometry.faces.push(new THREE.Face3((i-1)*2 + 2, (i-1)*2 + 1, (i-1)*2 + 3));
-		// 		    	}
-		// 			}
-		//     		waveGeometry = new THREE.BufferGeometry().fromGeometry( tmpGeometry );
-		//     		waveGeometry.dynamic = true;
-		//     	}
-
-		//     	// All this does is explicitly update all of the triangles that are being used to draw the 
-		//     	// wave geometry. Imagine that between every two adjacent points along the top curve we draw
-		//     	// a long rectangle with a slanted top. The top-left corner of that rectangle is wave[i-1],
-		//     	// the top-right corner is wave[i], and the bottom left and bottom right are the same points
-		//     	// but on the bottom edge of the image. This rectangle strip has four points, but we draw it
-		//     	// as two triangles. Each of those triangles has three points, so there are 3 * 3 vertices
-		//     	// to update, for each of 2 triangles, for a total of 18 vertices per every point on the
-		//     	// wave curve.
-		//     	for (var i=1; i<shapeArr.length; i++) {
-		//     		var p = waveGeometry.attributes.position.array;
-		//     		var idx = (i-1) * 18;
-		//     		p[idx++] = shapeArr[i-1][0]; // Bottom-left
-		//     		p[idx++] = bottomEdge;
-		//     		p[idx++] = 0;
-		//     		p[idx++] = shapeArr[i-1][0]; // Top-left
-		//     		p[idx++] = shapeArr[i-1][1];
-		//     		p[idx++] = 0;
-		//     		p[idx++] = shapeArr[i][0]; // Top-right
-		//     		p[idx++] = shapeArr[i][1];
-		//     		p[idx++] = 0;
-		//     		p[idx++] = shapeArr[i-1][0]; // Bottom-left
-		//     		p[idx++] = bottomEdge;
-		//     		p[idx++] = 0;
-		//     		p[idx++] = shapeArr[i][0]; // Bottom-right
-		//     		p[idx++] = bottomEdge;
-		//     		p[idx++] = 0;
-		//     		p[idx++] = shapeArr[i][0]; // Top-right
-		//     		p[idx++] = shapeArr[i][1];
-		//     		p[idx++] = 0;
-		//     	}
-		//     	waveGeometry.attributes.position.needsUpdate = true;
-
-		//     	if (waveMesh === undefined) {
-		//     		waveMesh = new THREE.Mesh(waveGeometry, blueMat);
-		// 			waveMesh.name = "wave";
-		// 			scene.add( waveMesh );
-		//     	}
-
-		// 		// Update peaks
-		// 		for (var i=0; i<maxNumPeaks; i++) {
-		// 			var px=0, py=HEIGHT/2;
-		// 			if (i < peaks.length) {
-		// 				var peak = peaks[i];
-		// 				px = linScale(peak.X, -1, 1, 0, frequencyScaling);
-		// 				px = linScale(px, 0, 1, WIDTH/-2, WIDTH/2);
-		// 				py = linScale(peak.Y, 1, -1, HEIGHT/-2, HEIGHT/2);
-		// 			}
-		// 			peakGeometry.vertices[2*i].x = px;
-		// 			peakGeometry.vertices[2*i].y = py;
-		// 			peakGeometry.vertices[2*i+1].x = px;
-		// 			peakGeometry.vertices[2*i+1].y = HEIGHT/2;
-		// 		}
-		// 		peakGeometry.verticesNeedUpdate = true;
-		// 	}
-		// };
-
-	$scope.animate = function() {
-		if ($scope.active) {
-			$scope.getLPCCoefficients($scope.lpcCoefficientCallback);
-			window.requestAnimFrame($scope.animate);
-			renderer.render(scene, camera);
-			$scope.updateTarget();
-		}
-	};
-
-	$scope.scaleContext = function() {
-		var renderer = $scope.renderer;
-		var canvas = $scope.canvas;
-		var camera = $scope.camera;
-		var WIDTH = parseInt(renderer.domElement.clientWidth);
-		var HEIGHT = parseInt(renderer.domElement.clientHeight);
-
-		if (renderer.getSize().width != WIDTH ||
-			renderer.getSize().height != HEIGHT) 
-		{	
-			renderer.setSize(WIDTH, HEIGHT);
-			camera.left = -WIDTH/2;
-	        camera.right = WIDTH/2;
-	        camera.top = -HEIGHT/2;
-	        camera.bottom = HEIGHT/2;
-	        camera.updateProjectionMatrix();
-	    }
-	}
-
-	$scope.animate();
-	$scope.data = {};
-
-
-	////////////////////////////
 	//  Interaction & Targets
 	////////////////////////////
 
-	function setInitialTarget()
-	{
-		ProfileService.getCurrentProfile().then(function(res)
-		{
-			console.log('currentProfile:',res)
-			if (res) {
-				if (res.targetF3)
-				{
-					$scope.data.targetF3 = res.targetF3;
-					console.log('existing targetf3:', res.targetF3)
-				}
-				else
-				{
-					$scope.data.targetF3 = ProfileService.lookupDefaultF3(res);
-					console.log('going w default tf3:', $scope.data.targetF3);
-				}
-			}
+	function setInitialTarget() {
+	// 	ProfileService.getCurrentProfile().then(function(res)
+	// 	{
+	// 		console.log('currentProfile:',res)
+	// 		if (res) {
+	// 			if (res.targetF3)
+	// 			{
+	// 				$scope.data.targetF3 = res.targetF3;
+	// 				console.log('existing targetf3:', res.targetF3)
+	// 			}
+	// 			else
+	// 			{
+	// 				$scope.data.targetF3 = ProfileService.lookupDefaultF3(res);
+	// 				console.log('going w default tf3:', $scope.data.targetF3);
+	// 			}
+	// 		}
 
-			// Set initial LPC 
-			$timeout(function()
-			{
-				$scope.updateTarget();
-			});
-		})
+	// 		// Set initial LPC 
+	// 		$timeout(function()
+	// 		{
+	// 			$scope.updateTarget();
+	// 		});
+	// 	})
 	}
 
-	setInitialTarget();
+	//setInitialTarget();
 
-	$scope.updateTarget = function()
-	{	
-		// Move value bubble
-		var wrappedElement = angular.element(element);
-		var control = wrappedElement.find('input');
+	$scope.updateTarget = function() {	
+		// // Move value bubble
+		// var wrappedElement = angular.element(element);
+		// var control = wrappedElement.find('input');
 
-		var controlMin = control.attr('min')
-		var controlMax = control.attr('max')
-		var controlVal = control.val();
-		var controlThumbWidth = control.attr('data-thumbwidth');
+		// var controlMin = control.attr('min')
+		// var controlMax = control.attr('max')
+		// var controlVal = control.val();
+		// var controlThumbWidth = control.attr('data-thumbwidth');
 
-		var range = controlMax - controlMin;
+		// var range = controlMax - controlMin;
 
-		var position = ((controlVal - controlMin) / range) * 100;
+		// var position = ((controlVal - controlMin) / range) * 100;
 
-		var positionOffset = Math.round(controlThumbWidth * position / 100) - (controlThumbWidth / 2);
-		var output = control.next('output');
+		// var positionOffset = Math.round(controlThumbWidth * position / 100) - (controlThumbWidth / 2);
+		// var output = control.next('output');
 
-		output
-		.css('left', 'calc(' + position + '% - ' + positionOffset + 'px)')
-		.text(controlVal);
+		// output
+		// .css('left', 'calc(' + position + '% - ' + positionOffset + 'px)')
+		// .text(controlVal);
 
 		// Update current user's Target F3
-		ProfileService.getCurrentProfile().then(function(res)
-		{
-			if (res) {
-				var currentProfile = res;
-				currentProfile.targetF3 = parseInt($scope.data.targetF3);
-				ProfileService.saveProfile(currentProfile);
-			}
-		})
+		// ProfileService.getCurrentProfile().then(function(res)
+		// {
+		// 	if (res) {
+		// 		var currentProfile = res;
+		// 		currentProfile.targetF3 = parseInt($scope.data.targetF3);
+		// 		ProfileService.saveProfile(currentProfile);
+		// 	}
+		// })
 	}
 
-	$scope.resetF3 = function() {
-		ProfileService.getCurrentProfile().then(function(res)
-		{
-			if(res)
-			{
-				$scope.data.targetF3 = ProfileService.lookupDefaultF3(res);
-				$timeout(function()
-				{
-					$scope.updateTarget();
-				})
-			}
-		})
-	}
+	// $scope.resetF3 = function() {
+	// 	ProfileService.getCurrentProfile().then(function(res)
+	// 	{
+	// 		if(res)
+	// 		{
+	// 			$scope.data.targetF3 = ProfileService.lookupDefaultF3(res);
+	// 			$timeout(function()
+	// 			{
+	// 				$scope.updateTarget();
+	// 			})
+	// 		}
+	// 	})
+	// }
 
 	$scope.$parent.$on('$ionicView.afterEnter', function() {
 		$scope.active = true;
 		$scope.animate();
 
-		setInitialTarget();
+		//setInitialTarget();
 	});
 
 	$scope.$parent.$on('$ionicView.beforeLeave', function() {
 		$scope.active = false;
 	});
 
-	$scope.$watch('targetF3', function()
-	{
-		console.log('target changed to: ', $scope.targetF3);
-		//$scope.updateTarget();
-	});
-
-// =========================================================
+	// $scope.$watch('targetF3', function()
+	// {
+	// 	console.log('target changed to: ', $scope.targetF3);
+	// 	//$scope.updateTarget();
+	// });
 
 
 
@@ -998,6 +939,6 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 
 
-// close out lpc-directive	
+// close out the lpc-directive	
 
 } );
