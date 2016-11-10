@@ -46,7 +46,8 @@ input[type=range]::-webkit-slider-thumb {
   border-color: transparent; }
 
 * {
-  font-family: 'Quicksand', 'Helvetica Neue', sans-serif !important; }
+  font-family: 'Quicksand', 'Helvetica Neue', sans-serif !important;
+  -webkit-user-select: none; }
 
 #app-container {
   display: -webkit-flex;
@@ -79,34 +80,48 @@ input[type=range]::-webkit-slider-thumb {
   display: -webkit-flex;
   -webkit-flex-direction: column;
   width: 10vw;
-  z-index: 999; }
+  z-index: 999;
+  border: 0px solid red; }
 
 #content-container {
+  position: relative;
+  display: block;
   text-align: center;
-  display: -webkit-flex;
+  /* display: -webkit-flex;
   -webkit-flex: 1;
   -webkit-flex-direction: column;
+  */
   height: 85vh;
-  width: 90vw;
-  margin-top: 110px; }
+  width: 100%;
+  margin-top: 110px;
+  padding-left: 70px;
+  padding-right: 70px;
+  border: 0px solid red; }
 
 .text-content {
   padding: 3rem; }
 
 canvas {
-  background-color: #000000; }
+  background-color: #ffffff; }
 
 .text-and-lpc {
+  /*
   display: -webkit-flex;
   -webkit-flex: 1;
   font-size: 1rem;
-  padding: 3rem; }
+  padding: 3rem;
+  border: 1px solid blue;
+  */ }
 
 .text-and-lpc__text {
-  font-size: 14pt; }
+  /*font-size: 14pt;*/
+  font-size: 1.25em; }
 
 .pane {
-  flex-flow: column; }
+  /*
+  flex-flow: column;
+  border: 1px solid red;
+  */ }
 
 .nav-container {
   z-index: 99; }
@@ -203,12 +218,14 @@ lpc-directive {
   flex-flow: column; }
 
 #lpc-canvas {
+  /* This is the THREEjs element*/
   width: 100%;
   height: 100%;
   margin: auto;
   z-index: 10; }
 
 .lpc-container {
+  /* This is the light blue box*/
   position: relative;
   width: 800px;
   height: 400px;

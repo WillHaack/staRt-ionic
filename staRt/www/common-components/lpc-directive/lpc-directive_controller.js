@@ -64,8 +64,14 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 
 		// USER INTERACTION 
+			// mouse pos are best when relative to the DOM element
 			var mouse; // vector2, stores NDC vals used by raycaster 
 			var mouseX; // stores linScaled e.clientX vals used for slider
+
+			// if touch
+			var touch; // vector2, stores NDC vals used by raycaster 
+			var touchX, touchY;
+
 			var INTERSECTED = undefined;
 
 			var pause = false;
@@ -155,14 +161,21 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		// USER INTERACTION
 			raycaster = new THREE.Raycaster();
 	    	mouse = new THREE.Vector2();
+	    	touch = new THREE.Vector2();
 	    	$scope.data = {}; // holds user data, like F3 target
 
 	    	// #ST is scope supposed to handle this in ionic??
-	    	//canvas.addEventListener('mousemove', onMouseMove, false );
-			canvas.addEventListener('mousedown', onMouseDown, false );
-			canvas.addEventListener('mouseup', onMouseUp, false );
-			//canvas.addEventListener('touchstart', onTouchStart, false );
-			//canvas.addEventListener('touchmove', onTouchMove, false); 
+	    	// if mouse (for debugging)
+		    	//canvas.addEventListener('mousemove', onMouseMove, false );
+				//canvas.addEventListener('mousedown', onMouseDown, false );
+				//canvas.addEventListener('mouseup', onMouseUp, false );
+
+			// if touch
+			canvas.addEventListener('touchstart', onTouchStart, false );
+			canvas.addEventListener('touchmove', onTouchMove, false); 
+			//canvas.addEventListener('touchend', onTouchEnd, false); 
+			//canvas.addEventListener('touchcancel', onTouchCancel, false); 
+			//document.body.addEventListener("touchcancel", touchUp, false);
 			
 			//canvas.addEventListener( 'resize', handleResize, false );
 
@@ -481,112 +494,200 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	///////////////////////////////////
 	//  TOUCH HANDLERS
 	///////////////////////////////////
-		function onMouseDown( event ) {
-			event.preventDefault();		
+		// function onMouseDown( event ) {
+		// 	event.preventDefault();		
 
-			canvas.addEventListener( 'mousemove', onMouseMove, false );
-			canvas.addEventListener( 'mouseup', onMouseUp, false );
-			canvas.addEventListener( 'mouseout', onMouseOut, false ); 
+		// 	canvas.addEventListener( 'mousemove', onMouseMove, false );
+		// 	canvas.addEventListener( 'mouseup', onMouseUp, false );
+		// 	canvas.addEventListener( 'mouseout', onMouseOut, false ); 
 
-			// NDC for raycaster. raycaster will ONLY accept NDC for mouse events 
-			mouse.x = ( event.clientX / canvas.clientWidth ) * 2 - 1;
-			mouse.y = (( event.clientY / canvas.clientHeight ) * -1) * 2 + 1; // GOTTA FLIP FOR DOM COORDS! tres important!!!
-			// #st - maybe these are wrong
+		// 	// NDC for raycaster. raycaster will ONLY accept NDC for mouse events 
+		// 	mouse.x = ( event.clientX / canvas.clientWidth ) * 2 - 1;
+		// 	mouse.y = (( event.clientY / canvas.clientHeight ) * -1) * 2 + 1; // GOTTA FLIP FOR DOM COORDS! tres important!!!
+		// 	// #st - maybe these are wrong
 
-			// RAYCASTER
-			raycaster.setFromCamera(mouse, camera); // gives the raycaster coords from mouse (NDC) & cam (world) positions
+		// 	// RAYCASTER
+		// 	raycaster.setFromCamera(mouse, camera); // gives the raycaster coords from mouse (NDC) & cam (world) positions
 
-			var intersects = raycaster.intersectObjects(scene.children, true); // cast a ray & get an array of things that it hits. 'recursive = true' is necessary to autoloop thru the descendants of grouped objs (i.e. scence.children's children)
-			console.log(intersects.length);
+		// 	var intersects = raycaster.intersectObjects(scene.children, true); // cast a ray & get an array of things that it hits. 'recursive = true' is necessary to autoloop thru the descendants of grouped objs (i.e. scence.children's children)
+		// 	console.log(intersects.length);
 
-			if (intersects.length > 0) { // if the ray hits things
-				for ( var i = 0; i < intersects.length; i++ ) {
+		// 	if (intersects.length > 0) { // if the ray hits things
+		// 		for ( var i = 0; i < intersects.length; i++ ) {
 					
-					INTERSECTED = intersects[i];
-					console.log(intersects[ i ].object.name);
+		// 			INTERSECTED = intersects[i];
+		// 			console.log(intersects[ i ].object.name);
 
-					if (INTERSECTED.object.name === "pauseBtn") {
-						if(pause === false) {
-							pause = true;
-							console.log('wave is paused.');
-						} else {
-							pause = false;
-							console.log('wave is running');
-						}
+		// 			if (INTERSECTED.object.name === "pauseBtn") {
+		// 				if(pause === false) {
+		// 					pause = true;
+		// 					console.log('wave is paused.');
+		// 				} else {
+		// 					pause = false;
+		// 					console.log('wave is running');
+		// 				}
 
-					} else if (INTERSECTED.object.name === "targetBtn") {
+		// 			} else if (INTERSECTED.object.name === "targetBtn") {
 
-						if (sliderFz != savedTarget) {
+		// 				if (sliderFz != savedTarget) {
 
-							// reposition slider
-							var target = (linScale(savedTarget, 4500, 0, LEFT, RIGHT));
-							slider.position.setX(target);
+		// 					// reposition slider
+		// 					var target = (linScale(savedTarget, 4500, 0, LEFT, RIGHT));
+		// 					slider.position.setX(target);
 
-							// update canvas2d
-							label.remove( textSprite );
-							textSprite = makeTextSprite(savedTarget); 
-							textSprite.position.set(0,10,9);
-							label.add( textSprite );
-						}
+		// 					// update canvas2d
+		// 					label.remove( textSprite );
+		// 					textSprite = makeTextSprite(savedTarget); 
+		// 					textSprite.position.set(0,10,9);
+		// 					label.add( textSprite );
+		// 				}
 
-					// } else if (INTERSECTED.object.name === "star") {
-					// 	console.log('star');
-					// } 
+		// 			// } else if (INTERSECTED.object.name === "star") {
+		// 			// 	console.log('star');
+		// 			// } 
 
-					} // end if targetBtn
-				} // end forLoop 
-			} else {
-				INTERSECTED = null;  // clear your ray gun
-			}
-		} // end onMouseDown
+		// 			} // end if targetBtn
+		// 		} // end forLoop 
+		// 	} else {
+		// 		INTERSECTED = null;  // clear your ray gun
+		// 	}
+		// } // end onMouseDown
 
-		function onMouseMove( event ) {
-			event.preventDefault();
+		// function onMouseMove(e) {
+		// 	e.preventDefault();
 			 
-			 	// #st if positioned using css you need to add offset to event.clientX. However the offset shouldn't go thru linScale, so not sure how to solve
-				mouseX = linScale(event.clientX, 0, WIDTH, LEFT, RIGHT); 
+		// 	 	// #st if positioned using css you need to add offset to event.clientX. However the offset shouldn't go thru linScale, so not sure how to solve
+		// 		mouseX = linScale(e.clientX, 0, WIDTH, LEFT, RIGHT); 
 
-				if (mouseX >= (LEFT+(padH)) && mouseX <= (sliderWidth-(padH))) {
-					slider.position.setX(mouseX);
+		// 		if (mouseX >= (LEFT+(padH)) && mouseX <= (sliderWidth-(padH))) {
+		// 			slider.position.setX(mouseX);
+					
+		// 			// map fz range for slider
+		// 			sliderFz = Math.ceil(linScale(mouseX, LEFT, RIGHT, 4500, 0));
+		// 			renderTextSprite = true;
+		// 		}
+		// } // end onMouseMove
+
+		// function onMouseUp( e ) {
+		// 	canvas.removeEventListener( 'mousemove', onMouseMove, false );
+		// 	canvas.removeEventListener( 'mouseup', onMouseUp, false );
+		// 	canvas.removeEventListener( 'mouseout', onMouseOut, false );
+		// 	renderTextSprite = false;
+		// }
+
+		// function onMouseOut( e ) {
+		// 	canvas.removeEventListener( 'mousemove', onMouseMove, false );
+		// 	canvas.removeEventListener( 'mouseup', onMouseUp, false );
+		// 	canvas.removeEventListener( 'mouseout', onMouseOut, false );
+		// }
+
+		// TOUCH 
+		// https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/HTML-canvas-guide/AddingMouseandTouchControlstoCanvas/AddingMouseandTouchControlstoCanvas.html
+		// touch points can be calc'd from the DOM ele, but even though the method is called .pageX and .pageY
+		// #hc - read this
+
+		// if touch
+		// canvas.addEventListener('touchstart', onTouchStart, false );
+		// canvas.addEventListener('touchmove', onTouchMove, false); 
+		// canvas.addEventListener('touchend', onTouchEnd, false); 
+		// canvas.addEventListener('touchcancel', onTouchCancel, false); 
+		// document.body.addEventListener("touchcancel", touchUp, false);
+
+		function onTouchStart( e ) {
+			if ( event.touches.length === 1 ) {
+				event.preventDefault();
+				var touchX = e.targetTouches[0].pageX -170; //- canvas.offsetLeft (nav = 100px + margin = 70px)
+				var touchY = e.targetTouches[0].pageY -232; //- canvas.offsetTop;
+
+
+				// NDC for raycaster. raycaster will ONLY accept NDC for mouse events
+				touch.x = (touchX / canvas.clientWidth ) * 2 - 1;
+				touch.y = (( touchY / canvas.clientHeight ) * -1) * 2 + 1; // GOTTA FLIP FOR DOM COORDS! tres important!!!
+				// #st - is this right??
+
+                console.log("touch x " + touch.x);  
+                console.log("touch y " + touch.y); 
+
+                // RAYCASTER
+				raycaster.setFromCamera(touch, camera); // gives the raycaster coords from mouse (NDC) & cam (world) positions
+
+				var intersects = raycaster.intersectObjects(scene.children, true); // cast a ray & get an array of things that it hits. 'recursive = true' is necessary to autoloop thru the descendants of grouped objs (i.e. scence.children's children)
+				console.log(intersects.length);
+
+				if (intersects.length > 0) { // if the ray hits things
+					for ( var i = 0; i < intersects.length; i++ ) {
+						
+						INTERSECTED = intersects[i];
+						console.log(intersects[ i ].object.name);
+
+						if (INTERSECTED.object.name === "pauseBtn") {
+							if(pause === false) {
+								pause = true;
+								console.log('wave is paused.');
+							} else {
+								pause = false;
+								console.log('wave is running');
+							}
+
+						} else if (INTERSECTED.object.name === "targetBtn") {
+
+							if (sliderFz != savedTarget) {
+
+								// reposition slider
+								var target = (linScale(savedTarget, 4500, 0, LEFT, RIGHT));
+								slider.position.setX(target);
+
+								// update canvas2d
+								label.remove( textSprite );
+								textSprite = makeTextSprite(savedTarget); 
+								textSprite.position.set(0,10,9);
+								label.add( textSprite );
+							}
+
+						// } else if (INTERSECTED.object.name === "star") {
+						// 	console.log('star');
+						// } 
+
+						} // end if targetBtn
+					} // end forLoop 
+				} else {
+					INTERSECTED = null;  // clear your ray gun
+				}
+			} // end if
+		} // end onTouchStart
+
+		function onTouchMove( e) {
+			if ( event.touches.length === 1 ) {
+				event.preventDefault();
+				var touchX = e.targetTouches[0].pageX -170; //- canvas.offsetLeft (nav = 100px + margin = 70px)
+				var touchY = e.targetTouches[0].pageY -232; //- canvas.offsetTop;
+				//console.log(touchX + ", " + touchY);  
+
+				// #st if positioned using css you need to add offset to event.clientX. However the offset shouldn't go thru linScale, so not sure how to solve
+				//touchX = linScale(e.clientX, 0, WIDTH, LEFT, RIGHT); 
+				var touchXpos = linScale(touchX, 0, WIDTH, LEFT, RIGHT); 
+
+				if (touchXpos >= (LEFT+(padH)) && touchXpos <= (sliderWidth-(padH))) {
+					slider.position.setX(touchXpos);
 					
 					// map fz range for slider
-					sliderFz = Math.ceil(linScale(mouseX, LEFT, RIGHT, 4500, 0));
+					sliderFz = Math.ceil(linScale(touchXpos, LEFT, RIGHT, 4500, 0));
 					renderTextSprite = true;
 				}
+			} // end if
+
 		} // end onMouseMove
 
-		function onMouseUp( event ) {
-			canvas.removeEventListener( 'mousemove', onMouseMove, false );
-			canvas.removeEventListener( 'mouseup', onMouseUp, false );
-			canvas.removeEventListener( 'mouseout', onMouseOut, false );
-			renderTextSprite = false;
-		}
+		function onTouchEnd(e) {
+			if ( e.touches.length === 1 ) {
+				e.preventDefault();
 
-		function onMouseOut( event ) {
-			canvas.removeEventListener( 'mousemove', onMouseMove, false );
-			canvas.removeEventListener( 'mouseup', onMouseUp, false );
-			canvas.removeEventListener( 'mouseout', onMouseOut, false );
-		}
+				//mouseXOnMouseDown = event.touches[ 0 ].pageX - halfX;
 
-		//ref: https://developer.mozilla.org/en-US/docs/Web/API/Touch/clientX
-		// #hc - look this up
-
-			function onTouchStart( event ) {
-				if ( event.touches.length === 1 ) {
-					event.preventDefault();
-					//mouseXOnMouseDown = event.touches[ 0 ].pageX - halfX;
-				}
+				//canvas.removeEventListener( 'mouseup', onMouseUp, false );
+				//canvas.removeEventListener( 'mouseout', onMouseOut, false );
+				renderTextSprite = false;
 			}
-
-			function onTouchMove( event ) {
-				if ( event.touches.length === 1 ) {
-					event.preventDefault();
-					//mouseX = event.touches[ 0 ].pageX - halfX;
-					//starSprite.position.set(mouseX, waveBottom+(yOffset/2), 10);
-					//slider.position.setX(mouseX)
-					// needele update
-					// text label update
-				}
 		}
 
 

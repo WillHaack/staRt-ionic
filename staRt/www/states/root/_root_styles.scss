@@ -1,5 +1,4 @@
-*
-{
+* {
   font-family: 'Quicksand', 'Helvetica Neue', sans-serif !important;
   -webkit-user-select: none;
 }
@@ -9,11 +8,9 @@
   -webkit-flex-direction: row;
   line-height: 1.7;
   color: $grey;
-
 }
 
-.bar-header
-{
+.bar-header {
   background-color: $light-blue;
   height: 14vh !important;
   display: flex;
@@ -21,8 +18,7 @@
   padding-left: 120px;
 }
 
-.bar .title
-{
+.bar .title {
   position: relative;
   display: block;
   text-transform: uppercase;
@@ -33,8 +29,7 @@
   overflow: visible;
 }
 
-#nav-and-content-container
-{
+#nav-and-content-container {
   display: flex;
   flex-flow: row nowrap;
 }
@@ -44,47 +39,58 @@
   -webkit-flex-direction: column;
   width: 10vw;
   z-index: 999;
+  border: 0px solid red;
 }
 
 #content-container {
+  position: relative;
+  display: block;
   text-align: center;
-  display: -webkit-flex;
+  /* display: -webkit-flex;
   -webkit-flex: 1;
   -webkit-flex-direction: column;
+  */  
   height: 85vh;
-  width: 90vw;
+  width: 100%;
   margin-top: 110px;
-
+  padding-left: 70px;
+  padding-right: 70px;
+  border: 0px solid red;
 }
 
-.text-content
-{
+.text-content {
     padding: 3rem;
 }
 
 canvas {
-  background-color: #000000;
+  background-color: #ffffff;
 }
 
 .text-and-lpc {
+  /*
   display: -webkit-flex;
   -webkit-flex: 1;
   font-size: 1rem;
   padding: 3rem;
+  border: 1px solid blue;
+  */
 }
 
-.text-and-lpc__text
-{
-  font-size: 14pt;
+.text-and-lpc__text {
+  /*font-size: 14pt;*/
+  font-size: 1.25em;
 }
 
-.pane
-{
+.pane {
+  /*
   flex-flow: column;
+  border: 1px solid red;
+  */
 }
 
-.nav-container
-{
+// NAV STYLES ======================================================
+
+.nav-container {
   z-index: 99;
 }
 
@@ -138,8 +144,7 @@ canvas {
   background-color: darkblue;
 }
 
-.nav-svg
-{
+.nav-svg {
   height: 65px;
   width: 65px;
   display: block;
