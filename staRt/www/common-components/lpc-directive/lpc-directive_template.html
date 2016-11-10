@@ -5,12 +5,13 @@
 		ng-class="{'full-width': !rate && !reset}">
 		<!-- Renderer will be inserted here -->
 		
-		<!-- Slider -->
+		
+		<!-- Slider ->
 		<div
 			ng-if="slider"
 			class="lpc-range">
 		
-			<!-- Starfish -->
+			<!- Starfish ->
 			<input
 				ng-if="slider"
 				type="range"
@@ -20,12 +21,12 @@
 				ng-change="updateTarget()"
 				data-thumbwidth="50"/>
 			
-			<!-- Line + numbers -->
+			<!- Line + numbers ->
 			<output name="rangeVal"></output>
 			
 			<div id="sand"></div>
 		
-		</div>
+		</div> -->
 	</div>
 
 	<div class="lpc-buttons">
@@ -41,13 +42,14 @@
 			</button>
 		</div>
 		
+		<!--
 		<button
 			ng-click="resetF3()"
 			class="reset-button"
 			ng-if="reset">
 			Reset Target
 		</button>
+	-->
 	</div>
-
 
 </div>

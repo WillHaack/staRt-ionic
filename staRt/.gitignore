@@ -6,3 +6,5 @@ platforms/
 plugins/
 www/lib/
 www/css/
+www/hc
+*.DS_Store
