@@ -27,9 +27,9 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 			//var constrols, stats, axisHelper, camHelper, gridHelper; // helpers
 		
 		// DOM ELEMENTS
-			var element; // this is the 'lpc-directive' element that is called from page or state templates
+			var element; // this is the 'lpc-directive' element that's called from page or state templates
 
-			var containerDiv; // Hold the "lpc-container" div and its child 'slider & canvas', defined in the lpc directive template, during INIT.
+			var containerDiv; // Holds the "lpc-container" div and its child 'slider & canvas', defined in the lpc directive template, during INIT.
 
 			var firstElt; // Used to locate the the angular element on to which the THREE canvas should be attached. (First element in 'slider & canvas' should always be where the canvas goes.) 
 
@@ -64,24 +64,24 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 
 		// USER INTERACTION 
-			// mouse pos are best when relative to the DOM element
+			// if mouse -- pos are relative to the DOM element
 			var mouse; // vector2, stores NDC vals used by raycaster 
 			var mouseX; // stores linScaled e.clientX vals used for slider
 
 			// if touch
 			var touch; // vector2, stores NDC vals used by raycaster 
-			var touchX, touchY;
+			var touchX, touchY; //
 
-			var INTERSECTED = undefined;
+			var INTERSECTED = undefined; //obj intersected by raycaster
 
-			var pause = false;
+			var pause = false; // pauses the wave
 			
-			var fzVal; // holds slider val mapped to fz range
-			var savedTarget = 3100; // placeholder for user's saved target
-			var sliderFz = savedTarget; // position of slider
+			var fzVal; // holds slider val mapped to fz range ()
+			var savedTarget; // holds user's saved target from profile
+			var sliderFz; // position of slider -- savedTarget mapped to screen coords
 			//var targetSet = true;
 
-			var textSprite = undefined;
+			var textSprite = undefined;  // displays fz value
 			var renderTextSprite = false;
 
 
@@ -152,19 +152,28 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 			$scope.canvas = canvas;
 			$scope.renderer = renderer;
 			$scope.camera = camera;
-			$scope.active = false;
+			$scope.active = false; 
+
+		// GET PROFILE DATA
+			// setInitialTarget(); is called at '$ionicView.afterEnter',
+			 //# hc - ask #st about the best way to do this.  I want to initalize the drawing w/ the F3 target/needle/slider in place
+			//savedTarget = $scope.data.targetF3;  //UNDEFINED #hc
+			//savedTarget = parseInt($scope.data.targetF3); //NAN #hc
+			savedTarget = 2247; // temp placeholder  #hc
+
+			sliderFz = savedTarget;
 
 		// MATERIALS, STATIC SHAPES + MESH GROUPS
 			matMaker();
 			drawScene();
 
+
 		// USER INTERACTION
 			raycaster = new THREE.Raycaster();
 	    	mouse = new THREE.Vector2();
 	    	touch = new THREE.Vector2();
-	    	$scope.data = {}; // holds user data, like F3 target
 
-	    	// #ST is scope supposed to handle this in ionic??
+	    	// #ST is $scope supposed to handle events, or is this OK?
 	    	// if mouse (for debugging)
 		    	//canvas.addEventListener('mousemove', onMouseMove, false );
 				//canvas.addEventListener('mousedown', onMouseDown, false );
@@ -173,14 +182,15 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 			// if touch
 			canvas.addEventListener('touchstart', onTouchStart, false );
 			canvas.addEventListener('touchmove', onTouchMove, false); 
-			//canvas.addEventListener('touchend', onTouchEnd, false); 
+			canvas.addEventListener('touchend', onTouchEnd, false); 
+			// additional touch API options, #hc learn what they are for 
 			//canvas.addEventListener('touchcancel', onTouchCancel, false); 
 			//document.body.addEventListener("touchcancel", touchUp, false);
-			
-			//canvas.addEventListener( 'resize', handleResize, false );
 
 
 		// DEBUGGERS
+			//canvas.addEventListener( 'resize', handleResize, false );
+
 			// we can add these later, if needed
 				//initStatsObject();
 		    	//initGUIctrl(); 
@@ -190,7 +200,6 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 		// RENDER
 			// had to put all this stuff in the RENDER section at the end of the sketch
-
 
 	// END INIT
 
@@ -293,7 +302,7 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 			slider = new THREE.Object3D();
 			slider.name = slider;
 
-			// #hc slider range should be 0-4500
+			// #ST - slider range should be 0-4500? 
 			// set pos of slider to user's saved F3 target
 			var target = (linScale(savedTarget, 4500, 0, LEFT, RIGHT));
 			slider.position.set(target,0,9)
@@ -492,7 +501,7 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 
 	///////////////////////////////////
-	//  TOUCH HANDLERS
+	//  MOUSE HANDLERS -- DELETE AFTER DEBUGGING
 	///////////////////////////////////
 		// function onMouseDown( event ) {
 		// 	event.preventDefault();		
@@ -581,10 +590,13 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		// 	canvas.removeEventListener( 'mouseout', onMouseOut, false );
 		// }
 
+	///////////////////////////////////
+	//  TOUCH HANDLERS
+	///////////////////////////////////
+
 		// TOUCH 
 		// https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/HTML-canvas-guide/AddingMouseandTouchControlstoCanvas/AddingMouseandTouchControlstoCanvas.html
 		// touch points can be calc'd from the DOM ele, but even though the method is called .pageX and .pageY
-		// #hc - read this
 
 		// if touch
 		// canvas.addEventListener('touchstart', onTouchStart, false );
@@ -605,14 +617,14 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 				touch.y = (( touchY / canvas.clientHeight ) * -1) * 2 + 1; // GOTTA FLIP FOR DOM COORDS! tres important!!!
 				// #st - is this right??
 
-                console.log("touch x " + touch.x);  
-                console.log("touch y " + touch.y); 
+                // console.log("touch x " + touch.x);  
+                // console.log("touch y " + touch.y); 
 
                 // RAYCASTER
 				raycaster.setFromCamera(touch, camera); // gives the raycaster coords from mouse (NDC) & cam (world) positions
 
 				var intersects = raycaster.intersectObjects(scene.children, true); // cast a ray & get an array of things that it hits. 'recursive = true' is necessary to autoloop thru the descendants of grouped objs (i.e. scence.children's children)
-				console.log(intersects.length);
+				//console.log(intersects.length);
 
 				if (intersects.length > 0) { // if the ray hits things
 					for ( var i = 0; i < intersects.length; i++ ) {
@@ -635,13 +647,17 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 								// reposition slider
 								var target = (linScale(savedTarget, 4500, 0, LEFT, RIGHT));
+								
+								//renderTextSprite = false;
 								slider.position.setX(target);
 
 								// update canvas2d
+								renderTextSprite = true;
 								label.remove( textSprite );
 								textSprite = makeTextSprite(savedTarget); 
 								textSprite.position.set(0,10,9);
 								label.add( textSprite );
+								renderTextSprite = false;
 							}
 
 						// } else if (INTERSECTED.object.name === "star") {
@@ -682,10 +698,6 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 			if ( e.touches.length === 1 ) {
 				e.preventDefault();
 
-				//mouseXOnMouseDown = event.touches[ 0 ].pageX - halfX;
-
-				//canvas.removeEventListener( 'mouseup', onMouseUp, false );
-				//canvas.removeEventListener( 'mouseout', onMouseOut, false );
 				renderTextSprite = false;
 			}
 		}
@@ -729,6 +741,7 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 			var renderer = $scope.renderer;
 			var canvas = $scope.canvas;
 			var camera = $scope.camera;
+			
 			getDrawingDim(); 
 			// var WIDTH = parseInt(renderer.domElement.clientWidth);
 			// var HEIGHT = parseInt(renderer.domElement.clientHeight);
@@ -753,28 +766,28 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	////////////////////////////
 
 	function setInitialTarget() {
-	// 	ProfileService.getCurrentProfile().then(function(res)
-	// 	{
-	// 		console.log('currentProfile:',res)
-	// 		if (res) {
-	// 			if (res.targetF3)
-	// 			{
-	// 				$scope.data.targetF3 = res.targetF3;
-	// 				console.log('existing targetf3:', res.targetF3)
-	// 			}
-	// 			else
-	// 			{
-	// 				$scope.data.targetF3 = ProfileService.lookupDefaultF3(res);
-	// 				console.log('going w default tf3:', $scope.data.targetF3);
-	// 			}
-	// 		}
+		ProfileService.getCurrentProfile().then(function(res)
+		{
+			console.log('currentProfile:', res)
+			if (res) {
+				if (res.targetF3)
+				{
+					$scope.data.targetF3 = res.targetF3;
+					console.log('existing targetf3:', res.targetF3)
+				}
+				else
+				{
+					$scope.data.targetF3 = ProfileService.lookupDefaultF3(res);
+					console.log('going w default tf3:', $scope.data.targetF3);
+				}
+			}
 
-	// 		// Set initial LPC 
-	// 		$timeout(function()
-	// 		{
-	// 			$scope.updateTarget();
-	// 		});
-	// 	})
+			// Set initial LPC 
+			$timeout(function()
+			{
+				$scope.updateTarget();
+			});
+		})
 	}
 
 	//setInitialTarget();
@@ -800,47 +813,46 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		// .css('left', 'calc(' + position + '% - ' + positionOffset + 'px)')
 		// .text(controlVal);
 
-		// Update current user's Target F3
-		// ProfileService.getCurrentProfile().then(function(res)
-		// {
-		// 	if (res) {
-		// 		var currentProfile = res;
-		// 		currentProfile.targetF3 = parseInt($scope.data.targetF3);
-		// 		ProfileService.saveProfile(currentProfile);
-		// 	}
-		// })
+		//Update current user's Target F3
+		ProfileService.getCurrentProfile().then(function(res)
+		{
+			if (res) {
+				var currentProfile = res;
+				currentProfile.targetF3 = parseInt($scope.data.targetF3);
+				ProfileService.saveProfile(currentProfile);
+			}
+		})
 	}
 
-	// $scope.resetF3 = function() {
-	// 	ProfileService.getCurrentProfile().then(function(res)
-	// 	{
-	// 		if(res)
-	// 		{
-	// 			$scope.data.targetF3 = ProfileService.lookupDefaultF3(res);
-	// 			$timeout(function()
-	// 			{
-	// 				$scope.updateTarget();
-	// 			})
-	// 		}
-	// 	})
-	// }
+	$scope.resetF3 = function() {
+		ProfileService.getCurrentProfile().then(function(res)
+		{
+			if(res)
+			{
+				$scope.data.targetF3 = ProfileService.lookupDefaultF3(res);
+				$timeout(function()
+				{
+					$scope.updateTarget();
+				})
+			}
+		})
+	}
 
 	$scope.$parent.$on('$ionicView.afterEnter', function() {
 		$scope.active = true;
+		setInitialTarget();
 		$scope.animate();
-
-		//setInitialTarget();
 	});
 
 	$scope.$parent.$on('$ionicView.beforeLeave', function() {
 		$scope.active = false;
 	});
 
-	// $scope.$watch('targetF3', function()
-	// {
-	// 	console.log('target changed to: ', $scope.targetF3);
-	// 	//$scope.updateTarget();
-	// });
+	$scope.$watch('targetF3', function()
+	{
+		console.log('target changed to: ', $scope.targetF3);
+		$scope.updateTarget();
+	});
 
 
 
@@ -993,11 +1005,6 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	// CONTEXT2D TEXT SPRITE ======================================================
 		// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D#Text_styles
 
-		// 	var material = new THREE.SpriteMaterial( {
-		// 	map: new THREE.CanvasTexture( generateSprite() ),
-		// 	blending: THREE.AdditiveBlending
-		// } );
-
 		function makeTextSprite(message) {
 				
 			// styles
@@ -1037,8 +1044,6 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 			
 			return textSprite;	
 		}
-
-
 
 // close out the lpc-directive	
 
