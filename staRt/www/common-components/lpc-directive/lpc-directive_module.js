@@ -1,6 +1,6 @@
 'use strict';
 
-var lpcDirective = angular.module( 'lpcDirective', 
+var lpcDirective = angular.module( 'lpcDirective',
 [
     'ngResize'
 ]);
@@ -17,6 +17,7 @@ lpcDirective.directive( 'lpcDirective', function()
 		controller: 'LpcDirectiveController',
 		scope:
 		{
+			sand: '=',
 			slider: '=',
 			reset: '=',
 			rate: '='
