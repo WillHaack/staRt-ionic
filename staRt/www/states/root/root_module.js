@@ -3,7 +3,7 @@
 ( function(  )
 {
 	var root = angular.module( 'root',
-	[ 
+	[
 		'LocalForageModule',
 		'startStateService',
 		'profileService',

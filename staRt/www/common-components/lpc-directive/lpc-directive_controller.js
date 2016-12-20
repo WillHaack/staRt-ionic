@@ -60,7 +60,7 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 	var dummyNoisiness = 0.05
 
 	$scope.makeDummyData = function(cb) {
-	
+
 		var msg = {};
 		msg.coefficients = [];
 		msg.freqPeaks = [];
@@ -149,6 +149,29 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		var waveMat = new THREE.MeshBasicMaterial({ color: 0x53C8E9 });
 		waveMat.side = THREE.DoubleSide;
 		var peakMat = new THREE.LineBasicMaterial({ color: 0x2095b6 });
+		var texloader = new THREE.TextureLoader();
+		var starTex = texloader.load('img/star.png');
+		var starMat = new THREE.SpriteMaterial( { map: starTex, rotation:Math.PI } );
+		var starSprite = new THREE.Sprite(starMat);
+		starSprite.scale.set(53, 61, 1);
+		starSprite.position.set(0, 0, 1);
+		scene.add(starSprite);
+
+		// sand
+		if ($scope.sand) {
+			var sandMat = new THREE.MeshBasicMaterial({ color: 0xffeccb });
+			sandMat.side = THREE.DoubleSide;
+			var sandShape = new THREE.Shape();
+			sandShape.moveTo( -WIDTH/2, HEIGHT/2 );
+			sandShape.lineTo( -WIDTH/2, HEIGHT/2 - 60 );
+			sandShape.lineTo( WIDTH/2, HEIGHT/2 - 60 );
+			sandShape.lineTo( WIDTH/2, HEIGHT/2 );
+			sandShape.lineTo( -WIDTH/2, HEIGHT/2 );
+
+			var sandGeo = new THREE.ShapeGeometry( sandShape );
+			var sandMesh = new THREE.Mesh( sandGeo, sandMat ) ;
+			scene.add( sandMesh );
+		}
 
 	////////////////////////////
 	//  Draw
@@ -167,7 +190,7 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 		peakSegments.geometry.dynamic = true;
 		scene.add(peakSegments);
 		var waveMesh;
-		
+
 		$scope.lpcCoefficientCallback = function(msg) {
 
 			if ($scope.active) {
@@ -177,6 +200,11 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 				rightEdge = WIDTH/2;
 				topEdge = HEIGHT/-2;
 				bottomEdge = HEIGHT/2;
+
+				if ($scope.sand) {
+					HEIGHT -= 60;
+					bottomEdge -= 60;
+				}
 
 				points = msg.coefficients;
 				peaks = msg.freqPeaks;
@@ -250,12 +278,12 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 						var peak = peaks[i];
 						px = linScale(peak.X, -1, 1, 0, frequencyScaling);
 						px = linScale(px, 0, 1, WIDTH/-2, WIDTH/2);
-						py = linScale(peak.Y, 1, -1, HEIGHT/-2, HEIGHT/2);
+						py = linScale(peak.Y, 1, -1, HEIGHT/-2, bottomEdge);
 					}
 					peakGeometry.vertices[2*i].x = px;
 					peakGeometry.vertices[2*i].y = py;
 					peakGeometry.vertices[2*i+1].x = px;
-					peakGeometry.vertices[2*i+1].y = HEIGHT/2;
+					peakGeometry.vertices[2*i+1].y = bottomEdge;
 				}
 				peakGeometry.verticesNeedUpdate = true;
 			}
@@ -315,7 +343,7 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 				}
 			}
 
-			// Set initial LPC 
+			// Set initial LPC
 			$timeout(function()
 			{
 				$scope.updateTarget();
@@ -325,27 +353,36 @@ lpcDirective.controller( 'LpcDirectiveController', function( $rootScope, $scope,
 
 	setInitialTarget();
 
+	$scope.touched = function($event)
+	{
+		if (renderer.domElement === $event.target) {
+			var WIDTH = parseInt(renderer.domElement.clientWidth);
+			var HEIGHT = parseInt(renderer.domElement.clientHeight);
+			var px = $event.gesture.srcEvent.layerX - WIDTH/2;
+			// var py = $event.gesture.srcEvent.layerY - HEIGHT/2;
+
+			$scope.data.targetF3 = linScale(px, -WIDTH/2, WIDTH/2, 0, 5000);
+
+			$timeout(function()
+			{
+				$scope.updateTarget();
+			});
+		}
+	}
+
 	$scope.updateTarget = function()
-	{	
-		// Move value bubble
-		var wrappedElement = angular.element(element);
-		var control = wrappedElement.find('input');
+	{
+		// Move the star sprite
+		var targetf3 = parseInt($scope.data.targetF3);
+		var position = linScale(targetf3, 0, 5000, -WIDTH/2, WIDTH/2);
+		var offsetY = 100 + ($scope.sand ? -60 : 0);
+		starSprite.position.set(position, HEIGHT/2 - offsetY, 1);
 
-		var controlMin = control.attr('min')
-		var controlMax = control.attr('max')
-		var controlVal = control.val();
-		var controlThumbWidth = control.attr('data-thumbwidth');
+		// var output = control.next('output');
 
-		var range = controlMax - controlMin;
-
-		var position = ((controlVal - controlMin) / range) * 100;
-
-		var positionOffset = Math.round(controlThumbWidth * position / 100) - (controlThumbWidth / 2);
-		var output = control.next('output');
-
-		output
-		.css('left', 'calc(' + position + '% - ' + positionOffset + 'px)')
-		.text(controlVal);
+		// output
+		// .css('left', 'calc(' + position + '% - ' + positionOffset + 'px)')
+		// .text(controlVal);
 
 		// Update current user's Target F3
 		ProfileService.getCurrentProfile().then(function(res)
