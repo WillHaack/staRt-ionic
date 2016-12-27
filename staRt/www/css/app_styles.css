@@ -394,7 +394,7 @@ input[type=range]::-webkit-slider-thumb {
   display: -webkit-flex;
   -webkit-flex-direction: row;
   line-height: 1.7;
-  height: 768px;
+  height: 767px;
   width: 1024px;
   color: #4d4d4d;
   border: 0px solid yellow; }
@@ -402,14 +402,15 @@ input[type=range]::-webkit-slider-thumb {
 /* unfortunately, I think the correct way to update this is with native code:
     https://developer.apple.com/reference/uikit/uiviewcontroller#//apple_ref/occ/instm/UIViewController/preferredStatusBarStyle  */
 #statusBar-bg {
-  height: 22px;
+  height: 21px;
   width: 1024px;
-  background-color: #018B9D; }
+  background-color: #53c8e9;
+  border-bottom: 1px solid #F0F9FC; }
 
 #nav-and-content-container {
   display: flex;
   flex-flow: row nowrap;
-  margin-top: 22px;
+  margin-top: 21px;
   border: 0px solid red; }
 
 .bar-header {
@@ -512,170 +513,6 @@ canvas {
   margin: 0 auto;
   padding-bottom: 5px; }
 
-/*
-
-.bigtext {
-  font-size: 55pt;
-}
-
-.testbutton {
-  background-color: $blue-light;
-}
-
-.testbutton:active {
-  background-color: $blue-dark;
-}
-*/
-/*
-*
-{
-  font-family: 'Quicksand', 'Helvetica Neue', sans-serif !important;
-  -webkit-user-select: none;
-}
-
-#app-container {
-  display: -webkit-flex;
-  -webkit-flex-direction: row;
-  line-height: 1.7;
-  color: $grey;
-
-}
-
-.bar-header
-{
-  background-color: $light-blue;
-  height: 14vh !important;
-  display: flex;
-  align-items: center;
-  padding-left: 120px;
-}
-
-.bar .title
-{
-  position: relative;
-  display: block;
-  text-transform: uppercase;
-  color: $blue;
-  font-weight: bold;
-  font-size: $header-type;
-  text-align: left;
-  overflow: visible;
-}
-
-#nav-and-content-container
-{
-  display: flex;
-  flex-flow: row nowrap;
-}
-
-#nav-container {
-  display: -webkit-flex;
-  -webkit-flex-direction: column;
-  width: 10vw;
-  z-index: 999;
-}
-
-#content-container {
-  text-align: center;
-  display: -webkit-flex;
-  -webkit-flex: 1;
-  -webkit-flex-direction: column;
-  height: 85vh;
-  width: 90vw;
-  margin-top: 110px;
-
-}
-
-.text-content
-{
-    padding: 3rem;
-}
-
-canvas {
-  background-color: #000000;
-}
-
-.text-and-lpc {
-  display: -webkit-flex;
-  -webkit-flex: 1;
-  font-size: 1rem;
-  padding: 3rem;
-}
-
-.text-and-lpc__text
-{
-  font-size: 14pt;
-}
-
-.pane
-{
-  flex-flow: column;
-}
-
-.nav-container
-{
-  z-index: 99;
-}
-
-.navTabs {
-  height: 100vh;
-  display: -webkit-flex;
-  -webkit-flex: 1;
-  -webkit-flex-direction: column;
-  color: $white;
-  text-transform: uppercase;
-  font-weight: bold;
-}
-
-.navTab {
-  background-color: $blue;
-  text-align: center;
-  display: -webkit-flex;
-  -webkit-flex: 1;
-  border-radius: 4px;
-  box-shadow: 1px 0px 2px #d3d3d3;
-  transition: width 0.5s ease-in-out;
-  width: 100px;
-  padding-top: 10%;
-  padding-bottom: 5%;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-
-  &.active
-  {
-    color: #53C8E9;
-    background-color: #F0F9FC;
-    box-shadow: 2px 1px 2px #d1d1d1;
-    z-index: 25;
-    width: 108px;
-  }
-}
-
-.navTabText {
-  margin: auto;
-}
-
-.bigtext {
-  font-size: 55pt;
-}
-
-.testbutton {
-  background-color: lightblue;
-}
-
-.testbutton:active {
-  background-color: darkblue;
-}
-
-.nav-svg
-{
-  height: 65px;
-  width: 65px;
-  display: block;
-  margin: 0 auto;
-  padding-bottom: 5px;
-}
-*/
 .profiles {
   flex-flow: row nowrap; }
 

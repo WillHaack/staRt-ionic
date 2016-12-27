@@ -18,7 +18,7 @@
 	// I've applied these to #app-container (height: and width:) to set the dimesnions for for entire app. Styles written for all elements within #app-container will be responsive (% or vw - based) 
 	$appW: 1024px; //100vw; //
 	$appH: 746px; //100vh; //
-	$statusBarH: 22px;
+	$statusBarH: 21px;
  
 	// padding-right: for #app-container & flex-row elements
 	//$elePadding-R: $appW * 0.07;  // 7% of appW

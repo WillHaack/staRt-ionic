@@ -7,3 +7,4 @@ plugins/
 www/lib/
 www/css/
 *.DS_Store
+**/.DS_Store
