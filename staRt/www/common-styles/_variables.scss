@@ -16,20 +16,20 @@
 
 /* LAYOUT ================================================= */
 	// I've applied these to #app-container (height: and width:) to set the dimesnions for for entire app. Styles written for all elements within #app-container will be responsive (% or vw - based) 
-	$appW: 1024px; //100vw; //
-	$appH: 746px; //100vh; //
-	$statusBarH: 21px;
+	$appW:  100vw; //1024px;
+	$statusBarH: 2.9vh; //22px
+	$appH:  100vh - $statusBarH; //746px;
  
 	// padding-right: for #app-container & flex-row elements
 	//$elePadding-R: $appW * 0.07;  // 7% of appW
 
-	$rowH: 106px; //$appH / 7; //
-	$rowHalf: 54px; //$rowH/2
+	$rowH: $appH / 7; //106px;
+	$rowHalf: $rowH/2; //54px; 
 
 
-	$nav-btnW: 100px; //10vw; //
-	$col-pad: 70px; //0.0666vw; //
-	$navW: 170px;  //$nav-btnW + $col-pad; // 16.66% of appW
+	$nav-btnW: 10vw; //100px; 
+	$col-pad: 6.66vw; //70px; //
+	$navW: $nav-btnW + $col-pad; //16.66vw; //170px;
 
 
 /* MISC STYLES ================================================= */

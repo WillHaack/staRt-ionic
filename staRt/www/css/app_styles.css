@@ -394,33 +394,33 @@ input[type=range]::-webkit-slider-thumb {
   display: -webkit-flex;
   -webkit-flex-direction: row;
   line-height: 1.7;
-  height: 767px;
-  width: 1024px;
+  height: 100vh;
+  width: 100vw;
   color: #4d4d4d;
   border: 0px solid yellow; }
 
 /* unfortunately, I think the correct way to update this is with native code:
     https://developer.apple.com/reference/uikit/uiviewcontroller#//apple_ref/occ/instm/UIViewController/preferredStatusBarStyle  */
 #statusBar-bg {
-  height: 21px;
-  width: 1024px;
+  height: 2.9vh;
+  width: 100vw;
   background-color: #53c8e9;
   border-bottom: 1px solid #F0F9FC; }
 
 #nav-and-content-container {
   display: flex;
   flex-flow: row nowrap;
-  margin-top: 21px;
+  margin-top: 2.9vh;
   border: 0px solid red; }
 
 .bar-header {
   background-color: #c5f3ff;
-  height: 14vh !important;
+  height: 13.87143vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
-  padding-left: 170px; }
+  padding-left: 16.66vw; }
 
 .bar .title {
   position: relative;
@@ -440,22 +440,26 @@ input[type=range]::-webkit-slider-thumb {
   -webkit-flex-direction: column;
   justify-content: flex-start;
   text-align: center;
-  height: 640px;
-  width: 784px;
-  margin-top: 106px;
-  margin-left: 170px;
-  border: 0px solid red; }
+  height: 83.22857vh;
+  width: 100vw;
+  margin-top: 13.87143vh; }
 
-.state-contentBox {
+.state-contentBox, .state-contentBox--wide {
   padding: 0;
   margin: 0;
   display: -webkit-flex;
   -webkit-flex: 1;
-  margin-top: 54px;
+  margin-top: 6.93571vh;
+  margin-left: 16.66vw;
   height: auto;
-  width: auto;
+  width: 76.68vw;
   font-size: 1rem;
   border: 1px solid #c5f3ff; }
+
+.state-contentBox--wide {
+  margin-left: 0;
+  padding: 0;
+  width: 100vw; }
 
 .pane {
   flex-flow: column; }
@@ -466,15 +470,15 @@ canvas {
 #nav-container {
   display: -webkit-flex;
   -webkit-flex-direction: column;
-  width: 100px;
-  height: 746px;
+  width: 10vw;
+  height: 97.1vh;
   z-index: 999; }
 
 .nav-container {
   z-index: 99; }
 
 .navTabs {
-  height: 100vh;
+  height: 97.1vh;
   display: -webkit-flex;
   -webkit-flex: 1;
   -webkit-flex-direction: column;
@@ -489,7 +493,7 @@ canvas {
   text-align: center;
   border-radius: 4px;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
-  width: 100px;
+  width: 10vw;
   padding-top: 10%;
   padding-bottom: 5%;
   border-top-left-radius: 0px;
@@ -500,7 +504,7 @@ canvas {
     background-color: #F0F9FC;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
     z-index: 25;
-    width: 110px; }
+    width: 11vw; }
 
 .navTabText {
   margin: auto; }
@@ -522,11 +526,51 @@ canvas {
   flex: 1 0 0%; }
 
 .tut-contentBox {
+  position: relative;
   margin: 0;
   padding: 0;
-  height: 530px;
-  width: 100%;
-  border: 1px solid yellow; }
+  height: 69.35714vh;
+  width: 100%; }
+
+.sandbarBox {
+  position: relative;
+  height: 150px;
+  top: 435px;
+  display: flex;
+  flex-direction: column; }
+
+.sandbar-img {
+  position: absolute;
+  height: 150px;
+  width: 100vw;
+  left: 0;
+  opacity: 1;
+  z-index: 1; }
+
+.sandbar-coinRow {
+  position: absolute;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  top: 44px;
+  height: 13.87143vh;
+  margin-left: 16.66vw;
+  width: 76.68vw;
+  z-index: 25; }
+
+.sandbar-coinBox {
+  align-self: flex-start;
+  z-index: 25; }
+
+.sandbar-coinImgBox {
+  height: 68px;
+  width: 100px;
+  border: 1px solid white; }
+
+.sandbar-coinTxt {
+  margin-top: 5px; }
 
 .words-word {
   font-size: 3rem;

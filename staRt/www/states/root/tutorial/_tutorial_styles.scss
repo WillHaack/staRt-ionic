@@ -1,26 +1,70 @@
 .tut-contentBox  { // parent ele for tut content
 	// needs to be a flex
+	position: relative;
 	margin: 0;
 	padding: 0;
 	height: $rowH * 5;
 	width: 100%;
-	border: 1px solid yellow;
+	//border: 1px solid yellow;
 }
 
-.tutBox.tutHead {
-	//border: 2px solid yellow;
+.sceneBox {
+	//border: 1px solid yellow;
 }
 
 
-div#tutSandbar {
+// SANDBAR -------------------------------------
+
+.sandbarBox {
+	position: relative;
+	height: 150px;
+	top: 435px;
+	display: flex;
+	flex-direction: column;
+	//border: 1px solid lime;
+}
+
+.sandbar-img {
+	position: absolute;
+	height: 150px;
+	width: $appW;
+	left: 0;
+	opacity: 1;
+	z-index: 1;
+	//border: 1px solid pink;
+}
+
+.sandbar-coinRow {
+	position: absolute;
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: nowrap;
+
+	top: 44px;  // vert offset, or hgt of .sandbarBox - $rowH
+	height: $rowH;
+	margin-left: $navW;
+	width: $appW - $navW - $col-pad;
+	z-index: 25;
 	//border: 1px solid orange;
 }
 
-div.tutSandbarImg {
-	
+.sandbar-coinBox {
+	align-self: flex-start;
+	z-index: 25;
+	//border: 1px solid lime;
 }
 
-// ion-view.auto-contentBox {  // // parent ele for all the auto content
-	//border: 1px solid violet;
+.sandbar-coinImgBox {
+	height: 68px; //64%;
+	width: 100px;
+	border: 1px solid white;
+}
 
-//}
+.sandbar-coinImg {}
+
+.sandbar-coinTxt {
+	margin-top: 5px;
+}
+
