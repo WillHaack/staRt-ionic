@@ -1,5 +1,22 @@
-<ion-view view-title="Tutorial" class="text-content">
-	<div class="text-and-lpc__text">
-		A great big tutorial
-	</div>
+<ion-view view-title="Tutorial" class="state-contentBox">
+	<div class="tut-contentBox">
+		
+		<div class="text-and-lpc__text">
+			
+		</div>
+
+		<!-- sand bar goes here -->
+		<div id="tutSandbar">
+			<div class="tutSandbar-img"></div> <!-- or maybe apply as bg to parent ele -->
+		  <!-- the links to nested states using relative paths -->
+		  <!-- adds active class if the state matches the ui-sref -->
+			<div id="tutSandbar-coins" class="">
+			  <a ui-sref-active="active" ui-sref=".p01s1"><span>1</span>The Wave</a>
+			  <a ui-sref-active="active" ui-sref=".interests"><span>2</span> Full Image Template</a>
+			  <a ui-sref-active="active" ui-sref=".payment"><span>3</span> Wave2 Template</a>
+			</div>
+		</div> <!-- end tutSandbar -->
+	
+
+	</div> <!-- end tut-contentBox-->
 </ion-view>

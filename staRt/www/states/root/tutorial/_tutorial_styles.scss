@@ -1,0 +1,26 @@
+.tut-contentBox  { // parent ele for tut content
+	// needs to be a flex
+	margin: 0;
+	padding: 0;
+	height: $rowH * 5;
+	width: 100%;
+	border: 1px solid yellow;
+}
+
+.tutBox.tutHead {
+	//border: 2px solid yellow;
+}
+
+
+div#tutSandbar {
+	//border: 1px solid orange;
+}
+
+div.tutSandbarImg {
+	
+}
+
+// ion-view.auto-contentBox {  // // parent ele for all the auto content
+	//border: 1px solid violet;
+
+//}

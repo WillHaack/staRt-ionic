@@ -446,23 +446,22 @@ input[type=range]::-webkit-slider-thumb {
   margin-left: 170px;
   border: 0px solid red; }
 
-.text-content {
-  padding: 3rem; }
-
-canvas {
-  background-color: #ffffff; }
-
-.text-and-lpc {
+.state-contentBox {
+  padding: 0;
+  margin: 0;
   display: -webkit-flex;
   -webkit-flex: 1;
+  margin-top: 54px;
+  height: auto;
+  width: auto;
   font-size: 1rem;
-  padding: 3rem; }
-
-.text-and-lpc__text {
-  font-size: 14pt; }
+  border: 1px solid #c5f3ff; }
 
 .pane {
   flex-flow: column; }
+
+canvas {
+  background-color: #ffffff; }
 
 #nav-container {
   display: -webkit-flex;
@@ -521,6 +520,13 @@ canvas {
 
 .profiles__info {
   flex: 1 0 0%; }
+
+.tut-contentBox {
+  margin: 0;
+  padding: 0;
+  height: 530px;
+  width: 100%;
+  border: 1px solid yellow; }
 
 .words-word {
   font-size: 3rem;
