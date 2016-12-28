@@ -45,7 +45,7 @@
     height: $appH + $statusBarH;
     width: $appW;
     color: $grey-txtMain;
-    border: 0px solid yellow; //#db
+    //border: 1px solid yellow; //#db
   }
 
   /* unfortunately, I think the correct way to update this is with native code:
@@ -61,18 +61,20 @@
     display: flex;
     flex-flow: row nowrap;
     margin-top: $statusBarH;
-    border: 0px solid red; //#db
+    //border: 1px solid red; //#db
   }
 
 // PAGE HEADER -------------------------------------
   .bar-header {
     background-color: $blue-light;
-    height:  $rowH;
+    //height-min: 106px; //iOS cordova will overwrite this 
+    height: $rowH !important; //iOS cordova will overwrite this if not !important
     display: flex;
-    align-items: center; // vertical align, but doesn't seem to work in iOS
-    justify-content: space-between;
+    align-items: center; // vertical align, but doesn't work w/ iOS cordova
+    //justify-content: space-between;
     box-shadow: $itemShadow;
     padding-left: $navW;
+    //border: 1px solid red; //#db
   }
 
   .bar .title {
@@ -117,7 +119,7 @@
       height: auto;
       width: $appW - $navW - $col-pad;
       font-size: 1rem;
-      border: 1px solid $blue-light; //#db
+      border: 1px solid $blue-light; //#db DEBUG LINES
     }
 
     .state-contentBox--wide {  // used in tutorial for full width graphics

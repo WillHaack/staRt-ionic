@@ -396,8 +396,7 @@ input[type=range]::-webkit-slider-thumb {
   line-height: 1.7;
   height: 100vh;
   width: 100vw;
-  color: #4d4d4d;
-  border: 0px solid yellow; }
+  color: #4d4d4d; }
 
 /* unfortunately, I think the correct way to update this is with native code:
     https://developer.apple.com/reference/uikit/uiviewcontroller#//apple_ref/occ/instm/UIViewController/preferredStatusBarStyle  */
@@ -410,15 +409,13 @@ input[type=range]::-webkit-slider-thumb {
 #nav-and-content-container {
   display: flex;
   flex-flow: row nowrap;
-  margin-top: 2.9vh;
-  border: 0px solid red; }
+  margin-top: 2.9vh; }
 
 .bar-header {
   background-color: #c5f3ff;
-  height: 13.87143vh;
+  height: 13.87143vh !important;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
   padding-left: 16.66vw; }
 
