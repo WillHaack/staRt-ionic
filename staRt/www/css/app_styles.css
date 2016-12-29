@@ -529,12 +529,21 @@ canvas {
   height: 69.35714vh;
   width: 100%; }
 
+.sceneBox {
+  border: 1px solid yellow;
+  position: absolute;
+  margin-left: 170px;
+  width: 80%;
+  height: 475px;
+  z-index: 10; }
+
 .sandbarBox {
   position: relative;
   height: 150px;
   top: 435px;
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  z-index: 1; }
 
 .sandbar-img {
   position: absolute;

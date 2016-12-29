@@ -9,7 +9,12 @@
 }
 
 .sceneBox {
-	//border: 1px solid yellow;
+	border: 1px solid yellow;
+	position: absolute;
+	margin-left: 170px;
+	width: 80%;
+	height: 475px;
+	z-index: 10;
 }
 
 
@@ -21,6 +26,7 @@
 	top: 435px;
 	display: flex;
 	flex-direction: column;
+	z-index: 1;
 	//border: 1px solid lime;
 }
 
@@ -62,7 +68,9 @@
 	border: 1px solid white;
 }
 
-.sandbar-coinImg {}
+.sandbar-coinImg {
+	
+}
 
 .sandbar-coinTxt {
 	margin-top: 5px;
