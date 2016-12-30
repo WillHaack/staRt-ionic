@@ -65,7 +65,41 @@
 			},
 		];
 
+		$scope.sliderOpts = {
+		    effect: 'slide',
+		    initialSlide: 0,
+		    pagination: false,
+
+		    // this seems to be the only way to get the swiperJs obj
+		    onInit: function(swiper){  
+		    $scope.swiper = swiper;
+		    console.log($scope.swiper);
+		    // Now you can do whatever you want with the swiper
+		    },
+
+		    onSlideChangeEnd: function(swiper){
+		    console.log('The active index is ' + swiper.activeIndex); 
+		    }
+		  };
+
+		
+		
+
+
+
+
 		console.log('TutorialController here!');
 	});
 
 } )(  );
+
+/*
+
+Slide Events
+The slides component dispatches events when the active slide changes
+
+$ionicSlides.slideChangeStart	This event is emitted when a slide change begins
+$ionicSlides.slideChangeEnd	This event is emitted when a slide change completes
+$ionicSlides.sliderInitialized	This event is emitted when the slider is initialized. It provides access to an instance of the slider.
+
+*/
