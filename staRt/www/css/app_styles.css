@@ -366,7 +366,8 @@ input[type=range]::-webkit-slider-thumb {
   outline: none;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  font-family: 'Quicksand', 'Helvetica Neue', sans-serif !important; }
+  font-family: 'Quicksand', 'Helvetica Neue', sans-serif !important;
+  -webkit-user-select: none; }
 
 .animated {
   -webkit-animation-duration: 1s;
@@ -459,6 +460,28 @@ input[type=range]::-webkit-slider-thumb {
   width: 100vw;
   margin-top: 13.87143vh; }
 
+.state-contentBox, .state-contentBox--wide {
+  padding: 0;
+  margin: 0;
+  display: -webkit-flex;
+  -webkit-flex: 1;
+  margin-top: 6.93571vh;
+  margin-left: 16.66vw;
+  height: auto;
+  width: 76.68vw;
+  font-size: 1rem; }
+
+.state-contentBox--wide {
+  margin-left: 0;
+  padding: 0;
+  width: 100vw; }
+
+.pane {
+  flex-flow: column; }
+
+canvas {
+  background-color: #ffffff; }
+
 #nav-container {
   display: -webkit-flex;
   -webkit-flex-direction: column;
@@ -550,8 +573,8 @@ canvas {
   width: 100%; }
 
 .sceneBox {
-  border: 1px solid yellow;
   position: absolute;
+  top: 0;
   margin-left: 170px;
   width: 80%;
   height: 475px;
@@ -559,41 +582,37 @@ canvas {
 
 .sandbarBox {
   position: relative;
-  height: 150px;
-  top: 435px;
+  height: 27.74286vh;
+  width: 100vw;
+  top: 55.48571vh;
   display: flex;
   flex-direction: column;
-  z-index: 1; }
-
-.sandbar-img {
-  position: absolute;
-  height: 150px;
-  width: 100vw;
-  left: 0;
-  opacity: 1;
-  z-index: 1; }
+  z-index: 1;
+  background-image: url("../img/tutorial/sand.svg");
+  background-size: auto 100%; }
 
 .sandbar-coinRow {
-  position: absolute;
+  position: relative;
   display: inline-flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   flex-wrap: nowrap;
-  top: 44px;
-  height: 13.87143vh;
+  margin-top: 6.93571vh;
+  height: 100%;
   margin-left: 16.66vw;
   width: 76.68vw;
   z-index: 25; }
 
 .sandbar-coinBox {
   align-self: flex-start;
-  z-index: 25; }
+  padding: 0px 10px;
+  z-index: 25;
+  border: 1px solid white; }
 
 .sandbar-coinImgBox {
   height: 68px;
-  width: 100px;
-  border: 1px solid white; }
+  width: auto; }
 
 .sandbar-coinTxt {
   margin-top: 5px; }

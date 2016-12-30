@@ -1,12 +1,10 @@
 <ion-view view-title="Tutorial" class="state-contentBox--wide">
 	
-	<div class="tut-contentBox">
+	<div class="tut-contentBox"> <!-- <ion-content scroll="false"> n/a w/ <div> -->
 
-		<!-- sand bar goes here -->
+	<!-- ==================================
+	SAND BAR -->
 		<div class="sandbarBox">
-
-			<img src="img/tutorial/sand.svg" class="sandbar-img">
-
 			<list class="sandbar-coinRow">
 				<item ng-repeat="coin in coinData" class="sandbar-coinBox"
 				>
@@ -19,7 +17,7 @@
 
 			</list> <!-- end .coinList -->
 
-				<!-- 
+			<!-- 
 				<list class="navTabs">
 
 				      <item
@@ -53,7 +51,7 @@
 
 				<!-- the links to nested states using relative paths -->
 		  		<!-- adds active class if the state matches the ui-sref -->
-<!-- 				  <a ui-sref-active="active" ui-sref=".p01s1"><span>1</span>The Wave</a>
+				<!-- <a ui-sref-active="active" ui-sref=".p01s1"><span>1</span>The Wave</a>
 				  <a ui-sref-active="active" ui-sref=".interests"><span>2</span> Full Image Template</a>
 				  <a ui-sref-active="active" ui-sref=".payment"><span>3</span> Wave2 Template</a> -->
 			</div><!-- end sandbar-coins -->
@@ -62,14 +60,94 @@
 		</div> <!-- end sandbarBox -->
 
 
-		<!-- scene content goes here -->
+	<!-- ==================================
+	SCENE CONTENT -->
 		<div class="sceneBox">
 			
+			<!-- <ion-slides options="sliderOpts" slider="data.slider"> -->
+			<ion-slides options="sliderOpts" slider="swiper">
+			
+			<!-- PAGE 01 -->
+		  	    <ion-slide-page id="p01s1">
+			    	<img src="img/tutorial/p01s1.png" class="tutSlide">  
+			    </ion-slide-page>
+
+			    <ion-slide-page id="p01s2">
+			    	<img src="img/tutorial/p01s2.png" class="tutSlide">  
+			    </ion-slide-page>
+
+			    <ion-slide-page id="p01s3">
+			    	<img src="img/tutorial/p01s3.png" class="tutSlide">  
+			    </ion-slide-page>
+
+			    <ion-slide-page id="p01s4">
+			    	<img src="img/tutorial/p01s4.png" class="tutSlide">  
+			    </ion-slide-page>
+
+			    <ion-slide-page id="p01s5">
+			    	<img src="img/tutorial/p01s5.png" class="tutSlide">  
+			    </ion-slide-page>
+			
+
+		<!-- PAGE 02 -->
+				<ion-slide-page id="p02s1">
+			    	<img src="img/tutorial/p02s1.png" class="tutSlide">  
+			    </ion-slide-page>
+
+			    <ion-slide-page id="p02s2">
+			    	<img src="img/tutorial/p02s2.png" class="tutSlide">  
+			    </ion-slide-page>
+		
+		<!-- PAGE 03 -->
+				<ion-slide-page id="p03s1">
+			    	<img src="img/tutorial/p03s1.png" class="tutSlide">  
+			    </ion-slide-page>
+
+			    <ion-slide-page id="p03s2">
+			    	<img src="img/tutorial/p03s2.png" class="tutSlide">  
+			    </ion-slide-page>
+
+			    <ion-slide-page id="p03s3">
+			    	<img src="img/tutorial/p03s3.png" class="tutSlide">  
+			    </ion-slide-page>
+		
+
+		<!-- PAGE 04 -->
+				<ion-slide-page id="p04s1">
+			    	<img src="img/tutorial/p04s1.png" class="tutSlide">  
+			    </ion-slide-page>
+
+			    <ion-slide-page id="p04s2">
+			    	<img src="img/tutorial/p04s2.png" class="tutSlide">  
+			    </ion-slide-page>
+		
+
+		<!-- PAGE 05 -->
+				<ion-slide-page id="p05s1">
+			    	<img src="img/tutorial/p05s1.png" class="tutSlide">  
+			    </ion-slide-page>
+
+			    <ion-slide-page id="p05s2">
+			    	<img src="img/tutorial/p05s2.png" class="tutSlide">  
+			    </ion-slide-page>
+
+			    <ion-slide-page id="p05s3">
+			    	<img src="img/tutorial/p05s3.png" class="tutSlide">  
+			    </ion-slide-page>
+
+			    <ion-slide-page id="p05s4">
+			    	<img src="img/tutorial/p05s4.png" class="tutSlide">  
+			    </ion-slide-page>
+
+			    <ion-slide-page id="p05s5">
+			    	<img src="img/tutorial/p05s5.png" class="tutSlide">  
+			    </ion-slide-page>
 
 
 
-		</div>
+			</ion-slides> <!-- end ion-slides -->
+
+		</div> <!-- end sceneBox -->
 	
-
-	</div> <!-- end tut-contentBox-->
+	</div> <!-- end tut-contentBox -->
 </ion-view>

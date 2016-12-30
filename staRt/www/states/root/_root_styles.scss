@@ -5,6 +5,7 @@
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   font-family: 'Quicksand', 'Helvetica Neue', sans-serif !important;
+  -webkit-user-select: none;
 }
 
 // KEYFRAME ANIMATION BASE  =================================================================
@@ -125,7 +126,39 @@
     }
 
 
-// NAV CONTAINER =================================================================
+      display: -webkit-flex;
+      -webkit-flex: 1;
+      margin-top: $rowHalf;
+      margin-left: $navW; 
+      height: auto;
+      width: $appW - $navW - $col-pad;
+      font-size: 1rem;
+      //border: 1px solid $blue-light; //#db DEBUG LINES
+    }
+
+    .state-contentBox--wide {  // used in tutorial for full width graphics
+      @extend .state-contentBox;
+      margin-left: 0;
+      padding: 0; 
+      width: $appW;
+    }
+
+
+    .pane {  
+      // not entirely sure what this does. seems to be an ion-thing that groups content. 
+      //currently, used in Resources & Profiles. It should probably be moved to the individual state .scss files #hc
+      flex-flow: column;
+      //border: 1px solid yellow;
+    }
+
+    canvas {
+      background-color: $white;
+      // box-shadow
+      // rounded corners
+    }
+
+
+// NAV CONTAINER -------------------------------------
   // All of the nav icon animations live in  'common-styles/_keyframeAni.scss' 
 
   #nav-container {
