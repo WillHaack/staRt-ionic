@@ -3,6 +3,8 @@
 
 'use strict';
 
+var maxTargetTextUpdateCount = 4;
+
 // requestAnim shim layer by Paul Irish
 window.requestAnimFrame = (function(){
 	return  window.requestAnimationFrame       ||
@@ -54,6 +56,8 @@ lpcDirective.controller( 'LpcDirectiveController',
 	$scope.pointerDown = false;
 	$scope.lpcRenderer.doShowSand = $scope.sand;
 	$scope.lpcRenderer.doShowSlider = $scope.slider;
+	$scope.targetNeedsUpdate = false;
+	$scope.targetTextUpdateCount = 0;
 
 	///////////////////////////////////
 	//  GET DATA
@@ -159,7 +163,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 				var px = e.pageX - rect.left;
 
 				$scope.data.targetF3 = linScale(px, 0, $scope.lpcRenderer.WIDTH, 0, 4500);
-				$scope.updateTarget();
+				$scope.targetNeedsUpdate = true;
 			}
 		}
 
@@ -200,9 +204,16 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 				//stats.update();
 				window.requestAnimFrame($scope.animate);
+				if ($scope.targetNeedsUpdate) {
+					if ($scope.targetTextUpdateCount >= maxTargetTextUpdateCount) {
+						$scope.targetTextUpdateCount = 0;
+						$scope.updateTarget();
+						$scope.targetNeedsUpdate = false;
+					} else {
+						$scope.targetTextUpdateCount++;
+					}
+				}
 				$scope.lpcRenderer.render();
-
-				//$scope.updateTarget();
 			}
 		};
 		$scope.animate();

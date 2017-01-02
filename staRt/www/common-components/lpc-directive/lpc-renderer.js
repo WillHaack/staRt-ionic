@@ -36,15 +36,7 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 
 	Object.defineProperty(LPCRenderer.prototype, 'targetFrequency', {
 		set: function targetFrequency(f) {
-			if (this.textSprite !== undefined) this.label.remove(this.textSprite);
-
-			this.textSprite = Drawing.makeTextSprite( Math.floor(f) );
-
-			var px = (this.label.geometry.boundingBox.max.x) / 2;
-			var py = (this.label.geometry.boundingBox.max.y) / 2;
-
-			this.textSprite.position.set(px, py, 0);
-			this.label.add( textSprite );
+			this.updateTextSprite( Math.floor(f) );
 		}
 	});
 
@@ -269,13 +261,26 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 		this.label.geometry.computeBoundingBox();
 		this.slider.add(this.label);
 
-		$http.get('img/star2.svg').then( (function(res) {
-			this.createStar(res.data, (function(star) {
-				this.star = star;
-				this.star.position.set(5, -120, 10);
+		this.textSprite = this.initializeTextSprite();
+
+		// Could eventually use this to draw the star as an SVG---only problem
+		// is it's not supported by Safari.
+		// $http.get('img/star2.svg').then( (function(res) {
+		// 	this.createStar(res.data, (function(star) {
+		// 		this.star = star;
+		// 		this.star.position.set(5, -120, 10);
+		// 		this.slider.add(this.star);
+		// 	}).bind(this) );
+		// }).bind(this) );
+
+		var textureLoader = new THREE.TextureLoader();
+		textureLoader.load('img/star.png', (function(starTex) {
+			this.createStarFromTexture(starTex, (function(starSprite) {
+				this.star = starSprite;
+				this.star.position.set(0, -120, 10);
 				this.slider.add(this.star);
-			}).bind(this) );
-		}).bind(this) );
+			}).bind(this));
+		}).bind(this));
 
 		this.pauseButton = this.createPauseButton();
 		this.scene.add(this.pauseButton);
@@ -310,6 +315,45 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 
 		return label;
 	};
+
+	LPCRenderer.prototype.initializeTextSprite = function()
+	{
+		this.canvas2d = document.createElement('canvas');
+		this.canvas2d.width = 256;
+		this.canvas2d.height = 128;
+
+		this.textTexture = new THREE.CanvasTexture( this.canvas2d );
+		this.spriteMaterial = new THREE.SpriteMaterial( {
+			map: this.textTexture,
+		});
+
+		this.textSprite = new THREE.Sprite( this.spriteMaterial );
+		this.textSprite.scale.set(256, 128, 1.0);
+		this.textSprite.name = "fzLabel";
+
+		var px = (this.label.geometry.boundingBox.max.x) / 2;
+		var py = (this.label.geometry.boundingBox.max.y) / 2;
+
+		this.textSprite.position.set(px, py, 0);
+		this.label.add( this.textSprite );
+	};
+
+	LPCRenderer.prototype.updateTextSprite = function(message)
+	{
+		var color = "#4d4d4d";
+
+		var ctx = this.canvas2d.getContext('2d');
+
+		ctx.clearRect(0, 0, 256, 128);
+
+		ctx.font = "20px Quicksand";
+		ctx.fillStyle = color;
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		ctx.fillText(message, this.canvas2d.width/2, this.canvas2d.height/2);
+
+		this.textTexture.needsUpdate = true;
+	}
 
 	LPCRenderer.prototype.createSand = function() {
 		var sandShape = new THREE.Shape();
@@ -374,6 +418,14 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 		}
 
 		img.src = url;
+	}
+
+	LPCRenderer.prototype.createStarFromTexture = function(starTexture, callback) {
+		var spriteMaterial = new THREE.SpriteMaterial( { map: starTexture } );
+		var starSprite = new THREE.Sprite(spriteMaterial);
+		starSprite.scale.set(55, 65, 1.0);
+
+		callback(starSprite);
 	}
 
 	LPCRenderer.prototype.createPauseButton = function() {
