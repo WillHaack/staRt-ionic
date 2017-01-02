@@ -399,7 +399,7 @@ input[type=range]::-webkit-slider-thumb {
   color: #4d4d4d; }
 
 /* unfortunately, I think the correct way to update this is with native code:
-    https://developer.apple.com/reference/uikit/uiviewcontroller#//apple_ref/occ/instm/UIViewController/preferredStatusBarStyle  */
+      https://developer.apple.com/reference/uikit/uiviewcontroller#//apple_ref/occ/instm/UIViewController/preferredStatusBarStyle  */
 #statusBar-bg {
   height: 2.9vh;
   width: 100vw;
@@ -408,8 +408,7 @@ input[type=range]::-webkit-slider-thumb {
 
 #nav-and-content-container {
   display: flex;
-  flex-flow: row nowrap;
-  margin-top: 2.9vh; }
+  flex-flow: row nowrap; }
 
 .bar-header {
   background-color: #c5f3ff;
@@ -418,18 +417,17 @@ input[type=range]::-webkit-slider-thumb {
   align-items: center;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
   padding-left: 16.66vw; }
-
-.bar .title {
-  position: relative;
-  display: block;
-  text-transform: uppercase;
-  color: #53c8e9;
-  font-weight: bold;
-  font-size: 50px;
-  line-height: 0;
-  padding-top: 10px;
-  text-align: left;
-  overflow: visible; }
+  .bar-header .title {
+    position: relative;
+    display: block;
+    text-transform: uppercase;
+    color: #53c8e9;
+    font-weight: bold;
+    font-size: 50px;
+    line-height: 0;
+    padding-top: 10px;
+    text-align: left;
+    overflow: visible; }
 
 #content-container {
   display: -webkit-flex;
@@ -440,29 +438,6 @@ input[type=range]::-webkit-slider-thumb {
   height: 83.22857vh;
   width: 100vw;
   margin-top: 13.87143vh; }
-
-.state-contentBox, .state-contentBox--wide {
-  padding: 0;
-  margin: 0;
-  display: -webkit-flex;
-  -webkit-flex: 1;
-  margin-top: 6.93571vh;
-  margin-left: 16.66vw;
-  height: auto;
-  width: 76.68vw;
-  font-size: 1rem;
-  border: 1px solid #c5f3ff; }
-
-.state-contentBox--wide {
-  margin-left: 0;
-  padding: 0;
-  width: 100vw; }
-
-.pane {
-  flex-flow: column; }
-
-canvas {
-  background-color: #ffffff; }
 
 #nav-container {
   display: -webkit-flex;
@@ -512,6 +487,31 @@ canvas {
   display: block;
   margin: 0 auto;
   padding-bottom: 5px; }
+
+/* The <ion-view> for each [state]_template.html should be the direct descendant of #content-container
+     This section contains global styles for the state-level ion-view. Any individual styles for each state should go in ion-view.state-contentBox's direct descendant and should be styled in the state's .scss file
+  */
+.state-contentBox, .state-contentBox--wide {
+  padding: 0;
+  margin: 0;
+  display: -webkit-flex;
+  -webkit-flex: 1;
+  margin-top: 6.93571vh;
+  margin-left: 16.66vw;
+  height: auto;
+  width: 76.68vw;
+  font-size: 1rem; }
+
+.state-contentBox--wide {
+  margin-left: 0;
+  padding: 0;
+  width: 100vw; }
+
+.pane {
+  flex-flow: column; }
+
+canvas {
+  background-color: #ffffff; }
 
 .profiles {
   flex-flow: row nowrap; }
@@ -613,12 +613,14 @@ lpc-directive {
   flex-flow: column; }
 
 #lpc-canvas {
+  /* This is the THREEjs element*/
   width: 100%;
   height: 100%;
   margin: auto;
   z-index: 10; }
 
 .lpc-container {
+  /* This is the light blue box*/
   position: relative;
   width: 800px;
   height: 400px;
