@@ -52,6 +52,8 @@ lpcDirective.controller( 'LpcDirectiveController',
 	$scope.active = false;
 	$scope.pause = false;
 	$scope.pointerDown = false;
+	$scope.lpcRenderer.doShowSand = $scope.sand;
+	$scope.lpcRenderer.doShowSlider = $scope.slider;
 
 	///////////////////////////////////
 	//  GET DATA
@@ -118,117 +120,9 @@ lpcDirective.controller( 'LpcDirectiveController',
 			}
 		};
 
-
-	///////////////////////////////////
-	//  MOUSE HANDLERS -- DELETE AFTER DEBUGGING
-	///////////////////////////////////
-		// function onMouseDown( event ) {
-		// 	event.preventDefault();		
-
-		// 	canvas.addEventListener( 'mousemove', onMouseMove, false );
-		// 	canvas.addEventListener( 'mouseup', onMouseUp, false );
-		// 	canvas.addEventListener( 'mouseout', onMouseOut, false ); 
-
-		// 	// NDC for raycaster. raycaster will ONLY accept NDC for mouse events 
-		// 	mouse.x = ( event.clientX / canvas.clientWidth ) * 2 - 1;
-		// 	mouse.y = (( event.clientY / canvas.clientHeight ) * -1) * 2 + 1; // GOTTA FLIP FOR DOM COORDS! tres important!!!
-		// 	// #st - maybe these are wrong
-
-		// 	// RAYCASTER
-		// 	raycaster.setFromCamera(mouse, camera); // gives the raycaster coords from mouse (NDC) & cam (world) positions
-
-		// 	var intersects = raycaster.intersectObjects(scene.children, true); // cast a ray & get an array of things that it hits. 'recursive = true' is necessary to autoloop thru the descendants of grouped objs (i.e. scence.children's children)
-		// 	console.log(intersects.length);
-
-		// 	if (intersects.length > 0) { // if the ray hits things
-		// 		for ( var i = 0; i < intersects.length; i++ ) {
-					
-		// 			INTERSECTED = intersects[i];
-		// 			console.log(intersects[ i ].object.name);
-
-		// 			if (INTERSECTED.object.name === "pauseBtn") {
-		// 				if(pause === false) {
-		// 					pause = true;
-		// 					console.log('wave is paused.');
-		// 				} else {
-		// 					pause = false;
-		// 					console.log('wave is running');
-		// 				}
-
-		// 			} else if (INTERSECTED.object.name === "targetBtn") {
-
-		// 				if (sliderFz != savedTarget) {
-
-		// 					// reposition slider
-		// 					var target = (linScale(savedTarget, 4500, 0, LEFT, RIGHT));
-		// 					slider.position.setX(target);
-
-		// 					// update canvas2d
-		// 					label.remove( textSprite );
-		// 					textSprite = Drawing.makeTextSprite(savedTarget); 
-		// 					textSprite.position.set(0,10,9);
-		// 					label.add( textSprite );
-		// 				}
-
-		// 			// } else if (INTERSECTED.object.name === "star") {
-		// 			// 	console.log('star');
-		// 			// } 
-
-		// 			} // end if targetBtn
-		// 		} // end forLoop 
-		// 	} else {
-		// 		INTERSECTED = null;  // clear your ray gun
-		// 	}
-		// } // end onMouseDown
-
-		// function onMouseMove(e) {
-		// 	e.preventDefault();
-			 
-		// 	 	// #st if positioned using css you need to add offset to event.clientX. However the offset shouldn't go thru linScale, so not sure how to solve
-		// 		mouseX = linScale(e.clientX, 0, WIDTH, LEFT, RIGHT); 
-
-		// 		if (mouseX >= (LEFT+(padH)) && mouseX <= (sliderWidth-(padH))) {
-		// 			slider.position.setX(mouseX);
-					
-		// 			// map fz range for slider
-		// 			sliderFz = Math.ceil(linScale(mouseX, LEFT, RIGHT, 4500, 0));
-		// 			renderTextSprite = true;
-		// 		}
-		// } // end onMouseMove
-
-		// function onMouseUp( e ) {
-		// 	canvas.removeEventListener( 'mousemove', onMouseMove, false );
-		// 	canvas.removeEventListener( 'mouseup', onMouseUp, false );
-		// 	canvas.removeEventListener( 'mouseout', onMouseOut, false );
-		// 	renderTextSprite = false;
-		// }
-
-		// function onMouseOut( e ) {
-		// 	canvas.removeEventListener( 'mousemove', onMouseMove, false );
-		// 	canvas.removeEventListener( 'mouseup', onMouseUp, false );
-		// 	canvas.removeEventListener( 'mouseout', onMouseOut, false );
-		// }
-
-	///////////////////////////////////
-	//  TOUCH HANDLERS
-	///////////////////////////////////
-
-		// TOUCH 
-		// https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/HTML-canvas-guide/AddingMouseandTouchControlstoCanvas/AddingMouseandTouchControlstoCanvas.html
-		// touch points can be calc'd from the DOM ele, but even though the method is called .pageX and .pageY
-
-		// if touch
-		// canvas.addEventListener('touchstart', onTouchStart, false );
-		// canvas.addEventListener('touchmove', onTouchMove, false); 
-		// canvas.addEventListener('touchend', onTouchEnd, false); 
-		// canvas.addEventListener('touchcancel', onTouchCancel, false); 
-		// document.body.addEventListener("touchcancel", touchUp, false);
-
-		$scope.lpcRenderer.renderer.domElement.addEventListener('mousedown', onTouchStart, false);
-
 		function onTouchStart( e )
 		{
-			// $scope.lpcRenderer.sliderPosition = e.layerX - $scope.lpcRenderer.WIDTH/2
+			if ($scope.lpcRenderer.doShowSlider === false) return;
 
 			if ($scope.pointerDown === false) {
 				$scope.pointerDown = true;
@@ -247,7 +141,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 					handleButtonPress(intersects);
 				} else {
 					$scope.trackingTarget = true;
-					$scope.data.targetf3 = linScale(e.layerX, 0, $scope.lpcRenderer.WIDTH, 0, 4500);
+					$scope.data.targetF3 = linScale(e.layerX, 0, $scope.lpcRenderer.WIDTH, 0, 4500);
 					$scope.updateTarget();
 				}
 			}
@@ -264,12 +158,14 @@ lpcDirective.controller( 'LpcDirectiveController',
 				var rect = element.getBoundingClientRect();
 				var px = e.pageX - rect.left;
 
-				$scope.data.targetf3 = linScale(px, 0, $scope.lpcRenderer.WIDTH, 0, 4500);
+				$scope.data.targetF3 = linScale(px, 0, $scope.lpcRenderer.WIDTH, 0, 4500);
 				$scope.updateTarget();
 			}
 		}
 
 		function onTouchEnd( e ) {
+			if (!$scope.pointerDown) return;
+
 			if ($scope.trackedTouch !== undefined && $scope.trackedTouch !== e.identifier) return;
 
 			e.preventDefault();
@@ -350,7 +246,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 				if (res.targetF3)
 				{
 					$scope.data.targetF3 = res.targetF3;
-					console.log('existing targetf3:', res.targetF3)
+					console.log('existing targetF3:', res.targetF3)
 				}
 				else
 				{
@@ -369,9 +265,11 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 	$scope.updateTarget = function() {
 
-		var sliderPosition = linScale($scope.data.targetf3, 0, 4500, 0, 1);
+		if ($scope.data.targetF3 === undefined) return;
+
+		var sliderPosition = linScale($scope.data.targetF3, 0, 4500, 0, 1);
 		$scope.lpcRenderer.sliderPosition = sliderPosition;
-		$scope.lpcRenderer.targetFrequency = $scope.data.targetf3;
+		$scope.lpcRenderer.targetFrequency = $scope.data.targetF3;
 
 		//Update current user's Target F3
 		ProfileService.getCurrentProfile().then(function(res)

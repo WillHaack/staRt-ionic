@@ -3,8 +3,8 @@ var lpcDirective = angular.module('lpcDirective');
 lpcDirective.value('Drawing', new Drawing());
 
 var canvas2d = document.createElement('canvas');
-canvas2d.width = 256;
-canvas2d.height = 128;
+canvas2d.width = 512;
+canvas2d.height = 256;
 
 function Drawing() { }
 
@@ -33,13 +33,11 @@ Drawing.prototype.circle = function(shape, x, y, r)
 // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D#Text_styles
 Drawing.prototype.makeTextSprite = function(message)
 {
-	var fontface = "Quicksand";
-	var fontsize = 36;
 	var color = "#4d4d4d";
 
 	// canvas has to be 256px by 128px
 	var ctx = canvas2d.getContext('2d');
-	ctx.clearRect(0, 0, 256, 128);
+	ctx.clearRect(0, 0, 512, 256);
 	//ctx.font = fontsize + "em" + fontface;
 
 	//use this if you want to draw the label ele in the canvas2d
@@ -50,7 +48,7 @@ Drawing.prototype.makeTextSprite = function(message)
 
 	// ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
 	// ctx.fillRect(0, 0, canvas2d.width, canvas2d.height );
-	ctx.font = "20px Quicksand";
+	ctx.font = "40px Quicksand";
 	ctx.fillStyle = color;
 	ctx.textAlign = "center";
 	ctx.textBaseline = "middle";

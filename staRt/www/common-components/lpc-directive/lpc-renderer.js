@@ -18,7 +18,7 @@ function linScale(v, inlow, inhigh, outlow, outhigh) {
 		return ov;
 	}
 
-lpcDirective.factory('LPCRenderer', function (Drawing)
+lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 {
 	function LPCRenderer(element, maxNumPeaks)
 	{
@@ -46,7 +46,21 @@ lpcDirective.factory('LPCRenderer', function (Drawing)
 			this.textSprite.position.set(px, py, 0);
 			this.label.add( textSprite );
 		}
-	})
+	});
+
+	Object.defineProperty(LPCRenderer.prototype, 'doShowSand', {
+		get: function() { return this.sand.visible; },
+		set: function(sand) {
+			this.sand.visible = sand;
+		}
+	});
+
+	Object.defineProperty(LPCRenderer.prototype, 'doShowSlider', {
+		get: function() { return this.slider.visible },
+		set: function(slider) {
+			this.slider.visible = slider;
+		}
+	});
 
 	LPCRenderer.prototype.injectRenderer = function(renderer, element)
 	{
@@ -242,13 +256,10 @@ lpcDirective.factory('LPCRenderer', function (Drawing)
 		this.slider = new THREE.Object3D();
 		this.slider.name = this.slider;
 
-		// #ST - slider range should be 0-4500?
-		// set pos of slider to user's saved F3 target
-		var target = linScale(this.savedTarget, 0, 4500, this.LEFT, this.RIGHT);
-		this.slider.position.set(target, 0, 9);
+		this.slider.position.set(-100000, 0, 9); // offscreen to start
 		this.scene.add(this.slider);
 
-		this.needle = this.createNeedle(); //returns 'needle' line mesh
+		this.needle = this.createNeedle();
 		this.slider.add(this.needle);
 
 		this.sand = this.createSand();
@@ -258,8 +269,13 @@ lpcDirective.factory('LPCRenderer', function (Drawing)
 		this.label.geometry.computeBoundingBox();
 		this.slider.add(this.label);
 
-		// drawStar(); //returns 'star' shape mesh
-		// slider.add(star);
+		$http.get('img/star2.svg').then( (function(res) {
+			this.createStar(res.data, (function(star) {
+				this.star = star;
+				this.star.position.set(5, -120, 10);
+				this.slider.add(this.star);
+			}).bind(this) );
+		}).bind(this) );
 
 		this.pauseButton = this.createPauseButton();
 		this.scene.add(this.pauseButton);
@@ -271,6 +287,10 @@ lpcDirective.factory('LPCRenderer', function (Drawing)
 
 		this.peakSegments = this.createPeakSegments();
 		this.scene.add(this.peakSegments);
+
+		// temporarily disable both of those silly buttons
+		this.pauseButton.visible = false;
+		this.targetButton.visible = false;
 	};
 
 	LPCRenderer.prototype.createLabel = function()
@@ -322,6 +342,39 @@ lpcDirective.factory('LPCRenderer', function (Drawing)
 
 		return needle;
 	};
+
+	LPCRenderer.prototype.createStar = function(starSvg, callback) {
+		var cwidth = 256;
+		var cheight = 256;
+		var canvas2d = document.createElement('canvas');
+		canvas2d.width = cwidth;
+		canvas2d.height = cheight;
+		var ctx = canvas2d.getContext('2d');
+
+		var DOMURL = window.URL || window.webkitURL || window;
+
+		var img = new Image();
+		var svg = new Blob([starSvg], {type: 'image/svg+xml'});
+		var url = DOMURL.createObjectURL(svg);
+
+		img.onload = function () {
+			ctx.drawImage(img, 0, 0);
+			DOMURL.revokeObjectURL(url);
+
+			var tex = new THREE.CanvasTexture(canvas2d);
+
+			var spriteMaterial = new THREE.SpriteMaterial( {
+				map: tex
+			} );
+
+			var starSprite = new THREE.Sprite(spriteMaterial);
+			starSprite.scale.set(65, 65, 1.0);
+
+			callback(starSprite);
+		}
+
+		img.src = url;
+	}
 
 	LPCRenderer.prototype.createPauseButton = function() {
 		var pauseShape = new THREE.Shape();
