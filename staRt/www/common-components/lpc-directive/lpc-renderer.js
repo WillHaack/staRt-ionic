@@ -277,7 +277,7 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 		textureLoader.load('img/star.png', (function(starTex) {
 			this.createStarFromTexture(starTex, (function(starSprite) {
 				this.star = starSprite;
-				this.star.position.set(0, -120, 10);
+				this.star.position.set(0, -125, 10);
 				this.slider.add(this.star);
 			}).bind(this));
 		}).bind(this));
