@@ -21,6 +21,7 @@
 	{
 		$stateProvider.state( 'root',
 		{
+			cache: false,
 			url: '/',
 			views:
 			{
