@@ -8,109 +8,96 @@
   -webkit-user-select: none;
 }
 
-// KEYFRAME ANIMATION BASE  =================================================================
-  // for some reason everything breaks when I move this out of _root_styles. Sorry!
+#app-container {
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  line-height: 1.7;
+  color: $grey;
+}
 
-  .animated {
-    -webkit-animation-duration: 1s;
-    animation-duration: 1s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-  }
+.bar-header {
+  background-color: $light-blue;
+  height: 14vh !important;
+  display: flex;
+  align-items: center;
+  padding-left: 120px;
+}
 
-  /* 
-    These are here b/c I couldn't get the ng-show, ng-hide, & ng-if to trigger as soon as the class changed. They would stay in the DOM and display other eles and then get cleaned up after ~0.25s 
+.bar .title {
+  position: relative;
+  display: block;
+  text-transform: uppercase;
+  color: $blue;
+  font-weight: bold;
+  font-size: $header-type;
+  text-align: left;
+  overflow: visible;
+}
+
+#nav-and-content-container {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+#nav-container {
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+  width: 10vw;
+  z-index: 999;
+  border: 0px solid red;
+}
+
+#content-container {
+  position: relative;
+  display: block;
+  text-align: center;
+  /* display: -webkit-flex;
+  -webkit-flex: 1;
+  -webkit-flex-direction: column;
+  */  
+  height: 85vh;
+  width: 100%;
+  margin-top: 110px;
+  padding-left: 70px;
+  padding-right: 70px;
+  border: 0px solid red;
+}
+
+.text-content {
+    padding: 3rem;
+}
+
+canvas {
+  background-color: #ffffff;
+}
+
+.text-and-lpc {
+  /*
+  display: -webkit-flex;
+  -webkit-flex: 1;
+  font-size: 1rem;
+  padding: 3rem;
+  border: 1px solid blue;
   */
-  .animated.ng-enter, 
-  .animate-if.ng-leave {
-    transition: 0s;
-  }
+}
 
-  .animated.ng-enter,
-  .animated.ng-leave.ng-leave-active {
-    display: none;
-  }
+.text-and-lpc__text {
+  /*font-size: 14pt;*/
+  font-size: 1.25em;
+}
 
-  .animated.ng-leave,
-  .animated.ng-enter.ng-enter-active {
-    display: block;
-  }
+.pane {
+  /*
+  flex-flow: column;
+  border: 1px solid red;
+  */
+}
 
+// NAV STYLES ======================================================
 
-// LAYOUT  =================================================================
-  #app-container {
-    display: -webkit-flex;
-    -webkit-flex-direction: row;
-    line-height: 1.7;
-    height: $appH + $statusBarH;
-    width: $appW;
-    color: $grey-txtMain;
-    //border: 1px solid yellow; //#db
-  }
-
-  /* unfortunately, I think the correct way to update this is with native code:
-    https://developer.apple.com/reference/uikit/uiviewcontroller#//apple_ref/occ/instm/UIViewController/preferredStatusBarStyle  */
-  #statusBar-bg {
-    height: $statusBarH;
-    width: $appW;
-    background-color: $blue-main; //$blue-white; //$blue-main; //$grey-txtMain; //white; //$blue-dark;
-    border-bottom: 1px solid $blue-white;
-  }
-
-  #nav-and-content-container {
-    display: flex;
-    flex-flow: row nowrap;
-    margin-top: $statusBarH;
-    //border: 1px solid red; //#db
-  }
-
-// PAGE HEADER -------------------------------------
-  .bar-header {
-    background-color: $blue-light;
-    //height-min: 106px; //iOS cordova will overwrite this 
-    height: $rowH !important; //iOS cordova will overwrite this if not !important
-    display: flex;
-    align-items: center; // vertical align, but doesn't work w/ iOS cordova
-    //justify-content: space-between;
-    box-shadow: $itemShadow;
-    padding-left: $navW;
-    //border: 1px solid red; //#db
-  }
-
-  .bar .title {
-    position: relative;
-    display: block;
-    text-transform: uppercase;
-    color: $blue-main;
-    font-weight: bold;
-    font-size: $header-type;
-    line-height: 0; // this adjusts for weird iOS stuff
-    padding-top: 10px; // also adjusts for weird iOS styling
-    text-align: left;
-    overflow: visible;
-  }
-
-// CONTENT CONTAINER -------------------------------------
-
-  // IN ROOT TEMPLATE
-    #content-container { // this styles the view box in root_template.html -- tag = ion-nav-view
-      display: -webkit-flex;
-      -webkit-flex: 1;
-      -webkit-flex-direction: column;
-      justify-content: flex-start;
-      text-align: center;
-      height: $appH - $rowH;
-      width: $appW; // - $navW - $col-pad; //#hc this will need to be padding
-      margin-top: $rowH;
-      //border: 1px solid red; //#db
-    }
-
-    // IN STATE TEMPLATES
-      // ion-view.[state]_template.html should be the direct descendant of #content-container
-      // global styles for the state-level ion-view go here   (individual styles for each state should go in ion-view.state-contentBox's direct descendant and should be styled in the state's .scss file)
-    .state-contentBox {
-      padding: 0; // reset 
-      margin: 0; // reset
+.nav-container {
+  z-index: 99;
+}
 
       display: -webkit-flex;
       -webkit-flex: 1;
@@ -192,15 +179,10 @@
     }
   }
 
-  .navTabText {
-    margin: auto;
-  }
-
-  .nav-svg {
-    height: 65px; //~61%
-    width: 65px; //~61%
-    display: block;
-    margin: 0 auto;
-    padding-bottom: 5px;
-    //border: 1px solid yellow;
-  }
+.nav-svg {
+  height: 65px;
+  width: 65px;
+  display: block;
+  margin: 0 auto;
+  padding-bottom: 5px;
+}
