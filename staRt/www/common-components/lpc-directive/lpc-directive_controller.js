@@ -3,7 +3,7 @@
 
 'use strict';
 
-var maxTargetTextUpdateCount = 4;
+var maxTargetTextUpdateCount = 2;
 
 // requestAnim shim layer by Paul Irish
 window.requestAnimFrame = (function(){
