@@ -408,7 +408,8 @@ input[type=range]::-webkit-slider-thumb {
 
 #nav-and-content-container {
   display: flex;
-  flex-flow: row nowrap; }
+  flex-flow: row nowrap;
+  margin-top: 2.9vh; }
 
 .bar-header {
   background-color: #c5f3ff;
