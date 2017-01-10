@@ -51,11 +51,11 @@ lpc-directive {
 	color: #e79b4c;
 	float: right;
 	border: 0px solid red;
-	position: relative; 
+	position: relative;
 	height: 65px;
 	width: 80px;
 	margin: 0px;
-	padding: 5px; 
+	padding: 5px;
 	font-size: 0.90em;
 	font-family: 'Quicksand', 'Helvetica Neue', sans-serif;
 	font-weight: 800;
@@ -64,6 +64,7 @@ lpc-directive {
 	z-index: 99;
 	border: 0;
 	display: block;
+	margin-bottom: 20px;
 }
 
 .rate-box button {

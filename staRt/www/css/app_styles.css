@@ -666,7 +666,8 @@ lpc-directive {
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
   z-index: 99;
   border: 0;
-  display: block; }
+  display: block;
+  margin-bottom: 20px; }
 
 .rate-box button {
   float: right;
