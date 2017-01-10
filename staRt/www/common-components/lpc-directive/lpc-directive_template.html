@@ -4,29 +4,7 @@
 		class="slider-and-canvas"
 		ng-class="{'full-width': !rate && !reset}">
 		<!-- Renderer will be inserted here -->
-		
-		
-		<!-- Slider ->
-		<div
-			ng-if="slider"
-			class="lpc-range">
-		
-			<!- Starfish ->
-			<input
-				ng-if="slider"
-				type="range"
-				min="0"
-				max="4500"
-				ng-model="data.targetF3"
-				ng-change="updateTarget()"
-				data-thumbwidth="50"/>
-			
-			<!- Line + numbers ->
-			<output name="rangeVal"></output>
-			
-			<div id="sand"></div>
-		
-		</div> -->
+		<canvas id="lpc-canvas" ng-hide="lpcHidden" ></canvas>
 	</div>
 
 	<div class="lpc-buttons">
@@ -47,6 +25,20 @@
 			class="reset-button"
 			ng-if="reset">
 			Reset Target
+		</button>
+
+		<button
+			ng-click="showLPC()"
+			class="reset-button"
+			ng-hide="!lpcHidden || rate">
+			Show LPC
+		</button>
+
+		<button
+			ng-click="hideLPC()"
+			class="reset-button"
+			ng-hide="lpcHidden || rate">
+			Hide LPC
 		</button>
 	</div>
 

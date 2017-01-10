@@ -29,7 +29,7 @@
 				console.log(res);
 				$scope.data.profiles = res;
 			});
-			
+
 			$scope.isEditing = false;
 			$scope.data = {};
 
@@ -91,7 +91,7 @@
 						$scope.setIsEditing(false);
 						ProfileService.setCurrentProfile($scope.data.currentProfile);
 					});
-				});		
+				});
 			} else {
 				alert("Profile is missing some data");
 			}
