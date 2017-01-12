@@ -688,6 +688,8 @@ lpc-directive {
   display: block; }
   .rate-box button:active {
     background-color: #26bae3; }
+  .rate-box button.selected {
+    background-color: #04c541; }
 
 .lpc-range {
   height: 400px;

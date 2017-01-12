@@ -9,13 +9,22 @@
 
 	<div class="lpc-buttons">
 		<div class="rate-box" ng-if="rate">
-			<button ng-click="data.rating = 1">
+			<button
+				ng-click="data.rating = 1"
+				ng-class="{selected: data.rating === 1}"
+			>
 				Poor
 			</button>
-			<button ng-click="data.rating = 2">
+			<button
+				ng-click="data.rating = 2"
+				ng-class="{selected: data.rating === 2}"
+			>
 				Decent
 			</button>
-			<button ng-click="data.rating = 3">
+			<button
+				ng-click="data.rating = 3"
+				ng-class="{selected: data.rating === 3}"
+			>
 				Great
 			</button>
 		</div>
