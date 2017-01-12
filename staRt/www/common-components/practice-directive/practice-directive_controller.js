@@ -268,11 +268,18 @@ practiceDirective.controller( 'PracticeDirectiveController',
 				$scope.rating = 0;
 				$scope.$broadcast("resetRating");
 			}
-			$scope.currentWordIdx = ($scope.currentWordIdx + 1) % $scope.wordOrder.length;
-			if ($scope.currentWordIdx === 0) {
-				scrambleArray($scope.wordOrder);
+
+			$scope.currentWordIdx++;
+
+			if ($scope.count && $scope.currentWordIdx >= count) {
+				$scope.endWordPractice();
+			} else {
+				var lookupIdx = $scope.currentWordIdx % $scope.wordOrder.length;
+				if (lookupIdx && $scope.random) {
+					scrambleArray($scope.wordOrder);
+				}
+				$scope.currentWord = $scope.wordList[$scope.wordOrder[lookupIdx]];
 			}
-			$scope.currentWord = $scope.wordList[$scope.wordOrder[$scope.currentWordIdx]];
 		}
 
 		$scope.beginWordPractice = function() {
@@ -307,7 +314,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			if (window.AudioPlugin !== undefined) {
 				AudioPlugin.stopRecording(recordingDidStop, recordingDidFail);
 			}
-			console.log("Ending to practice words");
+			console.log("Ending word practice");
 		};
 
 		$scope.nextWord = function() {

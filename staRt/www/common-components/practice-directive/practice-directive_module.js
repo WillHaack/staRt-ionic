@@ -12,7 +12,9 @@ practiceDirective.directive( 'practiceDirective', function()
 		controller: 'PracticeDirectiveController',
 		scope:
 		{
-			data: '='
+			data: '=',
+			count: "=",
+			order: "="
 		},
 		templateUrl: 'common-components/practice-directive/practice-directive_template.html',
 		// resolve:
