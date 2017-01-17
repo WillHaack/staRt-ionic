@@ -12,10 +12,14 @@ practiceDirective.directive( 'practiceDirective', function()
 		controller: 'PracticeDirectiveController',
 		scope:
 		{
-			data: '=',
+			csv: '=',
 			count: "=",
-			order: "="
+			order: "=",
+			probe: "=",
+			startPracticeCallback: "&startPracticeCallback",
+			endPracticeCallback: "&endPracticeCallback"
 		},
+		transclude: true,
 		templateUrl: 'common-components/practice-directive/practice-directive_template.html',
 		// resolve:
 		// {

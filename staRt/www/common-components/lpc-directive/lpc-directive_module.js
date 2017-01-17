@@ -17,6 +17,7 @@ lpcDirective.directive( 'lpcDirective', function()
 		controller: 'LpcDirectiveController',
 		scope:
 		{
+			probe: '=',
 			sand: '=',
 			slider: '=',
 			reset: '=',
