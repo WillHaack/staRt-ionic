@@ -16,6 +16,7 @@ practiceDirective.directive( 'practiceDirective', function()
 			count: "=",
 			order: "=",
 			probe: "=",
+			pauseEvery: "=",
 			startPracticeCallback: "&startPracticeCallback",
 			endPracticeCallback: "&endPracticeCallback"
 		},

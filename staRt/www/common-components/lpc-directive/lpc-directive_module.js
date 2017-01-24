@@ -21,7 +21,8 @@ lpcDirective.directive( 'lpcDirective', function()
 			sand: '=',
 			slider: '=',
 			reset: '=',
-			rate: '='
+			rate: '=',
+			waveHidden: "="
 		},
 		templateUrl: 'common-components/lpc-directive/lpc-directive_template.html'
 	};

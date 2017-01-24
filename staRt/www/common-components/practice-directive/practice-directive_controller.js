@@ -273,6 +273,17 @@ practiceDirective.controller( 'PracticeDirectiveController',
 				}
 				$scope.currentWord = $scope.wordList[$scope.wordOrder[lookupIdx]];
 			}
+
+			if ($scope.pauseEvery && $scope.pauseEvery > 0 && $scope.currentWordIdx > 0) {
+				if ($scope.currentWordIdx % $scope.pauseEvery === 0) {
+					$scope.isFeedbacking = true;
+					navigator.notification.confirm("Pausing for feedback",
+						function () {
+							$scope.isFeedbacking = false;
+						}, "Pausing for feedback",
+						["Done"]);
+				}
+			}
 		}
 
 		$scope.beginWordPractice = function() {
