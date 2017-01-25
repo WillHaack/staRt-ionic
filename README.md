@@ -46,6 +46,16 @@ The audio plugin Xcode project has a couple of different targets. You can see al
 
 So, to build the plugin, simply select the UniversalLib target and build it.
 
+#### Password Protected Server
+The production server is password protected. Therefore, you'll need to create a JSON file `staRt/www/data/credentials.json` with the following format:
+```json
+{
+	"username": "<the_username>",
+	"password": "the_password"
+}
+```
+This file is in the `.gitignore` so that the username and password will not be accidentally uploaded to Github. It is important to have this file so when the Ionic application is built, the username and password will be included. To get the username and password, just ask someone.
+
 #### Buliding the ionic app
 
 ```

@@ -46,7 +46,21 @@ function initialPracticeSession() {
 	};
 }
 
-function uploadFile(absolutePath, destURL, mimeType, sessionID, progressCb, completeCb)
+function getCredentials($http, cb) {
+	$http.get("data/credentials.json",  {
+		headers: {
+			'Content-type': 'application/json'
+		}
+	})
+	.success(function(res) {
+		cb(res);
+	})
+	.error(function(data, status) {
+		cb(false);
+	})
+}
+
+function uploadFile(absolutePath, destURL, mimeType, sessionID, progressCb, completeCb, $http)
 {
 	var win = function (r) {
 		console.log("Code = " + r.responseCode);
@@ -69,21 +83,27 @@ function uploadFile(absolutePath, destURL, mimeType, sessionID, progressCb, comp
 			options.mimeType = mimeType;
 			options.chunkedMode = false;
 
-			var headers={
-				'filename':options.fileName
-			};
-			options.headers = headers;
-			var params = {
-				"session_id": sessionID
-			};
-			options.params = params;
+			//call getCredentials and set http headers with username and password
+			getCredentials($http, function(credentials) {
+				var headers = {
+					'filename':options.fileName,
+				};
+				if (credentials) {
+					headers['Authorization'] = 'Basic ' + btoa(credentials.username + ':' + credentials.password);
+				}
+				options.headers = headers;
+				var params = {
+					"session_id": sessionID
+				};
+				options.params = params;
 
-			// HACK: Add the session id to the URL, so that the server will recognize it
-			destURL = destURL + "?session_id=" + sessionID;
+				// HACK: Add the session id to the URL, so that the server will recognize it
+				destURL = destURL + "?session_id=" + sessionID;
 
-			var ft = new FileTransfer();
-			ft.onProgress = progressCb;
-			ft.upload(fileEntry.toInternalURL(), encodeURI(destURL), win, fail, options);
+				var ft = new FileTransfer();
+				ft.onProgress = progressCb;
+				ft.upload(fileEntry.toInternalURL(), encodeURI(destURL), win, fail, options);
+			});
 
 		}, function(error) {
 			console.log(error);
@@ -205,14 +225,15 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			session.uploadProgress = [0, 0, 0, 0];
 			session.uploadsComplete = [false, false, false, false];
 			var filesToUpload = [session.files.Ratings, session.files.Metadata, session.files.LPC, session.files.Audio];
-			var mimeTypes = ["text/json", "text/csv", "text/csv", "audio/wav"];
+			var mimeTypes = ["text/json", "text/csv", "text/csv", "audio/mp4"];
 			for (var i=0; i<4; i++) {
 				uploadFile(filesToUpload[i],
 					uploadURLs[i],
 					mimeTypes[i],
 					session.id,
 					uploadCallbackForSession(session, i),
-					completeCallbackForSession(session, i)
+					completeCallbackForSession(session, i),
+					$http
 					);
 			}
 			$scope.isUploading = true;
