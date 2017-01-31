@@ -25,6 +25,7 @@
 		
 		"LRow2": {
 			"lpc": false,
+			
 			"labelTitle": "Your Speech Wave"
 		},
 

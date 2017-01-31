@@ -26,12 +26,22 @@
 		.state('root.tutorial', {
 			//abstract: 'true',
 			url: 'tutorial', // this sets the active left-nav tab to tutorial
-			views: {
-				'content-view': {
+			views:
+			{
+				'content-view':
+				{
 					templateUrl: 'states/root/tutorial/tutorial_template.html',
 					controller: 'TutorialController as tutorial'
 				}
-			}
+			},
+			resolve:
+			{
+				firstPanelData:  function($http)
+				{
+            	// $http returns a promise for the url data
+            	return $http({method: 'GET', url: '/states/root/tutorial/tutorialData/p01data.js'})
+            	}
+         	}
 		}) //end root template
 
 		// ============================================================================
@@ -53,7 +63,7 @@
 				url: '/p01s2', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveSingle.html',
+						templateUrl: 'states/root/tutorial/sceneTemplates/waveSingleLiveLPC.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p01s2;
 						}
