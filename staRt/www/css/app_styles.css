@@ -622,10 +622,11 @@ canvas {
   text-align: left;
   width: 100%;
   height: auto;
+  padding-left: 15px;
   padding-bottom: 1em; }
 
 .tut-bgImg {
-  height: 100%;
+  height: 90%;
   width: 100%;
   position: absolute;
   top: 0px;
@@ -633,9 +634,41 @@ canvas {
   z-index: -1; }
 
 .tut-bgImg--dim {
-  opacity: 0.1; }
+  opacity: 0.25; }
 
-.tutSingleWave-content {
+.tutNoWave-content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100%; }
+  .tutNoWave-content .noWaveBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    width: 60%;
+    padding: 0;
+    margin: 0; }
+  .tutNoWave-content .noWaveRow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
+    padding: 0;
+    padding-left: 20px;
+    margin-bottom: 10px; }
+    .tutNoWave-content .noWaveRow .noWave3 {
+      border: 1px solid green;
+      width: 50%; }
+  .tutNoWave-content .charImg {
+    position: absolute; }
+
+.tutWave-content {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -643,104 +676,87 @@ canvas {
   justify-content: space-between;
   height: 100%;
   text-align: left; }
-  .tutSingleWave-content .leftBox {
+  .tutWave-content .leftBox {
     display: flex;
     flex-direction: column;
     max-height: 100%;
     width: 65%; }
-    .tutSingleWave-content .leftBox .leftRow {
+    .tutWave-content .leftBox .leftRow {
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
       align-items: flex-start; }
-    .tutSingleWave-content .leftBox .wave1 .waveFrame {
-      height: 190px;
+    .tutWave-content .leftBox .wave1 {
+      margin-bottom: 15px; }
+    .tutWave-content .leftBox .waveFrame {
+      position: relative;
+      top: 0;
+      left: 0;
+      height: 170px;
       width: 500px;
       background-color: #F0F9FC;
+      border: 10px solid #F0F9FC;
       border-radius: 10px;
-      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15); }
-      .tutSingleWave-content .leftBox .wave1 .waveFrame .lpcBox {
-        margin: 10px;
-        height: 170px;
-        width: 480px;
-        border-radius: 10px;
-        background-color: #c5f3ff; }
-      .tutSingleWave-content .leftBox .wave1 .waveFrame .waveFrame-label {
-        position: relative;
-        margin: 10px;
-        top: -190px;
-        left: 0px;
-        height: auto;
-        padding: 7px 15px;
-        width: 225px;
-        margin: 0 auto;
-        background-color: #F0F9FC;
-        border-radius: 10px;
-        text-align: center; }
-        .tutSingleWave-content .leftBox .wave1 .waveFrame .waveFrame-label .waveFrame-label--txt {
-          font-size: 0.65em;
-          line-height: 1em; }
-        .tutSingleWave-content .leftBox .wave1 .waveFrame .waveFrame-label .waveFrame-label--title {
-          font-size: 0.65em;
-          font-weight: bold; }
-    .tutSingleWave-content .leftBox .leftRow2 {
-      padding-top: 20px; }
-    .tutSingleWave-content .leftBox .leftRow3 {
+      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+      z-index: 1; }
+    .tutWave-content .leftBox .lpcBox {
+      height: 150px;
+      width: 480px;
+      margin: auto;
+      border-radius: 10px;
+      background-color: #c5f3ff;
+      z-index: 5; }
+    .tutWave-content .leftBox .soundImgBox {
+      position: relative;
+      margin: 0;
+      padding: 0;
+      height: 150px;
+      background-size: 100% auto;
+      width: 480px;
+      border-radius: 10px; }
+    .tutWave-content .leftBox .waveFrame-label {
+      position: relative;
+      margin: 10px;
+      top: -155px;
+      height: auto;
+      width: 225px;
+      padding: 7px 15px;
+      margin: 0 auto;
+      background-color: #F0F9FC;
+      border-radius: 10px;
+      text-align: center;
+      z-index: 10; }
+      .tutWave-content .leftBox .waveFrame-label .waveFrame-label--txt {
+        font-size: 0.65em;
+        line-height: 1em; }
+      .tutWave-content .leftBox .waveFrame-label .waveFrame-label--title {
+        font-size: 0.65em;
+        font-weight: bold; }
+    .tutWave-content .leftBox .leftRow2 {
+      padding: 0 20px;
+      width: 500px; }
+    .tutWave-content .leftBox .leftRow3 {
       flex-direction: column; }
-  .tutSingleWave-content .rightBox {
+  .tutWave-content .rightBox {
+    position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     height: 100%;
     width: 33%;
-    padding-top: 0px; }
-    .tutSingleWave-content .rightBox .rightRow1 {
+    padding-top: 10px; }
+    .tutWave-content .rightBox .rightRow1 {
+      position: relative;
       display: flex;
       flex-direction: row;
       min-height: 25px;
       width: 100%; }
-    .tutSingleWave-content .rightBox .starBox {
-      position: absolute;
+    .tutWave-content .rightBox .starBox {
+      position: relative;
       height: 265px;
-      width: 265px;
-      top: 27.74286vh; }
-    .tutSingleWave-content .rightBox .starImg {
+      width: 265px; }
+    .tutWave-content .rightBox .starImg {
       position: relative; }
-
-.tutPgView-content {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  height: 100%; }
-  .tutPgView-content .leftBox {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 65%; }
-    .tutPgView-content .leftBox .leftRow {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      align-items: flex-start;
-      height: 10%; }
-    .tutPgView-content .leftBox .leftRow3 {
-      flex-direction: column; }
-  .tutPgView-content .rightBox {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 33%; }
-    .tutPgView-content .rightBox .rightRow1 {
-      display: flex;
-      flex-direction: row;
-      min-height: 25px;
-      width: 100%; }
-    .tutPgView-content .rightBox .starBox {
-      position: absolute;
-      height: 265px;
-      width: 267px;
-      top: 27.74286vh; }
 
 .inputBox {
   position: absolute;
@@ -770,12 +786,6 @@ button.tutBtn, a.tutBtn {
   left: 0;
   height: 215px;
   width: 490px; }
-
-ion-slide-page {
-  z-index: 99; }
-
-.swiper-slide {
-  border: 1px solid pink; }
 
 .sandbarBox {
   position: relative;
@@ -821,34 +831,20 @@ ion-slide-page {
   color: red;
   font-weight: bold; }
 
-.tutNoWave-content {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  height: 100%; }
-  .tutNoWave-content .noWaveBox {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-around;
-    width: 60%;
-    height: auto;
-    padding: 10px 0; }
-  .tutNoWave-content .noWaveRow {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-    text-align: left;
-    width: 100%;
-    margin: 10px 0; }
-    .tutNoWave-content .noWaveRow .noWave3 {
-      width: 50%; }
-  .tutNoWave-content .charImg {
-    position: absolute; }
+/* typography
+		.txtBold 
+		.txtBold-blue
+		.txtBold-blueDark
+		.txtBold-blueLight
+	*/
+.txt-boldBlueDark--try {
+  font-weight: 600;
+  color: #018B9D;
+  font-size: 1.5em; }
+
+.txt-squish {
+  line-height: 0.5;
+  color: red; }
 
 .words-word {
   font-size: 3rem;

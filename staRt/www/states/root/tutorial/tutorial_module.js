@@ -38,7 +38,7 @@
 		// PAGE 1 The Wave ------------------------------------------------------------
 
 			.state('root.tutorial.p01s1', {
-				url: '/p01', // this sets the active left-nav tab to tutorial
+				url: '/p01s1', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/sceneTemplates/waveNone.html',
@@ -62,7 +62,7 @@
 			}) //end p01s2 state def
 
 			.state('root.tutorial.p01s3', {
-				url: 'tutorial', // this sets the active left-nav tab to tutorial
+				url: '/p01s3', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/sceneTemplates/waveSingle.html',
@@ -74,7 +74,7 @@
 			}) //end p01s3 state def
 
 			.state('root.tutorial.p01s4', {
-				url: 'tutorial', // this sets the active left-nav tab to tutorial
+				url: '/p01s4', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/sceneTemplates/waveSingle.html',
@@ -86,7 +86,7 @@
 			}) //end p01s4 state def
 
 			.state('root.tutorial.p01s5', {
-				url: 'tutorial', // this sets the active left-nav tab to tutorial
+				url: '/p01s5', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/sceneTemplates/waveNone.html',
@@ -100,10 +100,11 @@
 		// =============================================================================
 		// PAGE 2 'eee' Sounds ---------------------------------------------------------
 			.state('root.tutorial.p02s1', {
-				url: 'tutorial', // this sets the active left-nav tab to tutorial
+				url: '/p02s1', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveSingle.html',
+						//templateUrl: 'states/root/tutorial/sceneTemplates/waveSingle.html',
+						templateUrl: 'states/root/tutorial/sceneTemplates/imgTemplate.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p02s1;
 						}
@@ -112,10 +113,10 @@
 			}) //end p02 state def
 
 			.state('root.tutorial.p02s2', {
-				url: 'tutorial', // this sets the active left-nav tab to tutorial
+				url: '/p02s2', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveSingle.html',
+						templateUrl: 'states/root/tutorial/sceneTemplates/waveDouble.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p02s2;
 							console.log('p02s2');
@@ -128,10 +129,10 @@
 		// PAGE 3 'ahh' Sounds ------------------------------------------------------
 
 			.state('root.tutorial.p03s1', {
-				url: 'tutorial', // this sets the active left-nav tab to tutorial
+				url: '/p03s1', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/imgTemplate.html',
+						templateUrl: 'states/root/tutorial/sceneTemplates/waveSingle.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p03s1;
 						}
@@ -140,10 +141,10 @@
 			}) //end p03s1 state def
 
 			.state('root.tutorial.p03s2', {
-				url: 'tutorial', // this sets the active left-nav tab to tutorial
+				url: '/p03s2', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/imgTemplate.html',
+						templateUrl: 'states/root/tutorial/sceneTemplates/waveDouble.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p03s2;
 						}
@@ -152,10 +153,10 @@
 			}) //end p03s2 state def
 
 			.state('root.tutorial.p03s3', {
-			url: 'tutorial', // this sets the active left-nav tab to tutorial
+			url: '/p03s3', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/imgTemplate.html',
+						templateUrl: 'states/root/tutorial/sceneTemplates/waveDouble.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p03s3;
 						}
@@ -167,10 +168,10 @@
 		// PAGE 4 'ooo' Sounds (3) ---------------------------------------------------------
 
 			.state('root.tutorial.p04s1', {
-				url: 'tutorial', // this sets the active left-nav tab to tutorial
+				url: '/p04s1', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/imgTemplate.html',
+						templateUrl: 'states/root/tutorial/sceneTemplates/waveDouble.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p04s1;
 						}
@@ -179,10 +180,10 @@
 			}) //end p04s1 state def
 
 			.state('root.tutorial.p04s2', {
-				url: 'tutorial', // this sets the active left-nav tab to tutorial
+				url: '/p04s2', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/imgTemplate.html',
+						templateUrl: 'states/root/tutorial/sceneTemplates/waveDouble.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p04s2;
 						}
@@ -191,7 +192,7 @@
 			}) //end p04s2 state def
 
 			.state('root.tutorial.p04s3', {
-			url: 'tutorial', // this sets the active left-nav tab to tutorial
+			url: '/p04s3', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/sceneTemplates/imgTemplate.html',
@@ -207,7 +208,7 @@
 		// PAGE 5 /r/ Sounds (5) ---------------------------------------------------------
 
 			.state('root.tutorial.p05s1', {
-				url: 'tutorial', // this sets the active left-nav tab to tutorial
+				url: '/p05s1', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/sceneTemplates/imgTemplate.html',
@@ -219,7 +220,7 @@
 			}) //end p05s1 state def
 
 			.state('root.tutorial.p05s2', {
-				url: 'tutorial', // this sets the active left-nav tab to tutorial
+				url: '/p05s2', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/sceneTemplates/imgTemplate.html',
@@ -231,7 +232,7 @@
 			}) //end p05s2 state def
 
 			.state('root.tutorial.p05s3', {
-			url: 'tutorial', // this sets the active left-nav tab to tutorial
+			url: '/p05s3', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/sceneTemplates/imgTemplate.html',
@@ -243,7 +244,7 @@
 			}) //end p05s3 state def
 
 			.state('root.tutorial.p05s4', {
-				url: 'tutorial', // this sets the active left-nav tab to tutorial
+				url: '/p05s4', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/sceneTemplates/imgTemplate.html',
@@ -255,7 +256,7 @@
 			}) //end p05s4 state def
 
 			.state('root.tutorial.p05s5', {
-			url: 'tutorial', // this sets the active left-nav tab to tutorial
+			url: '/p05s5', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/sceneTemplates/imgTemplate.html',

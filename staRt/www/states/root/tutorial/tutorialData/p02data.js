@@ -16,12 +16,11 @@
 			"url":"img/tutorial/oldSlides/p02s1.png"
 		},
 
-		"header": {
-		},
+		"header": {},
 		
 		"LRow1": {
 			"lpc": false,
-			"lpcImg": "",
+			"lpcImg": "img/tutorial/waves/eeeWave.svg",
 			"labelTitle": "Image of an 'eee' Sound",
 			"labelTxt": "(touch for audio)"
 		},
@@ -67,32 +66,27 @@
 		"template":"waveDouble.html",
 		
 		"bgImg": {
-			"status":"dim",
+			"status":"done",
 			"url":"img/tutorial/oldSlides/p02s2.png"
 		},
 
-		"header": {
-			"txt": ""
-		},
-
 		"LRow1": {
-			"lpc": true,
-			"labelTitle": "Your Speech Wave",
-			"labelTxt": "Your Speech Wave"
-
+			"lpc": false,
+			"lpcImg": "img/tutorial/waves/eeeWave.svg",
+			"labelTitle": "Image of an 'eee' Sound",
+			"labelTxt": "(touch for audio)"
 		},
 		
 		"LRow2": {
-			"txt":""
-		},
-
-		"LRow3": {
-			"txt":""
+			"lpc": true,
+			"labelTitle": "Your Speech Wave"
 		},
 		
 		"RRow1": {
-			"txt": "Now you try.",
-			"txt": "How does your wave look when you say 'eee'?"
+			"txt":[
+				"<span class='txt-boldBlueDark--try'>Now you try!</span>",
+				"How does your wave look when you <span class='txtBold'>say 'eee'?</span>"
+			]
 		},
 
 		"star": {
@@ -100,7 +94,7 @@
 			"hgt": "260px",
 			"w": "265px",
 			"top": "5px",
-			"left":""
+			"left":"0px"
 		},
 		
 		"input": {

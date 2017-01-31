@@ -16,6 +16,14 @@
 			"url":"img/tutorial/oldSlides/p05s1.png"
 		},
 		
+		"star": {
+			"img":"img/tutorial/starPoint.png",
+			"hgt": "255px",
+			"w": "235px",
+			"top": "0px",
+			"left":"0px"
+		},
+		
 		"input": {
 			"txt":"Next",
 			"next": "p05s2"

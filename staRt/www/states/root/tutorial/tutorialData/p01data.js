@@ -16,27 +16,23 @@
 			"url":"img/tutorial/oldSlides/p01s1.png"
 		},
 
-		"header": {
-			"txt": "HELLO! <p>This tutorial will show you how to use the staRt wave to practice your 'r' sounds.</p>"
-		},
+		"header": {},
 		
 		"LRow1": {
-			"txt": "You should have an <span class='txtBold-blue'>external microphone </span> plugged into your iPad."
-		},
-		
-		"LRow2": {
-			"txt": "Please allow yourself <span class='txtBold-blueDark'>15 minutes</span> to complete the tutorial."
-		},
-		
-		"LRow3": {
+			"items": [
+				"<img src='img/tutorial/hello-p01s1.png' height='50' width='182'>",
+				"<p>This tutorial will show you how to use the staRt wave to practice your 'r' sounds.</p>",
+				"You should have an <span class='txtBold-blue'>external microphone </span> plugged into your iPad.",
+				"Please allow yourself <span class='txtBold-blueDark'>15 minutes</span> to complete the tutorial."
+			]
 		},
 		
 		"char": {
 			"img":"img/tutorial/char-p01s1.png",
-			"hgt": "330px",
-			"w": "316px",
-			"top": "145px",
-			"left":"505px"
+			"hgt": "370px",
+			"w": "346px",
+			"top": "105px",
+			"left":"480px"
 		},
 		
 		"input": {
@@ -77,8 +73,7 @@
 			"txt":"See how the wave moves around when you talk?"
 		},
 
-		"LRow3": {
-		},
+		"LRow3": {},
 		
 		"RRow1": {
 			"txt": "Speak into the microphone."
@@ -88,8 +83,8 @@
 			"img":"img/tutorial/starMic.png",
 			"hgt": "260px",
 			"w": "265px",
-			"top": "5px",
-			"left":""
+			"top": "0px",
+			"left": "0px"
 		},
 		
 		"input": {
@@ -127,7 +122,7 @@
 		},
 
 		"LRow2": {
-			"txt":"See how the peaks move around when you talk?"
+			"txt":"See how the <span class='txtBold'>peaks</span> move around when you talk?"
 		},
 
 		"LRow3": {
@@ -137,12 +132,13 @@
 			"txt": "Peaks create your wave’s shape."
 		},
 
+
 		"star": {
 			"img":"img/tutorial/starPoint.png",
 			"hgt": "255px",
 			"w": "235px",
-			"top": "10px",
-			"left":"20px"
+			"top": "0px",
+			"left":"0px"
 		},
 		
 		"input": {
@@ -179,12 +175,10 @@
 		},
 
 		"LRow2": {
-			"txt":"<span class='txtBold'>Pay attention to the overall shape of the wave.</span>"
+			"txt":"Focus on the overall shape of the wave. <span class='txtBold'>In staRt, peaks are more important than lines.</span>"
 		},
 
-		"LRow3": {
-			"txt":"In staRt, peaks are more important than lines."
-		},
+		"LRow3": {},
 		
 		"RRow1": {
 			"txt": "sometimes you will see a peak without a line, or a line without a peak. "
@@ -194,8 +188,8 @@
 			"img":"img/tutorial/starPoint.png",
 			"hgt": "255px",
 			"w": "235px",
-			"top": "10px",
-			"left":"20px"
+			"top": "0px",
+			"left":"0px"
 		},
 		
 		"input": {
@@ -222,31 +216,24 @@
 		},
 
 		"header": {
-			"head": true,
-			"txt": "<span class='txtBold'>You’ve completed the first step of the tutorial.</span>"
-		},
-		
-		"LRow1": {
-			"txt": "As you complete each step, you’ll receive one sand dollar in the sand bank."
-		},
-		
-		"LRow2": {
-			"img": {
-				"url": "img/tutorial/p01s5-coins.png",
-				"hgt": "69px",
-				"w": "420px",
-				"top": "",
-				"left":""
-			}
-		},
-		
-		"LRow3": {
-			"txt":"To return to a tutorial section, just touch the corresponding sand dollar."
+			"txt": [
+				"<span class='txtBold'>You’ve completed the first step of the tutorial.</span>"
+			]
 		},
 
-		"RRow1": {
-			"txt":""
+		"LRow1": {
+			"items": [
+				"As you complete each step, you’ll receive one sand dollar in the sand bank.",
+				"<img src='img/tutorial/p01s5-coins.png' height='69' width='420'>",
+				"To return to a tutorial section, just touch the corresponding sand dollar."
+			]
 		},
+		
+		"LRow2": {},
+		
+		"LRow3": {},
+
+		"RRow1": {},
 		
 		"char": {
 			"img":"img/tutorial/char-p01s5.png",

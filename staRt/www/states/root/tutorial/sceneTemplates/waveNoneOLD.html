@@ -8,9 +8,25 @@
 	
 	<div class="tutNoWave-content">
 		<div class="noWaveBox">
+			
+			<div class="noWaveRow noWave1" ng-if="currStep.LRow1.txt">
+				<span ng-bind-html="currStep.LRow1.txt"></span>
+			</div>
 
-			<div class="noWaveRow" ng-if="currStep.LRow1.items" ng-repeat="item in currStep.LRow1.items">
-				<span ng-bind-html="item">{{item}}</span>
+			<div class="noWaveRow noWave2" >
+				<span ng-if="currStep.LRow2.txt" ng-bind-html="currStep.LRow2.txt"></span>
+				<img 
+					ng-if="currStep.LRow2.img"
+					ng-src="{{currStep.LRow2.img.url}}" 
+					class="" 
+					style="height:{{currStep.LRow2.img.hgt}}; 
+						width:{{currStep.LRow2.img.w}}; 
+						top:{{currStep.LRow2.img.top}}; 
+						left:{{currStep.LRow2.img.left}};">
+			</div>
+
+			<div class="noWaveRow noWave3" ng-if="currStep.LRow3.txt">
+				<span ng-bind-html="currStep.LRow3.txt"></span>
 			</div>
 
 			<div class="inputBox">
