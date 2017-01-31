@@ -91,7 +91,8 @@
 		},
 		
 		"RRow1": {
-			"txt": "Now you try."
+			"txt": "Now you try.",
+			"txt": "How does your wave look when you say 'eee'?"
 		},
 
 		"star": {
