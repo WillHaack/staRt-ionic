@@ -289,7 +289,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 				$scope.endWordPractice();
 			} else {
 				var lookupIdx = $scope.currentWordIdx % $scope.wordOrder.length;
-				if (lookupIdx && $scope.random) {
+				if ((lookupIdx === 0) && ($scope.order === "random")) {
 					scrambleArray($scope.wordOrder);
 				}
 				$scope.currentWord = $scope.wordList[$scope.wordOrder[lookupIdx]];
