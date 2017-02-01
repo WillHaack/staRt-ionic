@@ -38,7 +38,9 @@ lpcDirective.controller( 'LpcDirectiveController',
 		$scope.$emit('ratingChange', $scope.data.rating);
 	});
 
+	// --------- #HC
 	var canvasElement = $element[0].querySelector('#lpc-canvas');
+	//console.log(canvasElement);
 
 	$scope.lpcRenderer = new LPCRenderer(canvasElement, 20);
 

@@ -5,21 +5,22 @@
 	 <div class="tutPg-header" ng-if="currStep.header.txt" ng-repeat="txt in currStep.header.txt">
 	 	<span ng-bind-html="txt">{{txt}}</span>
 	</div> 
-
-	<lpc-directive slider="true" reset="true" sand="true"></lpc-directive>
 	
 	<div class="tutWave-content">
+		
+		<!-- ==================
+			 LEFT BOX -->
 		<div class="leftBox">
 
-			<!-- ==================
+			<!-- - - - - - - - - - - - - 
 			 WAVE 1 -->
 			<div class="leftRow wave1">
 				<div class="waveFrame">
 
 					<div class="lpcBox" >
-						<div class="soundImgBox" style="background-image: url('{{currStep.LRow1.lpcImg}}')">
+						<div class="soundImgBox" ng-if="currStep.LRow1.lpcImg" style="background-image: url('{{currStep.LRow1.lpcImg}}')">
 						</div>
-					</div>
+					</div> <!-- end lpcBox -->
 
 					<div class="waveFrame-label">	
 						<div class="waveFrame-label--title" ng-if="currStep.LRow1.labelTitle">
@@ -34,15 +35,29 @@
 			</div> <!-- end wave 1 -->
 
 		
-			<!-- ==================
+			<!-- - - - - - - - - - - - - 
 			 WAVE 2 -->
 			 <div class="leftRow wave2">
 				<div class="waveFrame">
 
 					<div class="lpcBox" >
-						<div class="soundImgBox" style="background-image: url('{{currStep.LRow2.lpcImg}}')">
+						<div class="soundImgBox" ng-if="currStep.LRow2.lpcImg" style="background-image: url('{{currStep.LRow2.lpcImg}}')">
 						</div>
-					</div>
+					
+						<div id="lpc-canvas" ng-if="currStep.LRow2.lpc">
+							<lpc-directive 
+								slider="false" 
+								sand="false"
+								waveHidden="false"  
+								probe="false" 
+								rate="false" 
+								hideBtn="false" 
+								reset="false"
+								tutorial="true"
+								style="width:480px; height:150px">
+							</lpc-directive>
+						</div>
+					</div> <!-- end lpcBox | -->
 
 					<div class="waveFrame-label">	
 						<div class="waveFrame-label--title" ng-if="currStep.LRow1.labelTitle">
@@ -57,7 +72,7 @@
 			</div> <!-- end wave 2 -->
 
 			<!-- - - - - - - - - - - - - 
-				 INPUT BOX -->
+				INPUT BOX -->
 
 			<div class="inputBox">
 				<button
@@ -68,6 +83,7 @@
 			</div>
 
 		</div> <!-- end leftBox -->
+
 
 		<!-- ==================
 			 RIGHT BOX -->

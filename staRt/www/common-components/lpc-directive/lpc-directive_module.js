@@ -22,7 +22,9 @@ lpcDirective.directive( 'lpcDirective', function()
 			slider: '=',
 			reset: '=',
 			rate: '=',
-			waveHidden: "="
+			hideBtn: '=',
+			waveHidden: "=",
+			tutorial: "="
 		},
 		templateUrl: 'common-components/lpc-directive/lpc-directive_template.html'
 	};

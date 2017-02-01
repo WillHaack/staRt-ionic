@@ -5,9 +5,6 @@
 	 <div class="tutPg-header" ng-if="currStep.header.txt">
 	 	<span ng-bind-html="currStep.header.txt"></span>
 	</div> 
-	
-
-	<!-- <lpc-directive slider="true" reset="true" sand="true"></lpc-directive> -->
 
 	<div class="tutWave-content">
 		<div class="leftBox">
@@ -17,11 +14,8 @@
 				<div class="waveFrame">
 
 				<div class="lpcBox" >
-					<!--<div class="soundImgBox" style="background-image: url('{{currStep.LRow1.lpcImg}}')">
-					</div> -->
-					<div id="lpc-canvas"> </div>
-					<lpc-directive slider="false" reset="false" sand="false" probe="false" rate="false" waveHidden="false">
-					</lpc-directive>
+					<div class="soundImgBox" style="background-image: url('{{currStep.LRow1.lpcImg}}')">
+					</div>
 				</div>
 
 				<div class="waveFrame-label">

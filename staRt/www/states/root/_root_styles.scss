@@ -126,15 +126,15 @@
     }
 
 
-      display: -webkit-flex;
-      -webkit-flex: 1;
-      margin-top: $rowHalf;
-      margin-left: $navW; 
-      height: auto;
-      width: $appW - $navW - $col-pad;
-      font-size: 1rem;
-      //border: 1px solid $blue-light; //#db DEBUG LINES
-    }
+    //   display: -webkit-flex;
+    //   -webkit-flex: 1;
+    //   margin-top: $rowHalf;
+    //   margin-left: $navW; 
+    //   height: auto;
+    //   width: $appW - $navW - $col-pad;
+    //   font-size: 1rem;
+    //   //border: 1px solid $blue-light; //#db DEBUG LINES
+    // }
 
     .state-contentBox--wide {  // used in tutorial for full width graphics
       @extend .state-contentBox;

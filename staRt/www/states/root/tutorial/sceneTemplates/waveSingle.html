@@ -5,11 +5,6 @@
 	 <div class="tutPg-header" ng-if="currStep.header.txt">
 	 	<span ng-bind-html="currStep.header.txt"></span>
 	</div> 
-	
-	<lpc-directive slider="false" reset="false" sand="false" probe="false" rate="false" waveHidden="false">
-</lpc-directive>
-	<!-- <lpc-directive slider="true" reset="true" sand="true"></lpc-directive> -->
-
 	<div class="tutWave-content">
 		<div class="leftBox">
 
@@ -18,14 +13,30 @@
 				<div class="waveFrame">
 
 				<div class="lpcBox" >
-					<div class="soundImgBox" style="background-image: url('{{currStep.LRow1.lpcImg}}')">
+					<div class="soundImgBox" ng-if="currStep.LRow1.lpcImg" style="background-image: url('{{currStep.LRow1.lpcImg}}')">
 					</div>
-				</div>
+					
+					<div id="lpc-canvas" style="width:480px; height:150px;" ng-if="currStep.LRow1.lpc">
+						<lpc-directive 
+							slider="false" 
+							sand="false"
+							waveHidden="false"  
+							probe="false" 
+							rate="false" 
+							hideBtn="false" 
+							reset="false"
+							tutorial="true"
+							style="width:480px; height:150px">
+						</lpc-directive>
+					</div>
+
+				</div> <!-- tyle="width:480px; height:150px" end lpcBox -->
 
 				<div class="waveFrame-label">
 					
 					<div class="waveFrame-label--title" ng-if="currStep.LRow1.labelTitle">
-						<span ng-bind-html="currStep.LRow1.labelTitle"></span>
+						<span ng-bind-html="currStep.LRow1.labelTitle">
+						</span>
 					</div>
 
 					<div class="waveFrame-label--txt" ng-if="currStep.LRow1.labelTxt">

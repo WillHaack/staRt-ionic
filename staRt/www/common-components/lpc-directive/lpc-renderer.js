@@ -56,10 +56,6 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 
 	LPCRenderer.prototype.getDrawingDim = function(canvas)
 	{
-		// These might be needed if the css throws off our current clientWidth & clientHeight measurements
-		// waveHolderStyles = window.getComputedStyle(waveHolder);
-		// canvasOffset = waveHolderStyles.marginLeft;
-		// console.log("offset is: " + canvasOffset);
 
 		this.WIDTH = canvas.clientWidth;
 		this.HEIGHT = canvas.clientHeight;

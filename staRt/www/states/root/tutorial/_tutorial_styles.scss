@@ -68,7 +68,7 @@
 		//border: 1px solid red;
 	}
 
-	.tut-bgImg--dim {
+	.tut-bgImg--dim {  // for dev only
 		opacity: 0.25;
 	}
 
@@ -223,7 +223,7 @@
 	} // end .tutPgView-content
 
 
-	// .tutPgView-content {
+// .tutPgView-content {
 	// 	// should be identical to .tutNoWave-content w/ the exception of flex-direction
 	// 	display: flex;
 	// 	flex-direction: row;
@@ -313,21 +313,28 @@ button.tutBtn, a.tutBtn {
 	z-index: 99;
 }
 
-.lpc1 {
-	position: absolute;
-	top: $rowHalf * 0.85;
-	left: 0;
-	height: 215px;
-	width: 490px;
-	//border: 1px solid red;
-}
+// .lpc1 {
+// 	position: absolute;
+// 	top: $rowHalf * 0.85;
+// 	left: 0;
+// 	height: 215px;
+// 	width: 490px;
+// 	//border: 1px solid red;
+// }
 
-#lpc-canvas {
-	position: relative;
-	height: 150px;
-	width: 480px;
-	border: 1px solid red;
-}
+// #lpc-canvas {
+// 	position: relative;
+// 	height: 150px;
+// 	width: 480px;
+// 	//border: 1px solid red;
+// 	//z-index: 10;
+// }
+
+// .lpc-container {
+// 	height: 150px;
+// 	width: 480px;
+// 	//border: 1px solid yellow;
+// }
 
 // --------------------------------------------
 // IMPORTS THE SANDBAR STYLES

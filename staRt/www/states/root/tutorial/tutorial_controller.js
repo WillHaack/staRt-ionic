@@ -9,19 +9,34 @@
 
 	//#q  added $http to get some local json. I don't really understand when to use 'services' and 'factories', but these sound like good topics for 'next step/optimization' ideas re: the process below... 
 
-	tutorial.controller('TutorialController', ['$scope', '$timeout', '$localForage', 'StartUIState', '$rootScope', '$state', '$http', 'firstPanelData', 
+	tutorial.controller('TutorialController', ['$scope', '$timeout', '$localForage', 'StartUIState', '$rootScope', '$state', '$http', 
 		function($scope, $timeout, $localForage, StartUIState, $rootScope, $state, $http, $stateParams, firstPanelData) 
 		{
+			
+
+			// $scope.$on("$ionicView.enter", function() {
+			// 	$scope.$broadcast("enter");
+			// });
+
+			// $scope.$on("$ionicView.afterEnter", function() {
+			// 	$scope.$broadcast("afterEnter");
+			// });
+
+			// $scope.$on("$ionicView.beforeLeave", function() {
+			// 	$scope.$broadcast("beforeLeave");
+			// });
+
+
 			//get data for tutorial_template.html 
 			$http.get('states/root/tutorial/tutorialData/coinData.json').success(function(data){
 				$scope.coinData = data;
 			});
 
-			firstPanelData.then(function(res)
-			{
-				$scope.p01data = res;
-				console.log($scope.p01data);
-			})
+			// firstPanelData.then(function(res)
+			// {
+			// 	$scope.p01data = res;
+			// 	console.log($scope.p01data);
+			// })
 
 
 			// all this is read in as json
@@ -33,7 +48,7 @@
 				$scope.p01s3 = $scope.p01data[2];
 				$scope.p01s4 = $scope.p01data[3];
 				$scope.p01s5 = $scope.p01data[4];
-				console.log('tutorial data:',$scope.p01data);
+				//console.log('tutorial data:',$scope.p01data);
 			});
 
 			$http.get('states/root/tutorial/tutorialData/p02data.js').success(function(data)

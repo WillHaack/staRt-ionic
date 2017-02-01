@@ -12,8 +12,15 @@
 		"template":"imgTemplate.html",
 		
 		"bgImg": {
-			"status": "toDo",
+			"status": "dim",
 			"url":"img/tutorial/oldSlides/p05s1.png"
+		},
+
+		"LRow1": {
+			"lpc": false,
+			"lpcImg": "img/tutorial/waves/goodRwave.svg",
+			"labelTitle": "Image of Good /R/",
+			"labelTxt": "(touch for audio)"
 		},
 		
 		"star": {
@@ -43,8 +50,22 @@
 		"template":"imgTemplate.html",
 		
 		"bgImg": {
-			"status": "toDo",
+			"status": "dim",
 			"url":"img/tutorial/oldSlides/p05s2.png"
+		},
+
+		"LRow1": {
+			"lpc": false,
+			"lpcImg": "img/tutorial/waves/badRwave.svg",
+			"labelTitle": "Image of Poor /R/",
+			"labelTxt": "(touch for audio)"
+		},
+		
+		"LRow2": {
+			"lpc": false,
+			"lpcImg": "img/tutorial/waves/goodRwave.svg",
+			"labelTitle": "Image of Good /R/",
+			"labelTxt": "(touch for audio)"
 		},
 		
 		"input": {
@@ -66,8 +87,22 @@
 		"template":"imgTemplate.html",
 		
 		"bgImg": {
-			"status": "toDo",
+			"status": "dim",
 			"url":"img/tutorial/oldSlides/p05s3.png"
+		},
+
+		"LRow1": {
+			"lpc": false,
+			"lpcImg": "img/tutorial/waves/badRwave.svg",
+			"labelTitle": "Image of Poor /R/",
+			"labelTxt": "(touch for audio)"
+		},
+		
+		"LRow2": {
+			"lpc": false,
+			"lpcImg": "img/tutorial/waves/goodRwave.svg",
+			"labelTitle": "Image of Good /R/",
+			"labelTxt": "(touch for audio)"
 		},
 		
 		"input": {
@@ -89,8 +124,20 @@
 		"template":"imgTemplate.html",
 		
 		"bgImg": {
-			"status": "toDo",
+			"status": "dim",
 			"url":"img/tutorial/oldSlides/p05s4.png"
+		},
+
+		"LRow1": {
+			"lpc": false,
+			"lpcImg": "img/tutorial/waves/goodRwave.svg",
+			"labelTitle": "Image of Good /R/",
+			"labelTxt": "(touch for audio)"
+		},
+		
+		"LRow2": {
+			"lpc": true,
+			"labelTitle": "Your Speech Wave"
 		},
 		
 		"input": {
@@ -112,7 +159,7 @@
 		"template":"imgTemplate.html",
 		
 		"bgImg": {
-			"status": "toDo",
+			"status": "dim",
 			"url":"img/tutorial/oldSlides/p05s5.png"
 		},
 		
