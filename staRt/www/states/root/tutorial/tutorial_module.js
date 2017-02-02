@@ -39,7 +39,7 @@
 				firstPanelData:  function($http)
 				{
             		// $http returns a promise for the url data
-            		return $http.get('states/root/tutorial/tutorialData/p01data.js').success(function(res){console.log(res)});
+            		return $http.get('states/root/tutorial/tutorialData/p01data.js');
             	}
          	}
 		}) //end root template

@@ -7,25 +7,17 @@
 	tutorial.controller('TutorialController', 
 		function($scope, $timeout, $localForage, StartUIState, $rootScope, $state, $http, $stateParams, firstPanelData) 
 		{
-			
-			console.log('tut controller firstPanelData:',firstPanelData);	
+			$scope.p01data = firstPanelData.data;
+			$scope.p01s1 = $scope.p01data[0];
+			$scope.p01s2 = $scope.p01data[1];
+			$scope.p01s3 = $scope.p01data[2];
+			$scope.p01s4 = $scope.p01data[3];
+			$scope.p01s5 = $scope.p01data[4];
+			console.log('tut controller firstPanelData:',firstPanelData.data);	
 
 			//get data for tutorial_template.html 
 			$http.get('states/root/tutorial/tutorialData/coinData.json').success(function(data){
 				$scope.coinData = data;
-			});
-
-
-			// all this is read in as json
-			$http.get('states/root/tutorial/tutorialData/p01data.js').success(function(data)
-			{
-				$scope.p01data = data;
-				$scope.p01s1 = $scope.p01data[0];
-				$scope.p01s2 = $scope.p01data[1];
-				$scope.p01s3 = $scope.p01data[2];
-				$scope.p01s4 = $scope.p01data[3];
-				$scope.p01s5 = $scope.p01data[4];
-				//console.log('tutorial data:',$scope.p01data);
 			});
 
 			$http.get('states/root/tutorial/tutorialData/p02data.js').success(function(data)
