@@ -33,24 +33,15 @@
 					templateUrl: 'states/root/tutorial/tutorial_template.html',
 					controller: 'TutorialController as tutorial'
 				}
-			}
-			// },
-			// resolve:
-			// {
-			// 	firstPanelData:  function($http)
-			// 	{
-   //          		// $http returns a promise for the url data
-   //          		return $http(
-   //          			{
-   //          				method: 'GET', 
-   //          				url: '/states/root/tutorial/tutorialData/p01data.js'
-   //          			})
-   //          			.then (function (data) {
-   //          				var firstPanelData = data;
-   //          				console.log("where my data? ", data);
-   //          			})
-   //          	}
-   //       	}
+			},
+			resolve:
+			{
+				firstPanelData:  function($http)
+				{
+            		// $http returns a promise for the url data
+            		return $http.get('states/root/tutorial/tutorialData/p01data.js').success(function(res){console.log(res)});
+            	}
+         	}
 		}) //end root template
 
 		// ============================================================================
