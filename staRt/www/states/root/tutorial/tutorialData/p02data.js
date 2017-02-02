@@ -12,38 +12,37 @@
 		"template":"waveSingle.html",
 		
 		"bgImg": {
-			"status":"dim",
+			"status":"done",
 			"url":"img/tutorial/oldSlides/p02s1.png"
 		},
 
 		"header": {},
-		
+				
 		"LRow1": {
-			"lpc": false,
-			"lpcImg": "img/tutorial/waves/eeeWave.svg",
-			"labelTitle": "Image of an 'eee' Sound",
-			"labelTxt": "(touch for audio)"
+			"wave": {
+				"lpcLive": false,
+				"lpcImg": "img/tutorial/waves/p02s1.svg",
+				"labelTitle": "Image of an 'eee' Sound",
+				"labelTxt": "(touch for audio)"
+			}
 		},
 		
 		"LRow2": {
-			"txt": "Its 1st peak is all the way to the left, its 2nd peak is pretty far to the right, and its 3rd peak is even further to the right."
-		},
-		
-		"LRow3": {
-			"txt":""
+			"items": [
+				"<p>Its 1st peak is all the way to the left</p>",
+				"<p>its 2nd peak is pretty far to the right</p>",
+				"<p>and its 3rd peak is even further to the right.</p>"
+			]
 		},
 
 		"RRow1": {
-			"txt":"Here is a picture of my wave for an “eee” sound."
+			"txtSquish": false,
+			"items":[
+				"<p>Here is a picture of my wave for an “eee” sound.</p>"
+			]
 		},
 
-		"star": {
-			"img":"",
-			"hgt": "260px",
-			"w": "265px",
-			"top": "5px",
-			"left":""
-		},
+		"pic": {},
 		
 		"input": {
 			"txt":"Next",
@@ -71,27 +70,38 @@
 		},
 
 		"LRow1": {
-			"lpc": false,
-			"lpcImg": "img/tutorial/waves/eeeWave.svg",
-			"labelTitle": "Image of an 'eee' Sound",
-			"labelTxt": "(touch for audio)"
+			"wave": {
+				"lpcLive": false,
+				"lpcImg": "img/tutorial/waves/eeeWave.svg",
+				"labelTitle": "Image of an 'eee' Sound",
+				"labelTxt": "(touch for audio)"
+			}
 		},
 		
 		"LRow2": {
 			"lpc": true,
 			"labelTitle": "Your Speech Wave"
 		},
-		
+
+		"LRow2": {
+			"wave": {
+				"lpcLive": true,
+				"labelTitle": "Your Speech Wave"
+			}
+		},
+
 		"RRow1": {
-			"txt":[
-				"<span class='txt-boldBlueDark--try'>Now you try!</span>",
-				"How does your wave look when you <span class='txtBold'>say 'eee'?</span>"
+			"txtSquish": false,
+			"items":[
+				"<p class='txt-boldBlueDark--try'>Now you try!</p>",
+				"<p>How does your wave look when you <span class='txtBold'>say 'eee'?</p>"
 			]
 		},
 
-		"star": {
+		"pic": {
+			"imgAbs": false,
 			"img":"img/tutorial/starMic.png",
-			"hgt": "260px",
+			"h": "260px",
 			"w": "265px",
 			"top": "5px",
 			"left":"0px"

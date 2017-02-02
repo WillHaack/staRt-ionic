@@ -44,6 +44,21 @@
 	//border: 1px solid lightBlue;
 }
 
+	.tut-bgImg { // for dev only
+		height: 90%;
+		width: 100%;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		z-index: -1;
+		//opacity: 0.1;
+		//border: 1px solid red;
+	}
+
+	.tut-bgImg--dim {  // for dev only
+		opacity: 0.1;
+	}
+
 	.tutPg-header {
 		display: flex;
 		flex-direction: row;
@@ -57,25 +72,8 @@
 		//border: 1px solid lightBlue;
 	}
 
-	.tut-bgImg {
-		height: 90%;
-		width: 100%;
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		z-index: -1;
-		//opacity: 0.1;
-		//border: 1px solid red;
-	}
-
-	.tut-bgImg--dim {  // for dev only
-		opacity: 0.25;
-	}
-
-	// IMPORTS THE INDIVIDUAL TUTORIAL TEMPLATE LAYOUTS (flexbox setups)
-	@import 'sceneStyles/waveNone';
-	@import 'sceneStyles/waveSingle';
-	@import 'sceneStyles/waveDouble';
+	// IMPORTS INDIVIDUAL TUTORIAL TEMPLATE LAYOUTS (flexbox setups)
+	@import 'partialStyles/waveNone';
 
 
 	// STYLES THE WAVE CONTENT COMMON TO ALL LAYOUTS
@@ -93,22 +91,18 @@
 		.leftBox {
 			display: flex;
 			flex-direction: column;
-			max-height: 100%;
+			//max-height: $rowH * 3;
 			width: 65%;
 			//border: 1px solid lightBlue;
 			
 			.leftRow {
 				display: flex;
-				flex-direction: row;
+				flex-direction: column;
 				flex-wrap: nowrap;
 				align-items: flex-start;
-				//height: auto;
-				//border: 1px solid lightBlue;
-			}
-
-			.wave1 {
+				width: 500px;
 				margin-bottom: 15px;
-				//border: 1px solid orange;
+				//border: 1px solid lightBlue;
 			}
 
 			.waveFrame {
@@ -124,7 +118,7 @@
 				box-shadow: $itemShadow;
 				z-index: 1;
 				//border: 1px solid lime;
-			} // end waveFrame
+			}
 
 
 			// just a container
@@ -152,7 +146,6 @@
 				position: relative;
 				margin: 10px;
 				top: -155px;
-				//left: 137.5px;
 				height: auto;
 				width: 225px;
 				padding: 7px 15px;
@@ -173,14 +166,10 @@
 				}
 			} // end .waveFrame-label
 
-			.leftRow2 {
-				padding: 0 20px;
-				width: 500px;
+			.leftRow-item {
+				width: 100%;
+				padding: 0 15px;
 				//border: 1px solid lime;
-			}
-
-			.leftRow3 {
-				flex-direction: column;
 			}
 		}
 
@@ -198,10 +187,19 @@
 			.rightRow1 {
 				position: relative;
 				display: flex;
-				flex-direction: row;
-				min-height: 25px;
+				flex-direction: column;
+				justify-content: space-between;
 				width: 100%;
 				//border: 1px solid lightBlue;
+			}
+
+			.rightRow-item {}
+
+			.rightRow-spacer {
+				height: 50px;
+				width: 100%;
+				color: $yellow-light;
+				//border: 1px solid red;
 			}
 
 			.starBox {
@@ -212,81 +210,29 @@
 			}
 
 
-			.starImg {
+			.relImg {
 				position: relative;
 				// max-height: 265px;
 				// max-width: 265px;
 				//border: 1px solid lightBlue;
 			}
+
+			.absImgBox {
+				position: absolute;
+				// top: 0px;
+				// left:300px;
+				// width: 800px;
+				// height: 500px;
+				// border: 2px solid red;
+				// z-index: 99;
+			}
+			.absImg {
+				position: absolute;
+			//border: 1px solid pink;
+			}
 		}
 
 	} // end .tutPgView-content
-
-
-// .tutPgView-content {
-	// 	// should be identical to .tutNoWave-content w/ the exception of flex-direction
-	// 	display: flex;
-	// 	flex-direction: row;
-	// 	flex-wrap: nowrap;
-	// 	align-items: flex-start;
-	// 	justify-content: space-between;
-	// 	height: 100%;
-	// 	//border: 1px solid orange;
-
-	// 	.leftBox {
-	// 		display: flex;
-	// 		flex-direction: column;
-	// 		height: 100%;
-	// 		width: 65%;
-	// 		//border: 1px solid lightBlue;
-			
-	// 		.leftRow {
-	// 			display: flex;
-	// 			flex-direction: row;
-	// 			flex-wrap: nowrap;
-	// 			align-items: flex-start;
-	// 			height: 10%;
-	// 			//border: 1px solid lightBlue;
-	// 		}
-
-	// 		.leftRow1 {
-
-	// 		}
-	// 		.leftRow2 {
-
-	// 		}
-	// 		.leftRow3 {
-	// 			flex-direction: column;
-
-	// 		}
-	// 	}
-
-	// 	.rightBox {
-	// 		display: flex;
-	// 		flex-direction: column;
-	// 		height: 100%;
-	// 		width: 33%;
-	// 		border: 1px solid orange;
-			
-	// 		.rightRow1 {
-	// 			display: flex;
-	// 			flex-direction: row;
-	// 			min-height: 25px;
-	// 			width: 100%;
-	// 			//border: 1px solid lightBlue;
-	// 		}
-
-	// 		.starBox {
-	// 			//position: relative;
-	// 			height: 265px;
-	// 			width: 267px;
-	// 			//top: $rowH * 2;
-	// 			border: 1px solid yellow;
-	// 		}
-	// 	}
-
-	// } // end .tutPgView-content
-
 
 .inputBox {
 	position: absolute;
@@ -305,6 +251,7 @@ button.tutBtn, a.tutBtn {
 	min-height: $rowHalf;
 	min-width: 150px;
 	border-radius: $rowHalf;
+	padding: 15px 20px;
 	border: none;
 	box-shadow: $itemShadow;
 	color: white;
@@ -338,7 +285,7 @@ button.tutBtn, a.tutBtn {
 
 // --------------------------------------------
 // IMPORTS THE SANDBAR STYLES
-	@import 'sceneStyles/sandbar';
+	@import 'partialStyles/sandbar';
 
 
 // --------------------------------------------
@@ -350,9 +297,29 @@ button.tutBtn, a.tutBtn {
 		.txtBold-blueLight
 	*/
 
-	// p01s1
-	.img-hello {
+	.numbBub {
+		color: white;
+		font-weight: $bold;
+		background-color: $blue-dark;
+		padding: 5px 12px;
+		border-radius: 20px;
+	}
 
+	.numbBub--blueDark {
+		@extend .numbBub;
+		background-color: $blue-dark;
+	}
+
+	.numbBub--yellowMain {
+		@extend .numbBub;
+		background-color: $yellow-main;
+	}
+
+	.numbBub--white {
+		@extend .numbBub;
+		color: $grey-txtMain;
+		box-shadow: $itemShadow;
+		background-color: white;
 	}
 
 	.txt-boldBlueDark--try {
@@ -362,7 +329,11 @@ button.tutBtn, a.tutBtn {
 	}
 
 	.txt-squish {
-		line-height: 0.5;
-		color: red;
+		line-height: 1.5em;
+	}
+
+	.p05s5img {
+		padding: 15px;
+		//border: 1px solid red;
 	}
 

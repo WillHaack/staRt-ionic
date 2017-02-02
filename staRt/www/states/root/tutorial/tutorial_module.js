@@ -60,7 +60,7 @@
 				url: '/p01s1', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveNone.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/noWave.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p01s1;
 						}
@@ -72,7 +72,7 @@
 				url: '/p01s2', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveSingle.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p01s2;
 						}
@@ -84,7 +84,7 @@
 				url: '/p01s3', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveSingle.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p01s3;
 						}
@@ -96,7 +96,7 @@
 				url: '/p01s4', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveSingle.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p01s4;
 						}
@@ -108,7 +108,7 @@
 				url: '/p01s5', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveNone.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/noWave.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p01s5;
 						}
@@ -123,7 +123,7 @@
 				views: {
 					'pageView': {
 						//templateUrl: 'states/root/tutorial/sceneTemplates/waveSingle.html',
-						templateUrl: 'states/root/tutorial/sceneTemplates/imgTemplate.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p02s1;
 						}
@@ -135,7 +135,7 @@
 				url: '/p02s2', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveDouble.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p02s2;
 							console.log('p02s2');
@@ -151,7 +151,7 @@
 				url: '/p03s1', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveSingle.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p03s1;
 						}
@@ -163,7 +163,7 @@
 				url: '/p03s2', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveDouble.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p03s2;
 						}
@@ -175,7 +175,7 @@
 			url: '/p03s3', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveDouble.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p03s3;
 						}
@@ -190,7 +190,7 @@
 				url: '/p04s1', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveDouble.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p04s1;
 						}
@@ -202,7 +202,7 @@
 				url: '/p04s2', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveDouble.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p04s2;
 						}
@@ -214,7 +214,7 @@
 			url: '/p04s3', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/imgTemplate.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/imgTemplate.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p04s3;
 						}
@@ -230,7 +230,7 @@
 				url: '/p05s1', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveSingle.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p05s1;
 						}
@@ -242,7 +242,7 @@
 				url: '/p05s2', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveDouble.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p05s2;
 						}
@@ -254,7 +254,7 @@
 			url: '/p05s3', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveDouble.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p05s3;
 						}
@@ -266,7 +266,7 @@
 				url: '/p05s4', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveDouble.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p05s4;
 						}
@@ -278,7 +278,7 @@
 			url: '/p05s5', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
-						templateUrl: 'states/root/tutorial/sceneTemplates/waveNone.html',
+						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p05s5;
 						}

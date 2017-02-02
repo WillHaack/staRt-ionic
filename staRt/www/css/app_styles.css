@@ -603,6 +603,17 @@ canvas {
   align-items: stretch;
   font-size: 1.4em; }
 
+.tut-bgImg {
+  height: 90%;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: -1; }
+
+.tut-bgImg--dim {
+  opacity: 0.1; }
+
 .tutPg-header {
   display: flex;
   flex-direction: row;
@@ -613,17 +624,6 @@ canvas {
   height: auto;
   padding-left: 15px;
   padding-bottom: 1em; }
-
-.tut-bgImg {
-  height: 90%;
-  width: 100%;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  z-index: -1; }
-
-.tut-bgImg--dim {
-  opacity: 0.25; }
 
 .tutNoWave-content {
   display: flex;
@@ -668,14 +668,13 @@ canvas {
   .tutWave-content .leftBox {
     display: flex;
     flex-direction: column;
-    max-height: 100%;
     width: 65%; }
     .tutWave-content .leftBox .leftRow {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       flex-wrap: nowrap;
-      align-items: flex-start; }
-    .tutWave-content .leftBox .wave1 {
+      align-items: flex-start;
+      width: 500px;
       margin-bottom: 15px; }
     .tutWave-content .leftBox .waveFrame {
       position: relative;
@@ -721,11 +720,9 @@ canvas {
       .tutWave-content .leftBox .waveFrame-label .waveFrame-label--title {
         font-size: 0.65em;
         font-weight: bold; }
-    .tutWave-content .leftBox .leftRow2 {
-      padding: 0 20px;
-      width: 500px; }
-    .tutWave-content .leftBox .leftRow3 {
-      flex-direction: column; }
+    .tutWave-content .leftBox .leftRow-item {
+      width: 100%;
+      padding: 0 15px; }
   .tutWave-content .rightBox {
     position: relative;
     display: flex;
@@ -737,15 +734,23 @@ canvas {
     .tutWave-content .rightBox .rightRow1 {
       position: relative;
       display: flex;
-      flex-direction: row;
-      min-height: 25px;
+      flex-direction: column;
+      justify-content: space-between;
       width: 100%; }
+    .tutWave-content .rightBox .rightRow-spacer {
+      height: 50px;
+      width: 100%;
+      color: #FFECCB; }
     .tutWave-content .rightBox .starBox {
       position: relative;
       height: 265px;
       width: 265px; }
-    .tutWave-content .rightBox .starImg {
+    .tutWave-content .rightBox .relImg {
       position: relative; }
+    .tutWave-content .rightBox .absImgBox {
+      position: absolute; }
+    .tutWave-content .rightBox .absImg {
+      position: absolute; }
 
 .inputBox {
   position: absolute;
@@ -762,6 +767,7 @@ button.tutBtn, a.tutBtn {
   min-height: 6.93571vh;
   min-width: 150px;
   border-radius: 6.93571vh;
+  padding: 15px 20px;
   border: none;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
   color: white;
@@ -819,14 +825,34 @@ button.tutBtn, a.tutBtn {
 		.txtBold-blueDark
 		.txtBold-blueLight
 	*/
+.numbBub, .numbBub--blueDark, .numbBub--yellowMain, .numbBub--white {
+  color: white;
+  font-weight: 600;
+  background-color: #018B9D;
+  padding: 5px 12px;
+  border-radius: 20px; }
+
+.numbBub--blueDark {
+  background-color: #018B9D; }
+
+.numbBub--yellowMain {
+  background-color: #FFC95F; }
+
+.numbBub--white {
+  color: #4d4d4d;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+  background-color: white; }
+
 .txt-boldBlueDark--try {
   font-weight: 600;
   color: #018B9D;
   font-size: 1.5em; }
 
 .txt-squish {
-  line-height: 0.5;
-  color: red; }
+  line-height: 1.5em; }
+
+.p05s5img {
+  padding: 15px; }
 
 .words-word {
   font-size: 3rem;

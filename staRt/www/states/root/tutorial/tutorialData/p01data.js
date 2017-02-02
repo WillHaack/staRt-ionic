@@ -15,9 +15,7 @@
 			"status": "done",
 			"url":"img/tutorial/oldSlides/p01s1.png"
 		},
-
-		"header": {},
-		
+	
 		"LRow1": {
 			"items": [
 				"<img src='img/tutorial/hello-p01s1.png' height='50' width='182'>",
@@ -26,13 +24,14 @@
 				"Please allow yourself <span class='txtBold-blueDark'>15 minutes</span> to complete the tutorial."
 			]
 		},
-		
-		"char": {
+
+		"pic": {
+			"imgAbs": true,
 			"img":"img/tutorial/char-p01s1.png",
-			"hgt": "370px",
+			"h": "370px",
 			"w": "346px",
 			"top": "105px",
-			"left":"480px"
+			"left":"475px"
 		},
 		
 		"input": {
@@ -65,23 +64,32 @@
 		},
 
 		"LRow1": {
-			"lpc": true,
-			"labelTitle": "Your Speech Wave"
+			"wave": {
+				"lpcLive": true,
+				"labelTitle": "Your Speech Wave"
+			}
 		},
 		
 		"LRow2": {
-			"txt":"See how the wave moves around when you talk?"
+			"items": [
+				"See how the wave moves around when you talk?"
+			]
 		},
 
-		"LRow3": {},
-		
 		"RRow1": {
 			"txt": "Speak into the microphone."
 		},
 
-		"star": {
+		"RRow1": {
+			"txtSquish": false,
+			"items":[
+				"<p>Speak into the microphone.</p>"
+			]
+		},
+
+		"pic": {
 			"img":"img/tutorial/starMic.png",
-			"hgt": "260px",
+			"h": "260px",
 			"w": "265px",
 			"top": "0px",
 			"left": "0px"
@@ -117,25 +125,28 @@
 		},
 
 		"LRow1": {
-			"lpc": true,
-			"labelTitle": "Your Speech Wave"
+			"wave": {
+				"lpcLive": true,
+				"labelTitle": "Your Speech Wave"
+			}
 		},
 
 		"LRow2": {
-			"txt":"See how the <span class='txtBold'>peaks</span> move around when you talk?"
+			"items": [
+				"<p>See how the <span class='txtBold'>peaks</span> move around when you talk?</p>"
+			]
 		},
 
-		"LRow3": {
-		},
-		
 		"RRow1": {
-			"txt": "Peaks create your wave’s shape."
+			"txtSquish": false,
+			"items":[
+				"<p>Peaks create your wave’s shape.</p>"
+			]
 		},
 
-
-		"star": {
+		"pic": {
 			"img":"img/tutorial/starPoint.png",
-			"hgt": "255px",
+			"h": "255px",
 			"w": "235px",
 			"top": "0px",
 			"left":"0px"
@@ -174,19 +185,34 @@
 			"labelTitle": "Your Speech Wave"
 		},
 
+		"LRow1": {
+			"wave": {
+				"lpcLive": true,
+				"labelTitle": "Your Speech Wave"
+			}
+		},
+
 		"LRow2": {
 			"txt":"Focus on the overall shape of the wave. <span class='txtBold'>In staRt, peaks are more important than lines.</span>"
 		},
 
-		"LRow3": {},
-		
-		"RRow1": {
-			"txt": "sometimes you will see a peak without a line, or a line without a peak. "
+		"LRow2": {
+			"items": [
+				"<p>Focus on the overall shape of the wave.</p>",
+				"<p class='txtBold'>In staRt, peaks are more important than lines.</p>"
+			]
 		},
 
-		"star": {
+		"RRow1": {
+			"txtSquish": false,
+			"items":[
+				"<p>sometimes you will see a peak without a line, or a line without a peak.</p>"
+			]
+		},
+
+		"pic": {
 			"img":"img/tutorial/starPoint.png",
-			"hgt": "255px",
+			"h": "255px",
 			"w": "235px",
 			"top": "0px",
 			"left":"0px"
@@ -228,16 +254,11 @@
 				"To return to a tutorial section, just touch the corresponding sand dollar."
 			]
 		},
-		
-		"LRow2": {},
-		
-		"LRow3": {},
-
-		"RRow1": {},
-		
-		"char": {
+			
+		"pic": {
+			"imgAbs": true,
 			"img":"img/tutorial/char-p01s5.png",
-			"hgt": "350px",
+			"h": "350px",
 			"w": "400px",
 			"top": "125px",
 			"left":"425px"

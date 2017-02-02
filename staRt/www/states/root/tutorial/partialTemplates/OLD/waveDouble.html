@@ -87,14 +87,22 @@
 
 		<!-- ==================
 			 RIGHT BOX -->
-		<div class="rightBox">
 
-			<div class="rightRow1" ng-if="currStep.RRow1.txt" ng-repeat="txt in currStep.RRow1.txt">
-				<div ng-bind-html="txt">{{txt}}</div>
+		<div 
+		class="rightBox"
+		ng-class="{'txt-squish': currStep.RRow1.txtSquish}">
+
+			<div 
+			class="rightRow1" 
+			ng-if="currStep.RRow1.txt" 
+			ng-repeat="txt in currStep.RRow1.txt">
+
+				<div class="rightRow1-items" ng-bind-html="txt">{{txt}}</div>
+			
 			</div>
 
 
-			<div class="starBox">
+			<div class="starBox" ng-if="currStep.star">
 				<img 
 				ng-src="{{currStep.star.img}}" 
 				class="starImg" 

@@ -9,35 +9,41 @@
 			"scene": 1
 		},
 
-		"template":"waveSingle.html",
+		"template":"tutPartial_default.html",
 		
 		"bgImg": {
 			"status": "done",
 			"url":"img/tutorial/oldSlides/p03s1.png"
 		},
 
-		"header": {
-		},
-		
+		"header": {},
+				
 		"LRow1": {
-			"lpc": false,
-			"lpcImg": "img/tutorial/waves/ahhWave.svg",
-			"labelTitle": "Image of an 'aah' Sound",
-			"labelTxt": "(touch for audio)"
-		},
-		
-		"LRow2": {
-			"txt": "For example, if I say an “ahh” sound, my wave looks like this."
+			"wave": {
+				"lpcLive": false,
+				"lpcImg": "img/tutorial/waves/ahhWave.svg",
+				"labelTitle": "Image of an 'aah' Sound",
+				"labelTxt": "(touch for audio)"
+			}
 		},
 
+		"LRow2": {
+			"items": [
+				"<p>For example, if I say an “ahh” sound, my wave looks like this.</p>"
+			]
+		},
 
 		"RRow1": {
-			"txt": "<span class='txtBold'>Different sounds have the peaks in different places.</span>"
+			"txtSquish": false,
+			"items":[
+				"<p class='txtBold'>Different sounds have the peaks in different places.</p>"
+			]
 		},
 
-		"star": {
+		"pic": {
+			"imgAbs": false,
 			"img":"img/tutorial/char-p03s1.png",
-			"hgt": "322px",
+			"h": "322px",
 			"w": "295px",
 			"top": "-80px",
 			"left":"-30px"
@@ -72,23 +78,36 @@
 			"labelTitle": "Image of an 'aah' Sound",
 			"labelTxt": "(touch for audio)"
 		},
-		
+
+		"LRow1": {
+			"wave": {
+				"lpcLive": false,
+				"lpcImg": "img/tutorial/waves/ahhWave.svg",
+				"labelTitle": "Image of an 'aah' Sound",
+				"labelTxt": "(touch for audio)"
+			}
+		},
+
 		"LRow2": {
-			"lpc": false,
-			"lpcImg": "img/tutorial/waves/eeeWave.svg",
-			"labelTitle": "Image of an 'eee' Sound",
-			"labelTxt": "(touch for audio)"
+			"wave": {
+				"lpcLive": false,
+				"lpcImg": "img/tutorial/waves/eeeWave.svg",
+				"labelTitle": "Image of an 'eee' Sound",
+				"labelTxt": "(touch for audio)"
+			}
 		},
 		
 		"RRow1": {
-			"txt":[
-				"See how the peaks in “ahh” look different from the peaks in  “eee”?"
+			"txtSquish": false,
+			"items":[
+				"<p>See how the peaks in “ahh” look different from the peaks in  “eee”?</p>"
 			]
 		},
 
-		"star": {
+		"pic": {
+			"imgAbs": false,
 			"img":"img/tutorial/starPoint.png",
-			"hgt": "255px",
+			"h": "255px",
 			"w": "235px",
 			"top": "0px",
 			"left":"0px"
@@ -118,27 +137,33 @@
 		},
 
 		"LRow1": {
-			"lpc": false,
-			"lpcImg": "img/tutorial/waves/ahhWave.svg",
-			"labelTitle": "Image of an 'aah' Sound",
-			"labelTxt": "(touch for audio)"
+			"wave": {
+				"lpcLive": false,
+				"lpcImg": "img/tutorial/waves/ahhWave.svg",
+				"labelTitle": "Image of an 'aah' Sound",
+				"labelTxt": "(touch for audio)"
+			}
 		},
-		
+
 		"LRow2": {
-			"lpc": true,
-			"labelTitle": "Your Speech Wave"
+			"wave": {
+				"lpcLive": true,
+				"labelTitle": "Your Speech Wave"
+			}
 		},
 
 		"RRow1": {
-			"txt":[
-				"<span class='txt-boldBlueDark--try'>Now you try!</span>",
-				"How does your wave look when you <span class='txtBold'>say “ahh”?</span>"
+			"txtSquish": false,
+			"items":[
+				"<p class='txt-boldBlueDark--try'>Now you try!</p>",
+				"<p>How does your wave look when you <span class='txtBold'>say “ahh”?</span></p>"
 			]
 		},
 		
-		"star": {
+		"pic": {
+			"imgAbs": false,
 			"img":"img/tutorial/starMic.png",
-			"hgt": "260px",
+			"h": "260px",
 			"w": "265px",
 			"top": "0px",
 			"left": "0px"
