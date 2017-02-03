@@ -7,13 +7,16 @@
 	tutorial.controller('TutorialController', 
 		function($scope, $timeout, $localForage, StartUIState, $rootScope, $state, $http, $stateParams, firstPanelData) 
 		{
+
+			// Activate first tab on "Tutorial" click
+			$state.go('root.tutorial.p01s1');
+
+			// Fetch first panel data and make sure it's ready for the view
 			$scope.p01data = firstPanelData.data;
-			$scope.p01s1 = $scope.p01data[0];
-			$scope.p01s2 = $scope.p01data[1];
-			$scope.p01s3 = $scope.p01data[2];
-			$scope.p01s4 = $scope.p01data[3];
-			$scope.p01s5 = $scope.p01data[4];
-			console.log('tut controller firstPanelData:',firstPanelData.data);	
+			for (var i = 0; i < $scope.p01data.length; i++)
+			{
+				$scope['p01s' + (i + 1)] = $scope.p01data[i];
+			}
 
 			//get data for tutorial_template.html 
 			$http.get('states/root/tutorial/tutorialData/coinData.json').success(function(data){
