@@ -7,9 +7,6 @@
 
 	tutorial.config( function($stateProvider, $urlRouterProvider) {
 
-		// $urlRouterProvider
-		// .when('tutorial', 'tutorial/p01s1');
-
 		$stateProvider
 		// this is the parent of all other views
 		.state('root.tutorial', {
