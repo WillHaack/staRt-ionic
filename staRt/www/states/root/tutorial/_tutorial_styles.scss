@@ -77,6 +77,10 @@
 
 
 	// STYLES THE WAVE CONTENT COMMON TO ALL LAYOUTS
+	// NOTES: 
+		// all styles for the live lpc wave are in _lpc-directive_styles.scss
+		// all directive styles overwrite individual state styles, see app_module.scss
+
 	.tutWave-content {
 		// should be identical to .tutNoWave-content w/ the exception of flex-direction
 		display: flex;
@@ -105,7 +109,7 @@
 				//border: 1px solid lightBlue;
 			}
 
-			.waveFrame {
+			.waveFrame { // this is the light blue frame
 				position: relative;
 				top: 0;
 				left: 0;
@@ -121,15 +125,16 @@
 			}
 
 
-			// just a container
-			.lpcBox {
+			.lpcBox { 
+				// this container fills in the light-blue bg for the wave imgs
+				// it is BEHIND the live lpc target container, which is #lpc-canvas in _lpc-directive_styles.scss
 				height: 150px;
 				width: 480px;
 				margin: auto;
 				border-radius: 10px;
 				background-color: $blue-light;
 				z-index: 5;
-				//border: 1px solid red;
+				//border: 1px solid lime;
 			}
 			.soundImgBox {
 				position: relative;
@@ -142,7 +147,7 @@
 				//border: 1px solid lime;
 			}
 
-			.waveFrame-label {
+			.waveFrame-label { // this is the light blue frame
 				position: relative;
 				margin: 10px;
 				top: -155px;
@@ -259,29 +264,6 @@ button.tutBtn, a.tutBtn {
 	background-color: $blue-main;
 	z-index: 99;
 }
-
-// .lpc1 {
-// 	position: absolute;
-// 	top: $rowHalf * 0.85;
-// 	left: 0;
-// 	height: 215px;
-// 	width: 490px;
-// 	//border: 1px solid red;
-// }
-
-// #lpc-canvas {
-// 	position: relative;
-// 	height: 150px;
-// 	width: 480px;
-// 	//border: 1px solid red;
-// 	//z-index: 10;
-// }
-
-// .lpc-container {
-// 	height: 150px;
-// 	width: 480px;
-// 	//border: 1px solid yellow;
-// }
 
 // --------------------------------------------
 // IMPORTS THE SANDBAR STYLES
