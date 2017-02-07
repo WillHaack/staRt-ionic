@@ -38,11 +38,13 @@ lpcDirective.controller( 'LpcDirectiveController',
 		$scope.$emit('ratingChange', $scope.data.rating);
 	});
 
-	// --------- #HC
+	// --------- #HC 
 	var canvasElement = $element[0].querySelector('#lpc-canvas');
-	//console.log(canvasElement);
+	console.log('canvas ele: ', canvasElement);
 
+	// LPCRenderer(element, maxNumPeaks)
 	$scope.lpcRenderer = new LPCRenderer(canvasElement, 20);
+	//$scope.lpcRenderer.id = 'lpc-canvasRenderer';
 
 	// Mouse events
 	$scope.lpcRenderer.renderer.domElement.addEventListener('mousedown', onTouchStart, false);
@@ -232,6 +234,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 			var camera = $scope.lpcRenderer.camera;
 
 			getDrawingDim();
+
 			// var WIDTH = parseInt(renderer.domElement.clientWidth);
 			// var HEIGHT = parseInt(renderer.domElement.clientHeight);
 
@@ -244,6 +247,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 		        camera.top = -HEIGHT/2;
 		        camera.bottom = HEIGHT/2;
 		        camera.updateProjectionMatrix();
+		        console.log("CONTEXT SCALED");
 		    }
 		}
 
