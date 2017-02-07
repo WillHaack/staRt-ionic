@@ -272,7 +272,7 @@ button.tutBtn, a.tutBtn {
 
 
 // --------------------------------------------
-// TYPOGRAPHY & IMG
+// TEXT ADJUSTMENTS
 	/* typography
 		.txtBold 
 		.txtBold-blue
@@ -301,7 +301,9 @@ button.tutBtn, a.tutBtn {
 	.numbBub--white {
 		@extend .numbBub;
 		color: $grey-txtMain;
-		box-shadow: $itemShadow;
+		border: 1px solid #d3d3d3;
+		padding: 5px 15px;
+		//box-shadow: $itemShadow;
 		background-color: white;
 	}
 
@@ -314,6 +316,28 @@ button.tutBtn, a.tutBtn {
 	.txt-squish {
 		line-height: 1.5em;
 	}
+
+// --------------------------------------------
+// INDIVIDUAL PAGE ADJUSTMENTS
+
+	.p02s1-lr2-p1 {
+		//border: 1px solid orange;
+	}
+	.p02s1-lr2-p2 {
+		position: absolute;
+		margin-left: 125px;
+		margin-top: 0.25em;
+		//border: 1px solid lime;
+
+	}
+	.p02s1-lr2-p3 {
+		position: absolute;
+		margin-left: 250px;
+		margin-top: 2.75em;
+		//border: 1px solid pink;
+	}
+
+
 
 	.p05s5img {
 		padding: 15px;

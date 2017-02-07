@@ -9,7 +9,7 @@
 			"scene": 1
 		},
 
-		"template":"waveSingle.html",
+		"template":"default.html",
 		
 		"bgImg": {
 			"status":"done",
@@ -29,9 +29,9 @@
 		
 		"LRow2": {
 			"items": [
-				"<p>Its 1st peak is all the way to the left</p>",
-				"<p>its 2nd peak is pretty far to the right</p>",
-				"<p>and its 3rd peak is even further to the right.</p>"
+				"<p class='p02s1-lr2-p1'>Its <span class='numbBub--white'> 1</span>st peak is all the way to the left,</p>",
+				"<p class='p02s1-lr2-p2'>its <span class='numbBub--blueDark'>2</span>nd peak is pretty far to the right,</p>",
+				"<p class='p02s1-lr2-p3'>and its <span class='numbBub--yellowMain'>3</span>rd peak is even further to the right.</p>"
 			]
 		},
 

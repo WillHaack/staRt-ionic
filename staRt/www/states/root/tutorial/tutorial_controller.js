@@ -56,6 +56,9 @@
 				$scope.p05s5 = $scope.p05data[4];
 			});
 
+			$scope.tutorialProgress;
+
+
 		console.log('TutorialController here!');
 	} 	// end of controller constructor body
 	); // end of controller constructor fx

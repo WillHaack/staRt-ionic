@@ -2,7 +2,7 @@
 	{
 		"id": "coin1",
 		"sref": "p01s1",
-		"img": "",
+		"img": "img/tutorial/coins/coin1.svg",
 		"txt": "the wave",
 		"ani": "",
 		"xpos": "",
