@@ -7,25 +7,10 @@
 
 	tutorial.config( function($stateProvider, $urlRouterProvider) {
 
-		$urlRouterProvider
-			//.when('/tutorial', 'root.tutorial.p01s1')
-			//.otherwise('states/root/tutorial/p01s1');
-
-		/* 
-			When the application is in a particular state — when a state is "active" — all of its ancestor states are implicitly active as well. Child states will load their templates into their parent's ui-view.
-			https://github.com/angular-ui/ui-router/wiki/Nested-States-and-Nested-Views
-
-			~ NOTE ~
-			OBVIOUSLY, this is NOT happening
-				- perhaps the <ion-nav-view> & <ion-view> don't allow for a 3rd level of nesting??
-				- however I did NOT try anything w/ '$routeParams' or '$stateParams' yet -- that may req a service
-		*/
-
 		$stateProvider
 		// this is the parent of all other views
 		.state('root.tutorial', {
-			//abstract: 'true',
-			url: 'tutorial', // this sets the active left-nav tab to tutorial
+			url: 'tutorial',
 			views:
 			{
 				'content-view':
