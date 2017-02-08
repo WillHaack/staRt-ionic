@@ -4,8 +4,8 @@
 {
 	var tutorial = angular.module( 'tutorial' );
 
-	tutorial.controller('TutorialController', 
-		function($scope, $timeout, $localForage, StartUIState, $rootScope, $state, $http, $stateParams, firstPanelData) 
+	tutorial.controller('TutorialController',
+		function($scope, $timeout, $localForage, StartUIState, $rootScope, $state, $http, $stateParams, firstPanelData)
 		{
 			$scope.p01data = firstPanelData.data;
 			$scope.p01s1 = $scope.p01data[0];
@@ -13,9 +13,21 @@
 			$scope.p01s3 = $scope.p01data[2];
 			$scope.p01s4 = $scope.p01data[3];
 			$scope.p01s5 = $scope.p01data[4];
-			console.log('tut controller firstPanelData:',firstPanelData.data);	
+			console.log('tut controller firstPanelData:',firstPanelData.data);
 
-			//get data for tutorial_template.html 
+			$scope.$on("$ionicView.enter", function() {
+				$scope.$broadcast("enter");
+			});
+
+			$scope.$on("$ionicView.afterEnter", function() {
+				$scope.$broadcast("afterEnter");
+			});
+
+			$scope.$on("$ionicView.beforeLeave", function() {
+				$scope.$broadcast("beforeLeave");
+			});
+
+			//get data for tutorial_template.html
 			$http.get('states/root/tutorial/tutorialData/coinData.json').success(function(data){
 				$scope.coinData = data;
 			});

@@ -8,6 +8,34 @@
 	{
 		console.log('ResourcesController here!');
 
+		$scope.$on("$ionicView.enter", function() {
+			$scope.$broadcast("enter");
+
+			console.log('view content loaded!');
+			if (window.AudioPlugin !== undefined)
+			{
+				console.log("Did enter resources view");
+				ProfileService.getCurrentProfile().then( function(res) {
+					console.log("Got current user profile");
+					if (res && res.lpcOrder) {
+						$scope.currentProfileName = res.name;
+						$scope.lpcOrder = res.lpcOrder;
+						AudioPlugin.setLPCOrder($scope.lpcOrder, $scope.logPluginLPCOrder);
+					} else {
+						AudioPlugin.getLPCOrder($scope.setLPCOrder);
+					}
+				});
+			};
+		});
+
+		$scope.$on("$ionicView.afterEnter", function() {
+			$scope.$broadcast("afterEnter");
+		});
+
+		$scope.$on("$ionicView.beforeLeave", function() {
+			$scope.$broadcast("beforeLeave");
+		});
+
 		$scope.logPluginLPCOrder = function(order)
 		{
 			console.log("Plugin LPC order is now: " + order);
@@ -28,26 +56,7 @@
 					}
 				});
 			}
-		}
-
-		$scope.$on('$ionicView.afterEnter', function(event)
-		{
-			console.log('view content loaded!');
-			if (window.AudioPlugin !== undefined)
-			{
-				console.log("Did enter resources view");
-				ProfileService.getCurrentProfile().then( function(res) {
-					console.log("Got current user profile");
-					if (res && res.lpcOrder) {
-						$scope.currentProfileName = res.name;
-						$scope.lpcOrder = res.lpcOrder;
-						AudioPlugin.setLPCOrder($scope.lpcOrder, $scope.logPluginLPCOrder);
-					} else {
-						AudioPlugin.getLPCOrder($scope.setLPCOrder);
-					}
-				});
-			};
-		});
+		};
 
 	});
 
