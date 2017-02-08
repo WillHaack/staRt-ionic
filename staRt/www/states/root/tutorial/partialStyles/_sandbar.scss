@@ -56,13 +56,14 @@ div.sandbar-coinImgBox {
 
 .sandbar-coinImg {
 	position: relative;
+	opacity: 0;
 	//width: 50%;
 	//border: 1px solid pink;
 
 }
 
-.sandbar-coinImg--incomplete {
-	opacity: 0;
+.sandbar-coinImg--complete {
+	opacity: 1;
 }
 
 .sandbar-coinTxt {

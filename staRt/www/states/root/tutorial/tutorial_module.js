@@ -33,12 +33,14 @@
 		// PAGE 1 The Wave ------------------------------------------------------------
 
 			.state('root.tutorial.p01s1', {
-				url: '/p01s1', // this sets the active left-nav tab to tutorial
+				url: '/p01s1',
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/partialTemplates/noWave.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p01s1;
+							var step = $scope.currStep.nav;
+							$scope.tutorialProgress(step);
 						}
 					}
 				}

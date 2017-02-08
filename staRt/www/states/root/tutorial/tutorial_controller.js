@@ -56,7 +56,64 @@
 				$scope.p05s5 = $scope.p05data[4];
 			});
 
-			$scope.tutorialProgress;
+			// Tutorial Progress Markers
+			$scope.tutorialProgress = function(progress) {
+				$scope.progressSref = progress.id;
+				console.log("progress: ", $scope.progressSref)
+			};
+
+			$scope.progressStore = {
+				"step1": false,
+				"step2": false,
+				"step3": false,
+				"step4": false,
+				"step5": false,
+			};
+
+			var stepNum = 0;
+			
+			$scope.progressUpdate = function(step) {
+				//console.log('step: ' + step);
+				// note: 6 = $scope.progressStore.length + 1
+				for (var i = 0; i < 6; i++) {
+					//console.log('step: ' + step);
+					//console.log($scope.progressStore['step' + i]);
+					console.log($scope.progressStore[i]);
+					
+					// if(step === $scope.progressStore['step' + i]) {
+					// $scope.progressStore[i] = true;
+					// 	console.log('true');
+				 // }; // end if
+				}; //end for
+
+			}
+				
+
+			$scope.log = function(input) {
+				console.log('log: ' + input);
+			}
+
+
+
+			// 	if(step > stepNum) {
+			// 		stepNum = step;
+			// 		var currStep = 'step'+stepNum;
+			// 		//console.log(currStep);
+
+			// 		$scope.progressStore[currStep] = true;
+
+			// 		for (var i = 0; i < $scope.coinData.length+1; i++) {
+			// 			//if($scope.progressStore[i] = true) {
+			// 				console.log('Step'+[i]+': ' + $scope.progressStore['step'+i]);
+			// 				//appy class to coin
+			// 			//}
+			// 		};
+					
+
+			// 		//console.log("Step " + step + " is " + currStep); 
+			// 	};				
+			// }
+
 
 
 		console.log('TutorialController here!');

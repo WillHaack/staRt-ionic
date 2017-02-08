@@ -36,6 +36,7 @@
 		
 		"input": {
 			"txt":"Let's go!",
+			"stepDone": 0,
 			"next": "p01s2"
 		}
 	},
@@ -97,6 +98,7 @@
 		
 		"input": {
 			"txt":"Next",
+			"stepDone": 0,
 			"next": "p01s3"
 		}
 	},
@@ -154,6 +156,7 @@
 		
 		"input": {
 			"txt":"Next",
+			"stepDone": 0,
 			"next": "p01s4"
 		}
 	},
@@ -220,6 +223,7 @@
 		
 		"input": {
 			"txt":"Next",
+			"stepDone": 0,
 			"next": "p01s5"
 		}
 	},
@@ -266,6 +270,7 @@
 		
 		"input": {
 			"txt":"Next",
+			"stepDone": " 'step1' ",
 			"next":"p02s1"
 		}
 	}

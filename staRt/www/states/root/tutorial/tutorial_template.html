@@ -4,125 +4,49 @@
 
 	<!-- ==================================
 	SAND BAR -->
-		<div class="sandbarBox">
-			<ul class="sandbar-coinRow">
-				<li>
-					<div class="sandbar-coinBox"
-						ui-sref="root.tutorial.p01s1"
-						ui-sref-active="activeCoin">
+	
+		<div class="sandbarBox">	
 
-						<div class="sandbar-coinImgBox">
-							<img
-            					ng-src="img/tutorial/coins/coin1.svg"
-
-            					class="sandbar-coinImg"
-            					style="width: 60px; height: auto; top:-10px; left: auto;"
-          					>
-						</div>
-						<div class="sandbar-coinTxt">the wave</div>
-					</div>
-				</li>
-
-				<li>
-					<div class="sandbar-coinBox"
-						ui-sref="root.tutorial.p02s1"
-						ui-sref-active="activeCoin">
-
-						<div class="sandbar-coinImgBox">
-							<img
-            					ng-src="img/tutorial/coins/coin2.svg"
-            					class="sandbar-coinImg"
-            					style=" width: 80px; height: 65px; top:-10px;"
-          					>
-						</div>
-						<div class="sandbar-coinTxt">eee sounds</div>
-					</div>
-				</li>
-
-				<li>
-					<div class="sandbar-coinBox"
-						ui-sref="root.tutorial.p03s1"
-						ui-sref-active="activeCoin">
-
-						<div class="sandbar-coinImgBox">
-							<img
-            					ng-src="img/tutorial/coins/coin3.svg"
-            					class="sandbar-coinImg"
-            					style=" width: 65px; height: auto; top:-18px;"
-          					>
-						</div>
-
-						<div class="sandbar-coinTxt">ahh sounds</div>
-					</div>
-				</li>
-
-				<li>
-					<div class="sandbar-coinBox"
-						ui-sref="root.tutorial.p04s1"
-						ui-sref-active="activeCoin">
-
-						<div class="sandbar-coinImgBox">
-							<img
-            					ng-src="img/tutorial/coins/coin4.svg"
-            					class="sandbar-coinImg"
-            					style=" width: 70px; height: auto; top:-15px;"
-          					>
-						</div>
-						<div class="sandbar-coinTxt">ooh sounds</div>
-					</div>
-				</li>
-
-				<li >
-					<div class="sandbar-coinBox"
-						ui-sref="root.tutorial.p05s1"
-						ui-sref-active="activeCoin">
-						<div class="sandbar-coinImgBox">
-							<img
-            					ng-src="img/tutorial/coins/coin5.svg"
-            					class="sandbar-coinImg"
-            					style=" width: 60px; height: auto; top:-5px;"
-          					>
-						</div>
-						<div class="sandbar-coinTxt">/r/ sounds</div>
-					</div>
-				</li>
-
-
-			</ul>
-			
-		<!-- 
 			<list class="sandbar-coinRow">
 			<item  ng-repeat="coin in coinData">
-				<!- ui-router adds class="activeCoin" only if the STATE matches the ui-sref (coin.sref) ->
-					<a class="sandbar-coinBox"
+				<!-- ui-router adds class="activeCoin" only if the STATE matches the ui-sref (coin.sref) -->
+					<div class="sandbar-coinBox"
 					ui-sref="{{'root.tutorial.' + coin.sref }}"
 					ui-sref-active="activeCoin">	
 
 						<div class="sandbar-coinImgBox">
-							<!-NOTE: this isn't going to work if the url routing isn't working -->
+							<!-- NOTE: this isn't going to work if the url routing isn't working -->
 
-				        	<!-- defines img incomplete state ->
-				          	<img
+				        	<!-- defines img incomplete state -->
+							<!-- <img
 					            ng-if="state.current.url != tab.sref" 
 					            ng-src="{{ 'img/tutorial/coin/' + tab.sref + '.svg' }}"
 					            class="nav-svg"
-					          >
-					          <!- defines img active state ->
-					          <img 
-					            ng-if="state.current.url === tab.sref" 
-					            ng-src="{{ 'img/nav/' + tab.sref + '-b.svg' }}"
-					            class="nav-svg animated {{ tab.ani }}"
-					          >
-				      		->
+					          > -->
+					          <!-- defines img active state -->
+					          	<!-- ng-if="state.current.url === tab.sref"  
+					      		class="nav-svg animated {{ tab.ani }}"-->
+				<!-- ng-class="$variableToEvaluate ? 'class-if-true' : 'class-if-false' 
+					      		$scope.progressStore
+					      		class="sandbar-coinImg"
+					      		ng-if="'$scope.progressStore.' + {{coin.id}}"
+					      		ng-if="{{$scope.progressStore.step1}}"
+					      	-->
+					          <img id="{{coin.id}}"
+					            					            
+					            ng-src="{{coin.img}}"				            
+								style="width:{{coin.width}}; 
+									height:{{coin.width}}; 
+									top:{{coin.top}};">
 						</div>
 
 						<div class="sandbar-coinTxt">
 							{{coin.txt}}
 						</div>
-					</a>
+					</div>
 				</item>
 
-			</list> <!- end .coinRow -->
+			</list> <!-- end .coinRow -->
 
 		</div> <!-- end sandbarBox -->
 

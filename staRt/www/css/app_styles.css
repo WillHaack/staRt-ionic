@@ -818,10 +818,11 @@ div.sandbar-coinImgBox {
   width: 100px; }
 
 .sandbar-coinImg {
-  position: relative; }
-
-.sandbar-coinImg--incomplete {
+  position: relative;
   opacity: 0; }
+
+.sandbar-coinImg--complete {
+  opacity: 1; }
 
 .sandbar-coinTxt {
   margin-top: 0px; }

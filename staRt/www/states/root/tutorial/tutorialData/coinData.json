@@ -1,57 +1,52 @@
 [
 	{
-		"id": "coin1",
+		"id": "step1",
 		"sref": "p01s1",
 		"img": "img/tutorial/coins/coin1.svg",
 		"txt": "the wave",
 		"ani": "",
-		"xpos": "",
-		"ypos": "",
-		"height": "",
-		"width": ""
+		"width": "60px",
+		"height": "auto",
+		"top": "-10px"		
 	},
 	{ 
-		"id": "coin2",
+		"id": "step2",
 		"sref": "p02s1",
-		"img": "",
+		"img": "img/tutorial/coins/coin1.svg",
 		"txt": "eee sounds",
 		"ani": "",
-		"xpos": "",
-		"ypos": "",
-		"height": "",
-		"width": ""
+		"width": "80px",
+		"height": "65px",
+		"top": "-10px"
 	},
 	{ 
-		"id": "coin3",
+		"id": "step3",
 		"sref": "p03s1",
-		"img": "",
+		"img": "img/tutorial/coins/coin1.svg",
 		"txt": "ahh sounds",
 		"ani": "",
-		"xpos": "",
-		"ypos": "",
-		"height": "",
-		"width": ""
+		"width": "65px",
+		"height": "auto",
+		"top": "-18px"	
 	},
 	{ 
-		"id": "coin4",
+		"id": "step4",
 		"sref": "p04s1",
-		"img": "",
+		"img": "img/tutorial/coins/coin1.svg",
 		"txt": "ooh sounds",
 		"ani": "",
-		"xpos": "",
-		"ypos": "",
-		"height": "",
-		"width": ""
+		"width": "70px",
+		"height": "auto",
+		"top": "-15px"
 	},
 	{ 
-		"id": "coin5",
+		"id": "step5",
 		"sref": "p05s1",
-		"img": "",
+		"img": "img/tutorial/coins/coin5.svg",
 		"txt": "/r/ sounds",
 		"ani": "",
-		"xpos": "",
-		"ypos": "",
-		"height": "",
-		"width": ""
+		"width": "60px",
+		"height": "auto",
+		"top": "-5px"
 	}
 ]

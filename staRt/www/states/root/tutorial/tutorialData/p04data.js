@@ -51,6 +51,7 @@
 
 		"input": {
 			"txt":"Next",
+			"stepDone": 3,
 			"next": "p04s2"
 		}
 	},
@@ -110,6 +111,7 @@
 		
 		"input": {
 			"txt":"Next",
+			"stepDone": 4,
 			"next": "p04s3"
 		}
 	},
@@ -142,6 +144,7 @@
 		
 		"input": {
 			"txt":"Next",
+			"stepDone": 4,
 			"next": "p05s1"
 		}
 	}
