@@ -148,7 +148,7 @@
 				navigator.notification.confirm("Are you sure you want to delete " + profile.name + "?" , function(i)
 				{
 					if(i == 1)
-					{			
+					{
 						doDelete();
 					}
 				}, "Delete All", ["OK", "Cancel"]);
@@ -172,7 +172,7 @@
 				navigator.notification.confirm("Are you sure you want to delete all profiles?", function(i)
 				{
 					if(i == 1)
-					{			
+					{
 						doDelete();
 					}
 				}, "Delete All", ["OK", "Cancel"]);

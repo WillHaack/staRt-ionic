@@ -38,13 +38,12 @@ lpcDirective.controller( 'LpcDirectiveController',
 		$scope.$emit('ratingChange', $scope.data.rating);
 	});
 
-	// --------- #HC 
+	// --------- #HC
 	var canvasElement = $element[0].querySelector('#lpc-canvas');
+	var parentElement = $element[0].querySelector('#lpc-canvas-parentSize');
 	console.log('canvas ele: ', canvasElement);
 
-	// LPCRenderer(element, maxNumPeaks)
-	$scope.lpcRenderer = new LPCRenderer(canvasElement, 20);
-	//$scope.lpcRenderer.id = 'lpc-canvasRenderer';
+	$scope.lpcRenderer = new LPCRenderer(parentElement, canvasElement, 20);
 
 	// Mouse events
 	$scope.lpcRenderer.renderer.domElement.addEventListener('mousedown', onTouchStart, false);
@@ -225,33 +224,6 @@ lpcDirective.controller( 'LpcDirectiveController',
 		};
 		$scope.animate();
 
-	///////////////////////////////////
-	//  MISC UTILS
-	///////////////////////////////////
-		$scope.scaleContext = function() {
-			var renderer = $scope.lpcRenderer.renderer;
-			var canvas = $scope.lpcRenderer.canvas;
-			var camera = $scope.lpcRenderer.camera;
-
-			getDrawingDim();
-
-			// var WIDTH = parseInt(renderer.domElement.clientWidth);
-			// var HEIGHT = parseInt(renderer.domElement.clientHeight);
-
-			if (renderer.getSize().width != WIDTH ||
-				renderer.getSize().height != HEIGHT)
-			{
-				renderer.setSize(WIDTH, HEIGHT);
-				camera.left = -WIDTH/2;
-		        camera.right = WIDTH/2;
-		        camera.top = -HEIGHT/2;
-		        camera.bottom = HEIGHT/2;
-		        camera.updateProjectionMatrix();
-		        console.log("CONTEXT SCALED");
-		    }
-		}
-
-
 //--------------------------------------------------------------
 
 	////////////////////////////
@@ -324,9 +296,20 @@ lpcDirective.controller( 'LpcDirectiveController',
 		$scope.lpcHidden = true;
 	}
 
+	$scope.updateCanvasSize = function() {
+		$scope.lpcRenderer.updateDrawingDim();
+		$scope.lpcRenderer.updateCameraSize();
+		$scope.lpcRenderer.clearScene();
+		$scope.lpcRenderer.drawScene();
+	}
+
 	$scope.active = true;
 	setInitialTarget();
 	$scope.animate();
+
+	$scope.$on('afterEnter', function() {
+		$scope.updateCanvasSize();
+	});
 
 	$scope.$on('beforeLeave', function() {
 		$scope.active = false;
