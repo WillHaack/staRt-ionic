@@ -65,6 +65,18 @@
 			},
 		];
 
+		$scope.$on("$ionicView.enter", function() {
+			$scope.$broadcast("enter");
+		});
+
+		$scope.$on("$ionicView.afterEnter", function() {
+			$scope.$broadcast("afterEnter");
+		});
+
+		$scope.$on("$ionicView.beforeLeave", function() {
+			$scope.$broadcast("beforeLeave");
+		});
+
 		console.log('TutorialController here!');
 	});
 
