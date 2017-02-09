@@ -23,6 +23,9 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 	function LPCRenderer(element, maxNumPeaks)
 	{
 		this.maxNumPeaks = maxNumPeaks;
+		this.geometries = [];
+		this.materials = [];
+		this.textures = [];
 		this.initialize(element);
 	}
 
@@ -30,7 +33,7 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 		set: function sliderPosition(s) {
 			if (s > 1) s = 1;
 			if (s < 0) s = 0;
-			this.slider.position.x = linScale(s, 0, 1, this.LEFT, this.RIGHT);
+			if (this.slider !== undefined) this.slider.position.x = linScale(s, 0, 1, this.LEFT, this.RIGHT);
 		}
 	});
 
@@ -43,14 +46,14 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 	Object.defineProperty(LPCRenderer.prototype, 'doShowSand', {
 		get: function() { return this.sand.visible; },
 		set: function(sand) {
-			this.sand.visible = sand;
+			if (this.sand !== undefined) this.sand.visible = sand;
 		}
 	});
 
 	Object.defineProperty(LPCRenderer.prototype, 'doShowSlider', {
 		get: function() { return this.slider.visible },
 		set: function(slider) {
-			this.slider.visible = slider;
+			if (this.slider !== undefined) this.slider.visible = slider;
 		}
 	});
 
@@ -100,21 +103,27 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 		// basic mesh mats
 		this.blueMat = new THREE.MeshBasicMaterial({ color: colors.blueMain});
 		this.blueMat.side = THREE.DoubleSide;
+		this.materials.push(this.blueMat);
 
 		this.yellowMat = new THREE.MeshBasicMaterial({ color: colors.yellowMain});
+		this.materials.push(this.yellowMat);
 		//yellowMat.side = THREE.DoubleSide;
 
 		this.whiteMat = new THREE.MeshBasicMaterial({ color: colors.white});
+		this.materials.push(this.whiteMat);
 		//whiteMat.side = THREE.DoubleSide;
 
 		this.sandMat = new THREE.MeshBasicMaterial({ color: colors.yellowLight});
+		this.materials.push(this.sandMat);
 		//sandMat.side = THREE.DoubleSide;
 
 		// basic line mats
 		this.peakMat = new THREE.LineBasicMaterial({ color: 0x2095b6 });
+		this.materials.push(this.peakMat);
 		//blueDarkLineMat = new THREE.LineBasicMaterial({ color: 0x2095b6 });
 
 		this.needleMat = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 3 });
+		this.materials.push(this.needleMat);
 	};
 
 	// Really dumb hittest that just returns the name of the hit object, if any
@@ -142,6 +151,8 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 
 	LPCRenderer.prototype.updateWave = function(points, peaks, frequencyScaling)
 	{
+		if (this.peakSegments === undefined) return;
+
 		// Make an array of all the topmost points
 		var shapeArr = [];
 		for (var i=0; i<points.length; i++) {
@@ -227,7 +238,7 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 	LPCRenderer.prototype.drawScene = function()
 	{
 		this.slider = new THREE.Object3D();
-		this.slider.name = this.slider;
+		this.slider.name = "slider";
 
 		this.slider.position.set(-100000, 0, 9); // offscreen to start
 		this.scene.add(this.slider);
@@ -290,6 +301,7 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 
 		var labelGeom = new THREE.ShapeGeometry(labelShape);
 		var label = new THREE.Mesh(labelGeom, this.whiteMat);
+		this.geometries.push(labelGeom);
 
 		label.position.set(labelWidth/-2, this.TOP - this.padH, 8 );
 		label.name = "label";
@@ -304,9 +316,11 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 		this.canvas2d.height = 128;
 
 		this.textTexture = new THREE.CanvasTexture( this.canvas2d );
+		this.textures.push(this.textTexture);
 		this.spriteMaterial = new THREE.SpriteMaterial( {
 			map: this.textTexture,
 		});
+		this.materials.push(this.spriteMaterial);
 
 		this.textSprite = new THREE.Sprite( this.spriteMaterial );
 		this.textSprite.scale.set(256, 128, 1.0);
@@ -321,6 +335,8 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 
 	LPCRenderer.prototype.updateTextSprite = function(message)
 	{
+		if (this.canvas2d === undefined) return;
+
 		var color = "#4d4d4d";
 
 		var ctx = this.canvas2d.getContext('2d');
@@ -345,6 +361,7 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 		sandShape.lineTo(this.LEFT, this.waveBottom);
 
 		var sandGeom = new THREE.ShapeGeometry(sandShape);
+		this.geometries.push(sandGeom);
 
 		sand = new THREE.Mesh(sandGeom, this.sandMat);
 		sand.name = "sand";
@@ -356,6 +373,7 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 
 	LPCRenderer.prototype.createNeedle = function() {
 		var needleGeom = new THREE.Geometry();
+		this.geometries.push(needleGeom);
 
 		needleGeom.vertices.push(
 			new THREE.Vector3(0, this.waveBottom, 7),
@@ -471,6 +489,28 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 		this.drawScene();
 
 		this.raycaster = new THREE.Raycaster();
+	}
+
+	LPCRenderer.prototype.destroy = function() {
+		delete this.renderer;
+		delete this.canvas;
+		delete this.canvas2d;
+		delete this.textSprite;
+		delete this.textTexture;
+		delete this.spriteMaterial;
+
+		// Remove all children
+		while (this.scene.children.length) {
+			this.scene.remove(this.scene.children[0]);
+		}
+
+		var disposables = ["geometries", "materials", "textures"];
+		for (var k = 0; k < disposables.length; k++) {
+			var junk = this[disposables[k]];
+			for (var i=0; i<junk.length; i++) {
+				junk[i].dispose();
+			}
+		}
 	}
 
 	return LPCRenderer;
