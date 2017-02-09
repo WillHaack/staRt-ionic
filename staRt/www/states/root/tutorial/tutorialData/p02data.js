@@ -46,7 +46,6 @@
 		
 		"input": {
 			"txt":"Next",
-			"stepDone": 1,
 			"next": "p02s2"
 		}
 	},
@@ -110,7 +109,7 @@
 		
 		"input": {
 			"txt":"Next",
-			"stepDone": 2,
+			"stepDone": " 'step2' ",
 			"next": "p03s1"
 		}
 	}

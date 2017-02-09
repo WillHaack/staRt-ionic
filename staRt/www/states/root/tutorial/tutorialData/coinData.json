@@ -7,37 +7,37 @@
 		"ani": "",
 		"width": "60px",
 		"height": "auto",
-		"top": "-10px"		
+		"top": "-5px"		
 	},
 	{ 
 		"id": "step2",
 		"sref": "p02s1",
-		"img": "img/tutorial/coins/coin1.svg",
+		"img": "img/tutorial/coins/coin2.svg",
 		"txt": "eee sounds",
 		"ani": "",
-		"width": "80px",
+		"width": "68px",
 		"height": "65px",
-		"top": "-10px"
+		"top": "-15px"
 	},
 	{ 
 		"id": "step3",
 		"sref": "p03s1",
-		"img": "img/tutorial/coins/coin1.svg",
+		"img": "img/tutorial/coins/coin3.svg",
 		"txt": "ahh sounds",
 		"ani": "",
 		"width": "65px",
 		"height": "auto",
-		"top": "-18px"	
+		"top": "-5px"	
 	},
 	{ 
 		"id": "step4",
 		"sref": "p04s1",
-		"img": "img/tutorial/coins/coin1.svg",
+		"img": "img/tutorial/coins/coin4.svg",
 		"txt": "ooh sounds",
 		"ani": "",
 		"width": "70px",
 		"height": "auto",
-		"top": "-15px"
+		"top": "-10px"
 	},
 	{ 
 		"id": "step5",

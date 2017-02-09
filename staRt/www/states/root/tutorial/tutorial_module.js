@@ -40,7 +40,7 @@
 						controller: function($scope){
 							$scope.currStep = $scope.p01s1;
 							var step = $scope.currStep.nav;
-							$scope.tutorialProgress(step);
+							//$scope.tutorialProgress(step);
 						}
 					}
 				}
@@ -110,13 +110,13 @@
 			}) //end p02 state def
 
 			.state('root.tutorial.p02s2', {
-				url: '/p02s2', // this sets the active left-nav tab to tutorial
+				url: '/p02s1', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p02s2;
-							console.log('p02s2');
+							//.log('p02s2');
 						}
 					}
 				}

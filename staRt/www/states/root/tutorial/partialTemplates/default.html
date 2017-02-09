@@ -175,20 +175,17 @@
 		RIGHT BOX -->
 		<div 
 		class="rightBox"
-		ng-class="{'txt-squish': currStep.RRow1.txtSquish}">
+		ng-class="{'txt-squish': currStep.RRow1.txtSquish, 'rightBox--short': currStep.header}">
 
 			<div 
 			class="rightRow1" 
 			ng-if="currStep.RRow1.items" 
-			ng-repeat="item in currStep.RRow1.items">
-				<div 
-				ng-bind-html="item"
-				class="rightRow-item">
-					{{item}}
-				</div>
+			ng-repeat="item in currStep.RRow1.items"
+			ng-bind-html="item">
+				{{item}}
 			</div>
-
-			<div class="starBox" ng-if="currStep.pic && !currStep.pic.imgAbs">
+			<!-- -->
+			<div class="starBox" ng-if="currStep.pic">
 				<img 
 				ng-src="{{currStep.pic.img}}" 
 				class="relImg" 
@@ -196,20 +193,18 @@
 					width:{{currStep.pic.w}}; 
 					top:{{currStep.pic.top}}; 
 					left:{{currStep.pic.left}};">
-			<div>
-
-		</div> <!-- end rightBox ng-if="currStep.pic.imgAbs"-->
-
-		<div class="absImgBox" ng-if="currStep.pic.imgAbs"> 
+		</div> <!-- end rightBox -->
+<!-- ng-if="currStep.pic.imgAbs" -->
+<!-- 		<div class="absImgBox" ng-if="currStep.pic.imgAbs"> 
 			<span>Hello</span>
-			<!-- <img 
+			<img 
 				ng-src="{{currStep.pic.img}}" 
 				class="absImg" 
 				style="height:{{currStep.pic.h}}; 
 					width:{{currStep.pic.w}}; 
 					top:{{currStep.pic.top}}; 
-					left:{{currStep.pic.left}};"> -->
-		</div>
+					left:{{currStep.pic.left}};">
+		</div> -->
 
 	</div> <!-- end tutPgView-content -->
 

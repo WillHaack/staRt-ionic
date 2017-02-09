@@ -95,24 +95,24 @@
 			"txtSquish": true,
 			"items":[
 				"<p class='txtBold'>Your wave might look different depending on where you are from.</p>",
-				"<br />",
+				"<p></p>",
 				"<p>For example, people from California and people from New York tend to have very different 'ooo' sounds.</p>"
 			]
 		},
-
+		
 		"pic": {
-			"imgAbs": false,
+			"imgAbs": true,
 			"img":"img/tutorial/char-p04s2.png",
 			"h": "180px",
 			"w": "320px",
-			"top": "35px",
+			"top": "25px",
 			"left":"-30px"
 		},
-		
+
 		"input": {
 			"txt":"Next",
-			"stepDone": 4,
-			"next": "p04s3"
+			"stepDone": " 'step4' ",
+			"next": "p05s1"
 		}
 	},
 
@@ -144,7 +144,7 @@
 		
 		"input": {
 			"txt":"Next",
-			"stepDone": 4,
+			"stepDone": "step4",
 			"next": "p05s1"
 		}
 	}

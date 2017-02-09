@@ -15,29 +15,13 @@
 					ui-sref-active="activeCoin">	
 
 						<div class="sandbar-coinImgBox">
-							<!-- NOTE: this isn't going to work if the url routing isn't working -->
-
-				        	<!-- defines img incomplete state -->
-							<!-- <img
-					            ng-if="state.current.url != tab.sref" 
-					            ng-src="{{ 'img/tutorial/coin/' + tab.sref + '.svg' }}"
-					            class="nav-svg"
-					          > -->
-					          <!-- defines img active state -->
-					          	<!-- ng-if="state.current.url === tab.sref"  
-					      		class="nav-svg animated {{ tab.ani }}"-->
-				<!-- ng-class="$variableToEvaluate ? 'class-if-true' : 'class-if-false' 
-					      		$scope.progressStore
-					      		class="sandbar-coinImg"
-					      		ng-if="'$scope.progressStore.' + {{coin.id}}"
-					      		ng-if="{{$scope.progressStore.step1}}"
-					      	-->
-					          <img id="{{coin.id}}"
-					            					            
-					            ng-src="{{coin.img}}"				            
+					          <img id="{{coin.id}}"	            
+					            ng-src="{{coin.img}}"
+					            ng-show="{{coin.id}}"
 								style="width:{{coin.width}}; 
 									height:{{coin.width}}; 
-									top:{{coin.top}};">
+									top:{{coin.top}};
+									position: relative;">
 						</div>
 
 						<div class="sandbar-coinTxt">

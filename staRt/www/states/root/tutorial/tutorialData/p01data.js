@@ -36,7 +36,6 @@
 		
 		"input": {
 			"txt":"Let's go!",
-			"stepDone": 0,
 			"next": "p01s2"
 		}
 	},
@@ -89,16 +88,16 @@
 		},
 
 		"pic": {
+			"imgAbs": false,
 			"img":"img/tutorial/starMic.png",
 			"h": "260px",
 			"w": "265px",
-			"top": "0px",
-			"left": "0px"
+			"top": "5px",
+			"left":"0px"
 		},
 		
 		"input": {
 			"txt":"Next",
-			"stepDone": 0,
 			"next": "p01s3"
 		}
 	},
@@ -147,6 +146,7 @@
 		},
 
 		"pic": {
+			"imgAbs": false,
 			"img":"img/tutorial/starPoint.png",
 			"h": "255px",
 			"w": "235px",
@@ -156,7 +156,6 @@
 		
 		"input": {
 			"txt":"Next",
-			"stepDone": 0,
 			"next": "p01s4"
 		}
 	},
@@ -214,6 +213,7 @@
 		},
 
 		"pic": {
+			"imgAbs": false,
 			"img":"img/tutorial/starPoint.png",
 			"h": "255px",
 			"w": "235px",
@@ -223,7 +223,6 @@
 		
 		"input": {
 			"txt":"Next",
-			"stepDone": 0,
 			"next": "p01s5"
 		}
 	},

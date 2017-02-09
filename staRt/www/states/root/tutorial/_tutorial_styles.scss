@@ -90,7 +90,7 @@
 		justify-content: space-between;
 		height: 100%;
 		text-align: left;
-		//border: 1px solid orange;
+		border: 1px solid orange;
 
 		.leftBox {
 			display: flex;
@@ -188,7 +188,8 @@
 			height: 100%;
 			width: 33%;
 			padding-top: 10px;
-			//border: 1px solid orange;
+			margin-bottom: $rowH;
+			border: 1px solid orange;
 			
 			.rightRow1 {
 				position: relative;
@@ -196,46 +197,46 @@
 				flex-direction: column;
 				justify-content: space-between;
 				width: 100%;
-				//border: 1px solid lightBlue;
+				height: auto;
+				border: 1px solid lightBlue;
 			}
 
-			.rightRow-item {}
+			.rightRow-item {
+				border: 1px solid pink;
+			}
 
 			.rightRow-spacer {
 				height: 50px;
 				width: 100%;
 				color: $yellow-light;
-				//border: 1px solid red;
+				border: 1px solid red;
 			}
 
 			.starBox {
 				position: relative;
-				height: 265px;
+				max-height: 265px;
 				width: 265px;
-				//border: 1px solid lightBlue;
+				border: 1px solid lightBlue;
 			}
 
 
 			.relImg {
 				position: relative;
-				// max-height: 265px;
-				// max-width: 265px;
-				//border: 1px solid lightBlue;
 			}
 
 			.absImgBox {
 				position: absolute;
-				// top: 0px;
-				// left:300px;
-				// width: 800px;
-				// height: 500px;
-				// border: 2px solid red;
-				// z-index: 99;
+
 			}
 			.absImg {
 				position: absolute;
 			//border: 1px solid pink;
 			}
+		}
+
+		.rightBox--short {
+			@extend .rightBox;
+			height: $rowH * 4;
 		}
 
 	} // end .tutPgView-content
@@ -336,7 +337,6 @@ button.tutBtn, a.tutBtn {
 		margin-top: 2.75em;
 		//border: 1px solid pink;
 	}
-
 
 
 	.p05s5img {

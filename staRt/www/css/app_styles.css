@@ -664,7 +664,8 @@ canvas {
   align-items: flex-start;
   justify-content: space-between;
   height: 100%;
-  text-align: left; }
+  text-align: left;
+  border: 1px solid orange; }
   .tutWave-content .leftBox {
     display: flex;
     flex-direction: column;
@@ -723,34 +724,44 @@ canvas {
     .tutWave-content .leftBox .leftRow-item {
       width: 100%;
       padding: 0 15px; }
-  .tutWave-content .rightBox {
+  .tutWave-content .rightBox, .tutWave-content .rightBox--short {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
     width: 33%;
-    padding-top: 10px; }
-    .tutWave-content .rightBox .rightRow1 {
+    padding-top: 10px;
+    margin-bottom: 13.87143vh;
+    border: 1px solid orange; }
+    .tutWave-content .rightBox .rightRow1, .tutWave-content .rightBox--short .rightRow1 {
       position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      width: 100%; }
-    .tutWave-content .rightBox .rightRow-spacer {
+      width: 100%;
+      height: auto;
+      border: 1px solid lightBlue; }
+    .tutWave-content .rightBox .rightRow-item, .tutWave-content .rightBox--short .rightRow-item {
+      border: 1px solid pink; }
+    .tutWave-content .rightBox .rightRow-spacer, .tutWave-content .rightBox--short .rightRow-spacer {
       height: 50px;
       width: 100%;
-      color: #FFECCB; }
-    .tutWave-content .rightBox .starBox {
+      color: #FFECCB;
+      border: 1px solid red; }
+    .tutWave-content .rightBox .starBox, .tutWave-content .rightBox--short .starBox {
       position: relative;
-      height: 265px;
-      width: 265px; }
-    .tutWave-content .rightBox .relImg {
+      max-height: 265px;
+      width: 265px;
+      border: 1px solid lightBlue; }
+    .tutWave-content .rightBox .relImg, .tutWave-content .rightBox--short .relImg {
       position: relative; }
-    .tutWave-content .rightBox .absImgBox {
+    .tutWave-content .rightBox .absImgBox, .tutWave-content .rightBox--short .absImgBox {
       position: absolute; }
-    .tutWave-content .rightBox .absImg {
+    .tutWave-content .rightBox .absImg, .tutWave-content .rightBox--short .absImg {
       position: absolute; }
+  .tutWave-content .rightBox--short {
+    height: 55.48571vh; }
 
 .inputBox {
   position: absolute;
@@ -816,13 +827,6 @@ div.sandbar-coinImgBox {
   height: 60px;
   align-items: center;
   width: 100px; }
-
-.sandbar-coinImg {
-  position: relative;
-  opacity: 0; }
-
-.sandbar-coinImg--complete {
-  opacity: 1; }
 
 .sandbar-coinTxt {
   margin-top: 0px; }

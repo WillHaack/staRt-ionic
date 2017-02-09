@@ -52,7 +52,6 @@
 		
 		"input": {
 			"txt":"Next",
-			"stepDone": 4,
 			"next": "p05s2"
 		}
 	},
@@ -102,7 +101,6 @@
 		
 		"input": {
 			"txt":"Next",
-			"stepDone": 4,
 			"next": "p05s3"
 		}
 	},
@@ -152,7 +150,6 @@
 		
 		"input": {
 			"txt":"Next",
-			"stepDone": 4,
 			"next": "p05s4"
 		}
 	},
@@ -208,7 +205,7 @@
 		
 		"input": {
 			"txt":"Next",
-			"stepDone": 5,
+			"stepDone": " 'step5' ",
 			"next": "p05s5"
 		}
 	},
@@ -253,7 +250,6 @@
 		
 		"input": {
 			"txt":"End Tutorial",
-			"stepDone": 5,
 			"next": "p01s1"
 		}
 

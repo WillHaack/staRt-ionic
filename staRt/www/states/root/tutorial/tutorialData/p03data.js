@@ -45,13 +45,12 @@
 			"img":"img/tutorial/char-p03s1.png",
 			"h": "322px",
 			"w": "295px",
-			"top": "-80px",
+			"top": "-20px",
 			"left":"-30px"
 		},
 
 		"input": {
 			"txt":"Next",
-			"stepDone": 2,
 			"next": "p03s2"
 		}
 	},
@@ -116,7 +115,6 @@
 
 		"input": {
 			"txt":"Next",
-			"stepDone": 2,
 			"next": "p03s3"
 		}
 	},
@@ -173,7 +171,7 @@
 
 		"input": {
 			"txt":"Next",
-			"stepDone": 3,
+			"stepDone": " 'step3' ",
 			"next": "p04s1"
 		}
 	}
