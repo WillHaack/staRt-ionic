@@ -664,8 +664,7 @@ canvas {
   align-items: flex-start;
   justify-content: space-between;
   height: 100%;
-  text-align: left;
-  border: 1px solid orange; }
+  text-align: left; }
   .tutWave-content .leftBox {
     display: flex;
     flex-direction: column;
@@ -732,28 +731,22 @@ canvas {
     height: 100%;
     width: 33%;
     padding-top: 10px;
-    margin-bottom: 13.87143vh;
-    border: 1px solid orange; }
+    margin-bottom: 13.87143vh; }
     .tutWave-content .rightBox .rightRow1, .tutWave-content .rightBox--short .rightRow1 {
       position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       width: 100%;
-      height: auto;
-      border: 1px solid lightBlue; }
-    .tutWave-content .rightBox .rightRow-item, .tutWave-content .rightBox--short .rightRow-item {
-      border: 1px solid pink; }
+      height: auto; }
     .tutWave-content .rightBox .rightRow-spacer, .tutWave-content .rightBox--short .rightRow-spacer {
       height: 50px;
       width: 100%;
-      color: #FFECCB;
-      border: 1px solid red; }
+      color: #FFECCB; }
     .tutWave-content .rightBox .starBox, .tutWave-content .rightBox--short .starBox {
       position: relative;
       max-height: 265px;
-      width: 265px;
-      border: 1px solid lightBlue; }
+      width: 265px; }
     .tutWave-content .rightBox .relImg, .tutWave-content .rightBox--short .relImg {
       position: relative; }
     .tutWave-content .rightBox .absImgBox, .tutWave-content .rightBox--short .absImgBox {

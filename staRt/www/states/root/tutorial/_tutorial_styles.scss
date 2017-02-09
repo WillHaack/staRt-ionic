@@ -90,7 +90,7 @@
 		justify-content: space-between;
 		height: 100%;
 		text-align: left;
-		border: 1px solid orange;
+		//border: 1px solid orange;
 
 		.leftBox {
 			display: flex;
@@ -189,7 +189,7 @@
 			width: 33%;
 			padding-top: 10px;
 			margin-bottom: $rowH;
-			border: 1px solid orange;
+			//border: 1px solid orange;
 			
 			.rightRow1 {
 				position: relative;
@@ -198,25 +198,25 @@
 				justify-content: space-between;
 				width: 100%;
 				height: auto;
-				border: 1px solid lightBlue;
+				//border: 1px solid lightBlue;
 			}
 
 			.rightRow-item {
-				border: 1px solid pink;
+				//border: 1px solid pink;
 			}
 
 			.rightRow-spacer {
 				height: 50px;
 				width: 100%;
 				color: $yellow-light;
-				border: 1px solid red;
+				//border: 1px solid red;
 			}
 
 			.starBox {
 				position: relative;
 				max-height: 265px;
 				width: 265px;
-				border: 1px solid lightBlue;
+				//border: 1px solid lightBlue;
 			}
 
 
