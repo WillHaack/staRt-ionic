@@ -43,6 +43,7 @@
 			$scope.practicing = true;
 			$scope.csv = "data/Syllable_Probe.csv";
 			$scope.order = "sequential";
+			$scope.type = "Syllable";
 			$scope.count = 30;
 		};
 
@@ -51,6 +52,7 @@
 			$scope.practicing = true;
 			$scope.csv = "data/Word_Probe.csv";
 			$scope.order = "random";
+			$scope.type = "Word";
 			$scope.count = 50;
 		};
 
