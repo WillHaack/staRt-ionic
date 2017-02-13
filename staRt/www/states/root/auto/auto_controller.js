@@ -4,7 +4,7 @@
 {
 	var auto = angular.module( 'auto' );
 
-	auto.controller('AutoController', function($scope, $timeout, $localForage, StartUIState, $rootScope, $state)
+	auto.controller('AutoController', function($scope, $timeout, $localForage, $cordovaDialogs, StartUIState, $rootScope, $state)
 	{
 		console.log('AutoController here!');
 
@@ -27,6 +27,19 @@
 
 		$scope.beginSyllableProbe = function() {
 			console.log("Begin syllable probe");
+
+			$cordovaDialogs.alert(
+				(
+					"In this task, you will see some syllables " +
+					"containing /r/. Your clinician will model " +
+					"each syllable for you. Your task is to " +
+					"listen, watch, and repeat the clinician " +
+					"while making your best /r/ sound."
+				),
+				"Syllable Probe",
+				"Okay"
+			);
+
 			$scope.practicing = true;
 			$scope.csv = "data/Syllable_Probe.csv";
 			$scope.order = "sequential";
