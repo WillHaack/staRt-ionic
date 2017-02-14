@@ -125,7 +125,7 @@
 			}
 
 
-			.lpcBox { 
+			.lpcBox {
 				// this container fills in the light-blue bg for the wave imgs
 				// it is BEHIND the live lpc target container, which is #lpc-canvas in _lpc-directive_styles.scss
 				height: 150px;
@@ -135,6 +135,25 @@
 				background-color: $blue-light;
 				z-index: 5;
 				//border: 1px solid lime;
+			}
+
+		.lpc-container-tutorial {  /* This is the light blue box*/
+			position: relative;
+			height: 150px;
+			width: 480px;
+			// margin: 0;
+			// padding: 0;
+			// border-radius: 4px;
+			// display: block;
+			// background-color: #F0F9FC;
+			// border: 15px solid #F0F9FC;
+			// border-bottom: 25px solid #F0F9FC;
+			// box-shadow: 1px 1px 1px rgba(0,0,0,0.15);
+		}
+
+			.lpc-canvas-area {
+				width: 100%;
+				height: 100%;
 			}
 
 			.soundImgBox {

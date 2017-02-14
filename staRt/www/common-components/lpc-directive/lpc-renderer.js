@@ -22,6 +22,8 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 {
 	function LPCRenderer(parentElement, canvasElement, maxNumPeaks)
 	{
+		this._doShowSand = true;
+		this._doShowSlider = true;
 		this.maxNumPeaks = maxNumPeaks;
 		this.geometries = [];
 		this.materials = [];
@@ -44,15 +46,21 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 	});
 
 	Object.defineProperty(LPCRenderer.prototype, 'doShowSand', {
-		get: function() { return this.sand.visible; },
+		get: function() {
+			return this._doShowSand;
+		},
 		set: function(sand) {
+			return this._doShowSand = sand;
 			if (this.sand !== undefined) this.sand.visible = sand;
 		}
 	});
 
 	Object.defineProperty(LPCRenderer.prototype, 'doShowSlider', {
-		get: function() { return this.slider.visible },
+		get: function() {
+			return this._doShowSlider;
+		},
 		set: function(slider) {
+			this._doShowSlider = slider;
 			if (this.slider !== undefined) this.slider.visible = slider;
 		}
 	});
@@ -250,6 +258,7 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 		this.slider.name = "slider";
 
 		this.slider.position.set(-100000, 0, 9); // offscreen to start
+		this.slider.visible = this.doShowSlider;
 		this.scene.add(this.slider);
 
 		this.needle = this.createNeedle();
@@ -387,6 +396,7 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 		sand.name = "sand";
 
 		sand.position.set(0,0,9);
+		sand.visible = this.doShowSand;
 
 		return sand;
 	};

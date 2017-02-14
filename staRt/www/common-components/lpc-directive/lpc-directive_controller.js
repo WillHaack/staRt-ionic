@@ -208,7 +208,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 				if ($scope.lpcRenderer.WIDTH !== $scope.lpcRenderer.parentElement.clientWidth ||
 					$scope.lpcRenderer.HEIGHT !== $scope.lpcRenderer.parentElement.clientHeight
 				) {
-					if (false) $scope.updateCanvasSize();
+					$scope.updateCanvasSize();
 				}
 
 				if ($scope.renderTextSprite) {
