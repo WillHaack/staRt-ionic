@@ -17,7 +17,24 @@ start.config(function($urlRouterProvider, $locationProvider, $ionicConfigProvide
 
 // This is all automatic boilerplate, none of which is apparently necessary for
 // running the program. But it says not to disable it, so...
-start.run(function($ionicPlatform) {
+start.run(function($ionicPlatform, $rootScope, $state) {
+
+  $rootScope.$on("$stateChangeStart", function(event, next, prev) {
+    if (next.name !== prev.name) {
+      $rootScope.$broadcast("$urlChangeStart", next.name);
+    }
+
+    // if (next.current.url === $scope.myURL) {
+    //   debugger;
+    //   $scope.active = true;
+    //   $scope.animate();
+    //   $scope.updateCanvasSize();
+    // } else {
+    //   debugger;
+    //   scope.active = false;
+    // }
+  });
+
   $ionicPlatform.ready(function() {
 
     if (window.AudioPlugin)

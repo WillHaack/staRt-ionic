@@ -116,28 +116,48 @@ lpcDirective.controller( 'LpcDirectiveController',
 			}
 		};
 
+		function positionForTouch(t) {
+			if (t.layerX && t.layerY) {
+				var point = {
+					x: t.layerX - $scope.lpcRenderer.WIDTH / 2,
+					y: t.layerY - $scope.lpcRenderer.HEIGHT / 2
+				};
+				return point;
+
+			} else {
+				var rect = $scope.lpcRenderer.canvas.getBoundingClientRect();
+				var point = {
+					x: t.pageX - rect.left - $scope.lpcRenderer.WIDTH / 2,
+					y: t.pageY - rect.top - $scope.lpcRenderer.HEIGHT / 2
+				};
+				return point;
+			}
+		}
+
 		function onTouchStart( e )
 		{
+			if ($scope.active !== true) return;
+
 			if ($scope.lpcRenderer.doShowSlider === false) return;
 
 			if ($scope.pointerDown === false) {
 				$scope.pointerDown = true;
 
-				if (e.type === 'touchstart') $scope.trackedTouch = e.identifier;
+				if (e.type === 'touchstart') {
+					$scope.trackedTouch = e.changedTouches[0].identifier;
+				}
 
-				e.preventDefault();
+				if (e.cancellable) e.preventDefault();
 
-				var point = {
-					x: e.layerX - $scope.lpcRenderer.WIDTH / 2,
-					y: e.layerY - $scope.lpcRenderer.HEIGHT / 2
-				};
+				var point = positionForTouch((e.type === 'touchstart') ? e.changedTouches[0] : e);
+				var px = point.x + $scope.lpcRenderer.WIDTH / 2;
 
 				var intersects = $scope.lpcRenderer.hitTest(point);
 				if (intersects === 'pauseBtn' || intersects === 'targetBtn') {
 					handleButtonPress(intersects);
 				} else {
 					$scope.trackingTarget = true;
-					$scope.data.targetF3 = linScale(e.layerX, 0, $scope.lpcRenderer.WIDTH, 0, 4500);
+					$scope.data.targetF3 = linScale(px, 0, $scope.lpcRenderer.WIDTH, 0, 4500);
 					$scope.updateTarget();
 				}
 			}
@@ -145,14 +165,18 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 		function onTouchMove( e )
 		{
-			if ($scope.trackedTouch !== undefined && $scope.trackedTouch !== e.identifier) return;
+			if ($scope.active !== true) return;
+
+			var identifier = ((e.changedTouches !== undefined) ? e.changedTouches[0].identifier : undefined);
+			if ($scope.trackedTouch !== undefined && $scope.trackedTouch !== identifier) return;
 
 			if ($scope.trackingTarget) {
-				e.preventDefault();
+				if (e.cancellable) e.preventDefault();
 
 				var element = $scope.lpcRenderer.renderer.domElement;
-				var rect = element.getBoundingClientRect();
-				var px = e.pageX - rect.left;
+
+				var point = positionForTouch((e.changedTouches !== undefined) ? e.changedTouches[0] : e);
+				var px = point.x + $scope.lpcRenderer.WIDTH / 2;
 
 				$scope.data.targetF3 = linScale(px, 0, $scope.lpcRenderer.WIDTH, 0, 4500);
 				$scope.targetNeedsUpdate = true;
@@ -160,11 +184,14 @@ lpcDirective.controller( 'LpcDirectiveController',
 		}
 
 		function onTouchEnd( e ) {
+			if ($scope.active !== true) return;
+
 			if (!$scope.pointerDown) return;
 
-			if ($scope.trackedTouch !== undefined && $scope.trackedTouch !== e.identifier) return;
+			var identifier = ((e.changedTouches !== undefined) ? e.changedTouches[0].identifier : undefined);
+			if ($scope.trackedTouch !== undefined && $scope.trackedTouch !== identifier) return;
 
-			e.preventDefault();
+			if (e.cancellable) e.preventDefault();
 
 			$scope.pointerDown = false;
 			$scope.trackedTouch = undefined;
@@ -177,6 +204,13 @@ lpcDirective.controller( 'LpcDirectiveController',
 	///////////////////////////////////
 		$scope.animate = function() {
 			if ($scope.active) {
+
+				if ($scope.lpcRenderer.WIDTH !== $scope.lpcRenderer.parentElement.clientWidth ||
+					$scope.lpcRenderer.HEIGHT !== $scope.lpcRenderer.parentElement.clientHeight
+				) {
+					if (false) $scope.updateCanvasSize();
+				}
+
 				if ($scope.renderTextSprite) {
 					if ( textSprite === undefined ) {
 						textSprite = Drawing.makeTextSprite(sliderFz);
@@ -288,8 +322,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 		$scope.lpcRenderer.drawScene();
 	}
 
-	$scope.$on('afterEnter', function() {
-
+	{
 		if ('ontouchstart' in window) {
 			$scope.lpcRenderer.renderer.domElement.addEventListener('touchstart', onTouchStart, false);
 			$scope.lpcRenderer.renderer.domElement.addEventListener('touchmove', onTouchMove, false);
@@ -308,22 +341,22 @@ lpcDirective.controller( 'LpcDirectiveController',
 		$scope.active = true;
 		setInitialTarget();
 		$scope.animate();
-	});
+	}
 
-	$scope.$on('beforeLeave', function() {
-		$scope.active = false;
+	// $scope.$on('beforeLeave', function() {
+	// 	$scope.active = false;
 
-		if ('ontouchstart' in window) {
-			$scope.lpcRenderer.renderer.domElement.removeEventListener('touchstart', onTouchStart);
-			$scope.lpcRenderer.renderer.domElement.removeEventListener('touchmove', onTouchMove);
-			$scope.lpcRenderer.renderer.domElement.removeEventListener('touchcancel', onTouchEnd);
-			$scope.lpcRenderer.renderer.domElement.removeEventListener('touchend', onTouchEnd);
-		} else {
-			$scope.lpcRenderer.renderer.domElement.removeEventListener('mousedown', onTouchStart);
-			window.removeEventListener('mousemove', onTouchMove);
-			window.removeEventListener('mouseup', onTouchEnd);
-		}
-	});
+	// 	if ('ontouchstart' in window) {
+	// 		$scope.lpcRenderer.renderer.domElement.removeEventListener('touchstart', onTouchStart);
+	// 		$scope.lpcRenderer.renderer.domElement.removeEventListener('touchmove', onTouchMove);
+	// 		$scope.lpcRenderer.renderer.domElement.removeEventListener('touchcancel', onTouchEnd);
+	// 		$scope.lpcRenderer.renderer.domElement.removeEventListener('touchend', onTouchEnd);
+	// 	} else {
+	// 		$scope.lpcRenderer.renderer.domElement.removeEventListener('mousedown', onTouchStart);
+	// 		window.removeEventListener('mousemove', onTouchMove);
+	// 		window.removeEventListener('mouseup', onTouchEnd);
+	// 	}
+	// });
 
 	$scope.$on("resetRating", function() {
 		$scope.data.rating = 0;
@@ -333,5 +366,17 @@ lpcDirective.controller( 'LpcDirectiveController',
 	{
 		console.log('target changed to: ', $scope.targetF3);
 		$scope.updateTarget();
+	});
+
+	$scope.myURL = $state.current.name;
+
+	$rootScope.$on("$urlChangeStart", function(event, next) {
+		if (next === $scope.myURL) {
+			$scope.active = true;
+			$scope.animate();
+			$scope.updateCanvasSize();
+		} else {
+			$scope.active = false;
+		}
 	});
 });

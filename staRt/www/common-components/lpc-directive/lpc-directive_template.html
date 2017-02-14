@@ -1,12 +1,11 @@
 <!-- .lpc-container is the light blue containing box-->
-<div ng-class="{'lpc-container': !tutorial}">
+<div ng-class="lpc-container">
 
 	<!-- this holds the lpc renderer -->
 	<div
 		id="lpc-canvas-parentSize"
 		ng-class="{'slider-and-canvas': !tutorial}"
 		ng-class="{'full-width': !rate && !reset && !tutorial}"
-		ng-resize="updateCanvasSize($event)"
 		>
 		<!-- ng-class="{'lpcCanvasSize-tutorial': tutorial}" -->
 		<!-- Renderer will be inserted here -->
