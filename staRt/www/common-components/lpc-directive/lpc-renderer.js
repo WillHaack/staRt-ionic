@@ -20,13 +20,13 @@ function linScale(v, inlow, inhigh, outlow, outhigh) {
 
 lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 {
-	function LPCRenderer(element, maxNumPeaks)
+	function LPCRenderer(parentElement, canvasElement, maxNumPeaks)
 	{
 		this.maxNumPeaks = maxNumPeaks;
 		this.geometries = [];
 		this.materials = [];
 		this.textures = [];
-		this.initialize(element);
+		this.initialize(parentElement, canvasElement);
 	}
 
 	Object.defineProperty(LPCRenderer.prototype, 'sliderPosition', {
@@ -57,11 +57,11 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 		}
 	});
 
-	LPCRenderer.prototype.getDrawingDim = function(canvas)
+	LPCRenderer.prototype.updateDrawingDim = function()
 	{
-
-		this.WIDTH = canvas.clientWidth;
-		this.HEIGHT = canvas.clientHeight;
+		var parentElement = this.parentElement;
+		this.WIDTH = parentElement.clientWidth;
+		this.HEIGHT = parentElement.clientHeight;
 		this.ASPECT = this.WIDTH / this.HEIGHT;
 
 		// 3d coords
@@ -88,15 +88,24 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 	{
 		this.scene = new THREE.Scene();
 		this.camera = new THREE.OrthographicCamera(this.LEFT, this.RIGHT, this.TOP, this.BOTTOM, 1, 1000);
-		this.camera.position.set(0, 0, 100);
-		this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-		this.camera.updateProjectionMatrix();
 		this.scene.add(this.camera);
+	};
 
+	LPCRenderer.prototype.updateCameraSize = function()
+	{
+		this.camera.position.set(0, 0, 100);
+		this.camera.aspect = this.WIDTH/this.HEIGHT;
+		this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+		this.camera.left = this.LEFT;
+		this.camera.top = this.TOP;
+		this.camera.right = this.RIGHT;
+		this.camera.bottom = this.BOTTOM;
+
+		this.renderer.setSize(this.WIDTH, this.HEIGHT);
 		this.renderer.setPixelRatio( window.devicePixelRatio );
 		this.renderer.setClearColor(0xc5f3ff, 1.0);
-		this.renderer.setSize(this.WIDTH, this.HEIGHT);
-	};
+		this.camera.updateProjectionMatrix();
+	}
 
 	LPCRenderer.prototype.buildMaterials = function()
 	{
@@ -290,6 +299,17 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 		this.targetButton.visible = false;
 	};
 
+	LPCRenderer.prototype.clearScene = function()
+	{
+		this.scene.remove(this.slider);
+		this.scene.remove(this.sand);
+		this.scene.remove(this.pauseButton);
+		this.scene.remove(this.targetButtonButton);
+		this.scene.remove(this.peakSegments);
+
+		this.geometries = [];
+	}
+
 	LPCRenderer.prototype.createLabel = function()
 	{
 		var labelWidth = 75;
@@ -471,18 +491,21 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 		this.renderer.render(this.scene, this.camera);
 	};
 
-	LPCRenderer.prototype.initialize = function(element)
+	LPCRenderer.prototype.initialize = function(parentElement, canvasElement)
 	{
-		this.renderer = new THREE.WebGLRenderer({ antialias: true, canvas: element });
+		this.renderer = new THREE.WebGLRenderer({ antialias: true, canvas: canvasElement });
 
-		this.canvas = element;
+		this.parentElement = parentElement;
+		this.canvas = canvasElement;
 		this.canvas.id = "lpc-canvas";
 
 		this.savedTarget = 2247;
 
-		this.getDrawingDim(this.canvas);
+		this.updateDrawingDim();
 
 		this.buildStage();
+
+		this.updateCameraSize();
 
 		this.buildMaterials();
 
@@ -511,6 +534,10 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 				junk[i].dispose();
 			}
 		}
+
+		this.geometries = [];
+		this.materials = [];
+		this.textures = [];
 	}
 
 	return LPCRenderer;

@@ -10,9 +10,15 @@
 			<list class="sandbar-coinRow">
 			<item  ng-repeat="coin in coinData">
 				<!-- ui-router adds class="activeCoin" only if the STATE matches the ui-sref (coin.sref) -->
+				<!-- JUNK
+					 ng-click="setActiveCoin({{coin.coinRef}})"
+					 ng-class="{ 'activeCoin': state.current.url.includes($scope.activeCoin) }"
+
+					-->
 					<div class="sandbar-coinBox"
 					ui-sref="{{'root.tutorial.' + coin.sref }}"
-					ui-sref-active="activeCoin">	
+					ui-sref-active="activeCoin"
+					>	
 
 						<div class="sandbar-coinImgBox">
 					          <img id="{{coin.id}}"	            
@@ -24,13 +30,15 @@
 									position: relative;">
 						</div>
 
-						<div class="sandbar-coinTxt">
+						<div id="{{coin.coinRef}}"
+						class="sandbar-coinTxt"
+						ng-class="{activeCoin: activeCoin.{{coin.coinRef}} }">
 							{{coin.txt}}
 						</div>
 					</div>
 				</item>
 
-			</list> <!-- end .coinRow -->
+			</list> <!-- end .coinRow   {{coin.coinRef ===   -->
 
 		</div> <!-- end sandbarBox -->
 

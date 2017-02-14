@@ -98,6 +98,7 @@
 		
 		"input": {
 			"txt":"Next",
+			"updateCoin": " 'p01' ",
 			"next": "p01s3"
 		}
 	},
@@ -156,6 +157,7 @@
 		
 		"input": {
 			"txt":"Next",
+			"updateCoin": " 'p01-03' ",
 			"next": "p01s4"
 		}
 	},
@@ -223,6 +225,7 @@
 		
 		"input": {
 			"txt":"Next",
+			"updateCoin": " 'p01-04' ",
 			"next": "p01s5"
 		}
 	},
@@ -266,12 +269,13 @@
 			"top": "125px",
 			"left":"425px"
 		},
-		
+
 		"input": {
 			"txt":"Next",
 			"stepDone": " 'step1' ",
 			"next":"p02s1"
 		}
+
 	}
 
 ]

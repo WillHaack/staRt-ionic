@@ -33,62 +33,88 @@
 		// PAGE 1 The Wave ------------------------------------------------------------
 
 			.state('root.tutorial.p01s1', {
-				url: '/p01s1',
+				url: '/p01',
+				name: 'p01',
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/partialTemplates/noWave.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p01s1;
-							var step = $scope.currStep.nav;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
+							//console.log($scope);
+							//var step = $scope.currStep.nav;
 							//$scope.tutorialProgress(step);
+							//console.log(window.location.hash);
+							// $scope.activeCoin = $scope.currStep.coinRef;
+							//console.log('activeCoin: ' + $scope.activeCoin);
 						}
 					}
 				}
 			}) //end p01s1 state def
 
 			.state('root.tutorial.p01s2', {
-				url: '/p01s2', // this sets the active left-nav tab to tutorial
+				url: '/p01', // this sets the active left-nav tab to tutorial
+				name: 'p01',
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p01s2;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
+							// $scope.activeCoin = $scope.currStep.coinRef;
+							//console.log('activeCoin: ' + $scope.activeCoin);
 						}
 					}
 				}
 			}) //end p01s2 state def
 
 			.state('root.tutorial.p01s3', {
-				url: '/p01s3', // this sets the active left-nav tab to tutorial
+				url: '/p01', // this sets the active left-nav tab to tutorial
+				name: 'p01',
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p01s3;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
+							//console.log(window.location.hash);
+							// $scope.activeCoin = $scope.currStep.coinRef;
+							// console.log('activeCoin: ' + $scope.activeCoin);
 						}
 					}
 				}
 			}) //end p01s3 state def
 
 			.state('root.tutorial.p01s4', {
-				url: '/p01s4', // this sets the active left-nav tab to tutorial
+				url: '/p01', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p01s4;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
+							// $scope.activeCoin = $scope.currStep.coinRef;
+							//console.log('activeCoin: ' + $scope.activeCoin);
+
 						}
 					}
 				}
 			}) //end p01s4 state def
 
 			.state('root.tutorial.p01s5', {
-				url: '/p01s5', // this sets the active left-nav tab to tutorial
+				url: '/p01', // this sets the active left-nav tab to tutorial
 				views: {
 					'pageView': {
 						templateUrl: 'states/root/tutorial/partialTemplates/noWave.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p01s5;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
+							//console.log('ctrl activeCoin: ' + $scope.activeCoin.coin);
 						}
 					}
 				}
@@ -104,6 +130,9 @@
 						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p02s1;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
+							console.log('ctrl activeCoin: ' + $scope.activeCoin.coin);
 						}
 					}
 				}
@@ -116,6 +145,8 @@
 						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p02s2;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
 							//.log('p02s2');
 						}
 					}
@@ -132,6 +163,8 @@
 						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p03s1;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
 						}
 					}
 				}
@@ -144,6 +177,8 @@
 						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p03s2;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
 						}
 					}
 				}
@@ -156,6 +191,8 @@
 						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p03s3;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
 						}
 					}
 				}
@@ -171,6 +208,8 @@
 						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p04s1;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
 						}
 					}
 				}
@@ -183,6 +222,8 @@
 						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p04s2;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
 						}
 					}
 				}
@@ -195,6 +236,8 @@
 						templateUrl: 'states/root/tutorial/partialTemplates/imgTemplate.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p04s3;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
 						}
 					}
 				}
@@ -211,6 +254,8 @@
 						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p05s1;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
 						}
 					}
 				}
@@ -223,6 +268,8 @@
 						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p05s2;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
 						}
 					}
 				}
@@ -235,6 +282,8 @@
 						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p05s3;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
 						}
 					}
 				}
@@ -247,6 +296,8 @@
 						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p05s4;
+							//$scope.activeCoin.coin = $scope.currStep.coinRef;
+							$scope.setActiveCoin($scope.currStep.coinRef);
 						}
 					}
 				}

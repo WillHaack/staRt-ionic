@@ -8,6 +8,7 @@
 		'startStateService',
 		'profileService',
 		'lpcDirective',
+		'ngCordova',
 		'auto',
 		'freePlay',
 		'profiles',

@@ -38,23 +38,18 @@ lpcDirective.controller( 'LpcDirectiveController',
 		$scope.$emit('ratingChange', $scope.data.rating);
 	});
 
-	// --------- #HC 
+	// --------- #HC
 	var canvasElement = $element[0].querySelector('#lpc-canvas');
-	console.log('canvas ele: ', canvasElement);
+	var parentElement = $element[0].querySelector('#lpc-canvas-parentSize');
+	//console.log('canvas ele: ', canvasElement);
 
-	// LPCRenderer(element, maxNumPeaks)
-	$scope.lpcRenderer = new LPCRenderer(canvasElement, 20);
-	//$scope.lpcRenderer.id = 'lpc-canvasRenderer';
+	$scope.lpcRenderer = new LPCRenderer(parentElement, canvasElement, 20);
 
 	$scope.lpcHidden = false;
 	$scope.lpcRenderer.doShowSand = $scope.sand;
 	$scope.lpcRenderer.doShowSlider = $scope.slider;
 	$scope.targetNeedsUpdate = false;
 	$scope.targetTextUpdateCount = 0;
-
-	$scope.$on('$destroy', function() {
-		// $scope.lpcRenderer.destroy();
-	});
 
 	///////////////////////////////////
 	//  GET DATA
@@ -214,33 +209,6 @@ lpcDirective.controller( 'LpcDirectiveController',
 			}
 		};
 
-	///////////////////////////////////
-	//  MISC UTILS
-	///////////////////////////////////
-		$scope.scaleContext = function() {
-			var renderer = $scope.lpcRenderer.renderer;
-			var canvas = $scope.lpcRenderer.canvas;
-			var camera = $scope.lpcRenderer.camera;
-
-			getDrawingDim();
-
-			// var WIDTH = parseInt(renderer.domElement.clientWidth);
-			// var HEIGHT = parseInt(renderer.domElement.clientHeight);
-
-			if (renderer.getSize().width != WIDTH ||
-				renderer.getSize().height != HEIGHT)
-			{
-				renderer.setSize(WIDTH, HEIGHT);
-				camera.left = -WIDTH/2;
-		        camera.right = WIDTH/2;
-		        camera.top = -HEIGHT/2;
-		        camera.bottom = HEIGHT/2;
-		        camera.updateProjectionMatrix();
-		        console.log("CONTEXT SCALED");
-		    }
-		}
-
-
 //--------------------------------------------------------------
 
 	////////////////////////////
@@ -313,21 +281,30 @@ lpcDirective.controller( 'LpcDirectiveController',
 		$scope.lpcHidden = true;
 	}
 
-	$scope.$on('afterEnter', function() {
-		// Mouse events
-		$scope.lpcRenderer.renderer.domElement.addEventListener('mousedown', onTouchStart, false);
-		window.addEventListener('mousemove', onTouchMove, false);
-		window.addEventListener('mouseup', onTouchEnd, false);
+	$scope.updateCanvasSize = function() {
+		$scope.lpcRenderer.updateDrawingDim();
+		$scope.lpcRenderer.updateCameraSize();
+		$scope.lpcRenderer.clearScene();
+		$scope.lpcRenderer.drawScene();
+	}
 
-		// Touch events
-		$scope.lpcRenderer.renderer.domElement.addEventListener('touchstart', onTouchStart, false);
-		$scope.lpcRenderer.renderer.domElement.addEventListener('touchmove', onTouchMove, false);
-		$scope.lpcRenderer.renderer.domElement.addEventListener('touchcancel', onTouchEnd, false);
-		$scope.lpcRenderer.renderer.domElement.addEventListener('touchend', onTouchEnd, false);
+	$scope.$on('afterEnter', function() {
+
+		if ('ontouchstart' in window) {
+			$scope.lpcRenderer.renderer.domElement.addEventListener('touchstart', onTouchStart, false);
+			$scope.lpcRenderer.renderer.domElement.addEventListener('touchmove', onTouchMove, false);
+			$scope.lpcRenderer.renderer.domElement.addEventListener('touchcancel', onTouchEnd, false);
+			$scope.lpcRenderer.renderer.domElement.addEventListener('touchend', onTouchEnd, false);
+		} else {
+			$scope.lpcRenderer.renderer.domElement.addEventListener('mousedown', onTouchStart, false);
+			window.addEventListener('mousemove', onTouchMove, false);
+			window.addEventListener('mouseup', onTouchEnd, false);
+		}
 
 		$scope.pause = false;
 		$scope.pointerDown = false;
 
+		$scope.updateCanvasSize();
 		$scope.active = true;
 		setInitialTarget();
 		$scope.animate();
@@ -335,15 +312,17 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 	$scope.$on('beforeLeave', function() {
 		$scope.active = false;
-		$scope.lpcRenderer.renderer.domElement.removeEventListener('mousedown', onTouchStart);
-		window.removeEventListener('mousemove', onTouchMove);
-		window.removeEventListener('mouseup', onTouchEnd);
 
-		// Touch events
-		$scope.lpcRenderer.renderer.domElement.removeEventListener('touchstart', onTouchStart);
-		$scope.lpcRenderer.renderer.domElement.removeEventListener('touchmove', onTouchMove);
-		$scope.lpcRenderer.renderer.domElement.removeEventListener('touchcancel', onTouchEnd);
-		$scope.lpcRenderer.renderer.domElement.removeEventListener('touchend', onTouchEnd);
+		if ('ontouchstart' in window) {
+			$scope.lpcRenderer.renderer.domElement.removeEventListener('touchstart', onTouchStart);
+			$scope.lpcRenderer.renderer.domElement.removeEventListener('touchmove', onTouchMove);
+			$scope.lpcRenderer.renderer.domElement.removeEventListener('touchcancel', onTouchEnd);
+			$scope.lpcRenderer.renderer.domElement.removeEventListener('touchend', onTouchEnd);
+		} else {
+			$scope.lpcRenderer.renderer.domElement.removeEventListener('mousedown', onTouchStart);
+			window.removeEventListener('mousemove', onTouchMove);
+			window.removeEventListener('mouseup', onTouchEnd);
+		}
 	});
 
 	$scope.$on("resetRating", function() {
@@ -352,7 +331,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 	$scope.$watch('targetF3', function()
 	{
-		console.log('target changed to: ', $scope.targetF3);
+		//console.log('target changed to: ', $scope.targetF3);
 		$scope.updateTarget();
 	});
 });

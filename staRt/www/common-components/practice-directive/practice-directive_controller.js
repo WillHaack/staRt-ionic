@@ -60,7 +60,7 @@ function getCredentials($http, cb) {
 	})
 }
 
-function uploadFile(absolutePath, destURL, mimeType, sessionID, progressCb, completeCb, $http)
+function uploadFile(absolutePath, destURL, mimeType, sessionID, progressCb, completeCb, $http, $cordovaDialogs)
 {
 	var win = function (r) {
 		console.log("Code = " + r.responseCode);
@@ -71,9 +71,21 @@ function uploadFile(absolutePath, destURL, mimeType, sessionID, progressCb, comp
 	}
 
 	var fail = function (error) {
-		alert("An error has occurred: Code = " + error.code);
-		console.log("upload error source " + error.source);
-		console.log("upload error target " + error.target);
+		if (error.code === 3) {
+			$cordovaDialogs.alert(
+				"Server Upload Failed. Please check your internet connection and try again.",
+				"Upload Error",
+				"Okay"
+			);
+		} else {
+			$cordovaDialogs.alert(
+				"An error has occurred: Code = " + error.code,
+				"Unexpected Error",
+				"Okay"
+			);
+			console.log("upload error source " + error.source);
+			console.log("upload error target " + error.target);
+		}
 	}
 
 	resolveLocalFileSystemURL("file://" + absolutePath, function(fileEntry) {
@@ -154,11 +166,11 @@ function saveJSON(jsonObject, absolutePath, successCb)
 var practiceDirective = angular.module( 'practiceDirective' );
 
 practiceDirective.controller( 'PracticeDirectiveController',
-	function($scope, $timeout, $localForage, ProfileService, StartUIState, $rootScope, $state, $http)
+	function($scope, $timeout, $localForage, ProfileService, StartUIState, $rootScope, $state, $http, $cordovaDialogs)
 	{
 		console.log('Practice Controller here!');
 
-		$scope.$on("enter", function() {
+		$scope.$on("afterEnter", function() {
 			$scope.active = true;
 		});
 
@@ -215,7 +227,11 @@ practiceDirective.controller( 'PracticeDirectiveController',
 				session.uploadsComplete[idx] = true;
 				if (session.uploadsComplete.lastIndexOf(false) === -1) {
 					$scope.isUploading = false;
-					navigator.notification.alert(null, null, "Upload Complete");
+					$cordovaDialogs.alert(
+						"Session uploaded successfully",
+						"Upload Complete",
+						"Okay"
+					);
 				}
 			}
 		}
@@ -233,8 +249,9 @@ practiceDirective.controller( 'PracticeDirectiveController',
 					session.id,
 					uploadCallbackForSession(session, i),
 					completeCallbackForSession(session, i),
-					$http
-					);
+					$http,
+					$cordovaDialogs
+				);
 			}
 			$scope.isUploading = true;
 		}
