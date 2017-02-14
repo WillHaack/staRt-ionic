@@ -7,10 +7,6 @@
 	tutorial.controller('TutorialController', 
 		function($scope, $timeout, $localForage, StartUIState, $rootScope, $state, $http, $stateParams, firstPanelData) 
 		{
-
-			// Activate first tab on "Tutorial" click
-			$state.go('root.tutorial.p01s1');
-
 				// Fetch first panel data and make sure it's ready for the view
 				$scope.p01data = firstPanelData.data;
 				for (var i = 0; i < $scope.p01data.length; i++)
@@ -70,6 +66,10 @@
 				p04: false,
 				p05: false
 			}
+
+			$scope.$on("$ionicView.afterEnter", function() {
+				$state.go('root.tutorial.p01s1');
+			});
 
 			$scope.setActiveCoin = function(coin) {
 				$scope.activeCoin.p01 = false;
