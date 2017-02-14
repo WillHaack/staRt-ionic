@@ -18,6 +18,18 @@
   font-weight: bold;
   font-style: normal; }
 
+.txtBold, .txtBold-blue, .txtBold-blueDark, .txtBold-blueLight {
+  font-weight: 600; }
+
+.txtBold-blue {
+  color: #53c8e9; }
+
+.txtBold-blueDark {
+  color: #018B9D; }
+
+.txtBold-blueLight {
+  color: #c5f3ff; }
+
 button {
   font-weight: bold; }
 
@@ -366,7 +378,8 @@ input[type=range]::-webkit-slider-thumb {
   outline: none;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  font-family: 'Quicksand', 'Helvetica Neue', sans-serif !important; }
+  font-family: 'Quicksand', 'Helvetica Neue', sans-serif !important;
+  -webkit-user-select: none; }
 
 .animated {
   -webkit-animation-duration: 1s;
@@ -459,6 +472,17 @@ input[type=range]::-webkit-slider-thumb {
   width: 100vw;
   margin-top: 13.87143vh; }
 
+.state-contentBox--wide {
+  margin-left: 0;
+  padding: 0;
+  width: 100vw; }
+
+.pane {
+  flex-flow: column; }
+
+canvas {
+  background-color: #ffffff; }
+
 #nav-container {
   display: -webkit-flex;
   -webkit-flex-direction: column;
@@ -528,7 +552,8 @@ input[type=range]::-webkit-slider-thumb {
   width: 100vw; }
 
 .pane {
-  flex-flow: column; }
+  flex-flow: column;
+  background-color: transparent; }
 
 canvas {
   background-color: #ffffff; }
@@ -550,53 +575,284 @@ canvas {
   width: 100%; }
 
 .sceneBox {
-  border: 1px solid yellow;
   position: absolute;
+  top: 0;
   margin-left: 170px;
   width: 80%;
   height: 475px;
   z-index: 10; }
 
-.sandbarBox {
-  position: relative;
-  height: 150px;
-  top: 435px;
+.pane {
+  background-color: transparent; }
+
+#pageView {
+  width: 100%;
+  height: 475px;
   display: flex;
   flex-direction: column;
-  z-index: 1; }
+  justify-content: flex-start;
+  align-items: stretch;
+  background-color: transparent; }
 
-.sandbar-img {
+.pageView {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  font-size: 1.4em; }
+
+.tut-bgImg {
+  height: 90%;
+  width: 100%;
   position: absolute;
-  height: 150px;
+  top: 0px;
+  left: 0px;
+  z-index: -1; }
+
+.tut-bgImg--dim {
+  opacity: 0.1; }
+
+.tutPg-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+  width: 100%;
+  height: auto;
+  padding-left: 15px;
+  padding-bottom: 1em; }
+
+.tutNoWave-content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100%; }
+  .tutNoWave-content .noWaveBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    width: 60%;
+    padding: 0;
+    margin: 0; }
+  .tutNoWave-content .noWaveRow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
+    padding: 0;
+    padding-left: 20px;
+    margin-bottom: 10px; }
+    .tutNoWave-content .noWaveRow .noWave3 {
+      border: 1px solid green;
+      width: 50%; }
+  .tutNoWave-content .charImg {
+    position: absolute; }
+
+.tutWave-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100%;
+  text-align: left; }
+  .tutWave-content .leftBox {
+    display: flex;
+    flex-direction: column;
+    width: 65%; }
+    .tutWave-content .leftBox .leftRow {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      width: 500px;
+      margin-bottom: 15px; }
+    .tutWave-content .leftBox .waveFrame {
+      position: relative;
+      top: 0;
+      left: 0;
+      height: 170px;
+      width: 500px;
+      background-color: #F0F9FC;
+      border: 10px solid #F0F9FC;
+      border-radius: 10px;
+      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+      z-index: 1; }
+    .tutWave-content .leftBox .lpcBox {
+      height: 150px;
+      width: 480px;
+      margin: auto;
+      border-radius: 10px;
+      background-color: #c5f3ff;
+      z-index: 5; }
+    .tutWave-content .leftBox .soundImgBox {
+      position: relative;
+      margin: 0;
+      padding: 0;
+      height: 150px;
+      background-size: 100% auto;
+      width: 480px;
+      border-radius: 10px; }
+    .tutWave-content .leftBox .waveFrame-label {
+      position: relative;
+      margin: 10px;
+      top: -155px;
+      height: auto;
+      width: 225px;
+      padding: 7px 15px;
+      margin: 0 auto;
+      background-color: #F0F9FC;
+      border-radius: 10px;
+      text-align: center;
+      z-index: 10; }
+      .tutWave-content .leftBox .waveFrame-label .waveFrame-label--txt {
+        font-size: 0.65em;
+        line-height: 1em; }
+      .tutWave-content .leftBox .waveFrame-label .waveFrame-label--title {
+        font-size: 0.65em;
+        font-weight: bold; }
+    .tutWave-content .leftBox .leftRow-item {
+      width: 100%;
+      padding: 0 15px; }
+  .tutWave-content .rightBox {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 33%;
+    padding-top: 10px; }
+    .tutWave-content .rightBox .rightRow1 {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 100%; }
+    .tutWave-content .rightBox .rightRow-spacer {
+      height: 50px;
+      width: 100%;
+      color: #FFECCB; }
+    .tutWave-content .rightBox .starBox {
+      position: relative;
+      height: 265px;
+      width: 265px; }
+    .tutWave-content .rightBox .relImg {
+      position: relative; }
+    .tutWave-content .rightBox .absImgBox {
+      position: absolute; }
+    .tutWave-content .rightBox .absImg {
+      position: absolute; }
+
+.inputBox {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  width: 65%;
+  height: auto;
+  top: 48.55vh;
+  margin-bottom: 6.93571vh; }
+
+button.tutBtn, a.tutBtn {
+  min-height: 6.93571vh;
+  min-width: 150px;
+  border-radius: 6.93571vh;
+  padding: 15px 20px;
+  border: none;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+  color: white;
+  font-size: 1em;
+  background-color: #53c8e9;
+  z-index: 99; }
+
+.sandbarBox {
+  position: relative;
+  height: 27.74286vh;
   width: 100vw;
-  left: 0;
-  opacity: 1;
-  z-index: 1; }
+  top: 55.48571vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  background-image: url("../img/tutorial/sand.svg");
+  background-size: auto 100%; }
 
 .sandbar-coinRow {
-  position: absolute;
+  position: relative;
   display: inline-flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   flex-wrap: nowrap;
-  top: 44px;
-  height: 13.87143vh;
+  height: 100%;
   margin-left: 16.66vw;
   width: 76.68vw;
   z-index: 25; }
 
 .sandbar-coinBox {
   align-self: flex-start;
-  z-index: 25; }
+  display: flex;
+  flex-direction: column;
+  padding: 0px 10px;
+  height: 100%;
+  z-index: 25;
+  border: 1px solid white; }
 
 .sandbar-coinImgBox {
-  height: 68px;
-  width: 100px;
-  border: 1px solid white; }
+  height: 60px;
+  width: auto;
+  border: 1px solid aqua; }
 
 .sandbar-coinTxt {
   margin-top: 5px; }
+
+.activeCoin {
+  color: red;
+  font-weight: bold; }
+
+/* typography
+		.txtBold 
+		.txtBold-blue
+		.txtBold-blueDark
+		.txtBold-blueLight
+	*/
+.numbBub, .numbBub--blueDark, .numbBub--yellowMain, .numbBub--white {
+  color: white;
+  font-weight: 600;
+  background-color: #018B9D;
+  padding: 5px 12px;
+  border-radius: 20px; }
+
+.numbBub--blueDark {
+  background-color: #018B9D; }
+
+.numbBub--yellowMain {
+  background-color: #FFC95F; }
+
+.numbBub--white {
+  color: #4d4d4d;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+  background-color: white; }
+
+.txt-boldBlueDark--try {
+  font-weight: 600;
+  color: #018B9D;
+  font-size: 1.5em; }
+
+.txt-squish {
+  line-height: 1.5em; }
+
+.p05s5img {
+  padding: 15px; }
 
 .words-word {
   font-size: 3rem;
@@ -633,11 +889,20 @@ lpc-directive {
   flex-flow: column; }
 
 #lpc-canvas {
-  /* This is the THREEjs element*/
-  width: 100%;
-  height: 100%;
   margin: auto;
-  z-index: 10; }
+  border: 1px solid red; }
+
+#lpc-canvas-parentSize {
+  border: 2px solid yellow;
+  z-index: 10;
+  width: 100%;
+  height: 100%; }
+
+.lpcCanvasSize-big {
+  border: 1px solid lime; }
+
+.lpcCanvasSize-tutorial {
+  border: 1px solid red; }
 
 .lpc-container {
   /* This is the light blue box*/

@@ -8,6 +8,7 @@
 		'startStateService',
 		'profileService',
 		'lpcDirective',
+		'ngCordova',
 		'auto',
 		'freePlay',
 		'profiles',
@@ -30,7 +31,7 @@
 					controller: 'RootController as root'
 				}
 			}
-			// abstract: true
+			//abstract: true
 		});
 	} );
 

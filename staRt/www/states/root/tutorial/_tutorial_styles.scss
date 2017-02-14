@@ -8,71 +8,315 @@
 	//border: 1px solid yellow;
 }
 
-.sceneBox {
-	border: 1px solid yellow;
+.sceneBox { // #hc is this n/a now
 	position: absolute;
+	top: 0;
 	margin-left: 170px;
 	width: 80%;
 	height: 475px;
 	z-index: 10;
+	//border: 1px solid yellow;
 }
 
+.pane { // this is class for ionic <ion-nav-view> eles 
+	background-color: transparent;
+}
 
-// SANDBAR -------------------------------------
-
-.sandbarBox {
-	position: relative;
-	height: 150px;
-	top: 435px;
+#pageView {  // this is the ui-view in the parent ele
+	width: 100%;
+	height: 475px;
 	display: flex;
 	flex-direction: column;
-	z-index: 1;
-	//border: 1px solid lime;
+	justify-content: flex-start;
+	align-items: stretch;
+	background-color: transparent;
+	// border: 1px solid pink;
 }
 
-.sandbar-img {
-	position: absolute;
-	height: 150px;
-	width: $appW;
-	left: 0;
-	opacity: 1;
-	z-index: 1;
-	//border: 1px solid pink;
+.pageView {  // this is the parent ele in the view template
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: stretch;
+	font-size: 1.4em;
+	//border: 1px solid lightBlue;
 }
 
-.sandbar-coinRow {
+	.tut-bgImg { // for dev only
+		height: 90%;
+		width: 100%;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		z-index: -1;
+		//opacity: 0.1;
+		//border: 1px solid red;
+	}
+
+	.tut-bgImg--dim {  // for dev only
+		opacity: 0.1;
+	}
+
+	.tutPg-header {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: flex-start;
+		text-align: left;
+		width: 100%;
+		height: auto;
+		padding-left: 15px;
+		padding-bottom: 1em;
+		//border: 1px solid lightBlue;
+	}
+
+	// IMPORTS INDIVIDUAL TUTORIAL TEMPLATE LAYOUTS (flexbox setups)
+	@import 'partialStyles/noWave';
+
+
+	// STYLES THE WAVE CONTENT COMMON TO ALL LAYOUTS
+	// NOTES: 
+		// all styles for the live lpc wave are in _lpc-directive_styles.scss
+		// all directive styles overwrite individual state styles, see app_module.scss
+
+	.tutWave-content {
+		// should be identical to .tutNoWave-content w/ the exception of flex-direction
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-items: flex-start;
+		justify-content: space-between;
+		height: 100%;
+		text-align: left;
+		//border: 1px solid orange;
+
+		.leftBox {
+			display: flex;
+			flex-direction: column;
+			//max-height: $rowH * 3;
+			width: 65%;
+			//border: 1px solid lightBlue;
+			
+			.leftRow {
+				display: flex;
+				flex-direction: column;
+				flex-wrap: nowrap;
+				align-items: flex-start;
+				width: 500px;
+				margin-bottom: 15px;
+				//border: 1px solid lightBlue;
+			}
+
+			.waveFrame { // this is the light blue frame
+				position: relative;
+				top: 0;
+				left: 0;
+				height: 170px;
+				width: 500px;
+				//padding: 10px;
+				background-color: $blue-white;
+				border: 10px solid $blue-white;
+				border-radius: 10px;
+				box-shadow: $itemShadow;
+				z-index: 1;
+				//border: 1px solid lime;
+			}
+
+
+			.lpcBox { 
+				// this container fills in the light-blue bg for the wave imgs
+				// it is BEHIND the live lpc target container, which is #lpc-canvas in _lpc-directive_styles.scss
+				height: 150px;
+				width: 480px;
+				margin: auto;
+				border-radius: 10px;
+				background-color: $blue-light;
+				z-index: 5;
+				//border: 1px solid lime;
+			}
+
+			.soundImgBox {
+				position: relative;
+				margin:0;
+				padding: 0;
+				height: 150px;
+				background-size: 100% auto;
+				width: 480px;
+				border-radius: 10px;
+				//border: 1px solid lime;
+			}
+
+			.waveFrame-label { // this is the light blue frame
+				position: relative;
+				margin: 10px;
+				top: -155px;
+				height: auto;
+				width: 225px;
+				padding: 7px 15px;
+				margin: 0 auto;
+				background-color: $blue-white;
+				border-radius: 10px;
+				text-align: center;
+				z-index: 10;
+				//border: 1px solid lime;
+
+				.waveFrame-label--txt {
+					font-size: 0.65em;
+					line-height: 1em;
+				}
+				.waveFrame-label--title {
+					font-size: 0.65em;
+					font-weight: bold;
+				}
+			} // end .waveFrame-label
+
+			.leftRow-item {
+				width: 100%;
+				padding: 0 15px;
+				//border: 1px solid lime;
+			}
+		}
+
+
+		.rightBox {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			height: 100%;
+			width: 33%;
+			padding-top: 10px;
+			//border: 1px solid orange;
+			
+			.rightRow1 {
+				position: relative;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				width: 100%;
+				//border: 1px solid lightBlue;
+			}
+
+			.rightRow-item {}
+
+			.rightRow-spacer {
+				height: 50px;
+				width: 100%;
+				color: $yellow-light;
+				//border: 1px solid red;
+			}
+
+			.starBox {
+				position: relative;
+				height: 265px;
+				width: 265px;
+				//border: 1px solid lightBlue;
+			}
+
+
+			.relImg {
+				position: relative;
+				// max-height: 265px;
+				// max-width: 265px;
+				//border: 1px solid lightBlue;
+			}
+
+			.absImgBox {
+				position: absolute;
+				// top: 0px;
+				// left:300px;
+				// width: 800px;
+				// height: 500px;
+				// border: 2px solid red;
+				// z-index: 99;
+			}
+			.absImg {
+				position: absolute;
+			//border: 1px solid pink;
+			}
+		}
+
+	} // end .tutPgView-content
+
+.inputBox {
 	position: absolute;
-	display: inline-flex;
+	display: flex;
 	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
 	flex-wrap: nowrap;
-
-	top: 44px;  // vert offset, or hgt of .sandbarBox - $rowH
-	height: $rowH;
-	margin-left: $navW;
-	width: $appW - $navW - $col-pad;
-	z-index: 25;
-	//border: 1px solid orange;
+	justify-content: center;
+	width: 65%;
+	height: auto;
+	top: $rowH * 3.5;
+	margin-bottom: $rowHalf;
+	//border: 1px solid red;
 }
 
-.sandbar-coinBox {
-	align-self: flex-start;
-	z-index: 25;
-	//border: 1px solid lime;
+button.tutBtn, a.tutBtn {
+	min-height: $rowHalf;
+	min-width: 150px;
+	border-radius: $rowHalf;
+	padding: 15px 20px;
+	border: none;
+	box-shadow: $itemShadow;
+	color: white;
+	font-size: 1em;
+	background-color: $blue-main;
+	z-index: 99;
 }
 
-.sandbar-coinImgBox {
-	height: 68px; //64%;
-	width: 100px;
-	border: 1px solid white;
-}
+// --------------------------------------------
+// IMPORTS THE SANDBAR STYLES
+	@import 'partialStyles/sandbar';
 
-.sandbar-coinImg {
-	
-}
 
-.sandbar-coinTxt {
-	margin-top: 5px;
-}
+// --------------------------------------------
+// TYPOGRAPHY & IMG
+	/* typography
+		.txtBold 
+		.txtBold-blue
+		.txtBold-blueDark
+		.txtBold-blueLight
+	*/
+
+	.numbBub {
+		color: white;
+		font-weight: $bold;
+		background-color: $blue-dark;
+		padding: 5px 12px;
+		border-radius: 20px;
+	}
+
+	.numbBub--blueDark {
+		@extend .numbBub;
+		background-color: $blue-dark;
+	}
+
+	.numbBub--yellowMain {
+		@extend .numbBub;
+		background-color: $yellow-main;
+	}
+
+	.numbBub--white {
+		@extend .numbBub;
+		color: $grey-txtMain;
+		box-shadow: $itemShadow;
+		background-color: white;
+	}
+
+	.txt-boldBlueDark--try {
+		font-weight: $bold;
+		color: $blue-dark;
+		font-size: 1.5em;
+	}
+
+	.txt-squish {
+		line-height: 1.5em;
+	}
+
+	.p05s5img {
+		padding: 15px;
+		//border: 1px solid red;
+	}
 

@@ -1,0 +1,38 @@
+<div class="pageView">
+
+	<img ng-if="currStep.bgImg.status != 'done'" ng-src="{{currStep.bgImg.url}}" class="tut-bgImg" ng-class="{'tut-bgImg--dim': currStep.bgImg.status === 'dim'}">
+
+	<div class="tutPg-header" ng-if="currStep.header.txt">
+	 	<span ng-bind-html="currStep.header.txt"></span>
+	</div> 
+	
+	<div class="tutNoWave-content">
+		
+		<div class="noWaveBox">
+
+			<div class="noWaveRow" ng-if="currStep.LRow1.items" ng-repeat="item in currStep.LRow1.items">
+				<span ng-bind-html="item">{{item}}</span>
+			</div>
+
+			<div class="inputBox">
+				<button
+					class="tutBtn"
+					ui-sref="{{'root.tutorial.' + currStep.input.next}}">
+					{{currStep.input.txt}}
+				</button>
+			</div>
+		</div> <!-- end noWaveBox -->
+		
+		<img 
+			ng-src="{{currStep.pic.img}}" 
+			class="charImg" 
+			style="height:{{currStep.pic.h}}; 
+				width:{{currStep.pic.w}}; 
+				top:{{currStep.pic.top}}; 
+				left:{{currStep.pic.left}};">
+		</div>
+	</div> <!-- end tutNoWave-content ng-click=""-->
+</div> <!-- end .pageView -->
+
+
+

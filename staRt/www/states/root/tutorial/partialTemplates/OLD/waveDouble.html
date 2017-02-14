@@ -1,0 +1,118 @@
+<div class="pageView">
+
+	<img ng-if="currStep.bgImg.status != 'done'" ng-src="{{currStep.bgImg.url}}" class="tut-bgImg" ng-class="{'tut-bgImg--dim': currStep.bgImg.status === 'dim'}">
+
+	 <div class="tutPg-header" ng-if="currStep.header.txt" ng-repeat="txt in currStep.header.txt">
+	 	<span ng-bind-html="txt">{{txt}}</span>
+	</div> 
+	
+	<div class="tutWave-content">
+		
+		<!-- ==================
+			 LEFT BOX -->
+		<div class="leftBox">
+
+			<!-- - - - - - - - - - - - - 
+			 WAVE 1 -->
+			<div class="leftRow wave1">
+				<div class="waveFrame">
+
+					<div class="lpcBox" >
+						<div class="soundImgBox" ng-if="currStep.LRow1.lpcImg" style="background-image: url('{{currStep.LRow1.lpcImg}}')">
+						</div>
+					</div> <!-- end lpcBox -->
+
+					<div class="waveFrame-label">	
+						<div class="waveFrame-label--title" ng-if="currStep.LRow1.labelTitle">
+							<span ng-bind-html="currStep.LRow1.labelTitle"></span>
+						</div>
+
+						<div class="waveFrame-label--txt" ng-if="currStep.LRow1.labelTxt">
+							<span ng-bind-html="currStep.LRow1.labelTxt"></span>
+						</div>
+					</div> <!-- end waveframe-label -->
+				</div> <!-- end waveframe -->
+			</div> <!-- end wave 1 -->
+
+		
+			<!-- - - - - - - - - - - - - 
+			 WAVE 2 -->
+			 <div class="leftRow wave2">
+				<div class="waveFrame">
+
+					<div class="lpcBox" >
+						<div class="soundImgBox" ng-if="currStep.LRow2.lpcImg" style="background-image: url('{{currStep.LRow2.lpcImg}}')">
+						</div>
+					
+						<div id="lpc-canvas" ng-if="currStep.LRow2.lpc">
+							<lpc-directive 
+								slider="false" 
+								sand="false"
+								waveHidden="false"  
+								probe="false" 
+								rate="false" 
+								hideBtn="false" 
+								reset="false"
+								tutorial="true"
+								style="width:480px; height:150px">
+							</lpc-directive>
+						</div>
+					</div> <!-- end lpcBox | -->
+
+					<div class="waveFrame-label">	
+						<div class="waveFrame-label--title" ng-if="currStep.LRow1.labelTitle">
+							<span ng-bind-html="currStep.LRow2.labelTitle"></span>
+						</div>
+
+						<div class="waveFrame-label--txt" ng-if="currStep.LRow1.labelTxt">
+							<span ng-bind-html="currStep.LRow2.labelTxt"></span>
+						</div>
+					</div> <!-- end waveframe-label -->
+				</div> <!-- end waveframe -->
+			</div> <!-- end wave 2 -->
+
+			<!-- - - - - - - - - - - - - 
+				INPUT BOX -->
+
+			<div class="inputBox">
+				<button
+					class="tutBtn"
+					ui-sref="{{'root.tutorial.' + currStep.input.next}}">
+					{{currStep.input.txt}}
+				</button>
+			</div>
+
+		</div> <!-- end leftBox -->
+
+
+		<!-- ==================
+			 RIGHT BOX -->
+
+		<div 
+		class="rightBox"
+		ng-class="{'txt-squish': currStep.RRow1.txtSquish}">
+
+			<div 
+			class="rightRow1" 
+			ng-if="currStep.RRow1.txt" 
+			ng-repeat="txt in currStep.RRow1.txt">
+
+				<div class="rightRow1-items" ng-bind-html="txt">{{txt}}</div>
+			
+			</div>
+
+
+			<div class="starBox" ng-if="currStep.star">
+				<img 
+				ng-src="{{currStep.star.img}}" 
+				class="starImg" 
+				style="height:{{currStep.star.hgt}}; 
+					width:{{currStep.star.w}}; 
+					top:{{currStep.star.top}}; 
+					left:{{currStep.star.left}};">
+			<div>
+
+		</div> <!-- end rightBox -->
+
+	</div> <!-- end tutPgView-content -->
+</div> <!-- end .pageView -->
