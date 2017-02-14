@@ -6,7 +6,7 @@
 
 	root.controller('RootController', function($scope, $timeout, $localForage, StartUIState, ProfileService, $rootScope, $state)
 	{
-		console.log('RootController here!');
+		//console.log('RootController here!');
 
 		// ProfileService.getAllProfiles().then(function (res) {
 		//     if (!res || res.length == 0) {
@@ -22,7 +22,7 @@
 
 		$scope.state = $state;
 
-		console.log($scope.state);
+		//console.log($scope.state);
 
 		$scope.selectIndex = function(index)
 		{

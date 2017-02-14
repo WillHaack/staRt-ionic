@@ -41,7 +41,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 	// --------- #HC
 	var canvasElement = $element[0].querySelector('#lpc-canvas');
 	var parentElement = $element[0].querySelector('#lpc-canvas-parentSize');
-	console.log('canvas ele: ', canvasElement);
+	//console.log('canvas ele: ', canvasElement);
 
 	$scope.lpcRenderer = new LPCRenderer(parentElement, canvasElement, 20);
 
@@ -364,7 +364,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 	$scope.$watch('targetF3', function()
 	{
-		console.log('target changed to: ', $scope.targetF3);
+		//console.log('target changed to: ', $scope.targetF3);
 		$scope.updateTarget();
 	});
 

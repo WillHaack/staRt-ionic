@@ -4,38 +4,42 @@
 
 	<!-- ==================================
 	SAND BAR -->
-		<div class="sandbarBox">
+	
+		<div class="sandbarBox">	
+
 			<list class="sandbar-coinRow">
 			<item  ng-repeat="coin in coinData">
 				<!-- ui-router adds class="activeCoin" only if the STATE matches the ui-sref (coin.sref) -->
-					<a class="sandbar-coinBox"
+				<!-- JUNK
+					 ng-click="setActiveCoin({{coin.coinRef}})"
+					 ng-class="{ 'activeCoin': state.current.url.includes($scope.activeCoin) }"
+
+					-->
+					<div class="sandbar-coinBox"
 					ui-sref="{{'root.tutorial.' + coin.sref }}"
-					ui-sref-active="activeCoin">	
+					ui-sref-active="activeCoin"
+					>	
 
 						<div class="sandbar-coinImgBox">
-							<!--NOTE: this isn't going to work if the url routing isn't working 
-				        	<!- defines img inactive state ->
-				          	<img
-					            ng-if="state.current.url != tab.sref" 
-					            ng-src="{{ 'img/nav/' + tab.sref + '.svg' }}"
-					            class="nav-svg"
-					          >
-					          <!- defines img active state ->
-					          <img 
-					            ng-if="state.current.url === tab.sref" 
-					            ng-src="{{ 'img/nav/' + tab.sref + '-b.svg' }}"
-					            class="nav-svg animated {{ tab.ani }}"
-					          >
-				      		-->
+					          <img id="{{coin.id}}"	            
+					            ng-src="{{coin.img}}"
+					            ng-show="{{coin.id}}"
+								style="width:{{coin.width}}; 
+									height:{{coin.width}}; 
+									top:{{coin.top}};
+									position: relative;">
 						</div>
 
-						<div class="sandbar-coinTxt">
+						<div id="{{coin.coinRef}}"
+						class="sandbar-coinTxt"
+						ng-class="{activeCoin: activeCoin.{{coin.coinRef}} }">
 							{{coin.txt}}
 						</div>
-					</a>
+					</div>
 				</item>
 
-			</list> <!-- end .coinRow -->
+			</list> <!-- end .coinRow   {{coin.coinRef ===   -->
+
 		</div> <!-- end sandbarBox -->
 
 

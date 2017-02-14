@@ -45,9 +45,14 @@
 							style="background-image: url('{{currStep.LRow1.wave.lpcImg}}')">
 							</div>
 							
+<<<<<<< HEAD
+							<div id="lpc-canvas" 
+=======
 							<!-- style="width:480px; height:150px;" --> 
 							<div class="lpc-canvas-area" 
+>>>>>>> master
 							ng-if="currStep.LRow1.wave.lpcLive">
+							<!-- 
 								<lpc-directive 
 									slider="false" 
 									sand="false"
@@ -58,6 +63,7 @@
 									reset="false"
 									tutorial="true">
 								</lpc-directive>
+							-->
 							</div> <!-- end #lpcCanvas -->
 						</div> <!-- end lpcBox -->
 
@@ -113,9 +119,14 @@
 							style="background-image: url('{{currStep.LRow2.wave.lpcImg}}')">
 							</div>
 							
+<<<<<<< HEAD
+							<div id="lpc-canvas" 
+=======
 							<div class="lpc-canvas-area" 
 							style="width:480px; height:150px;" 
+>>>>>>> master
 							ng-if="currStep.LRow2.wave.lpcLive">
+							<!-- 
 								<lpc-directive 
 									slider="false" 
 									sand="false"
@@ -124,8 +135,8 @@
 									rate="false" 
 									hideBtn="false" 
 									reset="false"
-									tutorial="true"
-									style="width:480px; height:150px">
+									tutorial="true">
+								-->
 								</lpc-directive>
 							</div> <!-- end #lpcCanvas -->
 						</div> <!-- end lpcBox -->
@@ -167,7 +178,7 @@
 					{{currStep.input.txt}}
 				</button>
 			</div>
-		</div> <!-- end leftBox progressUpdate({{currStep.input.stepDone}});  -->
+		</div> <!-- end leftBox -->
 
 
 		<!-- ==================

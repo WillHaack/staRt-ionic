@@ -10,7 +10,7 @@
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "EEA42516-B1CD-4FB2-B807-FBB1E3618DB2",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "979A9CF779966B8017CB668B4FDF3BEDEFBDCDDB" : "staRt-ionic\/",
-    "F1BC4876811AFC3F9EBAC1327B95940A459E2E4A" : "staRt-ionic\/audio-plugin\/src\/ios\/TheAmazingAudioEngine\/"
+    "F1BC4876811AFC3F9EBAC1327B95940A459E2E4A" : "staRt-ionic\/audio-plugin\/src\/ios\/AudioPlugin\/TheAmazingAudioEngine\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "AudioPlugin",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,

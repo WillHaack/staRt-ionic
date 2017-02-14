@@ -207,6 +207,7 @@
 			height: 100%;
 			width: 33%;
 			padding-top: 10px;
+			margin-bottom: $rowH;
 			//border: 1px solid orange;
 			
 			.rightRow1 {
@@ -215,10 +216,13 @@
 				flex-direction: column;
 				justify-content: space-between;
 				width: 100%;
+				height: auto;
 				//border: 1px solid lightBlue;
 			}
 
-			.rightRow-item {}
+			.rightRow-item {
+				//border: 1px solid pink;
+			}
 
 			.rightRow-spacer {
 				height: 50px;
@@ -229,7 +233,7 @@
 
 			.starBox {
 				position: relative;
-				height: 265px;
+				max-height: 265px;
 				width: 265px;
 				//border: 1px solid lightBlue;
 			}
@@ -237,24 +241,21 @@
 
 			.relImg {
 				position: relative;
-				// max-height: 265px;
-				// max-width: 265px;
-				//border: 1px solid lightBlue;
 			}
 
 			.absImgBox {
 				position: absolute;
-				// top: 0px;
-				// left:300px;
-				// width: 800px;
-				// height: 500px;
-				// border: 2px solid red;
-				// z-index: 99;
+
 			}
 			.absImg {
 				position: absolute;
 			//border: 1px solid pink;
 			}
+		}
+
+		.rightBox--short {
+			@extend .rightBox;
+			height: $rowH * 4;
 		}
 
 	} // end .tutPgView-content
@@ -291,7 +292,7 @@ button.tutBtn, a.tutBtn {
 
 
 // --------------------------------------------
-// TYPOGRAPHY & IMG
+// TEXT ADJUSTMENTS
 	/* typography
 		.txtBold 
 		.txtBold-blue
@@ -320,7 +321,9 @@ button.tutBtn, a.tutBtn {
 	.numbBub--white {
 		@extend .numbBub;
 		color: $grey-txtMain;
-		box-shadow: $itemShadow;
+		border: 1px solid #d3d3d3;
+		padding: 5px 15px;
+		//box-shadow: $itemShadow;
 		background-color: white;
 	}
 
@@ -333,6 +336,27 @@ button.tutBtn, a.tutBtn {
 	.txt-squish {
 		line-height: 1.5em;
 	}
+
+// --------------------------------------------
+// INDIVIDUAL PAGE ADJUSTMENTS
+
+	.p02s1-lr2-p1 {
+		//border: 1px solid orange;
+	}
+	.p02s1-lr2-p2 {
+		position: absolute;
+		margin-left: 125px;
+		margin-top: 0.25em;
+		//border: 1px solid lime;
+
+	}
+	.p02s1-lr2-p3 {
+		position: absolute;
+		margin-left: 250px;
+		margin-top: 2.75em;
+		//border: 1px solid pink;
+	}
+
 
 	.p05s5img {
 		padding: 15px;

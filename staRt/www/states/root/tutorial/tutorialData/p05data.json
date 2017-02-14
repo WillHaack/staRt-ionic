@@ -205,6 +205,7 @@
 		
 		"input": {
 			"txt":"Next",
+			"stepDone": " 'step5' ",
 			"next": "p05s5"
 		}
 	},

@@ -3,18 +3,21 @@ lpc-directive {
 	-webkit-flex: 1;
 	margin: auto;
 	flex-flow: column;
-	width: 100%;
-	height: 100%;
 }
 
+<<<<<<< HEAD
+#lpc-canvas { /* This is the THREEjs element*/
+	width: 100%;
+	height: 100%;
+	margin: auto;
+	z-index: 10;
+}
+
+=======
 // This is the THREEjs element.
 // Its H & W should be determined by its parent ele.
 #lpc-canvas {
 	margin: auto;
-
-	width: 100%; //conflict
-	height: 100%; //conflict
-	z-index: 10; //conflict
 }
 
 #lpc-canvas-parentSize {
@@ -37,6 +40,7 @@ lpc-directive {
 
 
 
+>>>>>>> master
 .lpc-container {  /* This is the light blue box*/
 	position: relative;
 	width: 800px;

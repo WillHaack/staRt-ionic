@@ -731,34 +731,38 @@ canvas {
     .tutWave-content .leftBox .leftRow-item {
       width: 100%;
       padding: 0 15px; }
-  .tutWave-content .rightBox {
+  .tutWave-content .rightBox, .tutWave-content .rightBox--short {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
     width: 33%;
-    padding-top: 10px; }
-    .tutWave-content .rightBox .rightRow1 {
+    padding-top: 10px;
+    margin-bottom: 13.87143vh; }
+    .tutWave-content .rightBox .rightRow1, .tutWave-content .rightBox--short .rightRow1 {
       position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      width: 100%; }
-    .tutWave-content .rightBox .rightRow-spacer {
+      width: 100%;
+      height: auto; }
+    .tutWave-content .rightBox .rightRow-spacer, .tutWave-content .rightBox--short .rightRow-spacer {
       height: 50px;
       width: 100%;
       color: #FFECCB; }
-    .tutWave-content .rightBox .starBox {
+    .tutWave-content .rightBox .starBox, .tutWave-content .rightBox--short .starBox {
       position: relative;
-      height: 265px;
+      max-height: 265px;
       width: 265px; }
-    .tutWave-content .rightBox .relImg {
+    .tutWave-content .rightBox .relImg, .tutWave-content .rightBox--short .relImg {
       position: relative; }
-    .tutWave-content .rightBox .absImgBox {
+    .tutWave-content .rightBox .absImgBox, .tutWave-content .rightBox--short .absImgBox {
       position: absolute; }
-    .tutWave-content .rightBox .absImg {
+    .tutWave-content .rightBox .absImg, .tutWave-content .rightBox--short .absImg {
       position: absolute; }
+  .tutWave-content .rightBox--short {
+    height: 55.48571vh; }
 
 .inputBox {
   position: absolute;
@@ -810,21 +814,26 @@ button.tutBtn, a.tutBtn {
   align-self: flex-start;
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 0px 10px;
   height: 100%;
-  z-index: 25;
-  border: 1px solid white; }
+  width: 160px;
+  color: #4d4d4d;
+  border-top-color: #FFECCB;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  z-index: 25; }
 
-.sandbar-coinImgBox {
+div.sandbar-coinImgBox {
   height: 60px;
-  width: auto;
-  border: 1px solid aqua; }
+  align-items: center;
+  width: 100px; }
 
 .sandbar-coinTxt {
-  margin-top: 5px; }
+  margin-top: 0px; }
 
 .activeCoin {
-  color: red;
+  color: #018B9D;
   font-weight: bold; }
 
 /* typography
@@ -848,7 +857,8 @@ button.tutBtn, a.tutBtn {
 
 .numbBub--white {
   color: #4d4d4d;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+  border: 1px solid #d3d3d3;
+  padding: 5px 15px;
   background-color: white; }
 
 .txt-boldBlueDark--try {
@@ -858,6 +868,16 @@ button.tutBtn, a.tutBtn {
 
 .txt-squish {
   line-height: 1.5em; }
+
+.p02s1-lr2-p2 {
+  position: absolute;
+  margin-left: 125px;
+  margin-top: 0.25em; }
+
+.p02s1-lr2-p3 {
+  position: absolute;
+  margin-left: 250px;
+  margin-top: 2.75em; }
 
 .p05s5img {
   padding: 15px; }

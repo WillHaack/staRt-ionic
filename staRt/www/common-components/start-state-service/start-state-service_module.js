@@ -18,7 +18,7 @@ startStateService.factory('StartUIState', function()
       },
       {
         title: "Tutorial",
-        sref: "tutorial.p01s1",
+        sref: "tutorial",
         ani: "rotateIn"
       },
       {

@@ -1,35 +1,16 @@
 <!-- .lpc-container is the light blue containing box-->
-<div ng-class="{'lpc-container': !tutorial, 'lpc-container-tutorial': tutorial}">
+<div ng-class="{'lpc-container': !tutorial}">
 
-	<!-- HC ORIG VERSION (conflict) --
-	<!-- this holds the lpc renderer --
-	
-	<div
-		id="lpc-canvas-parentSize"
-		ng-class="{'slider-and-canvas': !tutorial}"
-		ng-class="{'full-width': !rate && !reset && !tutorial}"
-		ng-resize="updateCanvasSize($event)"
-		>
-		<!-- ng-class="{'lpcCanvasSize-tutorial': tutorial}" --
-		<!-- Renderer will be inserted here --
-		<canvas
-			id="lpc-canvas"
-			ng-hide="lpcHidden || probe || waveHidden || hideBtn" >
-		</canvas>
-	</div>
-	-->
-
-	<!-- I believe this is Sam's updated version -->
 	<!-- this holds the lpc renderer -->
-	<div
+	<div 
 		id="lpc-canvas-parentSize"
 		ng-class="{'slider-and-canvas': !tutorial}"
 		ng-class="{'full-width': !rate && !reset && !tutorial}"
 		>
 		<!-- ng-class="{'lpcCanvasSize-tutorial': tutorial}" -->
 		<!-- Renderer will be inserted here -->
-		<canvas
-			id="lpc-canvas"
+		<canvas 
+			id="lpc-canvas" 
 			ng-hide="lpcHidden || probe || waveHidden || hideBtn" >
 		</canvas>
 	</div>
@@ -78,6 +59,7 @@
 			ng-hide="lpcHidden || rate">
 			Hide Wave
 		</button>
+
 	</div>
 
 </div>
