@@ -13,7 +13,7 @@
 		
 		"bgImg": {
 			"status": "done",
-			"url":"img/tutorial/oldSlides/p03s1.png"
+			"url":"img/tutorial/imgTemplate/p03s1.png"
 		},
 
 		"header": {},
@@ -133,7 +133,7 @@
 		
 		"bgImg": {
 			"status": "done",
-			"url":"img/tutorial/oldSlides/p03s3.png"
+			"url":"img/tutorial/imgTemplate/p03s3.png"
 		},
 
 		"LRow1": {
