@@ -184,9 +184,9 @@
 				"lpcLive": true,
 				"needle": {
 					"img": "img/tutorial/waves/dots.png",
-					"h": "100px",
-					"w": "30px",
-					"top": "5px",
+					"h": "100%",
+					"w": "100%",
+					"top": "0px",
 					"left":"0px"
 				},
 				"labelTitle": "Your Speech Wave"

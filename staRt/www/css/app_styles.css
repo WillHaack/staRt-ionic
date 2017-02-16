@@ -695,7 +695,6 @@ canvas {
       background-color: #c5f3ff;
       z-index: 5; }
     .tutWave-content .leftBox .lpc-container-tutorial {
-      /* This is the light blue box*/
       position: relative;
       height: 150px;
       width: 480px; }
@@ -882,6 +881,15 @@ div.sandbar-coinImgBox {
 .p05s5img {
   padding: 15px; }
 
+div.needleBox {
+  position: relative;
+  display: block;
+  height: 130px;
+  width: 16px;
+  top: -128px;
+  left: 169px;
+  z-index: 9; }
+
 .words-word {
   font-size: 3rem;
   font-weight: 700;
@@ -919,18 +927,15 @@ lpc-directive {
   height: 100%; }
 
 #lpc-canvas {
-  margin: auto; }
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  z-index: 10; }
 
 #lpc-canvas-parentSize {
   z-index: 10;
   width: 100%;
   height: 100%; }
-
-.lpcCanvasSize-big {
-  border: 1px solid lime; }
-
-.lpcCanvasSize-tutorial {
-  border: 1px solid red; }
 
 .lpc-container {
   /* This is the light blue box*/

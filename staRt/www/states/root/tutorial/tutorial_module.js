@@ -122,7 +122,6 @@
 						controller: function($scope){
 							$scope.currStep = $scope.p02s1;
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 							$scope.setActivePage($scope.currStep.page);
 						}
 					}
@@ -136,8 +135,8 @@
 						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
 						controller: function($scope){
 							$scope.currStep = $scope.p02s2;
+							//$scope.recordLastScene();
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 						}
 					}
 				}
@@ -154,7 +153,6 @@
 						controller: function($scope){
 							$scope.currStep = $scope.p03s1;
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 							$scope.setActivePage($scope.currStep.page);
 						}
 					}
@@ -169,7 +167,6 @@
 						controller: function($scope){
 							$scope.currStep = $scope.p03s2;
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 						}
 					}
 				}
@@ -183,7 +180,6 @@
 						controller: function($scope){
 							$scope.currStep = $scope.p03s3;
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 						}
 					}
 				}
@@ -200,7 +196,6 @@
 						controller: function($scope){
 							$scope.currStep = $scope.p04s1;
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 							$scope.setActivePage($scope.currStep.page);
 						}
 					}
@@ -215,7 +210,6 @@
 						controller: function($scope){
 							$scope.currStep = $scope.p04s2;
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 						}
 					}
 				}
@@ -230,7 +224,6 @@
 						controller: function($scope){
 							$scope.currStep = $scope.p04s3;
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 						}
 					}
 				}

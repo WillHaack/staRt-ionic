@@ -53,12 +53,6 @@
 									tutorial="true">
 								</lpc-directive>
 							</div> <!-- end #lpcCanvas -->
-
-							<div 
-								class="needleBox"
-								ng-if="currStep.LRow2.wave.needle" 
-								style="background-image: url('{{currStep.LRow1.wave.needle.img}}')">
-							</div>
 						</div> <!-- end lpcBox -->
 
 						<div class="waveFrame-label">
@@ -121,6 +115,20 @@
 									tutorial="true">
 								</lpc-directive>
 							</div> <!-- end #lpcCanvas -->
+
+							<!-- ng-if="currStep.LRow2.wave.needle"  
+								style="background-image: url('{{currStep.LRow2.wave.needle.img}}')"
+
+								class="needleBox" 
+							-->
+							<div class="needleBox">
+								<img 
+									ng-src="{{currStep.LRow2.wave.needle.img}}" 
+									style="height:{{currStep.LRow2.wave.needle.h}}; 
+										width:{{currStep.LRow2.wave.needle.w}}; 
+										top:{{currStep.LRow2.wave.needle.top}}; 
+										left:{{currStep.LRow2.wave.needle.left}};">
+							</div>
 						</div> <!-- end lpcBox -->
 
 						<div class="waveFrame-label">

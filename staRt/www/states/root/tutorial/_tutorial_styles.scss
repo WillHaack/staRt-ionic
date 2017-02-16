@@ -359,9 +359,19 @@ button.tutBtn, a.tutBtn {
 		//border: 1px solid pink;
 	}
 
-
 	.p05s5img {
 		padding: 15px;
 		//border: 1px solid red;
 	}
 
+	//p05s4
+	div.needleBox {  
+		position: relative;
+		display: block;
+		height: 130px;
+		width: 16px;
+		top: -128px;
+		left: 169px;
+		//border: 1px solid red;
+		z-index: 9;
+	}
