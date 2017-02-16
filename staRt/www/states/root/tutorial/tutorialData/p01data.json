@@ -36,7 +36,7 @@
 		
 		"input": {
 			"txt":"Let's go!",
-			"next": "p01s2"
+			"next": "root.tutorial.p01s2"
 		}
 	},
 
@@ -99,7 +99,7 @@
 		"input": {
 			"txt":"Next",
 			"updateCoin": " 'p01' ",
-			"next": "p01s3"
+			"next": "root.tutorial.p01s3"
 		}
 	},
 
@@ -159,7 +159,7 @@
 		"input": {
 			"txt":"Next",
 			"updateCoin": " 'p01-03' ",
-			"next": "p01s4"
+			"next": "root.tutorial.p01s4"
 		}
 	},
 
@@ -228,7 +228,7 @@
 		"input": {
 			"txt":"Next",
 			"updateCoin": " 'p01-04' ",
-			"next": "p01s5"
+			"next": "root.tutorial.p01s5"
 		}
 	},
 	
@@ -275,7 +275,7 @@
 		"input": {
 			"txt":"Next",
 			"stepDone": " 'step1' ",
-			"next":"p02s1"
+			"next":"root.tutorial.p02s1"
 		}
 
 	}

@@ -52,7 +52,7 @@
 		
 		"input": {
 			"txt":"Next",
-			"next": "p05s2"
+			"next": "root.tutorial.p05s2"
 		}
 	},
 
@@ -101,7 +101,7 @@
 		
 		"input": {
 			"txt":"Next",
-			"next": "p05s3"
+			"next": "root.tutorial.p05s3"
 		}
 	},
 
@@ -150,7 +150,7 @@
 		
 		"input": {
 			"txt":"Next",
-			"next": "p05s4"
+			"next": "root.tutorial.p05s4"
 		}
 	},
 
@@ -213,7 +213,7 @@
 		"input": {
 			"txt":"Next",
 			"stepDone": " 'step5' ",
-			"next": "p05s5"
+			"next": "root.tutorial.p05s5"
 		}
 	},
 
@@ -257,7 +257,7 @@
 		
 		"input": {
 			"txt":"End Tutorial",
-			"next": "p01s1"
+			"next": "root.free-play"
 		}
 
 	}

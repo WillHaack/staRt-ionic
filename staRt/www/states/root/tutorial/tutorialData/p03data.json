@@ -51,7 +51,7 @@
 
 		"input": {
 			"txt":"Next",
-			"next": "p03s2"
+			"next": "root.tutorial.p03s2"
 		}
 	},
 
@@ -115,7 +115,7 @@
 
 		"input": {
 			"txt":"Next",
-			"next": "p03s3"
+			"next": "root.tutorial.p03s3"
 		}
 	},
 
@@ -172,7 +172,7 @@
 		"input": {
 			"txt":"Next",
 			"stepDone": " 'step3' ",
-			"next": "p04s1"
+			"next": "root.tutorial.p04s1"
 		}
 	}
 ]

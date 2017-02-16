@@ -46,7 +46,7 @@
 		
 		"input": {
 			"txt":"Next",
-			"next": "p02s2"
+			"next": "root.tutorial.p02s2"
 		}
 	},
 
@@ -110,7 +110,7 @@
 		"input": {
 			"txt":"Next",
 			"stepDone": " 'step2' ",
-			"next": "p03s1"
+			"next": "root.tutorial.p03s1"
 		}
 	}
 ]
