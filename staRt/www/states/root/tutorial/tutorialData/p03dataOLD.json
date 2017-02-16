@@ -2,7 +2,7 @@
 	{
 		"idx": 0,
 		"sref": "p03s1",
-		"page":"p03",
+		"coinRef":"p03",
 		"nav": {
 			"id": "p03s1",
 			"page": 3,
@@ -58,7 +58,7 @@
 	{
 		"idx": 1,
 		"sref": "p03s2",
-		"page":"p03",
+		"coinRef":"p03",
 		"nav": {
 			"id": "p03s2",
 			"page": 3,
@@ -122,7 +122,7 @@
 	{
 		"idx": 2,
 		"sref": "p03s3",
-		"page":"p03",
+		"coinRef":"p03",
 		"nav": {
 			"id": "p03s3",
 			"page": 1,

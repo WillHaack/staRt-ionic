@@ -1,7 +1,7 @@
 [
 	{
 		"id": "step1",
-		"page": "p01",
+		"coinRef": "p01",
 		"sref": "p01s1",
 		"img": "img/tutorial/coins/coin1.svg",
 		"txt": "the wave",
@@ -12,7 +12,7 @@
 	},
 	{ 
 		"id": "step2",
-		"page": "p02",
+		"coinRef":"p02",
 		"sref": "p02s1",
 		"img": "img/tutorial/coins/coin2.svg",
 		"txt": "eee sounds",
@@ -23,7 +23,7 @@
 	},
 	{ 
 		"id": "step3",
-		"page": "p03",
+		"coinRef":"p03",
 		"sref": "p03s1",
 		"img": "img/tutorial/coins/coin3.svg",
 		"txt": "ahh sounds",
@@ -34,7 +34,7 @@
 	},
 	{ 
 		"id": "step4",
-		"page": "p04",
+		"coinRef":"p04",
 		"sref": "p04s1",
 		"img": "img/tutorial/coins/coin4.svg",
 		"txt": "ooh sounds",
@@ -45,7 +45,7 @@
 	},
 	{ 
 		"id": "step5",
-		"page": "p05",
+		"coinRef":"p05",
 		"sref": "p05s1",
 		"img": "img/tutorial/coins/coin5.svg",
 		"txt": "/r/ sounds",

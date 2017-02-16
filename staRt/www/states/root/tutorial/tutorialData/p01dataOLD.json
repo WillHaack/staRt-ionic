@@ -2,7 +2,7 @@
 	{
 		"idx": 0,
 		"sref": "p01s1",
-		"page":"p01",
+		"coinRef":"p01",
 		"nav": {
 			"id": "p01s1",
 			"page": 1,
@@ -44,7 +44,7 @@
 	{
 		"idx": 1,
 		"sref": "p01s2",
-		"page":"p01",
+		"coinRef":"p01",
 		"nav": {
 			"id": "p01s2",
 			"page": 1,
@@ -108,7 +108,6 @@
 		"idx": 2,
 		"sref": "p01s3",
 		"coinRef":"p01",
-		"page":"p01",
 		"nav": {
 			"id": "p01s3",
 			"page": 1,
@@ -168,7 +167,6 @@
 		"idx": 3,
 		"sref": "p01s4",
 		"coinRef":"p01",
-		"page":"p01",
 		"nav": {
 			"id": "p01s4",
 			"page": 1,
@@ -236,7 +234,7 @@
 	{
 		"id": "p01s5",
 		"sref": "p01s5",
-		"page":"p01",
+		"coinRef":"p01",
 		"nav": {
 			"page": 1,
 			"scene": 5

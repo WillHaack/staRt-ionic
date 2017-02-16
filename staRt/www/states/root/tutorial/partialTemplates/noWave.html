@@ -17,16 +17,12 @@
 			<div class="inputBox">
 				<button
 					class="tutBtn"
-					ng-click="progressUpdate({{currStep.input.stepDone}})"
+					ng-click="coinUpdate({{currStep.input.stepDone}})"
 					ui-sref="{{'root.tutorial.' + currStep.input.next}}">
 					{{currStep.input.txt}}
 				</button>
 			</div>
-		</div> <!-- end noWaveBox 
-="progressUpdate({{currStep.input.stepDone}})"
-
-
-	-->
+		</div> <!-- end noWaveBox -->
 		
 		<img 
 			ng-src="{{currStep.pic.img}}" 
@@ -36,7 +32,7 @@
 				top:{{currStep.pic.top}}; 
 				left:{{currStep.pic.left}};">
 		</div>
-	</div> <!-- end tutNoWave-content ng-click=""-->
+	</div> <!-- end tutNoWave-content -->
 </div> <!-- end .pageView -->
 
 

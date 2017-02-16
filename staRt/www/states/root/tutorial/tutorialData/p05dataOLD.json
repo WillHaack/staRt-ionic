@@ -2,7 +2,7 @@
 	{
 		"idx": 0,
 		"sref": "p05s1",
-		"page":"p05",
+		"coinRef":"p05",
 		"nav": {
 			"id": "p05s1",
 			"page": 5,
@@ -59,7 +59,7 @@
 	{
 		"idx": 1,
 		"sref": "p05s2",
-		"page":"p05",
+		"coinRef":"p05",
 		"nav": {
 			"id": "p05s2",
 			"page": 5,
@@ -108,7 +108,7 @@
 	{
 		"idx": 2,
 		"sref": "p05s3",
-		"page":"p05",
+		"coinRef":"p05",
 		"nav": {
 			"id": "p5s3",
 			"page": 5,
@@ -157,7 +157,7 @@
 	{
 		"idx": 3,
 		"sref": "p05s4",
-		"page":"p05",
+		"coinRef":"p05",
 		"nav": {
 			"id": "p5s4",
 			"page": 5,
@@ -213,7 +213,7 @@
 	{
 		"idx": 4,
 		"sref": "p05s5",
-		"page":"p05",
+		"coinRef":"p05",
 		"nav": {
 			"id": "p5s5",
 			"page": 5,

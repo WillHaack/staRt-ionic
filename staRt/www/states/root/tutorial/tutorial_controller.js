@@ -7,6 +7,10 @@
 	tutorial.controller('TutorialController', 
 		function($scope, $timeout, $localForage, StartUIState, $rootScope, $state, $http, $stateParams, firstPanelData) 
 		{
+
+			// =============================================================================
+			// GET DATA & ASSETS ---------------------------
+
 				// Fetch first panel data and make sure it's ready for the view
 				$scope.p01data = firstPanelData.data;
 				for (var i = 0; i < $scope.p01data.length; i++)
@@ -17,6 +21,7 @@
 				//get data for tutorial_template.html 
 				$http.get('states/root/tutorial/tutorialData/coinData.json').success(function(data){
 					$scope.coinData = data;
+					$scope.makeActivePageObj();
 				});
 
 				$http.get('states/root/tutorial/tutorialData/p02data.json').success(function(data)
@@ -52,99 +57,74 @@
 					$scope.p05s5 = $scope.p05data[4];
 				});
 
-			// Tutorial Progress Markers
-			// $scope.tutorialProgress = function(progress) {
-			// 	$scope.progressSref = progress.id;
-			// 	console.log("progress: ", $scope.progressSref)
-			// };
 
-			$scope.activeCoin = {
-				p00: true,
-				p01: false,
-				p02: false,
-				p03: false,
-				p04: false,
-				p05: false
-			}
 
-			$scope.$on("$ionicView.afterEnter", function() {
-				$state.go('root.tutorial.p01s1');
-			});
-
-			$scope.setActiveCoin = function(coin) {
-				$scope.activeCoin.p01 = false;
-				$scope.activeCoin.p02 = false;
-				$scope.activeCoin.p03 = false;
-				$scope.activeCoin.p04 = false;
-				$scope.activeCoin.p05 = false;
-
-				$scope.activeCoin[coin] = true;			
-
-				console.log('p00: ' + $scope.activeCoin.p00);
-				// console.log('p01: ' + $scope.activeCoin.p01);
-				// console.log('p02: ' + $scope.activeCoin.p02);
-				// console.log('p03: ' + $scope.activeCoin.p03);
-				// console.log('p04: ' + $scope.activeCoin.p04);
-				// console.log('p05: ' + $scope.activeCoin.p05);
+			// =============================================================================
+			// SETS UP PROGRESS MARKERS ---------------------------
 			
-				
+			// Holds child scope of current page
+			$scope.currStep;
 
-				//for(i=0; i<$scope.activeCoin.length; i++) {
-					//console.log($scope.activeCoin);
-				//}
+			// Holds active page marker for to ng-class 'activeCoin' on horizontal tutorial nav.  
+			$scope.activePage = {};  
 
-				// var activeCoin = {
-				// 	p00: true,
-				// 	p01: false,
-				// 	p02: false,
-				// 	p03: false,
-				// 	p04: false,
-				// 	p05: false
-				// };
+			// List of steps completed triggered by coinUpdates.
+			// May be useful for progress tracking in the future.
+			$scope.stepsCompleted = []; 
 
-				// $scope.objectHeaders = [];
+			// Simply records the last page visited.
+			// May be useful for user continuity in the future.
+			$scope.lastScene;
 
-				// for ( property in activeCoin) {
-				//   $scope.objectHeaders.push(property); 
-				// }
 
-				// console.log($scope.objectHeaders[]);
-				// $scope.activeCoin.forEach(self, function(key, value) {
-				// 		//console.log(key + ': ' + value);
-				// 	});
-
+			// called on line 29
+			$scope.makeActivePageObj = function() {
+				for (var i=0; i < $scope.coinData.length; i++) {
+					$scope.activePage['p0' + (i + 1)] = false;
+				}
 			}
 
-			/*
-				var values = {name: 'misko', gender: 'male'};
-				var log = [];
-				angular.forEach(values, function(value, key) {
-				  this.push(key + ': ' + value);
-				}, log);
-				expect(log).toEqual(['name: misko', 'gender: male']);
-			*/
+			// called from child ctrlrs
+			$scope.updateParentScope = function(currStep) {
+				$scope.currStep = currStep;
+				//console.log('currStep: ' + $scope.currStep.sref);
+			}
 
-				//$scope.activeCoin = coin;
-				//console.log('updateCoin: ' + coin);
-				
-					//console.log('coinRef: ' + coinRef);
-					// //$scope.activeCoin = coinRef;
-				//console.log('activeCoin: ' + $scope.activeCoin.coin);
-				
+			// called from child ctrlrs
+			$scope.recordLastScene = function() {
+				$scope.lastScene = $scope.currStep.sref;
+				//console.log('lastScene: ' + $scope.currStep.sref);
+			}
 
+			// called from child ctrlrs
+			$scope.setActivePage = function(page) {
+				for (var prop in $scope.activePage) {
+					$scope.activePage[prop] = false;
+				}
+				$scope.activePage[page] = true;	
+				//console.log($scope.activePage);
+			}
 
-			$scope.progressUpdate = function(step) {
+			// called from template partials (.inputBox)
+			// Updates coin graphic on the completion of each page (tutorial section)
+			$scope.coinUpdate = function(step) {
 				if(step !== undefined) {
 					$scope[step] = true;
-					//console.log(step + ' is: ' + $scope[step]);
+					$scope.stepsCompleted.push(step);
 				}
-			}				
+			}
 
-			// $scope.log = function(input) {
-			// 	console.log('log: ' + input);
-			// }
 
-		console.log('TutorialController here!');
-	} 	// end of controller constructor body
-	); // end of controller constructor fx
+			// =============================================================================
+			// PAGE INIT ---------------------------
+				// Activates first page on "Tutorial" click
+				$scope.$on("$ionicView.afterEnter", function() {
+					$state.go('root.tutorial.p01s1');
+				});
+
+
+			console.log('TutorialController here!');
+
+		} // end controller constructor body
+	); // end controller constructor fx
 } )(  );

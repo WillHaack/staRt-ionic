@@ -1,44 +1,40 @@
-<ion-view view-title="Tutorial" class="state-contentBox--wide">
+<ion-view 
+	view-title="Tutorial" 
+	class="state-contentBox--wide">
 	
-	<div class="tut-contentBox"> <!-- <ion-content scroll="false"> n/a w/ <div> -->
+	<div class="tut-contentBox">
 
 	<!-- ==================================
-	SAND BAR -->
+	SAND BAR 
+		Note: The activeCoin class is not actually controlled by the ui-router. Instead it is added to the coin text div (id="{{coin.coinRef}}") by the controller of 1st scene (state) of each page. (Sorry, design flaw. Can fix in future versions, if needed.)
+	-->
 	
 		<div class="sandbarBox">	
 
 			<list class="sandbar-coinRow">
-			<item  ng-repeat="coin in coinData">
-				<!-- ui-router adds class="activeCoin" only if the STATE matches the ui-sref (coin.sref) -->
-				<!-- JUNK
-					 ng-click="setActiveCoin({{coin.coinRef}})"
-					 ng-class="{ 'activeCoin': state.current.url.includes($scope.activeCoin) }"
-
-					-->
+				<item  ng-repeat="coin in coinData">
 					<div class="sandbar-coinBox"
 					ui-sref="{{'root.tutorial.' + coin.sref }}"
 					ui-sref-active="activeCoin"
 					>	
-
 						<div class="sandbar-coinImgBox">
-					          <img id="{{coin.id}}"	            
-					            ng-src="{{coin.img}}"
-					            ng-show="{{coin.id}}"
-								style="width:{{coin.width}}; 
-									height:{{coin.width}}; 
-									top:{{coin.top}};
-									position: relative;">
+				          <img id="{{coin.id}}"	            
+				            ng-src="{{coin.img}}"
+				            ng-show="{{coin.id}}"
+							style="width:{{coin.width}}; 
+								height:{{coin.width}}; 
+								top:{{coin.top}};
+								position: relative;">
 						</div>
 
-						<div id="{{coin.coinRef}}"
+						<div id="{{coin.page}}"
 						class="sandbar-coinTxt"
-						ng-class="{activeCoin: activeCoin.{{coin.coinRef}} }">
+						ng-class="{activeCoin: activePage.{{coin.page}} }">
 							{{coin.txt}}
 						</div>
-					</div>
+					</div> <!-- end .sandbar-coinBox -->
 				</item>
-
-			</list> <!-- end .coinRow   {{coin.coinRef ===   -->
+			</list> <!-- end .coinRow -->
 
 		</div> <!-- end sandbarBox -->
 

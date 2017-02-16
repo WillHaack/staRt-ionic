@@ -2,7 +2,7 @@
 	{
 		"idx": 0,
 		"sref": "p02s1",
-		"page":"p02",
+		"coinRef":"p02",
 		"nav": {
 			"id": "p02s1",
 			"page": 2,
@@ -53,7 +53,7 @@
 	{
 		"idx": 1,
 		"sref": "p02s2",
-		"page":"p02",
+		"coinRef":"p02",
 		"nav": {
 			"id": "p02s2",
 			"page": 2,
