@@ -182,6 +182,13 @@
 		"LRow2": {
 			"wave": {
 				"lpcLive": true,
+				"needle": {
+					"img": "img/tutorial/waves/dots.png",
+					"h": "100px",
+					"w": "30px",
+					"top": "5px",
+					"left":"0px"
+				},
 				"labelTitle": "Your Speech Wave"
 			}
 		},

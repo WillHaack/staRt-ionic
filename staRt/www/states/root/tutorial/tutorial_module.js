@@ -66,7 +66,6 @@
 						controller: function($scope){
 							$scope.currStep = $scope.p01s2;
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 							$scope.setActivePage($scope.currStep.page);
 
 						}
@@ -82,7 +81,6 @@
 						controller: function($scope) {
 							$scope.currStep = $scope.p01s3;
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 						}
 					}
 				}
@@ -96,7 +94,6 @@
 						controller: function($scope){
 							$scope.currStep = $scope.p01s4;
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 						}
 					}
 				}
@@ -110,7 +107,6 @@
 						controller: function($scope){
 							$scope.currStep = $scope.p01s5;
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 						}
 					}
 				}
@@ -252,7 +248,6 @@
 						controller: function($scope){
 							$scope.currStep = $scope.p05s1;
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 							$scope.setActivePage($scope.currStep.page);
 						}
 					}
@@ -267,7 +262,6 @@
 						controller: function($scope){
 							$scope.currStep = $scope.p05s2;
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 						}
 					}
 				}
@@ -281,7 +275,6 @@
 						controller: function($scope){
 							$scope.currStep = $scope.p05s3;
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 						}
 					}
 				}
@@ -295,7 +288,6 @@
 						controller: function($scope){
 							$scope.currStep = $scope.p05s4;
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 						}
 					}
 				}
@@ -309,7 +301,6 @@
 						controller: function($scope){
 							$scope.currStep = $scope.p05s5;
 							$scope.updateParentScope($scope.currStep);
-							$scope.recordLastScene();
 						}
 					}
 				}
