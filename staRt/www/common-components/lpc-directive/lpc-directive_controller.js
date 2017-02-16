@@ -343,34 +343,17 @@ lpcDirective.controller( 'LpcDirectiveController',
 		$scope.animate();
 	}
 
-	// $scope.$on('beforeLeave', function() {
-	// 	$scope.active = false;
-
-	// 	if ('ontouchstart' in window) {
-	// 		$scope.lpcRenderer.renderer.domElement.removeEventListener('touchstart', onTouchStart);
-	// 		$scope.lpcRenderer.renderer.domElement.removeEventListener('touchmove', onTouchMove);
-	// 		$scope.lpcRenderer.renderer.domElement.removeEventListener('touchcancel', onTouchEnd);
-	// 		$scope.lpcRenderer.renderer.domElement.removeEventListener('touchend', onTouchEnd);
-	// 	} else {
-	// 		$scope.lpcRenderer.renderer.domElement.removeEventListener('mousedown', onTouchStart);
-	// 		window.removeEventListener('mousemove', onTouchMove);
-	// 		window.removeEventListener('mouseup', onTouchEnd);
-	// 	}
-	// });
-
 	$scope.$on("resetRating", function() {
 		$scope.data.rating = 0;
 	});
 
-	$scope.$watch('targetF3', function()
-	{
-		//console.log('target changed to: ', $scope.targetF3);
+	$scope.$watch('targetF3', function() {
 		$scope.updateTarget();
 	});
 
 	$scope.myURL = $state.current.name;
 
-	$rootScope.$on("$urlChangeStart", function(event, next) {
+	var unsubscribe = $rootScope.$on("$urlChangeStart", function(event, next) {
 		if (next === $scope.myURL) {
 			$scope.active = true;
 			$scope.animate();
@@ -378,5 +361,9 @@ lpcDirective.controller( 'LpcDirectiveController',
 		} else {
 			$scope.active = false;
 		}
+	});
+
+	$scope.$on("$destroy", function() {
+		unsubscribe();
 	});
 });

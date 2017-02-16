@@ -170,17 +170,6 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	{
 		console.log('Practice Controller here!');
 
-		$scope.$on("afterEnter", function() {
-			$scope.active = true;
-		});
-
-		$scope.$on("beforeLeave", function() {
-			$scope.active = false;
-			if ($scope.isRecording) {
-				$scope.endWordPractice();
-			}
-		});
-
 		// var uploadURLs = [
 		// 	"http://localhost:5000",
 		// 	"http://localhost:5000",
@@ -195,14 +184,16 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			"https://byunlab.com/start/session/audio"
 		];
 
-		$scope.active = false;
+		$scope.active = true;
 		$scope.isPracticing = false;
 		$scope.currentWord = null;
 		$scope.rating = 0;
 		$scope.isRecording = false;
-		$scope.isUploading = false;
 		$scope.hasValidWordList = false;
-		$scope.uploadProgress = 0;
+		$scope.uploadStatus = {
+			isUploading: false,
+			uploadProgress: 0
+		}
 
 		$scope.currentWordIdx = -1;
 		$scope.currentPracticeSession = null;
@@ -218,7 +209,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		function uploadCallbackForSession(session, idx) {
 			return function uploadProgressHandler(progressEvent) {
 				session.uploadProgress[idx] = progressEvent.loaded / progressEvent.total;
-				$scope.uploadProgress = session.uploadProgress.reduce(function(x,y){return x+y;})/4;
+				$scope.uploadStatus.uploadProgress = session.uploadProgress.reduce(function(x,y){return x+y;})/4;
 			}
 		}
 
@@ -226,7 +217,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			return function completeProgressHandler(response) {
 				session.uploadsComplete[idx] = true;
 				if (session.uploadsComplete.lastIndexOf(false) === -1) {
-					$scope.isUploading = false;
+					$scope.uploadStatus.isUploading = false;
 					$cordovaDialogs.alert(
 						"Session uploaded successfully",
 						"Upload Complete",
@@ -253,7 +244,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 					$cordovaDialogs
 				);
 			}
-			$scope.isUploading = true;
+			$scope.uploadStatus.isUploading = true;
 		}
 
 		function recordingDidStop(files) {
@@ -318,7 +309,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 					navigator.notification.confirm("Pausing for feedback",
 						function () {
 							$scope.isFeedbacking = false;
-						}, "Pausing for feedback",
+						}, "",
 						["Done"]);
 				}
 			}
@@ -399,5 +390,22 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		});
 
 		if ($scope.csv) $scope.reloadCSVData();
+
+		$scope.myURL = $state.current.name;
+
+		var unsubscribe = $rootScope.$on("$urlChangeStart", function(event, next) {
+			if (next === $scope.myURL) {
+				$scope.active = true;
+			} else {
+				$scope.active = false;
+				if ($scope.isRecording) {
+					$scope.endWordPractice();
+				}
+			}
+		});
+
+		$scope.$on("$destroy", function() {
+			unsubscribe();
+		});
 	}
 );

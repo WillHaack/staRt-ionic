@@ -10,15 +10,12 @@
 		style="margin:40px;"
 		ng-click="endWordPractice()"
 		ng-hide="!isPracticing">
-		Stop Word Practice
+		Stop {{type}} Practice
 	</button>
 	<p
 		ng-hide="!isPracticing"
 		class="words-word">
 		{{currentWord}}
-	</p>
-	<p ng-hide="!isUploading">
-		Uploading {{uploadProgress * 100}}
 	</p>
 
 	<lpc-directive

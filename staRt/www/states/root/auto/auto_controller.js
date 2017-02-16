@@ -8,18 +8,6 @@
 	{
 		console.log('AutoController here!');
 
-		$scope.$on("$ionicView.enter", function() {
-			$scope.$broadcast("enter");
-		});
-
-		$scope.$on("$ionicView.afterEnter", function() {
-			$scope.$broadcast("afterEnter");
-		});
-
-		$scope.$on("$ionicView.beforeLeave", function() {
-			$scope.$broadcast("beforeLeave");
-		});
-
 		$scope.practicing = false;
 		$scope.csv = "";
 		$scope.order = "random";

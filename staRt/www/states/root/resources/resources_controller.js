@@ -9,8 +9,6 @@
 		console.log('ResourcesController here!');
 
 		$scope.$on("$ionicView.enter", function() {
-			$scope.$broadcast("enter");
-
 			console.log('view content loaded!');
 			if (window.AudioPlugin !== undefined)
 			{
@@ -26,14 +24,6 @@
 					}
 				});
 			};
-		});
-
-		$scope.$on("$ionicView.afterEnter", function() {
-			$scope.$broadcast("afterEnter");
-		});
-
-		$scope.$on("$ionicView.beforeLeave", function() {
-			$scope.$broadcast("beforeLeave");
 		});
 
 		$scope.logPluginLPCOrder = function(order)
