@@ -1,7 +1,7 @@
 <div class="words-contentBox">
 
 	<button style="margin:40px;" ng-click="beginWordPractice()" ng-hide="isPracticing || !hasValidWordList">
-		Start {{type}} Practice
+		Start {{type}} {{probe ? "probe" : "practice"}}
 	</button>
 	<button style="margin:40px;" ng-click="nextWord()" ng-hide="!isPracticing">
 		Next {{tyep}}
@@ -10,7 +10,7 @@
 		style="margin:40px;"
 		ng-click="endWordPractice()"
 		ng-hide="!isPracticing">
-		Stop {{type}} Practice
+		Stop {{type}} {{probe ? "probe" : "practice"}}
 	</button>
 	<p
 		ng-hide="!isPracticing"

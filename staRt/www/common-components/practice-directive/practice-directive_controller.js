@@ -168,8 +168,6 @@ var practiceDirective = angular.module( 'practiceDirective' );
 practiceDirective.controller( 'PracticeDirectiveController',
 	function($scope, $timeout, $localForage, ProfileService, StartUIState, $rootScope, $state, $http, $cordovaDialogs)
 	{
-		console.log('Practice Controller here!');
-
 		// var uploadURLs = [
 		// 	"http://localhost:5000",
 		// 	"http://localhost:5000",
@@ -204,6 +202,12 @@ practiceDirective.controller( 'PracticeDirectiveController',
 
 		function recordingDidFail() {
 
+		}
+
+		function sessionDisplayString() {
+			var type = $scope.type ? $scope.type.toLowerCase() : "word";
+			var sesh = $scope.probe ? "probe" : "practice";
+			return type + " " + sesh;
 		}
 
 		function uploadCallbackForSession(session, idx) {
@@ -258,8 +262,8 @@ practiceDirective.controller( 'PracticeDirectiveController',
 				saveJSON($scope.currentPracticeSession.ratings, jsonPath, function() {
 					files.Ratings = jsonPath;
 					$scope.currentPracticeSession.files = files;
-					var practiceTypeStr = $scope.type ? $scope.type.toLowerCase() : "word";
-					navigator.notification.confirm("Would you like to upload this " + practiceTypeStr + " practice session?",
+					var practiceTypeStr = sessionDisplayString();
+					navigator.notification.confirm("Would you like to upload this " + practiceTypeStr + " session?",
 						function (index) {
 							if (index == 1) {
 								uploadPracticeSessionFiles($scope.currentPracticeSession);
@@ -284,7 +288,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		function advanceWord() {
 			if ($scope.currentWord !== null) {
 				if ($scope.rating === 0) {
-					navigator.notification.alert("Rate pronunciation before advancing!", null, "Word not rated");
+					navigator.notification.alert("Rate pronunciation before advancing!", null, "No rating");
 					return;
 				}
 				$scope.currentPracticeSession.ratings.push([$scope.currentWord, $scope.rating]);
@@ -317,11 +321,11 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		}
 
 		$scope.beginWordPractice = function() {
-			console.log("Beginning to practice words");
+			console.log("Beginning " + sessionDisplayString());
 
 			if (window.AudioPlugin === undefined) {
 				if (navigator.notification)
-					navigator.notification.alert("Can't start work practice: no audio" , null, "Error");
+					navigator.notification.alert("Can't start " + sessionDisplayString() + ": no audio" , null, "Error");
 			}
 
 			ProfileService.getCurrentProfile().then(
@@ -330,11 +334,11 @@ practiceDirective.controller( 'PracticeDirectiveController',
 						beginPracticeForUser(res);
 					} else {
 						if (navigator.notification)
-							navigator.notification.alert("Can't start word practice -- create a profile first", null, "No profile");
+							navigator.notification.alert("Can't start " + sessionDisplayString() + " -- create a profile first", null, "No profile");
 					}
 				}, function (err) {
 					if (navigator.notification)
-						navigator.notification.alert("Can't start work practice: " + err, null, "Error");
+						navigator.notification.alert("Can't start " + sessionDisplayString() + ": " + err, null, "Error");
 				}
 			);
 
@@ -350,7 +354,6 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			if (window.AudioPlugin !== undefined) {
 				AudioPlugin.stopRecording(recordingDidStop, recordingDidFail);
 			}
-			console.log("Ending word practice");
 			if ($scope.endPracticeCallback) $scope.endPracticeCallback();
 		};
 
