@@ -258,7 +258,8 @@ practiceDirective.controller( 'PracticeDirectiveController',
 				saveJSON($scope.currentPracticeSession.ratings, jsonPath, function() {
 					files.Ratings = jsonPath;
 					$scope.currentPracticeSession.files = files;
-					navigator.notification.confirm("Would you like to upload this word practice session?",
+					var practiceTypeStr = $scope.type ? $scope.type.toLowerCase() : "word";
+					navigator.notification.confirm("Would you like to upload this " + practiceTypeStr + " practice session?",
 						function (index) {
 							if (index == 1) {
 								uploadPracticeSessionFiles($scope.currentPracticeSession);
