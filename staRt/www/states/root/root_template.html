@@ -22,13 +22,13 @@
           <!-- defines img inactive state -->
           <img
             ng-if="!state.current.name.includes(tab.sref)"
-            ng-src="{{ 'img/nav/' + tab.sref + '.svg' }}"
+            ng-src="{{ 'img/nav/' + tab.sref.split('.')[0] + '.svg' }}"
             class="nav-svg"
           >
           <!-- defines img active state -->
           <img
             ng-if="state.current.name.includes(tab.sref)"
-            ng-src="{{ 'img/nav/' + tab.sref + '-b.svg' }}"
+            ng-src="{{ 'img/nav/' + tab.sref.split('.')[0] + '-b.svg' }}"
             class="nav-svg animated {{ tab.ani }}"
           >
           {{tab.title}}

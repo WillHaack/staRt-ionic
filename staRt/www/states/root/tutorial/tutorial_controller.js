@@ -118,9 +118,9 @@
 			// =============================================================================
 			// PAGE INIT ---------------------------
 				// Activates first page on "Tutorial" click
-				$scope.$on("$ionicView.afterEnter", function() {
-					$state.go('root.tutorial.p01s1');
-				});
+				// $scope.$on("$ionicView.afterEnter", function() {
+				// 	$state.go('root.tutorial.p01s1');
+				// });
 
 
 			console.log('TutorialController here!');
