@@ -385,7 +385,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 
 		$scope.$on('ratingChange', function(event, data)
 		{
-			$scope.rating = data;
+			$scope.rating = data === undefined ? 0 : data;
 		});
 
 		$scope.$watch("csv", function () {
