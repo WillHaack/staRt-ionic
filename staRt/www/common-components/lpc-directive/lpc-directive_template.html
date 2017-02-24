@@ -12,6 +12,13 @@
 			id="lpc-canvas"
 			ng-hide="lpcHidden || probe || waveHidden || hideBtn" >
 		</canvas>
+
+		<div
+			class="waveLabel"
+			ng-hide="!(lpcHidden || probe || waveHidden || hideBtn)" >
+			Wave Hidden
+		</div>
+
 	</div>
 
 	<div class="lpc-buttons">
@@ -54,7 +61,7 @@
 		<button
 			ng-click="hideLPC()"
 			class="reset-button big-button"
-			ng-if="!probe && hideBtn" 
+			ng-if="!probe && hideBtn"
 			ng-hide="lpcHidden || rate">
 			Hide Wave
 		</button>
