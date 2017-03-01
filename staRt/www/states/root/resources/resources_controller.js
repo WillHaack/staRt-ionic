@@ -29,7 +29,12 @@
 		$scope.logPluginLPCOrder = function(order)
 		{
 			console.log("Plugin LPC order is now: " + order);
-		}
+		};
+
+		$scope.resetPluginLPCOrder = function() {
+			$scope.lpcOrder = 35;
+			$scope.updatePluginLPCOrder();
+		};
 
 		$scope.setLPCOrder = function(order)
 		{

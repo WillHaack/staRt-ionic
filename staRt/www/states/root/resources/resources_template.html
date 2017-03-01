@@ -11,11 +11,13 @@
 					min. 25
 				</div>
 
-				<input type="range" min="25" max="45" ng-model="lpcOrder" ng-change="updatePluginLPCOrder()"/>
+				<input type="range" min="25" max="45" ng-model="lpcOrder" ng-change="updatePluginLPCOrder()" />
 
 				<div class="range-label">
 					max. 45
 				</div>
+
+				<button name="reset" ng-click="resetPluginLPCOrder()" class="reset-button big-button">Reset</button>
 			</div>
 
 			<p>
