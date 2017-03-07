@@ -896,11 +896,17 @@ div.needleBox {
   left: 169px;
   z-index: 9; }
 
+.words-progress-indicator {
+  display: inline-block;
+  vertical-align: middle; }
+
 .words-word {
   font-size: 3rem;
   font-weight: 700;
   text-transform: uppercase;
-  line-height: 1.5; }
+  line-height: 1.5;
+  display: inline-block;
+  vertical-align: middle; }
 
 .range-container {
   display: flex;

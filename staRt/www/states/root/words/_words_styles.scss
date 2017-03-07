@@ -3,10 +3,16 @@
 	//border: 1px solid violet;
 }
 
+.words-progress-indicator {
+	display: inline-block;
+	vertical-align: middle;
+}
 
 .words-word {
 	font-size: 3rem;
 	font-weight: 700;
 	text-transform: uppercase;
 	line-height: 1.5;
+	display: inline-block;
+	vertical-align: middle;
 }

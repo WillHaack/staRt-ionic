@@ -12,11 +12,18 @@
 		ng-hide="!isPracticing">
 		Stop {{type}} {{probe ? "probe" : "practice"}}
 	</button>
+	<div class="word-status">
 	<p
 		ng-hide="!isPracticing"
 		class="words-word">
 		{{currentWord}}
 	</p>
+	<p
+		ng-hide="!isPracticing"
+		class="words-progress-indicator">
+		--- {{currentWordIdx}} of {{count}}
+	</p>
+	</div>
 
 	<lpc-directive
 		probe="probe"
