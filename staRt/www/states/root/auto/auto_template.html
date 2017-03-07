@@ -5,15 +5,6 @@
 			Syllable or Word Probes
 		</div>
 
-		<!-- 30 items, sequential -->
-		<button
-			class="big-button"
-			ng-click="beginSyllableProbe()"
-			ng-hide="practicing"
-		>
-			Syllable Probe
-		</button>
-
 		<!-- 50 items, random -->
 		<button
 			class="big-button"
@@ -21,6 +12,15 @@
 			ng-hide="practicing"
 		>
 			Word Probe
+		</button>
+
+		<!-- 30 items, sequential -->
+		<button
+			class="big-button"
+			ng-click="beginSyllableProbe()"
+			ng-hide="practicing"
+		>
+			Syllable Probe
 		</button>
 
 		<practice-directive
