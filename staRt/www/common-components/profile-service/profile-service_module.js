@@ -25,7 +25,9 @@ profileService.factory('ProfileService', function($localForage, $http)
 	};
 
 	var normsData;
+	var filterOrderData;
 	var norms;
+	var filterOrder;
 	var profilesCache;
 
 	$http.get('data/F3r_norms_Lee_et_al_1999.csv').then(function(res)
@@ -33,6 +35,12 @@ profileService.factory('ProfileService', function($localForage, $http)
 		// Set up norms data
 		normsData = res;
 		norms = parseCSV(normsData.data).slice(1);
+	});
+
+	$http.get('data/filter_norms.csv').then(function(res)
+	{
+		filterOrderData = res;
+		filterOrder = parseCSV(filterOrderData.data).slice(1);
 	});
 
 	function parseCSV(str) {
@@ -205,6 +213,26 @@ profileService.factory('ProfileService', function($localForage, $http)
 				return 0;
 			} else {
 				return 0;
+			}
+		},
+
+		lookupDefaultFilterOrder: function(profile) {
+			if (profile.age !== undefined &&
+				profile.heightFeet !== undefined &&
+				profile.heightInches !== undefined &&
+				profile.age !== undefined) {
+				var gender = profile.gender;
+				gender = gender === 'Male' ? 'M' : 'F';
+				var ageBit = profile.age >= 15 ? '1' : '0';
+				var heightBit = profile.heightFeet * 12 + profile.heightInches >= 64 ? '1' : '0';
+
+				var filterRow = filterOrder.find(function (row) {
+					return row[0] === gender && row[1] === ageBit && row[2] === heightBit;
+				});
+				if (filterRow) return parseInt(filterRow[3]);
+				return 35;
+			} else {
+				return 35;
 			}
 		}
 	}

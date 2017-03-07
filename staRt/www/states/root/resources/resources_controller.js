@@ -32,8 +32,14 @@
 		};
 
 		$scope.resetPluginLPCOrder = function() {
-			$scope.lpcOrder = 35;
-			$scope.updatePluginLPCOrder();
+			ProfileService.getCurrentProfile().then(function(res) {
+				if (res) {
+					$scope.lpcOrder = ProfileService.lookupDefaultFilterOrder(res);
+				} else {
+					$scope.lpcOrder = 35;
+				}
+				$scope.updatePluginLPCOrder();
+			});
 		};
 
 		$scope.setLPCOrder = function(order)
