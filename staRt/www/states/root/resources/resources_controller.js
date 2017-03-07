@@ -20,7 +20,7 @@
 						$scope.lpcOrder = res.lpcOrder;
 						AudioPlugin.setLPCOrder($scope.lpcOrder, $scope.logPluginLPCOrder);
 					} else {
-						AudioPlugin.getLPCOrder($scope.setLPCOrder);
+						$scope.resetPluginLPCOrder();
 					}
 				});
 			};
