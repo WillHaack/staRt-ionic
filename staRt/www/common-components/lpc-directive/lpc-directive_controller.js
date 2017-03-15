@@ -358,6 +358,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 			$scope.active = true;
 			$scope.animate();
 			$scope.updateCanvasSize();
+			setInitialTarget();
 		} else {
 			$scope.active = false;
 		}
