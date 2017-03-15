@@ -22,8 +22,7 @@
 			"wave": {
 				"lpcLive": false,
 				"lpcImg": "img/tutorial/waves/ahhWave.svg",
-				"labelTitle": "Image of an 'aah' Sound",
-				"labelTxt": "(touch for audio)"
+				"labelTitle": "Image of an 'aah' Sound"
 			}
 		},
 
@@ -75,16 +74,14 @@
 		"LRow1": {
 			"lpc": false,
 			"lpcImg": "img/tutorial/waves/ahhWave.svg",
-			"labelTitle": "Image of an 'aah' Sound",
-			"labelTxt": "(touch for audio)"
+			"labelTitle": "Image of an 'aah' Sound"
 		},
 
 		"LRow1": {
 			"wave": {
 				"lpcLive": false,
 				"lpcImg": "img/tutorial/waves/ahhWave.svg",
-				"labelTitle": "Image of an 'aah' Sound",
-				"labelTxt": "(touch for audio)"
+				"labelTitle": "Image of an 'aah' Sound"
 			}
 		},
 
@@ -92,8 +89,7 @@
 			"wave": {
 				"lpcLive": false,
 				"lpcImg": "img/tutorial/waves/eeeWave.svg",
-				"labelTitle": "Image of an 'eee' Sound",
-				"labelTxt": "(touch for audio)"
+				"labelTitle": "Image of an 'eee' Sound"
 			}
 		},
 		
@@ -140,8 +136,7 @@
 			"wave": {
 				"lpcLive": false,
 				"lpcImg": "img/tutorial/waves/ahhWave.svg",
-				"labelTitle": "Image of an 'aah' Sound",
-				"labelTxt": "(touch for audio)"
+				"labelTitle": "Image of an 'aah' Sound"
 			}
 		},
 

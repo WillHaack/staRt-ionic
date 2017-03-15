@@ -22,8 +22,7 @@
 			"wave": {
 				"lpcLive": false,
 				"lpcImg": "img/tutorial/waves/p02s1.svg",
-				"labelTitle": "Image of an 'eee' Sound",
-				"labelTxt": "(touch for audio)"
+				"labelTitle": "Image of an 'eee' Sound"
 			}
 		},
 		
@@ -73,8 +72,7 @@
 			"wave": {
 				"lpcLive": false,
 				"lpcImg": "img/tutorial/waves/eeeWave.svg",
-				"labelTitle": "Image of an 'eee' Sound",
-				"labelTxt": "(touch for audio)"
+				"labelTitle": "Image of an 'eee' Sound"
 			}
 		},
 		

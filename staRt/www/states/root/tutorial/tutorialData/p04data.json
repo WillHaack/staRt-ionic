@@ -20,8 +20,7 @@
 			"wave": {
 				"lpcLive": false,
 				"lpcImg": "img/tutorial/waves/oooWave.svg",
-				"labelTitle": "Image of an 'ooo' Sound",
-				"labelTxt": "(touch for audio)"
+				"labelTitle": "Image of an 'ooo' Sound"
 			}
 		},
 
@@ -77,8 +76,7 @@
 			"wave": {
 				"lpcLive": false,
 				"lpcImg": "img/tutorial/waves/oooWaveCali.svg",
-				"labelTitle": "California 'ooo' Sound",
-				"labelTxt": "(touch for audio)"
+				"labelTitle": "California 'ooo' Sound"
 			}
 		},
 
@@ -86,8 +84,7 @@
 			"wave": {
 				"lpcLive": false,
 				"lpcImg": "img/tutorial/waves/oooWaveNY.svg",
-				"labelTitle": "New York 'ooo' Sound",
-				"labelTxt": "(touch for audio)"
+				"labelTitle": "New York 'ooo' Sound"
 			}
 		},
 
