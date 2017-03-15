@@ -573,6 +573,12 @@ canvas {
 .profiles__info {
   flex: 1 0 0%; }
 
+.profiles__info input {
+  padding-left: 5pt; }
+  .profiles__info input:focus {
+    border: 2px solid #c5f3ff;
+    border-radius: 4px; }
+
 .tut-contentBox {
   position: relative;
   margin: 0;

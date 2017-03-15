@@ -4,17 +4,26 @@
 	// this needs to be a flexbox
 }
 
-	.profiles
-	{
-		flex-flow: row nowrap;
-	}
+.profiles
+{
+	flex-flow: row nowrap;
+}
 
-	.profiles__list
-	{
-		flex: 1 0 0%;
-	}
+.profiles__list
+{
+	flex: 1 0 0%;
+}
 
-	.profiles__info
-	{
-		flex: 1 0 0%;
-	}
+.profiles__info
+{
+	flex: 1 0 0%;
+}
+
+.profiles__info input {
+	padding-left: 5pt;
+	
+	&:focus {
+		border: 2px solid $blue-light;
+    	border-radius: 4px;
+	}	
+}
