@@ -1,22 +1,16 @@
 <div class="words-contentBox">
 
-	<button style="margin:40px;" ng-click="beginWordPractice()" ng-hide="isPracticing || !hasValidWordList">
-		Start {{type}} {{probe ? "probe" : "practice"}}
-	</button>
-	<button style="margin:40px;" ng-click="nextWord()" ng-hide="!isPracticing">
-		Next {{tyep}}
-	</button>
 	<button
-		style="margin:40px;"
-		ng-click="endWordPractice()"
-		ng-hide="!isPracticing">
-		Stop {{type}} {{probe ? "probe" : "practice"}}
+		ng-click="beginWordPractice()"
+		ng-hide="isPracticing || !hasValidWordList"
+		class="big-button">
+			Start {{type}} {{probe ? "probe" : "practice"}}
 	</button>
 	<div class="word-status">
 	<p
 		ng-hide="!isPracticing"
 		class="words-word">
-		{{currentWord}}
+			{{currentWord}}
 	</p>
 	<p
 		ng-hide="!isPracticing"
@@ -32,7 +26,20 @@
 		reset="true"
 		sand="true"
 		tutorial="false"
-		waveHidden="isFeedbacking"
-	/>
+		waveHidden="isFeedbacking">
+	</lpc-directive>
+
+	<button
+		ng-click="nextWord()"
+		ng-hide="!isPracticing"
+		class="button button-balanced">
+			Next {{type}}
+	</button>
+	<button
+		ng-click="endWordPractice()"
+		ng-hide="!isPracticing"
+		class="button button-assertive">
+			Stop {{type}} {{probe ? "probe" : "practice"}}
+	</button>
 
 </div> <!-- end words-contentBox-->
