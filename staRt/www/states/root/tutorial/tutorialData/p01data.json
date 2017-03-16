@@ -9,7 +9,7 @@
 			"scene": 1
 		},
 
-		"template":"waveNone.html",
+		"template":"noWave.html",
 		
 		"bgImg": {
 			"status": "done",
@@ -51,7 +51,7 @@
 			"scene": 2
 		},
 
-		"template":"waveSingle.html",
+		"template":"default.html",
 		
 		"bgImg": {
 			"status": "done",
@@ -98,7 +98,6 @@
 		
 		"input": {
 			"txt":"Next",
-			"updateCoin": " 'p01' ",
 			"next": "root.tutorial.p01s3"
 		}
 	},
@@ -158,7 +157,6 @@
 		
 		"input": {
 			"txt":"Next",
-			"updateCoin": " 'p01-03' ",
 			"next": "root.tutorial.p01s4"
 		}
 	},
@@ -227,7 +225,6 @@
 		
 		"input": {
 			"txt":"Next",
-			"updateCoin": " 'p01-04' ",
 			"next": "root.tutorial.p01s5"
 		}
 	},
