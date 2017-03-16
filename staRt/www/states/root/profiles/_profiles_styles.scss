@@ -21,9 +21,10 @@
 
 .profiles__info input {
 	padding-left: 5pt;
-	
+
 	&:focus {
-		border: 2px solid $blue-light;
+		// border: 2px solid $yellow-light;
     	border-radius: 4px;
+    	background: $yellow-light;
 	}	
 }
