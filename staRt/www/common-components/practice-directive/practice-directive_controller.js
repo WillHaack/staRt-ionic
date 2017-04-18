@@ -93,7 +93,7 @@ function uploadFile(absolutePath, destURL, mimeType, sessionID, progressCb, comp
 			var options = new FileUploadOptions();
 			options.fileName = absolutePath.substr(absolutePath.lastIndexOf('/') + 1);
 			options.mimeType = mimeType;
-			options.chunkedMode = false;
+			options.chunkedMode = true;
 
 			//call getCredentials and set http headers with username and password
 			getCredentials($http, function(credentials) {
