@@ -186,6 +186,7 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
     [mutRep setObject:[recordingDirectory stringByAppendingPathComponent:self.metadataFilename] forKey:LPCRecordingSessionMetadataKey];
     [mutRep setObject:[recordingDirectory stringByAppendingPathComponent:self.lpcFilename] forKey:LPCRecordingSessionLPCKey];
     [mutRep setObject:[recordingDirectory stringByAppendingPathComponent:self.audioFilename] forKey:LPCRecordingSessionAudioKey];
+	[mutRep setObject:self.dateString forKey:@"date"];
     return mutRep;
 }
 

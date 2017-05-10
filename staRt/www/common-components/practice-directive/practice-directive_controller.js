@@ -46,86 +46,6 @@ function initialPracticeSession() {
 	};
 }
 
-function getCredentials($http, cb) {
-	$http.get("data/credentials.json",  {
-		headers: {
-			'Content-type': 'application/json'
-		}
-	})
-	.success(function(res) {
-		cb(res);
-	})
-	.error(function(data, status) {
-		cb(false);
-	})
-}
-
-function uploadFile(absolutePath, destURL, mimeType, sessionID, progressCb, completeCb, $http, $cordovaDialogs)
-{
-	var win = function (r) {
-		console.log("Code = " + r.responseCode);
-		console.log("Response = " + r.response);
-		console.log("Sent = " + r.bytesSent);
-		if (completeCb)
-			completeCb(r);
-	}
-
-	var fail = function (error) {
-		if (error.code === 3) {
-			$cordovaDialogs.alert(
-				"Server Upload Failed. Please check your internet connection and try again.",
-				"Upload Error",
-				"Okay"
-			);
-		} else {
-			$cordovaDialogs.alert(
-				"An error has occurred: Code = " + error.code,
-				"Unexpected Error",
-				"Okay"
-			);
-			console.log("upload error source " + error.source);
-			console.log("upload error target " + error.target);
-		}
-	}
-
-	resolveLocalFileSystemURL("file://" + absolutePath, function(fileEntry) {
-		fileEntry.file( function(file) {
-			var options = new FileUploadOptions();
-			options.fileName = absolutePath.substr(absolutePath.lastIndexOf('/') + 1);
-			options.mimeType = mimeType;
-			options.chunkedMode = true;
-
-			//call getCredentials and set http headers with username and password
-			getCredentials($http, function(credentials) {
-				var headers = {
-					'filename':options.fileName,
-				};
-				if (credentials) {
-					headers['Authorization'] = 'Basic ' + btoa(credentials.username + ':' + credentials.password);
-				}
-				options.headers = headers;
-				var params = {
-					"session_id": sessionID
-				};
-				options.params = params;
-
-				// HACK: Add the session id to the URL, so that the server will recognize it
-				destURL = destURL + "?session_id=" + sessionID;
-
-				var ft = new FileTransfer();
-				ft.onProgress = progressCb;
-				ft.upload(fileEntry.toInternalURL(), encodeURI(destURL), win, fail, options);
-			});
-
-		}, function(error) {
-			console.log(error);
-		});
-		console.log(fileEntry.toInternalURL());
-	}, function(error) {
-		console.log(error);
-	});
-}
-
 function createFile(dirEntry, fileName, dataObj, successCb)
 {
 		// Creates a new file or returns the file if it already exists.
@@ -166,7 +86,7 @@ function saveJSON(jsonObject, absolutePath, successCb)
 var practiceDirective = angular.module( 'practiceDirective' );
 
 practiceDirective.controller( 'PracticeDirectiveController',
-	function($scope, $timeout, $localForage, ProfileService, StartUIState, $rootScope, $state, $http, $cordovaDialogs)
+	function($scope, $timeout, $localForage, ProfileService, StartUIState, UploadService, $rootScope, $state, $http, $cordovaDialogs)
 	{
 		// var uploadURLs = [
 		// 	"http://localhost:5000",
@@ -174,13 +94,6 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		// 	"http://localhost:5000",
 		// 	"http://localhost:5000"
 		// ];
-
-		var uploadURLs = [
-			"https://byunlab.com/start/session/ratings",
-			"https://byunlab.com/start/session/metadata",
-			"https://byunlab.com/start/session/lpc",
-			"https://byunlab.com/start/session/audio"
-		];
 
 		$scope.active = true;
 		$scope.isPracticing = false;
@@ -210,15 +123,15 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			return type + " " + sesh;
 		}
 
-		function uploadCallbackForSession(session, idx) {
-			return function uploadProgressHandler(progressEvent) {
+		function uploadCallbackForSession(session) {
+			return function uploadProgressHandler(progressEvent, idx) {
 				session.uploadProgress[idx] = progressEvent.loaded / progressEvent.total;
 				$scope.uploadStatus.uploadProgress = session.uploadProgress.reduce(function(x,y){return x+y;})/4;
 			}
 		}
 
-		function completeCallbackForSession(session, idx) {
-			return function completeProgressHandler(response) {
+		function completeCallbackForSession(session) {
+			return function completeProgressHandler(response, idx) {
 				session.uploadsComplete[idx] = true;
 				if (session.uploadsComplete.lastIndexOf(false) === -1) {
 					$scope.uploadStatus.isUploading = false;
@@ -229,26 +142,6 @@ practiceDirective.controller( 'PracticeDirectiveController',
 					);
 				}
 			}
-		}
-
-		function uploadPracticeSessionFiles(session)
-		{
-			session.uploadProgress = [0, 0, 0, 0];
-			session.uploadsComplete = [false, false, false, false];
-			var filesToUpload = [session.files.Ratings, session.files.Metadata, session.files.LPC, session.files.Audio];
-			var mimeTypes = ["text/json", "text/csv", "text/csv", "audio/mp4"];
-			for (var i=0; i<4; i++) {
-				uploadFile(filesToUpload[i],
-					uploadURLs[i],
-					mimeTypes[i],
-					session.id,
-					uploadCallbackForSession(session, i),
-					completeCallbackForSession(session, i),
-					$http,
-					$cordovaDialogs
-				);
-			}
-			$scope.uploadStatus.isUploading = true;
 		}
 
 		function recordingDidStop(files) {
@@ -263,10 +156,19 @@ practiceDirective.controller( 'PracticeDirectiveController',
 					files.Ratings = jsonPath;
 					$scope.currentPracticeSession.files = files;
 					var practiceTypeStr = sessionDisplayString();
+					var session = $scope.currentPracticeSession;
 					navigator.notification.confirm("Would you like to upload this " + practiceTypeStr + " session?",
 						function (index) {
 							if (index == 1) {
-								uploadPracticeSessionFiles($scope.currentPracticeSession);
+								session.uploadProgress = [0, 0, 0, 0];
+								session.uploadsComplete = [false, false, false, false];
+								UploadService.uploadPracticeSessionFiles(
+									session.files,
+									session.id,
+									uploadCallbackForSession(session),
+									completeCallbackForSession(session)
+								);
+								$scope.uploadStatus.isUploading = true;
 							}
 						}, "Upload",
 						["OK", "Discard"]);

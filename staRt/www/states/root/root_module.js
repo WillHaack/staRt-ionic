@@ -7,6 +7,7 @@
 		'LocalForageModule',
 		'startStateService',
 		'profileService',
+		'uploadService',
 		'lpcDirective',
 		'ngCordova',
 		'auto',

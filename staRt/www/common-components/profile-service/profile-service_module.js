@@ -20,7 +20,8 @@ profileService.factory('ProfileService', function($localForage, $http)
 			heightFeet: undefined,
 			heightInches: undefined,
 			gender: undefined,
-			uuid: guid()
+			uuid: guid(),
+			recordings: []
 		};
 	};
 
@@ -133,6 +134,14 @@ profileService.factory('ProfileService', function($localForage, $http)
 
 				return currentProfile;
 			});
+		},
+
+		getRecordingsForProfile: function(profile, cb) {
+			if (window.AudioPlugin !== undefined) {
+				window.AudioPlugin.recordingsForProfile(profile, cb, function() {cb([])});
+			} else {
+				cb([]);
+			}
 		},
 
 		setCurrentProfile: function(profile)

@@ -131,6 +131,9 @@
     NSString *metadataFile = [[recordingAsDict objectForKey:LPCRecordingSessionMetadataKey] lastPathComponent];
     LPCRecordingSession *session = [LPCRecordingSession sessionWithMetadataFile:metadataFile];
     [session deleteFiles];
+	[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]
+								callbackId:command.callbackId];
+	
     
 }
 
@@ -139,6 +142,8 @@
     NSFileManager *manager = [NSFileManager defaultManager];
     NSString *recordingDirectory = [LPCRecordingSession recordingDirectory];
     [manager removeItemAtPath:recordingDirectory error:nil];
+	[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]
+								callbackId:command.callbackId];
 }
 
 - (void)getLPCOrder:(CDVInvokedUrlCommand *)command

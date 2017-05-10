@@ -4,7 +4,7 @@
 {
 	var root = angular.module( 'root' );
 
-	root.controller('RootController', function($scope, $timeout, $localForage, StartUIState, ProfileService, $rootScope, $state)
+	root.controller('RootController', function($scope, $timeout, $localForage, StartUIState, ProfileService, UploadService, $rootScope, $state)
 	{
 		//console.log('RootController here!');
 

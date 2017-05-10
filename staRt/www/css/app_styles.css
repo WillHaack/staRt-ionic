@@ -565,13 +565,32 @@ canvas {
   background-color: #ffffff; }
 
 .profiles {
-  flex-flow: row nowrap; }
+  flex-flow: row nowrap;
+  display: flex; }
 
 .profiles__list {
-  flex: 1 0 0%; }
+  flex: 2 0 0%; }
 
 .profiles__info {
+  flex: 3 0 0%; }
+
+.profiles__recordings {
+  flex: 2 0 0%; }
+
+.profiles-flex {
+  flex-flow: row nowrap;
+  display: flex;
+  margin-top: 20px; }
+
+.column-div {
   flex: 1 0 0%; }
+
+.profiles-contentBox .radio-content .item-content {
+  padding-right: 0px;
+  text-overflow: initial; }
+
+.profiles-contentBox .radio-content span {
+  margin-right: 64px; }
 
 .tut-contentBox {
   position: relative;

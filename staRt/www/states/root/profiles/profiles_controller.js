@@ -6,7 +6,7 @@
 {
 	var profiles = angular.module( 'profiles' );
 
-	profiles.controller('ProfilesController', function($scope, $timeout, $localForage, StartUIState, ProfileService, $rootScope, $state)
+	profiles.controller('ProfilesController', function($scope, $timeout, $localForage, StartUIState, ProfileService, UploadService, $rootScope, $state, $cordovaDialogs)
 	{
 		console.log('ProfilesController here!');
 
@@ -54,7 +54,13 @@
 							AudioPlugin.setLPCOrder($scope.data.currentProfile.lpcOrder, null);
 						}
 					};
+
+					$scope.updateRecordingsList();
 				}
+			});
+
+			$scope.$on( "$ionicView.enter", function( scopes, states ) {
+				$scope.updateRecordingsList();
 			});
 		}
 
@@ -68,6 +74,12 @@
 				});
 			});
 		};
+
+		$scope.updateRecordingsList = function() {
+			ProfileService.getRecordingsForProfile($scope.data.currentProfile, function(recordings) {
+				$scope.data.currentProfileRecordings = recordings;
+			});
+		}
 
 		$scope.setIsEditing = function(isEditing)
 		{
@@ -180,6 +192,57 @@
 			else
 			{
 				doDelete();
+			}
+		};
+
+		$scope.updateSelectedRecording = function(recording) {
+			$scope.data.selectedProfileRecording = recording;
+		};
+
+		$scope.deleteSelectedRecording = function() {
+			if (window.AudioPlugin) {
+				if ($scope.data.selectedProfileRecording) {
+					window.AudioPlugin.deleteRecording($scope.data.selectedProfileRecording, function() {
+						$scope.data.selectedProfileRecording = null;
+						$scope.updateRecordingsList();
+					}, function(err) {
+						console.log(err);
+					});
+				}
+			}
+		};
+
+		$scope.uploadSelectedRecording = function() {
+
+			var uploadsComplete = [false, false, false, false];
+
+			if (window.AudioPlugin) {
+				if ($scope.data.selectedProfileRecording) {
+					var session = {
+						files: {},
+						id: null
+					};
+					session.files.Metadata = $scope.data.selectedProfileRecording.Metadata;
+					session.files.Audio = $scope.data.selectedProfileRecording.Audio;
+					session.files.LPC = $scope.data.selectedProfileRecording.LPC;
+					session.files.Ratings = session.files.Metadata.replace('-meta.csv', '-ratings.json');
+					session.id = session.files.Metadata.split('/').pop().replace('-meta.csv', '');
+					UploadService.uploadPracticeSessionFiles(
+						session.files,
+						session.id,
+						function() {},
+						function(res, idx) {
+							uploadsComplete[idx] = true;
+							if (uploadsComplete.indexOf(false) === -1) {
+								$cordovaDialogs.alert(
+									"Session uploaded successfully",
+									"Upload Complete",
+									"Okay"
+								);
+							}
+						}
+					)
+				}
 			}
 		};
 
