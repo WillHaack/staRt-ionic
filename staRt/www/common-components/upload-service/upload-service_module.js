@@ -23,7 +23,7 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 		})
 	}
 
-	function uploadFile(absolutePath, destURL, mimeType, sessionID, progressCb, completeCb, $http, $cordovaDialogs)
+	function uploadFile(absolutePath, destURL, mimeType, sessionID, progressCb, completeCb, errorCb, $http, $cordovaDialogs)
 	{
 		var win = function (r) {
 			console.log("Code = " + r.responseCode);
@@ -90,7 +90,7 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 	}
 
 	return {
-		uploadPracticeSessionFiles: function(session, id, uploadCallback, completeCallback) {
+		uploadPracticeSessionFiles: function(session, id, uploadCallback, completeCallback, errorCallback) {
 			var filesToUpload = [session.Ratings, session.Metadata, session.LPC, session.Audio];
 			var mimeTypes = ["text/json", "text/csv", "text/csv", "audio/mp4"];
 			filesToUpload.forEach(function(file, idx) {
@@ -98,8 +98,10 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 					uploadCallback(res, idx)
 				};
 				var completeCb = function(res) {
-					console.log(idx);
 					completeCallback(res, idx)
+				};
+				var errorCb = function(res) {
+					if (errorCallback) errorCallback(res, idx);
 				};
 				uploadFile(filesToUpload[idx],
 					uploadURLs[idx],
@@ -107,6 +109,7 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 					session.id,
 					uploadCb,
 					completeCb,
+					errorCb,
 					$http,
 					$cordovaDialogs
 				);

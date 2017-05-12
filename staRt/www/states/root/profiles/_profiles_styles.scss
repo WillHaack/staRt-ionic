@@ -10,19 +10,36 @@
 		display: flex;
 	}
 
+	.profiles button
+	{
+		font-size: 12px;
+		min-width: 100px;
+	}
+
+	.profiles h2
+	{
+		font-size: 22px;
+	}
+
+	.profiles__recordings ion-scroll{
+		height: 400px;
+	}
+
 	.profiles__list
 	{
 		flex: 2 0 0%;
+		margin-right: 10px;
 	}
 
 	.profiles__info
 	{
 		flex: 3 0 0%;
+		margin-right: 10px;
 	}
 
 	.profiles__recordings
 	{
-		flex: 2 0 0%;
+		flex: 3 0 0%;
 	}
 
 	.profiles-flex

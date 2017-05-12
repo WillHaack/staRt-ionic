@@ -19,22 +19,26 @@
 				</ion-radio>
 
 				<div class="profiles-flex">
-					<button
-						class="button button-calm column-div"
-						ng-click="createProfile()"
-						ng-disabled="isEditing"
-						ng-hide="isEditing">
-						<i class="icon ion-person-add"></i>
-						New
-					</button>
-					<button
-						class="button button-stable column-div"
-						ng-click="deleteAllProfiles()"
-						ng-disabled="isEditing"
-						ng-hide="isEditing || !data.currentProfile">
-						<i class="icon ion-trash-b"></i>
-						Delete All
-					</button>
+					<div class="column-div">
+						<button
+							class="button button-calm column-div"
+							ng-click="createProfile()"
+							ng-disabled="isEditing"
+							ng-hide="isEditing">
+							<i class="icon ion-person-add"></i>
+							New
+						</button>
+					</div>
+					<div class="column-div">
+						<button
+							class="button button-stable column-div"
+							ng-click="deleteAllProfiles()"
+							ng-disabled="isEditing"
+							ng-hide="isEditing || !data.currentProfile">
+							<i class="icon ion-trash-b"></i>
+							Delete All
+						</button>
+					</div>
 				</div>
 			</ion-list>
 		</div>
@@ -122,39 +126,43 @@
 						</ion-radio>
 					</label>
 					<div class="profiles-flex">
-						<button
-							type="button"
-							class="button button-balanced profiles column-div"
-							ng-click="setIsEditing(true)"
-							ng-hide="isEditing"
-							ng-disabled="!data.currentProfile"
-							ng-hide="!data.currentProfile">
-							<i class="icon ion-edit"></i>
-							Edit
-						</button>
-						<button
-							type="button"
-							class="button button-assertive profiles column-div"
-							ng-click="deleteProfile(data.currentProfile)"
-							ng-show="!isEditing"
-							ng-disabled="!data.currentProfile">
-							<i class="icon ion-trash-b"></i>
-							Discard
-						</button>
-						<button 
-							type="button" 
-							class="button profiles column-div" 
-							ng-click="saveProfile()" 
-							ng-hide="!isEditing">
-							Save
-						</button>
-						<button
-							type="button"
-							class="button profiles column-div"
-							ng-click="cancelEdit()"
-							ng-hide="!isEditing">
-							Cancel
-						</button>
+						<div class="column-div">
+							<button
+								type="button"
+								class="button button-balanced column-div"
+								ng-click="setIsEditing(true)"
+								ng-hide="isEditing"
+								ng-disabled="!data.currentProfile"
+								ng-hide="!data.currentProfile">
+								<i class="icon ion-edit"></i>
+								Edit
+							</button>
+							<button 
+								type="button" 
+								class="button column-div" 
+								ng-click="saveProfile()" 
+								ng-hide="!isEditing">
+								Save
+							</button>
+						</div>
+						<div class="column-div">
+							<button
+								type="button"
+								class="button column-div"
+								ng-click="cancelEdit()"
+								ng-hide="!isEditing">
+								Cancel
+							</button>
+							<button
+								type="button"
+								class="button button-assertive column-div"
+								ng-click="deleteProfile(data.currentProfile)"
+								ng-show="!isEditing"
+								ng-disabled="!data.currentProfile">
+								<i class="icon ion-trash-b"></i>
+								Discard
+							</button>
+						</div>
 					</div>
 		</div>
 
@@ -162,29 +170,38 @@
 			<h2>
 				Recordings
 			</h2>
-			<ion-radio
-				ng-model="data.selectedProfileRecording"
-				ng-repeat="recording in data.currentProfileRecordings"
-				ng-value="recording"
-				ng-change="updateSelectedRecording(recording)">
-			>
-				{{ recording.date }}
-			</ion-radio>
+			<ion-scroll>
+				<ion-radio
+					ng-model="data.selectedProfileRecording"
+					ng-repeat="recording in data.currentProfileRecordings"
+					ng-value="recording"
+					ng-change="updateSelectedRecording(recording)">
+				>
+					{{ recording.date }}
+				</ion-radio>
+			</ion-scroll>
 			<div class="profiles-flex">
-				<button
-					class="button button-calm column-div"
-					ng-click="uploadSelectedRecording()"
-					ng-disabled="!(data.selectedProfileRecording)" >
-					Upload
-				</button>
-				<button
-					class="button button-stable column-div"
-					ng-click="deleteSelectedRecording()"
-					ng-disabled="!(data.selectedProfileRecording)" >
-					<i class="icon ion-trash-b"></i>
-					Delete
-				</button>
+				<div class="column-div">
+					<button
+						class="button button-calm column-div"
+						ng-click="uploadSelectedRecording()"
+						ng-disabled="!data.selectedProfileRecording || uploading" >
+						Upload
+					</button>
+				</div>
+				<div class="column-div">
+					<button
+						class="button button-stable column-div"
+						ng-click="deleteSelectedRecording()"
+						ng-disabled="!data.selectedProfileRecording || uploading" >
+						<i class="icon ion-trash-b"></i>
+						Delete
+					</button>
+				</div>
 			</div>
+			<p>
+			 {{ data.uploadMessage }}
+			</p>
 		</div>
 
 		</ion-pane>

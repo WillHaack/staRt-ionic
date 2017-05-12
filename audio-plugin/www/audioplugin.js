@@ -52,7 +52,7 @@ module.exports = {
       successCallback,
       errorCallback,
       "AudioPlugin",
-      "recordingsForProfile",
+      "recordingsForAccount",
       [profileDescription]
     );
   },
