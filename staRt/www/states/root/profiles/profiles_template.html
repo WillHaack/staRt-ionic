@@ -177,7 +177,7 @@
 					ng-value="recording"
 					ng-change="updateSelectedRecording(recording)">
 				>
-					{{ recording.date }}
+					{{ recording.date + (recording.uploaded ? "Uploaded" : "Not" ) }}
 				</ion-radio>
 			</ion-scroll>
 			<div class="profiles-flex">

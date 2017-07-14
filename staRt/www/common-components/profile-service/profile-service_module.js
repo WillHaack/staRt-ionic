@@ -138,7 +138,14 @@ profileService.factory('ProfileService', function($localForage, $http)
 
 		getRecordingsForProfile: function(profile, cb) {
 			if (window.AudioPlugin !== undefined) {
-				window.AudioPlugin.recordingsForProfile(profile, cb, function() {cb([])});
+				var pluginRecordingsCallback = function(recordings) {
+					cb(recordings);
+				}
+				window.AudioPlugin.recordingsForProfile (
+					profile,
+					pluginRecordingsCallback,
+					function() {cb([])}
+				);
 			} else {
 				cb([]);
 			}

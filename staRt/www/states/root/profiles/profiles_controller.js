@@ -32,12 +32,6 @@ var UploadStatus = Object.freeze({
 
 			$scope.isEditing = false;
 			$scope.data = {};
-			$scope.data.uploadStatuses = [
-				UploadStatus.COMPLETE,
-				UploadStatus.COMPLETE,
-				UploadStatus.COMPLETE,
-				UploadStatus.COMPLETE
-			];
 
 			$scope.data.uploadMessage = "";
 
@@ -90,7 +84,18 @@ var UploadStatus = Object.freeze({
 
 		$scope.updateRecordingsList = function() {
 			ProfileService.getRecordingsForProfile($scope.data.currentProfile, function(recordings) {
-				$scope.data.currentProfileRecordings = recordings;
+				var statusesToFetch = [];
+				recordings.forEach(function(recording) {
+					statusesToFetch.push(
+						UploadService.getUploadStatusForSessionKey(recording.Metadata.split('/').pop())
+							.then(function(status) {
+								recording.uploaded = !!status.uploaded;
+							})
+					);
+				});
+				Promise.all(statusesToFetch).then(function() {
+					$scope.data.currentProfileRecordings = recordings;
+				});
 			});
 		}
 
@@ -228,33 +233,32 @@ var UploadStatus = Object.freeze({
 
 		$scope.uploadSelectedRecording = function() {
 
-			for (var i=0; i<$scope.data.uploadStatuses.length; i++) {
-				$scope.data.uploadStatuses[i] = UploadStatus.INCOMPLETE;
-			}
-
 			$scope.data.uploadMessage = "Uploading...";
 			$scope.uploading = true;
 
-			function checkUploadStatus() {
-				if ($scope.data.uploadStatuses.indexOf(UploadStatus.INCOMPLETE) === -1) {
-					if ($scope.data.uploadStatuses.indexOf(UploadStatus.ERROR) === -1) {
-						$cordovaDialogs.alert(
-							"Session uploaded successfully",
-							"Upload Complete",
-							"Okay"
-						);
-						$scope.uploading = false;
-						$scope.data.uploadMessage = "Upload succeeded";
-					} else {
-						$cordovaDialogs.alert(
-							"Session upload failed",
-							"Upload Error",
-							"Okay"
-						);
-						$scope.uploading = false;
-						$scope.data.uploadMessage = "Upload failed";
-					}
-				}
+			function progress() {
+				// do something
+			}
+
+			function win() {
+				$cordovaDialogs.alert(
+					"Session uploaded successfully",
+					"Upload Complete",
+					"Okay"
+				);
+				$scope.uploading = false;
+				$scope.data.uploadMessage = "Upload succeeded";
+				$scope.updateRecordingsList();
+			}
+
+			function fail(err) {
+				$cordovaDialogs.alert(
+					"Session upload failed",
+					"Upload Error",
+					"Okay"
+				);
+				$scope.uploading = false;
+				$scope.data.uploadMessage = "Upload failed";
 			}
 
 			if (window.AudioPlugin) {
@@ -267,20 +271,8 @@ var UploadStatus = Object.freeze({
 					session.files.Audio = $scope.data.selectedProfileRecording.Audio;
 					session.files.LPC = $scope.data.selectedProfileRecording.LPC;
 					session.files.Ratings = session.files.Metadata.replace('-meta.csv', '-ratings.json');
-					session.id = session.files.Metadata.split('/').pop().replace('-meta.csv', '');
-					UploadService.uploadPracticeSessionFiles(
-						session.files,
-						session.id,
-						function() {},
-						function(res, idx) {
-							$scope.data.uploadStatuses[idx] = UploadStatus.COMPLETE;
-							checkUploadStatus();
-						},
-						function(res, idx) {
-							$scope.data.uploadStatuses[idx] = UploadStatus.ERROR;
-							checkUploadStatus();
-						}
-					)
+					session.id = session.files.Metadata.split('/').pop().substr(0, 36);
+					UploadService.uploadPracticeSessionFiles(session.files, session.id, progress, win, fail);
 				}
 			}
 		};

@@ -130,18 +130,13 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			}
 		}
 
-		function completeCallbackForSession(session) {
-			return function completeProgressHandler(response, idx) {
-				session.uploadsComplete[idx] = true;
-				if (session.uploadsComplete.lastIndexOf(false) === -1) {
-					$scope.uploadStatus.isUploading = false;
-					$cordovaDialogs.alert(
-						"Session uploaded successfully",
-						"Upload Complete",
-						"Okay"
-					);
-				}
-			}
+		function completeCallback() {
+			$scope.uploadStatus.isUploading = false;
+			$cordovaDialogs.alert(
+				"Session uploaded successfully",
+				"Upload Complete",
+				"Okay"
+			);
 		}
 
 		function recordingDidStop(files) {
@@ -166,7 +161,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 									session.files,
 									session.id,
 									uploadCallbackForSession(session),
-									completeCallbackForSession(session)
+									completeCallback
 								);
 								$scope.uploadStatus.isUploading = true;
 							}
