@@ -8,6 +8,20 @@ var UploadStatus = Object.freeze({
 	COMPLETE: "COMPLETE"
 });
 
+function dateFromString(str) {
+	var a = str.split(/[^0-9]/);
+	a = a.map(function (s) { return parseInt(s, 10) });
+  return new Date(a[0], a[1]-1 || 0, a[2] || 1, a[3] || 0, a[4] || 0, a[5] || 0, a[6] || 0);
+}
+
+function compareRecordings(ra, rb) {
+	var da = dateFromString(ra.date);
+	var db = dateFromString(rb.date);
+	if (da > db) return -1;
+	if (da === db) return 0;
+	return 1;
+}
+
 ( function(  )
 {
 	var profiles = angular.module( 'profiles' );
@@ -85,6 +99,8 @@ var UploadStatus = Object.freeze({
 		$scope.updateRecordingsList = function() {
 			ProfileService.getRecordingsForProfile($scope.data.currentProfile, function(recordings) {
 				var statusesToFetch = [];
+				var oldRecordings = recordings.slice();
+				recordings.sort(compareRecordings);
 				recordings.forEach(function(recording) {
 					statusesToFetch.push(
 						UploadService.getUploadStatusForSessionKey(recording.Metadata.split('/').pop())
