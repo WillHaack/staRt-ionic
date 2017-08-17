@@ -99,8 +99,7 @@ function compareRecordings(ra, rb) {
 		$scope.updateRecordingsList = function() {
 			ProfileService.getRecordingsForProfile($scope.data.currentProfile, function(recordings) {
 				var statusesToFetch = [];
-				var oldRecordings = recordings.slice();
-				recordings.sort(compareRecordings);
+				recordings.sort(compareRecordings); // Prefer the recordings sorted from present to past
 				recordings.forEach(function(recording) {
 					statusesToFetch.push(
 						UploadService.getUploadStatusForSessionKey(recording.Metadata.split('/').pop())

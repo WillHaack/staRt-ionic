@@ -564,6 +564,24 @@ canvas {
 canvas {
   background-color: #ffffff; }
 
+.profiles__recordings .item-radio {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: black; }
+
+.item-radio.not_uploaded {
+  border-left-style: solid;
+  border-left-width: 5px;
+  border-left-color: red; }
+
+.upload_badge.uploaded {
+  color: green;
+  font-weight: bold; }
+
+.upload_badge.not_uploaded {
+  color: red;
+  font-weight: bold; }
+
 .profiles {
   flex-flow: row nowrap;
   display: flex; }
@@ -583,11 +601,11 @@ canvas {
   margin-right: 10px; }
 
 .profiles__info {
-  flex: 2 0 0%;
+  flex: 3 0 0%;
   margin-right: 10px; }
 
 .profiles__recordings {
-  flex: 2 0 0%; }
+  flex: 3 0 0%; }
 
 .profiles-flex {
   flex-flow: row nowrap;
@@ -603,6 +621,10 @@ canvas {
 
 .profiles-contentBox .radio-content span {
   margin-right: 64px; }
+
+.upload_badge {
+  color: #00bb00;
+  font-weight: bold; }
 
 .tut-contentBox {
   position: relative;

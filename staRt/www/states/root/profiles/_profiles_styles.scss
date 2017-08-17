@@ -1,8 +1,36 @@
 // parent ele for all the profiles content
-.profiles-contentBox {  
+.profiles-contentBox {
 	//border: 1px solid violet;
 	// this needs to be a flexbox
 }
+
+	.profiles__recordings .item-radio {
+		border-bottom-style: solid;
+		border-bottom-width: 2px;
+		border-bottom-color: black;
+	}
+
+	// .item-radio.uploaded {
+	// 	border-left-style: solid;
+	// 	border-left-width: 5px;
+	// 	border-left-color: green;
+	// }
+
+	.item-radio.not_uploaded {
+		border-left-style: solid;
+		border-left-width: 5px;
+		border-left-color: red;
+	}
+
+	.upload_badge.uploaded {
+		color: green;
+		font-weight: bold;
+	}
+
+	.upload_badge.not_uploaded {
+		color: red;
+		font-weight: bold;
+	}
 
 	.profiles
 	{
@@ -63,4 +91,10 @@
 	.profiles-contentBox .radio-content span
 	{
 		margin-right: 64px;
+	}
+
+	.upload_badge
+	{
+		color: #00bb00;
+		font-weight: bold;
 	}
