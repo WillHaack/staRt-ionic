@@ -1004,6 +1004,8 @@ lpc-directive {
   height: 100%;
   display: flex;
   align-items: center; }
+  #lpc-canvas-parentSize.buttons_visible {
+    width: 88%; }
 
 .waveLabel {
   font-size: 35px;

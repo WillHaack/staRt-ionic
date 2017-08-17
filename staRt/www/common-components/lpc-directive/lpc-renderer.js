@@ -101,6 +101,10 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 
 	LPCRenderer.prototype.updateCameraSize = function()
 	{
+		// this.renderer.setPixelRatio( 1 );
+		this.renderer.setSize(this.WIDTH, this.HEIGHT);
+		this.renderer.setClearColor(0xc5f3ff, 1.0);
+
 		this.camera.position.set(0, 0, 100);
 		this.camera.aspect = this.WIDTH/this.HEIGHT;
 		this.camera.lookAt(new THREE.Vector3(0, 0, 0));
@@ -108,11 +112,9 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 		this.camera.top = this.TOP;
 		this.camera.right = this.RIGHT;
 		this.camera.bottom = this.BOTTOM;
-
-		this.renderer.setSize(this.WIDTH, this.HEIGHT);
-		this.renderer.setPixelRatio( window.devicePixelRatio );
-		this.renderer.setClearColor(0xc5f3ff, 1.0);
 		this.camera.updateProjectionMatrix();
+
+		// this.renderer.setPixelRatio( window.devicePixelRatio );
 	}
 
 	LPCRenderer.prototype.buildMaterials = function()
@@ -504,6 +506,8 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 	LPCRenderer.prototype.initialize = function(parentElement, canvasElement)
 	{
 		this.renderer = new THREE.WebGLRenderer({ antialias: true, canvas: canvasElement });
+		// this.renderer.setPixelRatio( window.devicePixelRatio );
+		this.renderer.setPixelRatio( 1 );
 
 		this.parentElement = parentElement;
 		this.canvas = canvasElement;
