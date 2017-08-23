@@ -949,6 +949,10 @@ div.needleBox {
   left: 169px;
   z-index: 9; }
 
+.button-row {
+  display: flex;
+  justify-content: center; }
+
 .words-progress-indicator {
   display: inline-block;
   vertical-align: middle; }

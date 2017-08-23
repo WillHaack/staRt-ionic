@@ -5,23 +5,27 @@
 			Syllable or Word Probes
 		</div>
 
-		<!-- 50 items, random -->
-		<button
-			class="big-button"
-			ng-click="beginWordProbe()"
-			ng-hide="practicing"
-		>
-			Word Probe
-		</button>
+		<div class="button-row">
 
-		<!-- 30 items, sequential -->
-		<button
-			class="big-button"
-			ng-click="beginSyllableProbe()"
-			ng-hide="practicing"
-		>
-			Syllable Probe
-		</button>
+			<!-- 50 items, random -->
+			<button
+				class="big-button"
+				ng-click="beginWordProbe()"
+				ng-hide="practicing"
+			>
+				Word Probe
+			</button>
+
+			<!-- 30 items, sequential -->
+			<button
+				class="big-button"
+				ng-click="beginSyllableProbe()"
+				ng-hide="practicing"
+			>
+				Syllable Probe
+			</button>
+
+		</div>
 
 		<practice-directive
 			probe="true"
