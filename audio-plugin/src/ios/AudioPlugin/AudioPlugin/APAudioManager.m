@@ -65,7 +65,9 @@
 - (void) stopRecording
 {
     [self.recorder finishRecording];
-    [self.lpcCalculator finishRecording];
+	[self.currentRecordingSession endRecording];
+	LPCRecordingSessionData sessionData = [self.currentRecordingSession dataWithLpcOrder:self.lpcCalculator.lpcOrder];
+	[self.lpcCalculator finishRecordingLPCWithRecordingSessionData:&sessionData error:nil];
     self.currentRecordingSession = nil;
 }
 

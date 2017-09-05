@@ -21,7 +21,7 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
 
 @interface LPCRecordingSession ()
 @property (nonatomic, strong) NSDate *date;
-@property (nonatomic, strong) NSString *dateString;
+@property (nonatomic, strong) NSString *dateString, *userDataString, *endDateString;
 @property (nonatomic, strong) NSString *metadataFilename, *lpcFilename, *audioFilename;
 @property (nonatomic, strong) LPCProfileDescription *profileDescription;
 @end
@@ -37,18 +37,20 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
     return dateFormatter;
 }
 
-+ (instancetype) sessionWithProfileDescription:(LPCProfileDescription *)profile
++ (instancetype) sessionWithProfileDescription:(LPCProfileDescription *)profile clientUserData:(NSString *)userDataString
 {
     LPCRecordingSession *session = [[LPCRecordingSession alloc] init];
     session.profileDescription = profile;
+	session.userDataString = userDataString;
     session.date = [NSDate date];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
     [dateFormatter setLocale:enUSPOSIXLocale];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH-mm-ss"];
-    
+	
     session.dateString = [dateFormatter stringFromDate:session.date];
+	session.endDateString = @"";
     session.metadataFilename = [NSString stringWithFormat:@"%@-%@-meta.csv", session.profileDescription.uuid, session.dateString];
     session.lpcFilename = [NSString stringWithFormat:@"%@-%@-lpc.csv", session.profileDescription.uuid, session.dateString];
     session.audioFilename = [NSString stringWithFormat:@"%@-%@-audio.m4a", session.profileDescription.uuid, session.dateString];
@@ -85,8 +87,10 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
         NSLog(@"%@", [error localizedDescription]);
         return nil;
     }
-    
+	
+	session.userDataString = [rows[0] objectForKey:@"user_string"];
     session.dateString = [rows[0] objectForKey:@"start_date"];
+	session.endDateString = [rows[0] objectForKey:@"end_date"];
     session.lpcFilename = [[rows[0] objectForKey:@"lpc_file"] lastPathComponent];
     session.audioFilename = [[rows[0] objectForKey:@"audio_file"] lastPathComponent];
     session.profileDescription = [LPCProfileDescription accountDescriptionWithRecordingMetadataURL:metadataURL];
@@ -165,7 +169,8 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
     } else {
         data.ageInYears = -1;
     }
-    
+	
+	data.userDataString = [self.userDataString cStringUsingEncoding:NSUTF8StringEncoding];
     data.targetF3 = self.profileDescription.targetF3;
     data.stdevF3 = self.profileDescription.stdevF3;
     data.targetLPCOrder = self.profileDescription.targetLPCOrder;
@@ -173,6 +178,7 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
     data.lpc_path = [[[lpcFileURL absoluteString] stringByRemovingPercentEncoding] cStringUsingEncoding:NSUTF8StringEncoding];
     data.metadata_path = [[[metadataFileURL absoluteString] stringByRemovingPercentEncoding] cStringUsingEncoding:NSUTF8StringEncoding];
     data.date_string = [self.dateString cStringUsingEncoding:NSUTF8StringEncoding];
+	data.end_date_string = [self.endDateString cStringUsingEncoding:NSUTF8StringEncoding];
     data.identifier = [[[[UIDevice currentDevice] identifierForVendor] UUIDString] cStringUsingEncoding:NSUTF8StringEncoding];
     data.lpc_order = lpcOrder;
     
@@ -187,6 +193,8 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
     [mutRep setObject:[recordingDirectory stringByAppendingPathComponent:self.lpcFilename] forKey:LPCRecordingSessionLPCKey];
     [mutRep setObject:[recordingDirectory stringByAppendingPathComponent:self.audioFilename] forKey:LPCRecordingSessionAudioKey];
 	[mutRep setObject:self.dateString forKey:@"date"];
+	[mutRep setObject:self.userDataString forKey:@"userString"];
+	[mutRep setObject:self.endDateString forKey:@"endDate"];
     return mutRep;
 }
 
@@ -197,6 +205,13 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
     [manager removeItemAtPath:[recordingDirectory stringByAppendingPathComponent:self.metadataFilename] error:nil];
     [manager removeItemAtPath:[recordingDirectory stringByAppendingPathComponent:self.lpcFilename] error:nil];
     [manager removeItemAtPath:[recordingDirectory stringByAppendingPathComponent:self.audioFilename] error:nil];
+}
+
+- (void)endRecording
+{
+	NSDateFormatter *dateFormatter = [LPCRecordingSession recordingSessionDateFormatter];
+	NSDate *d = [NSDate date];
+	self.endDateString = [dateFormatter stringFromDate:d];
 }
 
 #pragma mark - LPCUploadable

@@ -17,5 +17,5 @@
 - (double) frequencyScaling;
 
 - (void) beginRecordingLPCWithRecordingSessionData:(LPCRecordingSessionData *)sessionData error:(NSError **)error;
-- (void) finishRecording;
+- (void) finishRecordingLPCWithRecordingSessionData:(LPCRecordingSessionData *)sessionData error:(NSError **)error;
 @end

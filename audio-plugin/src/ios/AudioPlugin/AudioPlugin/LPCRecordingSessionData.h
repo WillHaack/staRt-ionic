@@ -20,10 +20,12 @@ typedef struct {
     double      stdevF3;
     int16_t     targetLPCOrder;
     const char  *date_string;
+	const char  *end_date_string;
     const char  *metadata_path;
     const char  *lpc_path;
     const char  *audio_path;
     const char  *identifier;
+	const char	*userDataString;
     uint16_t lpc_order;
 } LPCRecordingSessionData;
 

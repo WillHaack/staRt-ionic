@@ -20,12 +20,13 @@ FOUNDATION_EXPORT NSString *const LPCRecordingSessionAudioKey;
 @property (nonatomic, readonly) NSString *lpcFilename;
 @property (nonatomic, readonly) NSString *audioFilename;
 
-+ (instancetype) sessionWithProfileDescription:(LPCProfileDescription *)profile;
++ (instancetype) sessionWithProfileDescription:(LPCProfileDescription *)profile clientUserData:(NSString *)userDataString;
 + (instancetype) sessionWithMetadataFile:(NSString *)metadata;
 + (NSArray<LPCRecordingSession *> *) recordingsForAccount:(LPCProfileDescription *)profile;
 + (NSString *) recordingDirectory;
 - (LPCRecordingSessionData) dataWithLpcOrder:(uint16_t)lpcOrder;
 - (NSDictionary *)recordingFilesDictionary;
 - (void)deleteFiles;
+- (void)endRecording;
 
 @end

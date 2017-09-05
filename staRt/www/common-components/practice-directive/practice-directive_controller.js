@@ -113,8 +113,8 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			$scope.isRecording = true;
 		}
 
-		function recordingDidFail() {
-
+		function recordingDidFail(err) {
+			console.log("Recording failed");
 		}
 
 		function sessionDisplayString() {
@@ -166,7 +166,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 								$scope.uploadStatus.isUploading = true;
 							}
 						}, "Upload",
-						["OK", "Discard"]);
+						["OK", "Later"]);
 				});
 			}
 
@@ -177,7 +177,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			$scope.isPracticing = true;
 			$scope.currentPracticeSession = initialPracticeSession();
 			if (window.AudioPlugin !== undefined) {
-				AudioPlugin.startRecording(user, recordingDidStart, recordingDidFail);
+				AudioPlugin.startRecording(user, sessionDisplayString(), recordingDidStart, recordingDidFail);
 			}
 			advanceWord();
 		}

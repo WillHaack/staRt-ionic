@@ -11,7 +11,7 @@ var UploadStatus = Object.freeze({
 function dateFromString(str) {
 	var a = str.split(/[^0-9]/);
 	a = a.map(function (s) { return parseInt(s, 10) });
-  return new Date(a[0], a[1]-1 || 0, a[2] || 1, a[3] || 0, a[4] || 0, a[5] || 0, a[6] || 0);
+	return new Date(a[0], a[1]-1 || 0, a[2] || 1, a[3] || 0, a[4] || 0, a[5] || 0, a[6] || 0);
 }
 
 function compareRecordings(ra, rb) {
@@ -45,9 +45,11 @@ function compareRecordings(ra, rb) {
 		{
 
 			$scope.isEditing = false;
+			$scope.uploadCount = 0;
 			$scope.data = {};
 
 			$scope.data.uploadMessage = "";
+			$scope.data.selectedProfileRecordings = [];
 
 			ProfileService.getAllProfiles().then( function(res) {
 				console.log(res);
@@ -97,6 +99,7 @@ function compareRecordings(ra, rb) {
 		};
 
 		$scope.updateRecordingsList = function() {
+			$scope.data.selectedProfileRecordings = [];
 			ProfileService.getRecordingsForProfile($scope.data.currentProfile, function(recordings) {
 				var statusesToFetch = [];
 				recordings.sort(compareRecordings); // Prefer the recordings sorted from present to past
@@ -105,11 +108,16 @@ function compareRecordings(ra, rb) {
 						UploadService.getUploadStatusForSessionKey(recording.Metadata.split('/').pop())
 							.then(function(status) {
 								recording.uploaded = !!status.uploaded;
+								if (recording.endDate && recording.endDate.length > 0) {
+									recording.totalTime = dateFromString(recording.endDate) - dateFromString(recording.date);
+									recording.totalTimeString = Math.floor(recording.totalTime / 60000) + " min, " + ((recording.totalTime % 60000) / 1000) + " sec";
+								}
 							})
 					);
 				});
 				Promise.all(statusesToFetch).then(function() {
 					$scope.data.currentProfileRecordings = recordings;
+					$timeout(function() {});
 				});
 			});
 		}
@@ -228,68 +236,89 @@ function compareRecordings(ra, rb) {
 			}
 		};
 
-		$scope.updateSelectedRecording = function(recording) {
-			$scope.data.selectedProfileRecording = recording;
-		};
+		var selected = [];
 
-		$scope.deleteSelectedRecording = function() {
+		$scope.recordingClicked = function (member) {
+			var index = $scope.data.selectedProfileRecordings.indexOf(member);
+			if(index > -1) {
+				$scope.data.selectedProfileRecordings.splice(index, 1);
+				member.selected = false;
+			} else {
+				$scope.data.selectedProfileRecordings.push(member);
+				member.selected = true;
+			}
+		}
+
+		$scope.deleteSelectedRecordings = function() {
 			if (window.AudioPlugin) {
-				if ($scope.data.selectedProfileRecording) {
-					var recording = $scope.data.selectedProfileRecording;
-					$scope.data.selectedProfileRecording = null;
-					window.AudioPlugin.deleteRecording(recording, function() {
+				if ($scope.data.selectedProfileRecordings.length) {
+					var deletionPromises = [];
+					$scope.data.selectedProfileRecordings.forEach(function (recording) {
+						$scope.data.selectedProfileRecording = null;
+						deletionPromises.push(new Promise(function (resolve, reject) {
+							window.AudioPlugin.deleteRecording(recording, function() {
+								resolve();
+							}, function(err) {
+								console.log(err);
+								reject(err);
+							});
+						}));
+					});
+
+					Promise.all(deletionPromises).then(function (res) {
 						$scope.updateRecordingsList();
-					}, function(err) {
-						console.log(err);
 					});
 				}
 			}
 		};
 
-		$scope.uploadSelectedRecording = function() {
+		$scope.uploadSelectedRecordings = function() {
 
-			$scope.data.uploadMessage = "Uploading...";
-			$scope.uploading = true;
+			$scope.data.selectedProfileRecordings.forEach(function (recording) {
 
-			function progress() {
-				// do something
-			}
+				$scope.data.uploadMessage = "Uploading...";
 
-			function win() {
-				$cordovaDialogs.alert(
-					"Session uploaded successfully",
-					"Upload Complete",
-					"Okay"
-				);
-				$scope.uploading = false;
-				$scope.data.uploadMessage = "Upload succeeded";
-				$scope.updateRecordingsList();
-			}
-
-			function fail(err) {
-				$cordovaDialogs.alert(
-					"Session upload failed",
-					"Upload Error",
-					"Okay"
-				);
-				$scope.uploading = false;
-				$scope.data.uploadMessage = "Upload failed";
-			}
-
-			if (window.AudioPlugin) {
-				if ($scope.data.selectedProfileRecording) {
-					var session = {
-						files: {},
-						id: null
-					};
-					session.files.Metadata = $scope.data.selectedProfileRecording.Metadata;
-					session.files.Audio = $scope.data.selectedProfileRecording.Audio;
-					session.files.LPC = $scope.data.selectedProfileRecording.LPC;
-					session.files.Ratings = session.files.Metadata.replace('-meta.csv', '-ratings.json');
-					session.id = session.files.Metadata.split('/').pop().substr(0, 36);
-					UploadService.uploadPracticeSessionFiles(session.files, session.id, progress, win, fail);
+				function progress() {
+					// do something
 				}
-			}
+
+				function win() {
+					$cordovaDialogs.alert(
+						"Session uploaded successfully",
+						"Upload Complete",
+						"Okay"
+					);
+					$scope.uploadCount -= 1;
+					if ($scope.uploadCount === 0) $scope.data.uploadMessage = "";
+					$scope.updateRecordingsList();
+				}
+
+				function fail(err) {
+					$cordovaDialogs.alert(
+						"Session upload failed",
+						"Upload Error",
+						"Okay"
+					);
+					$scope.uploadCount -= 1;
+					if ($scope.uploadCount === 0) $scope.data.uploadMessage = "";
+				}
+
+				if (window.AudioPlugin) {
+					if (recording) {
+						var session = {
+							files: {},
+							id: null
+						};
+						session.files.Metadata = recording.Metadata;
+						session.files.Audio = recording.Audio;
+						session.files.LPC = recording.LPC;
+						session.files.Ratings = session.files.Metadata.replace('-meta.csv', '-ratings.json');
+						session.id = session.files.Metadata.split('/').pop().substr(0, 36);
+						$scope.uploadCount += 1;
+						UploadService.uploadPracticeSessionFiles(session.files, session.id, progress, win, fail);
+					}
+				}
+			});
 		};
 
 		init();

@@ -20,13 +20,13 @@ module.exports = {
                  "getLPCCoefficients",
                  null); // No arguments
   },
-  startRecording: function(profileDescription, successCallback, errorCallback) {
+  startRecording: function(profileDescription, userString, successCallback, errorCallback) {
     cordova.exec(
       successCallback,
       errorCallback,
       "AudioPlugin",
       "startRecording",
-      [profileDescription]
+      [profileDescription, userString]
     );
   },
   stopRecording: function(successCallback, errorCallback) {

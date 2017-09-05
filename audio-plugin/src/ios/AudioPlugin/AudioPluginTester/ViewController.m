@@ -69,7 +69,9 @@ static NSDictionary *s_descDict;
 
 - (IBAction)stopRecording:(id)sender
 {
-    [self.audioManager stopRecording];
+	LPCProfileDescription *desc = [LPCProfileDescription accountDescriptionWithDictionary:s_descDict];
+	LPCRecordingSession *session = [LPCRecordingSession sessionWithProfileDescription:desc];
+	[self.audioManager stopRecordingForRecordingSession:session];
 }
 
 - (IBAction)listRecordings:(id)sender

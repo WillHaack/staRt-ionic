@@ -171,32 +171,33 @@
 				Recordings
 			</h2>
 			<ion-scroll>
-				<ion-radio
-					ng-model="data.selectedProfileRecording"
+				<ion-list
 					ng-repeat="recording in data.currentProfileRecordings"
-					ng-value="recording"
-					ng-change="updateSelectedRecording(recording)"
 					ng-class="{uploaded:recording.uploaded, not_uploaded:!recording.uploaded}"
 				>
-					<div>{{ recording.date }} </div>
-					<div ng-if=recording.uploaded class="upload_badge uploaded">Uploaded</div>
-					<div ng-if=!recording.uploaded class="upload_badge not_uploaded">Not Uploaded</div>
-				</ion-radio>
+					<ion-item ng-click="recordingClicked(recording)" ng-class="{ selected: recording.selected }">
+						<div>{{ recording.date }} </div>
+						<div>{{ recording.userString }} </div>
+						<div>{{ recording.totalTimeString }} </div>
+						<div ng-if=recording.uploaded class="upload_badge uploaded">Uploaded</div>
+						<div ng-if=!recording.uploaded class="upload_badge not_uploaded">Not Uploaded</div>
+					</ion-item>
+				</ion-list>
 			</ion-scroll>
 			<div class="profiles-flex">
 				<div class="column-div">
 					<button
 						class="button button-calm column-div"
-						ng-click="uploadSelectedRecording()"
-						ng-disabled="!data.selectedProfileRecording || uploading" >
+						ng-click="uploadSelectedRecordings()"
+						ng-disabled="!data.selectedProfileRecordings.length || uploadCount > 0" >
 						Upload
 					</button>
 				</div>
 				<div class="column-div">
 					<button
 						class="button button-stable column-div"
-						ng-click="deleteSelectedRecording()"
-						ng-disabled="!data.selectedProfileRecording || uploading" >
+						ng-click="deleteSelectedRecordings()"
+						ng-disabled="!data.selectedProfileRecordings.length || uploadCount > 0" >
 						<i class="icon ion-trash-b"></i>
 						Delete
 					</button>

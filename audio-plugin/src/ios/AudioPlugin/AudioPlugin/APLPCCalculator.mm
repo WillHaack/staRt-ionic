@@ -190,37 +190,44 @@ static void receiverCallback(__unsafe_unretained APLPCCalculator *THIS,
     self->audioManager->setLPCOrder(lpcOrder);
 }
 
+- (void) writeMetadataFileForSessionData:(LPCRecordingSessionData *)sessionData error:(NSError *__autoreleasing *)error
+{
+	FILE *metadataFile = fopen(sessionData->metadata_path, "w");
+	if (!metadataFile) {
+		printf("LPCSessionRecorder: Could not open metadata file at path %s\n", sessionData->metadata_path);
+		if (error)
+			*error = [NSError errorWithDomain:@"LPCRecorder" code:-50 userInfo:nil];
+		return;
+	}
+	
+	const char *metadataHeader = "user_string, stream_sample_rate, uuid, deviceID, username, gender, age, heightFeet, heightInches, targetF3, stdevF3, targetLPCOrder, start_date, end_date, lpc_order, lpc_file, audio_file\n";
+	fwrite(metadataHeader, sizeof(char), strlen(metadataHeader), metadataFile);
+	fprintf(metadataFile,
+			"%s, %f, %s, %s, %s, %s, %d, %d, %d, %f, %f, %d, %s, %s, %d, %s, %s",
+			sessionData->userDataString,
+			sampleRate,
+			sessionData->accountUUID,
+			sessionData->identifier,
+			sessionData->username,
+			sessionData->gender,
+			sessionData->ageInYears,
+			sessionData->heightFeet,
+			sessionData->heightInches,
+			sessionData->targetF3,
+			sessionData->stdevF3,
+			sessionData->targetLPCOrder,
+			sessionData->date_string,
+			sessionData->end_date_string,
+			sessionData->lpc_order,
+			sessionData->lpc_path,
+			sessionData->audio_path);
+	fclose(metadataFile);
+}
+
 - (void) beginRecordingLPCWithRecordingSessionData:(LPCRecordingSessionData *)sessionData error:(NSError *__autoreleasing *)error
 {
-    FILE *metadataFile = fopen(sessionData->metadata_path, "w");
-    if (!metadataFile) {
-        printf("LPCSessionRecorder: Could not open metadata file at path %s\n", sessionData->metadata_path);
-        if (error)
-            *error = [NSError errorWithDomain:@"LPCRecorder" code:-50 userInfo:nil];
-        return;
-    }
-    
-    const char *metadataHeader = "stream_sample_rate, uuid, deviceID, username, gender, age, heightFeet, heightInches, targetF3, stdevF3, targetLPCOrder, start_date, lpc_order, lpc_file, audio_file\n";
-    fwrite(metadataHeader, sizeof(char), strlen(metadataHeader), metadataFile);
-    fprintf(metadataFile,
-            "%f, %s, %s, %s, %s, %d, %d, %d, %f, %f, %d, %s, %d, %s, %s",
-            sampleRate,
-            sessionData->accountUUID,
-            sessionData->identifier,
-            sessionData->username,
-            sessionData->gender,
-            sessionData->ageInYears,
-            sessionData->heightFeet,
-            sessionData->heightInches,
-            sessionData->targetF3,
-            sessionData->stdevF3,
-            sessionData->targetLPCOrder,
-            sessionData->date_string,
-            sessionData->lpc_order,
-            sessionData->lpc_path,
-            sessionData->audio_path);
-    fclose(metadataFile);
-    
+	[self writeMetadataFileForSessionData:sessionData error:error];
+	
     m_lpcOutputFile = fopen(sessionData->lpc_path, "w");
     if (!m_lpcOutputFile) {
         printf("LPCSessionRecorder: Could not open LPC file at path %s\n", sessionData->lpc_path);
@@ -241,8 +248,10 @@ static void receiverCallback(__unsafe_unretained APLPCCalculator *THIS,
     return;
 }
 
-- (void) finishRecording
+- (void) finishRecordingLPCWithRecordingSessionData:(LPCRecordingSessionData *)sessionData error:(NSError **)error
 {
+	[self writeMetadataFileForSessionData:sessionData error:error];
+	
     m_isRecording = false;
     fclose(m_lpcOutputFile);
     m_lpcOutputFile = NULL;

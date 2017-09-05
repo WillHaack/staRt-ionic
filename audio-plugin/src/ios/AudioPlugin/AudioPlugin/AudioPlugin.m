@@ -66,9 +66,12 @@
     
     LPCProfileDescription *description;
     NSDictionary *accountAsDict = [command argumentAtIndex:0 withDefault:nil andClass:[NSDictionary class]];
+	NSString *userString = [command argumentAtIndex:1 withDefault:@"" andClass:[NSString class]];
     if (accountAsDict) {
         description = [LPCProfileDescription accountDescriptionWithDictionary:accountAsDict];
-        LPCRecordingSession *session = [LPCRecordingSession sessionWithProfileDescription:description];
+        LPCRecordingSession *session = [LPCRecordingSession
+										sessionWithProfileDescription:description
+										clientUserData:userString];
         [self.audioManager startRecordingForRecordingSession:session];
         NSDictionary *recordingFiles = [session recordingFilesDictionary];
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
@@ -85,7 +88,7 @@
 {
     LPCRecordingSession *session = self.audioManager.currentRecordingSession;
     if (session) {
-        [self.audioManager stopRecording];
+		[self.audioManager stopRecording];
         NSDictionary *recordingFiles = [session recordingFilesDictionary];
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                                 messageAsDictionary:recordingFiles];
