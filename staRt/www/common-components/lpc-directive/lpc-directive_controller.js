@@ -307,6 +307,10 @@ lpcDirective.controller( 'LpcDirectiveController',
 		})
 	};
 
+	$scope.stopPractice = function() {
+		$scope.$emit('stopPractice');
+	}
+
 	$scope.showLPC = function() {
 		$scope.lpcHidden = false;
 	};
@@ -351,6 +355,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 	$scope.$watch('targetF3', function() {
 		$scope.updateTarget();
 	});
+
 
 	$scope.myURL = $state.current.name;
 

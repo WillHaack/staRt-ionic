@@ -3,14 +3,12 @@
 	<button style="margin:40px;" ng-click="beginWordPractice()" ng-hide="isPracticing || !hasValidWordList">
 		Start {{type}} {{probe ? "probe" : "practice"}}
 	</button>
-	<button style="margin:40px;" ng-click="nextWord()" ng-hide="!isPracticing">
-		Next {{tyep}}
-	</button>
 	<button
 		style="margin:40px;"
-		ng-click="endWordPractice()"
-		ng-hide="!isPracticing">
-		Stop {{type}} {{probe ? "probe" : "practice"}}
+		ng-click="nextWord()"
+		ng-hide="!isPracticing"
+		ng-if="false">
+		Next {{type}}
 	</button>
 	<div class="word-status">
 	<p
@@ -32,6 +30,7 @@
 		reset="true"
 		sand="true"
 		tutorial="false"
+		type="type"
 		waveHidden="isFeedbacking"
 		hide-btn="true"
 	/>

@@ -283,6 +283,16 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		$scope.$on('ratingChange', function(event, data)
 		{
 			$scope.rating = data === undefined ? 0 : data;
+			if (!!$scope.rating) {
+				$scope.nextWord();
+			}
+		});
+
+		$scope.$on('stopPractice', function(event)
+		{
+			if ($scope.isPracticing) {
+				$scope.endWordPractice();
+			}
 		});
 
 		$scope.$watch("csv", function () {
