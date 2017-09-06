@@ -35,13 +35,13 @@
 			$scope.count = 30;
 		};
 
-		$scope.beginWordProbe = function() {
+		$scope.beginWordProbe = function(count) {
 			console.log("Begin word probe");
 			$scope.practicing = true;
 			$scope.csv = "data/Word_Probe.csv";
 			$scope.order = "random";
 			$scope.type = "Word";
-			$scope.count = 50;
+			$scope.count = count || 50;
 		};
 
 		$scope.endProbeCallback = function() {

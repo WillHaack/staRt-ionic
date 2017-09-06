@@ -1,9 +1,47 @@
 // parent ele for all the auto content
 .auto-contentBox {
 	//border: 1px solid violet;
+	display: flex;
+	height: 75%;
+	flex-direction: column;
+	justify-content: space-around;
 }
 
-.button-row {
+.probe-header {
+	width: 100%;
+	flex: 1 0 auto;
+}
+
+.probe-header h2 {
+	text-align: center;
+	width: 55%;
+	margin: auto;
+}
+
+.probe-header p {
+	text-align: center;
+	width: 55%;
+	margin: auto;
+}
+
+.probe-description-row {
+	width: 100%;
+	flex: 1 0 auto;
+	display: flex;
+	justify-content: space-around;
+}
+
+.probe-description {
+	width: 30%;
+}
+
+.probe-button-class {
+	flex: 1 0 auto;
 	display: flex;
 	justify-content: center;
+}
+
+.probe-buttons {
+	display: flex;
+	flex: 1 0 auto;
 }

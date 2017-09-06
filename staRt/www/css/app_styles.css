@@ -955,9 +955,43 @@ div.needleBox {
   left: 169px;
   z-index: 9; }
 
-.button-row {
+.auto-contentBox {
+  display: flex;
+  height: 75%;
+  flex-direction: column;
+  justify-content: space-around; }
+
+.probe-header {
+  width: 100%;
+  flex: 1 0 auto; }
+
+.probe-header h2 {
+  text-align: center;
+  width: 55%;
+  margin: auto; }
+
+.probe-header p {
+  text-align: center;
+  width: 55%;
+  margin: auto; }
+
+.probe-description-row {
+  width: 100%;
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: space-around; }
+
+.probe-description {
+  width: 30%; }
+
+.probe-button-class {
+  flex: 1 0 auto;
   display: flex;
   justify-content: center; }
+
+.probe-buttons {
+  display: flex;
+  flex: 1 0 auto; }
 
 .words-progress-indicator {
   display: inline-block;

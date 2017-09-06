@@ -1,33 +1,65 @@
 <ion-view view-title="Test Probes" class="state-contentBox">
 	<div class="auto-contentBox">
 
-		<div class="text-and-lpc__text" ng-hide="practicing">
-			Syllable or Word Probes
+		<div class="probe-header" ng-hide="practicing">
+			<h2 class="text-and-lpc__text">
+				What would you like to test?
+			</h2>
+
+			<p> Use the quizzes to track your progress over time. </p>
+			<p> You can compare your scores before and after a period of practice. </p>
 		</div>
 
-		<div class="button-row">
+		<div class="probe-description-row" ng-hide="practicing">
+			<div class="probe-description">
+				<p>
+					Syllable quiz: Imitate the clinician's model of syllables
+					 containing /r/ (ten syllables, three times each).
+				</p>
+			</div>
+			<div class="probe-description">
+				<p>
+					Word quiz: Read words containing /r/. The long quiz
+					 contains 50 words and the short quiz contains 25 words.
+				</p>
+			</div>
+		</div>
 
-			<!-- 50 items, random -->
-			<button
-				class="big-button"
-				ng-click="beginWordProbe()"
-				ng-hide="practicing"
-			>
-				Word Probe
-			</button>
+		<div class="probe-buttons" ng-hide="practicing">
+			<div class="probe-button-class">
+				<!-- 30 items, sequential -->
+				<button
+					class="big-button"
+					ng-click="beginSyllableProbe()"
+					ng-hide="practicing"
+				>
+					Syllable Probe
+				</button>
+			</div>
 
-			<!-- 30 items, sequential -->
-			<button
-				class="big-button"
-				ng-click="beginSyllableProbe()"
-				ng-hide="practicing"
-			>
-				Syllable Probe
-			</button>
+			<div class="probe-button-class">
+				<!-- 50 items, random -->
+				<button
+					class="big-button"
+					ng-click="beginWordProbe(50)"
+					ng-hide="practicing"
+				>
+					Long Word Probe
+				</button>
 
+				<!-- 25 items, random -->
+				<button
+					class="big-button"
+					ng-click="beginWordProbe(25)"
+					ng-hide="practicing"
+				>
+					Short Word Probe
+				</button>
+			</div>
 		</div>
 
 		<practice-directive
+			ng-if="practicing"
 			probe="true"
 			csv="csv"
 			order="order"
