@@ -1,0 +1,11 @@
+Word,C_or_V,Length,Complexity,Backness,Category,Target,
+rod,consonantal,1_syll,simple,back,consonantal_back,Ra,Ra_low
+rot,consonantal,1_syll,simple,back,consonantal_back,Ra,Ra_low
+rub,consonantal,1_syll,simple,back,consonantal_back,Ra,Ra_mid
+rust,consonantal,1_syll,simple,back,consonantal_back,Ra,Ra_mid
+rogue,consonantal,1_syll,simple,back,consonantal_back,Ro,Ro
+rope,consonantal,1_syll,simple,back,consonantal_back,Ro,Ro
+roast,consonantal,1_syll,simple,back,consonantal_back,Ro,Ro
+roof,consonantal,1_syll,simple,back,consonantal_back,Ru,Ru
+room,consonantal,1_syll,simple,back,consonantal_back,Ru,Ru
+root,consonantal,1_syll,simple,back,consonantal_back,Ru,Ru

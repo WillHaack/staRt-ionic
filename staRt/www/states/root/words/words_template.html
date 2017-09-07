@@ -1,3 +1,115 @@
 <ion-view view-title="Word Quest" class="state-contentBox">
-	<practice-directive csv='"data/Word_Practice.csv"' order='"random"' count="100" pause-every="10" type='"Word"'></practice-directive>
+	<div class="quest-contentBox">
+
+	<div class="quest-header" ng-hide="practicing || configuring">
+		<h2 class="text-and-lpc__text">
+			What would you like to practice?
+		</h2>
+
+		<p> Use the wave to practice your /r/ pronunciation. </p>
+		<p> You can choose between practicing just the syllables or whole words. </p>
+	</div>
+
+	<div class="quest-description-row" ng-hide="practicing || configuring">
+		<div class="quest-description">
+			<p>
+				Syllable quest: Imitate the clinician's model of syllables
+				 containing /r/ (ten syllables, three times each).
+			</p>
+		</div>
+		<div class="quest-description">
+			<p>
+				Word quest: Read words containing /r/. Different sets of
+				words have the /r/ sound in different positions
+			</p>
+		</div>
+	</div>
+
+	<div class="quest-buttons" ng-hide="practicing || configuring">
+		<div class="quest-button-class">
+			<!-- 30 items, sequential -->
+			<button
+				class="big-button"
+				ng-click="beginSyllableQuest()"
+				ng-hide="practicing"
+			>
+				Syllable Quest
+			</button>
+		</div>
+
+		<div class="quest-button-class">
+			<!-- 50 items, random -->
+			<button
+				class="big-button"
+				ng-click="beginWordQuestConfiguration()"
+				ng-hide="practicing"
+			>
+				Word Quest
+			</button>
+		</div>
+	</div>
+
+	<div class="quest-word-config" ng-if="configuring && !practicing">
+		<div class="r-category-container">
+			<h2>Select /r/ Categories</h2>
+			<p ng-if="!!wordCategory"> {{wordCategory}} </p>
+			<div class="quest-button-class">
+				<button
+					class="big-button"
+					ng-click="selectRCategory(0)">
+					bi/r/d
+				</button>
+				<button
+					class="big-button"
+					ng-click="selectRCategory(1)">
+					/r/ead
+				</button>
+				<button
+					class="big-button"
+					ng-click="selectRCategory(2)">
+					/r/oad
+				</button>
+				<button
+					class="big-button"
+					ng-click="selectRCategory(3)">
+					doo/r/
+				</button>
+				<button
+					class="big-button"
+					ng-click="selectRCategory(4)">
+					dee/r/
+				</button>
+			</div>
+		</div>
+
+		<div class="word-quest-trial-goal">
+			<h2>Select Session Trial Goal</h2>
+			<p>{{data.count}} Trials</p>
+			<input type="range" min="15" max="100" ng-model="data.count" ng-change="updateCount()" />
+		</div>
+
+		<div class="quest-button-class">
+			<button
+					class="big-button"
+					ng-click="beginWordQuest()"
+					ng-hide="practicing"
+					ng-disabled="!csv"
+				>
+					Begin Word Quest
+			</button>
+		</div>
+	</div>
+
+	<practice-directive
+		ng-if="practicing && !configuring"
+		probe="false"
+		csv="csv"
+		order="order"
+		count="data.count"
+		type="type"
+		pause-every="10"
+		end-practice-callback="endQuestCallback()">
+	</practice-directive>
+
+	</div> <!-- .words-contentBox -->
 </ion-view>

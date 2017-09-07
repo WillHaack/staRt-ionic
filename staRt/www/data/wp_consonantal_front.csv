@@ -1,0 +1,11 @@
+Word,C_or_V,Length,Complexity,Backness,Category,Target,
+rain,consonantal,1_syll,simple,front,consonantal_front,Re,Re_tense
+ray,consonantal,1_syll,simple,front,consonantal_front,Re,Re_tense
+rate,consonantal,1_syll,simple,front,consonantal_front,Re,Re_tense
+rest,consonantal,1_syll,simple,front,consonantal_front,Re,Re_lax
+reef,consonantal,1_syll,simple,front,consonantal_front,Ri,Ri_tense
+rib,consonantal,1_syll,simple,front,consonantal_front,Ri,Ri_lax
+rich,consonantal,1_syll,simple,front,consonantal_front,Ri,Ri_lax
+rice,consonantal,1_syll,simple,front,consonantal_front,Ry,Ry
+right,consonantal,1_syll,simple,front,consonantal_front,Ry,Ry
+rise,consonantal,1_syll,simple,front,consonantal_front,Ry,Ry

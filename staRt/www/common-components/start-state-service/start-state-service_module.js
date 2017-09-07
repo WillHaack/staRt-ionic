@@ -32,12 +32,7 @@ startStateService.factory('StartUIState', function()
         ani: "bounce"
       },
       {
-        title: "Syllables",
-        sref: "syllables",
-        ani: "bounceIn"
-      },
-      {
-        title: "Words",
+        title: "Quest",
         sref: "words",
         ani: "bounceIn"
 

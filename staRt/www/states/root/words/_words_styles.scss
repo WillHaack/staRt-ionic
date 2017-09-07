@@ -1,6 +1,10 @@
-// parent ele for all the words content
-.words-contentBox {  
+// parent ele for all the quest content
+.quest-contentBox {
 	//border: 1px solid violet;
+	display: flex;
+	height: 75%;
+	flex-direction: column;
+	justify-content: space-around;
 }
 
 .words-progress-indicator {
@@ -15,4 +19,48 @@
 	line-height: 1.5;
 	display: inline-block;
 	vertical-align: middle;
+}
+
+.quest-contentBox button[disabled] {
+	background-color: lightgray;
+	color: gray;
+}
+
+.quest-header {
+	width: 100%;
+	flex: 1 0 auto;
+}
+
+.quest-header h2 {
+	text-align: center;
+	width: 55%;
+	margin: auto;
+}
+
+.quest-header p {
+	text-align: center;
+	width: 55%;
+	margin: auto;
+}
+
+.quest-description-row {
+	width: 100%;
+	flex: 1 0 auto;
+	display: flex;
+	justify-content: space-around;
+}
+
+.quest-description {
+	width: 30%;
+}
+
+.quest-button-class {
+	flex: 1 0 auto;
+	display: flex;
+	justify-content: center;
+}
+
+.quest-buttons {
+	display: flex;
+	flex: 1 0 auto;
 }
