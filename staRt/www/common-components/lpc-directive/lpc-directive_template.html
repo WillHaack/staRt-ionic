@@ -22,12 +22,27 @@
 	</div>
 
 	<div class="lpc-buttons">
-		<button
-			ng-click="resetF3()"
-			class="reset-button big-button"
-			ng-if="reset && !probe">
-			Reset Target
-		</button>
+
+		<div class="rate-box" ng-if="rate">
+			<button
+				ng-click="data.rating = 3"
+				ng-class="{selected: data.rating === 3}"
+			>
+				Great
+			</button>
+			<button
+				ng-click="data.rating = 2"
+				ng-class="{selected: data.rating === 2}"
+			>
+				Good
+			</button>
+			<button
+				ng-click="data.rating = 1"
+				ng-class="{selected: data.rating === 1}"
+			>
+				Try Again
+			</button>
+		</div>
 
 		<button
 			ng-click="stopPractice()"
@@ -36,26 +51,12 @@
 			Stop {{type}} {{probe ? "probe" : "practice"}}
 		</button>
 
-		<div class="rate-box" ng-if="rate">
-			<button
-				ng-click="data.rating = 1"
-				ng-class="{selected: data.rating === 1}"
-			>
-				Poor
-			</button>
-			<button
-				ng-click="data.rating = 2"
-				ng-class="{selected: data.rating === 2}"
-			>
-				Decent
-			</button>
-			<button
-				ng-click="data.rating = 3"
-				ng-class="{selected: data.rating === 3}"
-			>
-				Great
-			</button>
-		</div>
+		<button
+			ng-click="resetF3()"
+			class="reset-button big-button"
+			ng-if="reset && !probe">
+			Reset Target
+		</button>
 
 		<button
 			ng-click="showLPC()"
