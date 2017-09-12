@@ -16,7 +16,8 @@
 		$scope.csv = "";
 		$scope.order = "random";
 		$scope.data = {
-			count: 50
+			count: 50,
+			navTitle: "Quest"
 		};
 		$scope.wordCategory = null;
 		$scope.wordCategoryNames = [
@@ -36,6 +37,7 @@
 
 		$scope.beginSyllableQuest = function() {
 			console.log("Begin syllable quest");
+			$scope.data.navTitle = "Syllable Quest";
 			$scope.practicing = true;
 			$scope.configuring = false;
 			$scope.csv = "data/Syllable_Practice.csv";
@@ -46,6 +48,7 @@
 
 		$scope.beginWordQuestConfiguration = function() {
 			console.log("Begin word quest configuration");
+			$scope.data.navTitle = "Word Quest";
 			$scope.practicing = false;
 			$scope.wordCategory = null;
 			$scope.csv = null;
