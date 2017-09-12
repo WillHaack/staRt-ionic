@@ -12,11 +12,13 @@ practiceDirective.directive( 'practiceDirective', function()
 		controller: 'PracticeDirectiveController',
 		scope:
 		{
+			beginOnLoad: "=",
 			csv: '=',
 			count: "=",
 			order: "=",
 			probe: "=",
 			pauseEvery: "=",
+			suppressStartButton: "=",
 			type: "=",
 			startPracticeCallback: "&startPracticeCallback",
 			endPracticeCallback: "&endPracticeCallback"

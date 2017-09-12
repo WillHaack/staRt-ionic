@@ -1,6 +1,9 @@
 <div class="words-contentBox" >
 
-	<button style="margin:40px;" ng-click="beginWordPractice()" ng-hide="isPracticing || !hasValidWordList">
+	<button
+		style="margin:40px;"
+		ng-click="beginWordPractice()"
+		ng-hide="suppressStartButton || isPracticing || !hasValidWordList">
 		Start {{type}} {{probe ? "probe" : "practice"}}
 	</button>
 	<button

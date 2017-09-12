@@ -277,6 +277,9 @@ practiceDirective.controller( 'PracticeDirectiveController',
 				}
 			}).success(function (res) {
 				$scope.parseWordList(res);
+				if (!$scope.isPracticing && $scope.beginOnLoad) {
+					$scope.beginWordPractice();
+				}
 			});
 		}
 

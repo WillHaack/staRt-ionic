@@ -61,12 +61,14 @@
 		</div>
 
 		<practice-directive
+			begin-on-load="true"
 			ng-if="practicing"
 			probe="true"
 			csv="csv"
 			order="order"
 			count="count"
 			type="type"
+			suppress-start-button="true"
 			end-practice-callback="endProbeCallback()">
 		</practice-directive>
 
