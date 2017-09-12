@@ -13,7 +13,7 @@ practiceDirective.directive( 'practiceDirective', function()
 		scope:
 		{
 			beginOnLoad: "=",
-			csv: '=',
+			csvs: '=',
 			count: "=",
 			order: "=",
 			probe: "=",

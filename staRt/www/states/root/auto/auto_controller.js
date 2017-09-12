@@ -28,12 +28,12 @@
 					"listen, watch, and repeat the clinician " +
 					"while making your best /r/ sound."
 				),
-				"Syllable Probe",
+				"Syllable Quiz",
 				"Okay"
 			);
 
 			$scope.practicing = true;
-			$scope.csv = "data/Syllable_Probe.csv";
+			$scope.csvs = [ "data/Syllable_Probe.csv" ];
 			$scope.order = "sequential";
 			$scope.type = "Syllable";
 			$scope.count = 30;
@@ -43,7 +43,7 @@
 			console.log("Begin word probe");
 			$scope.data.navTitle = (count < 40 ? "Short" : "Long") + " Word Quiz";
 			$scope.practicing = true;
-			$scope.csv = "data/Word_Probe.csv";
+			$scope.csvs = [ "data/Word_Probe.csv" ];
 			$scope.order = "random";
 			$scope.type = "Word";
 			$scope.count = count || 50;
@@ -51,7 +51,7 @@
 
 		$scope.endProbeCallback = function() {
 			$scope.practicing = false;
-			$scope.csv = null;
+			$scope.csvs = null;
 			$scope.data.navTitle = "Quiz";
 		};
 	});

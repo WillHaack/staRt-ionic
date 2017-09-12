@@ -13,13 +13,14 @@
 
 		$scope.practicing = false;
 		$scope.configuring = false;
-		$scope.csv = "";
 		$scope.order = "random";
 		$scope.data = {
 			count: 50,
-			navTitle: "Quest"
+			csvs: [],
+			navTitle: "Quest",
+			selectedWordCategories: [],
+			wordCategoryString: null
 		};
-		$scope.wordCategory = null;
 		$scope.wordCategoryNames = [
 			"Vocalic All",
 			"Consonantal Front",
@@ -40,7 +41,7 @@
 			$scope.data.navTitle = "Syllable Quest";
 			$scope.practicing = true;
 			$scope.configuring = false;
-			$scope.csv = "data/Syllable_Practice.csv";
+			$scope.data.csvs = [ "data/Syllable_Practice.csv" ];
 			$scope.order = "random";
 			$scope.type = "Syllable";
 			$scope.data.count = 100;
@@ -50,8 +51,9 @@
 			console.log("Begin word quest configuration");
 			$scope.data.navTitle = "Word Quest";
 			$scope.practicing = false;
-			$scope.wordCategory = null;
-			$scope.csv = null;
+			$scope.data.wordCategoryString = null;
+			$scope.data.selectedWordCategories = [];
+			$scope.data.csvs = [];
 			$scope.configuring = true;
 			$scope.order = "random";
 			$scope.type = "Word";
@@ -68,13 +70,22 @@
 		$scope.endQuestCallback = function() {
 			$scope.practicing = false;
 			$scope.configuring = false;
-			$scope.csv = null;
+			$scope.data.csvs = [];
 			$scope.data.navTitle = "Quest";
 		};
 
-		$scope.selectRCategory = function(wordCategoryIdx) {
-			$scope.csv = $scope.wordCategoryCSVs[wordCategoryIdx];
-			$scope.wordCategory = $scope.wordCategoryNames[wordCategoryIdx];
+		$scope.toggleRCategory = function(wordCategoryIdx) {
+			var idx = $scope.data.selectedWordCategories.indexOf(wordCategoryIdx);
+			if (idx === -1) {
+				$scope.data.selectedWordCategories.push(wordCategoryIdx)
+				$scope.data.selectedWordCategories.sort();
+			} else {
+				$scope.data.selectedWordCategories.splice(idx, 1);
+			}
+
+			$scope.data.csvs = $scope.data.selectedWordCategories.map( function (x) { return $scope.wordCategoryCSVs[x]; } );
+			var wordCategories = $scope.data.selectedWordCategories.map( function (x) { return $scope.wordCategoryNames[x]; } );
+			$scope.data.wordCategoryString = wordCategories.join(", ");
 		}
 
 		$scope.updateCount = function() {

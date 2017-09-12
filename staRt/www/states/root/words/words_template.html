@@ -55,31 +55,36 @@
 	<div class="quest-word-config" ng-if="configuring && !practicing">
 		<div class="r-category-container">
 			<h2>Select /r/ Categories</h2>
-			<p ng-if="!!wordCategory"> {{wordCategory}} </p>
+			<p ng-if="!!data.wordCategoryString && data.wordCategoryString.length"> {{data.wordCategoryString}} </p>
 			<div class="quest-button-class">
 				<button
 					class="big-button"
-					ng-click="selectRCategory(0)">
+					ng-selected="data.selectedWordCategories.includes(0)"
+					ng-click="toggleRCategory(0)">
 					bi/r/d
 				</button>
 				<button
 					class="big-button"
-					ng-click="selectRCategory(1)">
+					ng-selected="data.selectedWordCategories.includes(1)"
+					ng-click="toggleRCategory(1)">
 					/r/ead
 				</button>
 				<button
 					class="big-button"
-					ng-click="selectRCategory(2)">
+					ng-selected="data.selectedWordCategories.includes(2)"
+					ng-click="toggleRCategory(2)">
 					/r/oad
 				</button>
 				<button
 					class="big-button"
-					ng-click="selectRCategory(3)">
+					ng-selected="data.selectedWordCategories.includes(3)"
+					ng-click="toggleRCategory(3)">
 					doo/r/
 				</button>
 				<button
 					class="big-button"
-					ng-click="selectRCategory(4)">
+					ng-selected="data.selectedWordCategories.includes(4)"
+					ng-click="toggleRCategory(4)">
 					dee/r/
 				</button>
 			</div>
@@ -96,7 +101,7 @@
 					class="big-button"
 					ng-click="beginWordQuest()"
 					ng-hide="practicing"
-					ng-disabled="!csv"
+					ng-disabled="!data.csvs || data.csvs.length === 0"
 				>
 					Begin Word Quest
 			</button>
@@ -106,7 +111,7 @@
 	<practice-directive
 		ng-if="practicing && !configuring"
 		probe="false"
-		csv="csv"
+		csvs="data.csvs"
 		order="order"
 		count="data.count"
 		type="type"

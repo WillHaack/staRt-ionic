@@ -119,7 +119,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 
 		function sessionDisplayString() {
 			var type = $scope.type ? $scope.type.toLowerCase() : "word";
-			var sesh = $scope.probe ? "probe" : "practice";
+			var sesh = $scope.probe ? "quiz" : "quest";
 			return type + " " + sesh;
 		}
 
@@ -174,6 +174,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		}
 
 		function beginPracticeForUser(user) {
+			if ($scope.isPracticing) return;
 			$scope.isPracticing = true;
 			$scope.currentPracticeSession = initialPracticeSession();
 			if (window.AudioPlugin !== undefined) {
@@ -218,6 +219,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		}
 
 		$scope.beginWordPractice = function() {
+			$scope.currentWord = null;
 			console.log("Beginning " + sessionDisplayString());
 
 			if (window.AudioPlugin === undefined) {
@@ -229,6 +231,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 				function(res) {
 					if (res) {
 						beginPracticeForUser(res);
+						if ($scope.startPracticeCallback) $scope.startPracticeCallback();
 					} else {
 						if (navigator.notification)
 							navigator.notification.alert("Can't start " + sessionDisplayString() + " -- create a profile first", null, "No profile");
@@ -238,8 +241,6 @@ practiceDirective.controller( 'PracticeDirectiveController',
 						navigator.notification.alert("Can't start " + sessionDisplayString() + ": " + err, null, "Error");
 				}
 			);
-
-			if ($scope.startPracticeCallback) $scope.startPracticeCallback();
 		};
 
 		$scope.endWordPractice = function() {
@@ -260,24 +261,42 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		};
 
 		$scope.parseWordList = function(wordListData) {
-			$scope.wordList = parseCSV(wordListData).slice(1).map(function(w) {
+			var nextWordList = parseCSV(wordListData).slice(1).map(function(w) {
 				return w[0];
 			});
+			$scope.wordList = $scope.wordList.concat(nextWordList);
+		}
+
+		$scope.reorderWords = function() {
 			$scope.wordOrder = [];
+			$scope.hasValidWordList = $scope.wordList.length > 0;
 			for (var i=0; i<$scope.wordList.length; ++i) {
 				$scope.wordOrder.push(i);
 			}
-			$scope.hasValidWordList = true
 		}
 
 		$scope.reloadCSVData = function() {
-			$http.get($scope.csv, {
-				headers: {
-					'Content-type': 'application/csv'
-				}
-			}).success(function (res) {
-				$scope.parseWordList(res);
-				if (!$scope.isPracticing && $scope.beginOnLoad) {
+			console.log("Clearing word list");
+			$scope.wordList = [];
+			var loadTasks = [];
+			$scope.csvs.forEach(function (csv) {
+				loadTasks.push(
+					$http.get(csv, {
+						headers: {
+							'Content-type': 'application/csv'
+						}
+					}).then(function (res) {
+						$scope.parseWordList(res.data);
+						console.log("Appending word list");
+						console.log($scope.wordList);
+					})
+				);
+			});
+			Promise.all(loadTasks).then(function (res) {
+				$scope.reorderWords();
+				console.log("Reading word list");
+				console.log($scope.wordList);
+				if ($scope.hasValidWordList && !$scope.isPracticing && $scope.beginOnLoad) {
 					$scope.beginWordPractice();
 				}
 			});
@@ -298,12 +317,12 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			}
 		});
 
-		$scope.$watch("csv", function () {
+		$scope.$watch("csvs", function () {
 			$scope.hasValidWordList = false;
-			if ($scope.csv) $scope.reloadCSVData();
+			if ($scope.csvs) $scope.reloadCSVData();
 		});
 
-		if ($scope.csv) $scope.reloadCSVData();
+		if ($scope.csvs) $scope.reloadCSVData();
 
 		$scope.myURL = $state.current.name;
 

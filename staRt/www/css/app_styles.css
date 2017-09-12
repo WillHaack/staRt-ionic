@@ -1043,6 +1043,10 @@ div.needleBox {
   display: flex;
   justify-content: center; }
 
+.quest-button-class button[selected] {
+  background-color: green;
+  color: white; }
+
 .quest-buttons {
   display: flex;
   flex: 1 0 auto; }
