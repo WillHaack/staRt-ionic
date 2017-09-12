@@ -985,7 +985,7 @@ div.needleBox {
   width: 30%; }
 
 .probe-button-class {
-  flex: 1 0 auto;
+  flex: 1 0;
   display: flex;
   justify-content: center; }
 
@@ -1039,7 +1039,7 @@ div.needleBox {
   width: 30%; }
 
 .quest-button-class {
-  flex: 1 0 auto;
+  flex: 1 0;
   display: flex;
   justify-content: center; }
 
