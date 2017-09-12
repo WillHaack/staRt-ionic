@@ -69,6 +69,7 @@
 			$scope.practicing = false;
 			$scope.configuring = false;
 			$scope.csv = null;
+			$scope.data.navTitle = "Quest";
 		};
 
 		$scope.selectRCategory = function(wordCategoryIdx) {

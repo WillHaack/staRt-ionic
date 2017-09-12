@@ -12,9 +12,13 @@
 		$scope.csv = "";
 		$scope.order = "random";
 		$scope.count = 100;
+		$scope.data = {
+			navTitle: "Quiz"
+		};
 
 		$scope.beginSyllableProbe = function() {
 			console.log("Begin syllable probe");
+			$scope.data.navTitle = "Syllable Quiz";
 
 			$cordovaDialogs.alert(
 				(
@@ -37,6 +41,7 @@
 
 		$scope.beginWordProbe = function(count) {
 			console.log("Begin word probe");
+			$scope.data.navTitle = (count < 40 ? "Short" : "Long") + " Word Quiz";
 			$scope.practicing = true;
 			$scope.csv = "data/Word_Probe.csv";
 			$scope.order = "random";
@@ -47,6 +52,7 @@
 		$scope.endProbeCallback = function() {
 			$scope.practicing = false;
 			$scope.csv = null;
+			$scope.data.navTitle = "Quiz";
 		};
 	});
 

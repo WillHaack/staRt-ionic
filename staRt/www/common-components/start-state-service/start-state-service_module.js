@@ -22,7 +22,7 @@ startStateService.factory('StartUIState', function()
         ani: "rotateIn"
       },
       {
-        title: "Test",
+        title: "Quiz",
         sref: "auto",
         ani: "flipInX"
       },
