@@ -8,6 +8,8 @@
 	{
 		console.log('ResourcesController here!');
 
+		$scope.configuring = false;
+
 		$scope.$on("$ionicView.enter", function() {
 			console.log('view content loaded!');
 			if (window.AudioPlugin !== undefined)
@@ -25,6 +27,10 @@
 				});
 			};
 		});
+
+		$scope.configureLPC = function() {
+			$scope.configuring = true;
+		}
 
 		$scope.logPluginLPCOrder = function(order)
 		{

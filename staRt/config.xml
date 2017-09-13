@@ -73,5 +73,7 @@
   <plugin name="cordova-plugin-file" spec="~4.2.0"/>
   <plugin name="cordova-plugin-file-transfer" spec="~1.5.1"/>
   <plugin name="cordova-plugin-dialogs" spec="~1.2.1"/>
+  <allow-intent href="https://18798-presscdn-pagely.netdna-ssl.com/byunlab/wp-content/uploads/sites/*" />
+  <allow-intent href="https://docs.google.com/forms/*" />
   <icon src="resources/ios/icon/icon-small@3x.png"/>
 </widget>

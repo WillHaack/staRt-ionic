@@ -1,7 +1,48 @@
 <ion-view view-title="SLP Resources" class="state-contentBox">
 	<div class="resources-contentBox">
 
-		<div class="text-and-lpc__text resources">
+		<div class="resources-links-container resources" ng-if="!configuring">
+			<button ng-click="configureLPC()" class="button button-calm adjust-profile">Adjust Profile LPC</button>
+			<h3>Downloads</h3>
+			<h4>Download resources directly to your device as PDFs</h4>
+			<div class="resources-links-row">
+				<a href="https://18798-presscdn-pagely.netdna-ssl.com/byunlab/wp-content/uploads/sites/2008/2017/05/Master-schedule-for-staRt-app-piloting-2.pdf">
+					<button class="button button-calm"> Guide for Starting Pilot Study </button>
+				</a>
+				<a href="https://18798-presscdn-pagely.netdna-ssl.com/byunlab/wp-content/uploads/sites/2008/2017/03/staRt_app_clinician_checklist_expiresMAR2018.pdf">
+					<button class="button button-calm"> Checklist for Interested Clinicians </button>
+				</a>
+				<a href="https://18798-presscdn-pagely.netdna-ssl.com/byunlab/wp-content/uploads/sites/2008/2015/05/staRt-User-Manual_version_1.0.0.pdf">
+					<button class="button button-calm"> staRt User Manual </button>
+				</a>
+				<a href="https://18798-presscdn-pagely.netdna-ssl.com/byunlab/wp-content/uploads/sites/2008/2017/03/staRt_app_principal_letter_expiresMAR2018.pdf">
+					<button class="button button-calm"> Principal Letter </button>
+				</a>
+			</div>
+			<div class="resources-links-row">
+				<a href="https://18798-presscdn-pagely.netdna-ssl.com/byunlab/wp-content/uploads/sites/2008/2017/03/staRt_app_parent_letter_expiresMAR2018.pdf">
+					<button class="button button-calm"> Parent Letter </button>
+				</a>
+				<a href="https://18798-presscdn-pagely.netdna-ssl.com/byunlab/wp-content/uploads/sites/2008/2017/03/staRt_app_clinician_questionnaire_1_expiresMAR2018.pdf">
+					<button class="button button-calm questionnaire"> Clinician Questionnaire 1: History </button>
+				</a>
+				<a href="https://18798-presscdn-pagely.netdna-ssl.com/byunlab/wp-content/uploads/sites/2008/2017/03/staRt_app_clinician_questionnaire_2_expiresMAR2018.pdf">
+					<button class="button button-calm questionnaire"> Clinician Questionnaire 1: Evaluation </button>
+				</a>
+			</div>
+			<h3>Links</h3>
+			<h4>Open Google Forms in your device's browser</h4>
+			<div class="resources-links-row">
+				<a href="https://docs.google.com/forms/d/e/1FAIpQLSewiD8Uxle5WRPh5ArgUwYNQA6lktpjA8-xwSQVqinTW1IQiA/viewform?c=0&w=1">
+					<button class="button button-calm"> Pilot Tester Survey </button>
+				</a>
+				<a href="https://docs.google.com/forms/d/e/1FAIpQLScfSrv-fbkMg7AaZerT0ssXAbLJ20LD2h-XZQXBFAXbyUkWmw/viewform?c=0&w=1">
+					<button class="button button-calm"> Bug Report </button>
+				</a>
+			</div>
+		</div>
+
+		<div class="text-and-lpc__text resources" ng-if="configuring">
 			<p>
 				Use the slider to manually adjust the LPC filter order. <strong>In general, the filter order should be between 35 and 45.</strong>
 			</p>
@@ -25,10 +66,12 @@
 			</p>
 
 		</div>
+		<div ng-if="configuring">
 		<lpc-directive
 			sand="false"
 			slider="false">
 		</lpc-directive>
+		</div>
 
 	</div> <!-- end resources-contentBox-->
 </ion-view>
