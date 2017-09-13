@@ -96,6 +96,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		// ];
 
 		$scope.active = true;
+		$scope.isFeedbacking = false;
 		$scope.isPracticing = false;
 		$scope.currentWord = null;
 		$scope.rating = 0;
@@ -120,7 +121,8 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		function sessionDisplayString() {
 			var type = $scope.type ? $scope.type.toLowerCase() : "word";
 			var sesh = $scope.probe ? "quiz" : "quest";
-			return type + " " + sesh;
+			var hidden = $scope.forceWaveHidden ? " hidden" : "";
+			return type + " " + sesh + hidden;
 		}
 
 		function uploadCallbackForSession(session) {

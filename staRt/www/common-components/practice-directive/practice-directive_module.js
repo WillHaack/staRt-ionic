@@ -15,6 +15,7 @@ practiceDirective.directive( 'practiceDirective', function()
 			beginOnLoad: "=",
 			csvs: '=',
 			count: "=",
+			forceWaveHidden: "=",
 			order: "=",
 			probe: "=",
 			pauseEvery: "=",

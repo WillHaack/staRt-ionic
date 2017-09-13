@@ -1003,6 +1003,22 @@ div.needleBox {
   display: inline-block;
   vertical-align: middle; }
 
+.word-quest-wave-visible {
+  display: flex;
+  width: 100%;
+  justify-content: center; }
+
+.word-quest-wave-visible > .item {
+  display: flex;
+  width: 100%;
+  justify-content: center; }
+
+.word-quest-wave-visible .label {
+  padding: 0px; }
+
+.word-quest-wave-visible .input-label {
+  font-size: 30px; }
+
 .words-word {
   font-size: 3rem;
   font-weight: 700;

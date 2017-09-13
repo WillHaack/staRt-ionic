@@ -96,6 +96,13 @@
 			<input type="range" min="15" max="100" step="5" ng-model="data.count" ng-change="updateCount()" />
 		</div>
 
+		<div class="word-quest-wave-visible">
+			<ion-item>
+				<ion-label>Wave Hidden</ion-label>
+				<ion-checkbox ng-model="data.waveHidden"></ion-checkbox>
+			</ion-item>
+		</div>
+
 		<div class="quest-button-class">
 			<button
 					class="big-button"
@@ -112,6 +119,7 @@
 		ng-if="practicing && !configuring"
 		probe="false"
 		csvs="data.csvs"
+		force-wave-hidden="data.waveHidden"
 		order="order"
 		count="data.count"
 		type="data.type"

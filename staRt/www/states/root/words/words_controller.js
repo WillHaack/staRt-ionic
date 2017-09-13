@@ -20,7 +20,8 @@
 			csvs: [],
 			navTitle: "Quest",
 			selectedCategories: [],
-			type: null
+			type: null,
+			waveHidden: false
 		};
 
 		$scope.categoryNames = [
