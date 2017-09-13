@@ -33,7 +33,7 @@
 			<!-- 30 items, sequential -->
 			<button
 				class="big-button"
-				ng-click="beginSyllableQuest()"
+				ng-click="beginSyllableQuestConfiguration()"
 				ng-hide="practicing"
 			>
 				Syllable Quest
@@ -55,37 +55,37 @@
 	<div class="quest-word-config" ng-if="configuring && !practicing">
 		<div class="r-category-container">
 			<h2>Select /r/ Categories</h2>
-			<p ng-if="!!data.wordCategoryString && data.wordCategoryString.length"> {{data.wordCategoryString}} </p>
+			<p ng-if="!!data.categoryString && data.categoryString.length"> {{data.categoryString}} </p>
 			<div class="quest-button-class">
 				<button
 					class="big-button"
-					ng-selected="data.selectedWordCategories.includes(0)"
+					ng-selected="data.selectedCategories.includes(0)"
 					ng-click="toggleRCategory(0)">
-					bi/r/d
+					{{data.type === "Word" ? "bi/r/d" : "er" }}
 				</button>
 				<button
 					class="big-button"
-					ng-selected="data.selectedWordCategories.includes(1)"
+					ng-selected="data.selectedCategories.includes(1)"
 					ng-click="toggleRCategory(1)">
-					/r/ead
+					{{data.type === "Word" ? "/r/ead" : "ret" }}
 				</button>
 				<button
 					class="big-button"
-					ng-selected="data.selectedWordCategories.includes(2)"
+					ng-selected="data.selectedCategories.includes(2)"
 					ng-click="toggleRCategory(2)">
-					/r/oad
+					{{data.type === "Word" ? "/r/oad" : "rah" }}
 				</button>
 				<button
 					class="big-button"
-					ng-selected="data.selectedWordCategories.includes(3)"
+					ng-selected="data.selectedCategories.includes(3)"
 					ng-click="toggleRCategory(3)">
-					doo/r/
+					{{data.type === "Word" ? "doo/r/" : "air" }}
 				</button>
 				<button
 					class="big-button"
-					ng-selected="data.selectedWordCategories.includes(4)"
+					ng-selected="data.selectedCategories.includes(4)"
 					ng-click="toggleRCategory(4)">
-					dee/r/
+					{{data.type === "Word" ? "dee/r/" : "ar" }}
 				</button>
 			</div>
 		</div>
@@ -99,11 +99,11 @@
 		<div class="quest-button-class">
 			<button
 					class="big-button"
-					ng-click="beginWordQuest()"
+					ng-click="beginQuest()"
 					ng-hide="practicing"
 					ng-disabled="!data.csvs || data.csvs.length === 0"
 				>
-					Begin Word Quest
+					Begin {{data.type}} Quest
 			</button>
 		</div>
 	</div>
@@ -114,7 +114,7 @@
 		csvs="data.csvs"
 		order="order"
 		count="data.count"
-		type="type"
+		type="data.type"
 		begin-on-load="true"
 		pause-every="10"
 		suppress-start-button="true"
