@@ -48,6 +48,12 @@
 			"data/wp_vocalic_back.csv"
 		];
 
+		$scope.goBackToLanding = function() {
+			console.log('back button clicked');
+			$scope.practicing = false;
+			$scope.configuring = false;
+		}
+
 		$scope.beginSyllableQuestConfiguration = function() {
 			console.log("Begin syllable quest configuration");
 			$scope.data.navTitle = "Syllable Quest";
