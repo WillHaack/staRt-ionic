@@ -21,8 +21,7 @@
 		<div class="quest-description">
 			<h3>Word Quest</h3>
 			<p>
-				Read words containing /r/. Different sets of
-				words have the /r/ sound in different positions.
+				Read words containing /r/. Different sets of words have the /r/ sound in different positions.
 			</p>
 		</div>
 	</div>
@@ -52,6 +51,11 @@
 	</div>
 
 	<div class="quest-word-config" ng-if="configuring && !practicing">
+		<div
+			class="back-button"
+			ng-click="goBackToLanding()">
+			Back
+		</div>
 		<div class="r-category-container">
 			<h2>Select /r/ Categories</h2>
 			<p ng-if="!!data.categoryString && data.categoryString.length"> {{data.categoryString}} </p>

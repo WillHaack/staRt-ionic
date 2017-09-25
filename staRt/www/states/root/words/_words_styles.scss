@@ -89,3 +89,12 @@
 	display: flex;
 	flex: 1 0 auto;
 }
+
+.back-button {
+	background: #d3d3d3;
+    color: #808080;
+    z-index: 100000;
+    position: absolute;
+    top: 0;
+    padding: 10px;
+}
