@@ -999,6 +999,10 @@ div.needleBox {
   flex-direction: column;
   justify-content: space-around; }
 
+.words-contentBox {
+  position: absolute;
+  top: 0; }
+
 .words-progress-indicator {
   display: inline-block;
   vertical-align: middle; }
