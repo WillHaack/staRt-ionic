@@ -1,7 +1,7 @@
 <ion-view view-title="SLP Resources" class="state-contentBox">
 	<div class="resources-contentBox">
 
-		<div class="resources-links-container resources" ng-if="!configuring">
+		<div class="resources-links-container resources" ng-if="!data.configuring">
 			<button ng-click="configureLPC()" class="button button-calm adjust-profile">Adjust Profile LPC</button>
 			<h3>Downloads</h3>
 			<h4>Download resources directly to your device as PDFs</h4>
@@ -42,7 +42,7 @@
 			</div>
 		</div>
 
-		<div class="text-and-lpc__text resources" ng-if="configuring">
+		<div class="text-and-lpc__text resources" ng-if="data.configuring">
 			<p>
 				Use the slider to manually adjust the LPC filter order. <strong>In general, the filter order should be between 35 and 45.</strong>
 			</p>
@@ -52,7 +52,7 @@
 					min. 25
 				</div>
 
-				<input type="range" min="25" max="45" ng-model="lpcOrder" ng-change="updatePluginLPCOrder()" />
+				<input type="range" min="25" max="45" ng-model="data.lpcOrder" ng-change="updatePluginLPCOrder()" />
 
 				<div class="range-label">
 					max. 45
@@ -62,11 +62,11 @@
 			</div>
 
 			<p>
-				The filter order is now <em>{{lpcOrder}}</em>
+				The filter order is now <em>{{data.lpcOrder}}</em>
 			</p>
 
 		</div>
-		<div ng-if="configuring">
+		<div ng-if="data.configuring">
 		<lpc-directive
 			sand="false"
 			slider="false">

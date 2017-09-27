@@ -8,7 +8,10 @@
 	{
 		console.log('ResourcesController here!');
 
-		$scope.configuring = false;
+		$scope.data = {
+			configuring: false,
+			lpcOrder: 35,
+		};
 
 		$scope.$on("$ionicView.enter", function() {
 			console.log('view content loaded!');
@@ -19,8 +22,8 @@
 					console.log("Got current user profile");
 					if (res && res.lpcOrder) {
 						$scope.currentProfileName = res.name;
-						$scope.lpcOrder = res.lpcOrder;
-						AudioPlugin.setLPCOrder($scope.lpcOrder, $scope.logPluginLPCOrder);
+						$scope.data.lpcOrder = res.lpcOrder;
+						AudioPlugin.setLPCOrder($scope.data.lpcOrder, $scope.logPluginLPCOrder);
 					} else {
 						$scope.resetPluginLPCOrder();
 					}
@@ -29,7 +32,7 @@
 		});
 
 		$scope.configureLPC = function() {
-			$scope.configuring = true;
+			$scope.data.configuring = true;
 		}
 
 		$scope.logPluginLPCOrder = function(order)
@@ -40,9 +43,9 @@
 		$scope.resetPluginLPCOrder = function() {
 			ProfileService.getCurrentProfile().then(function(res) {
 				if (res) {
-					$scope.lpcOrder = ProfileService.lookupDefaultFilterOrder(res);
+					$scope.data.lpcOrder = ProfileService.lookupDefaultFilterOrder(res);
 				} else {
-					$scope.lpcOrder = 35;
+					$scope.data.lpcOrder = 35;
 				}
 				$scope.updatePluginLPCOrder();
 			});
@@ -50,15 +53,15 @@
 
 		$scope.setLPCOrder = function(order)
 		{
-			$scope.lpcOrder = order;
+			$scope.data.lpcOrder = order;
 		};
 
 		$scope.updatePluginLPCOrder = function() {
 			if (window.AudioPlugin !== undefined) {
-				AudioPlugin.setLPCOrder($scope.lpcOrder, $scope.logPluginLPCOrder);
+				AudioPlugin.setLPCOrder($scope.data.lpcOrder, $scope.logPluginLPCOrder);
 				ProfileService.getCurrentProfile().then(function (res) {
 					if (res) {
-						res.lpcOrder = $scope.lpcOrder;
+						res.lpcOrder = $scope.data.lpcOrder;
 						ProfileService.saveProfile(res);
 					}
 				});
