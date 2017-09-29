@@ -25,7 +25,7 @@
 		};
 
 		$scope.categoryNames = [
-			"Vocalic All",
+			"Syllabic",
 			"Consonantal Front",
 			"Consonantal Back",
 			"Vocalic Front",
