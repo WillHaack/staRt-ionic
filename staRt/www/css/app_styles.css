@@ -957,7 +957,7 @@ div.needleBox {
 
 .auto-contentBox {
   display: flex;
-  height: 75%;
+  height: 95%;
   flex-direction: column;
   justify-content: space-around; }
 
