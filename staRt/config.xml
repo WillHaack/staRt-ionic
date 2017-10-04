@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.start925154" version="1.0.11" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ionicframework.start925154" version="1.0.12" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>staRt</name>
   <description>
         An Ionic Framework and Cordova project.
@@ -73,7 +73,7 @@
   <plugin name="cordova-plugin-file" spec="~4.2.0"/>
   <plugin name="cordova-plugin-file-transfer" spec="~1.5.1"/>
   <plugin name="cordova-plugin-dialogs" spec="~1.2.1"/>
-  <allow-intent href="https://18798-presscdn-pagely.netdna-ssl.com/byunlab/wp-content/uploads/sites/*" />
+  <allow-intent href="https://www.dropbox.com/sh/*" />
   <allow-intent href="https://docs.google.com/forms/*" />
   <icon src="resources/ios/icon/icon-small@3x.png"/>
 </widget>
