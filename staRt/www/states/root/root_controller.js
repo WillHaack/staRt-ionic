@@ -8,11 +8,17 @@
 	{
 		//console.log('RootController here!');
 
-		// ProfileService.getAllProfiles().then(function (res) {
-		//     if (!res || res.length == 0) {
-		//     	$state.go('^.profiles');
-		//     }
-		// });
+		$localForage._localforage.defineDriver(window.cordovaSQLiteDriver).then(function() {
+			return $localForage._localforage.setDriver([
+				// Try setting cordovaSQLiteDriver if available,
+				window.cordovaSQLiteDriver._driver,
+				// otherwise use one of the default localForage drivers as a fallback.
+				// This should allow you to transparently do your tests in a browser
+				$localForage._localforage.INDEXEDDB,
+				$localForage._localforage.WEBSQL,
+				$localForage._localforage.LOCALSTORAGE
+			]);
+		});
 
 		// Initialize UI
 		StartUIState.getLastActiveIndex($localForage).then(function(data)
