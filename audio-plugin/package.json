@@ -1,0 +1,19 @@
+{
+  "name": "audio-plugin",
+  "version": "1.0.0",
+  "description": "Audio plugin developed specifically for staRt and LPC",
+  "main": "www/audioplugin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ByunLab/staRt-ionic.git"
+  },
+  "author": "Girlfriends Labs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ByunLab/staRt-ionic/issues"
+  },
+  "homepage": "https://github.com/ByunLab/staRt-ionic#readme"
+}
