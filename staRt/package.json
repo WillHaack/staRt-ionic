@@ -5,11 +5,11 @@
   "dependencies": {
     "audio-plugin": "file:../audio-plugin",
     "cordova-custom-config": "~2.0.3",
+    "cordova-plugin-device": "^2.0.1",
     "cordova-plugin-dialogs": "~1.2.1",
     "cordova-plugin-file": "~4.2.0",
     "cordova-plugin-file-transfer": "~1.5.1",
     "cordova-sqlite-storage": "^2.1.2",
-    "gulp": "^3.9.1",
     "localforage-cordovasqlitedriver": "^1.6.0",
     "path": "^0.12.7",
     "run-sequence": "^1.2.1",
@@ -52,7 +52,8 @@
       "cordova-plugin-file": {},
       "cordova-plugin-file-transfer": {},
       "site.girlfriends.start.audio": {},
-      "cordova-sqlite-storage": {}
+      "cordova-sqlite-storage": {},
+      "cordova-plugin-device": {}
     }
   }
 }

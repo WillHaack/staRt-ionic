@@ -58,7 +58,9 @@ gulp.task('inject', function()
 	var appJsSource = gulp.src( paths.js );
 	var sortedAppJs = appJsSource.pipe( angularFilesort(  ) );
 
-	var bowerSource = gulp.src( mainBowerFiles() );
+	var bowerFiles = mainBowerFiles();
+	bowerFiles = bowerFiles.concat('./www/lib/firebase/firebase-firestore.js');
+	var bowerSource = gulp.src( bowerFiles );
 
 	return target
 		.pipe( inject( bowerSource, bowerInjectOptions ) )

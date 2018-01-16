@@ -5,6 +5,7 @@
 	var root = angular.module( 'root',
 	[
 		'LocalForageModule',
+		'firebaseService',
 		'startStateService',
 		'profileService',
 		'uploadService',

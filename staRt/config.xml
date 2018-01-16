@@ -77,4 +77,5 @@
     <plugin name="cordova-plugin-file-transfer" spec="~1.5.1" />
     <plugin name="site.girlfriends.start.audio" spec="../audio-plugin" />
     <plugin name="cordova-sqlite-storage" spec="^2.1.2" />
+    <plugin name="cordova-plugin-device" spec="^2.0.1" />
 </widget>

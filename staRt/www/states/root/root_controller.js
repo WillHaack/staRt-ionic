@@ -4,7 +4,7 @@
 {
 	var root = angular.module( 'root' );
 
-	root.controller('RootController', function($scope, $timeout, $localForage, StartUIState, ProfileService, UploadService, $rootScope, $state)
+	root.controller('RootController', function($scope, $timeout, $localForage, FirebaseService, StartUIState, ProfileService, UploadService, $rootScope, $state)
 	{
 		//console.log('RootController here!');
 
@@ -24,6 +24,8 @@
 		StartUIState.getLastActiveIndex($localForage).then(function(data)
 		{
 			$scope.startUIState = data;
+
+			FirebaseService.startUi();
 		});
 
 		$scope.state = $state;
