@@ -1,6 +1,6 @@
-var profileService = angular.module('profileService', []);
+var profileService = angular.module('profileService', [ 'firebaseService' ]);
 
-profileService.factory('ProfileService', function($localForage, $http)
+profileService.factory('ProfileService', function($localForage, $http, FirebaseService)
 {
 	function guid() {
 		return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
@@ -14,14 +14,16 @@ profileService.factory('ProfileService', function($localForage, $http)
 	};
 
 	function newUserProfile() {
+		if (!FirebaseService.loggedIn()) { return null; }
+
 		return {
+			accountId: FirebaseService.userId(),
 			name: undefined,
 			age: undefined,
 			heightFeet: undefined,
 			heightInches: undefined,
 			gender: undefined,
-			uuid: guid(),
-			recordings: []
+			uuid: guid()
 		};
 	};
 
@@ -29,7 +31,7 @@ profileService.factory('ProfileService', function($localForage, $http)
 	var filterOrderData;
 	var norms;
 	var filterOrder;
-	var profilesCache;
+	var profilesInterfaceState;
 
 	$http.get('data/F3r_norms_Lee_et_al_1999.csv').then(function(res)
 	{
@@ -61,9 +63,9 @@ profileService.factory('ProfileService', function($localForage, $http)
 		return arr;
 	}
 
-	function commitCache() {
+	function commitProfilesInterfaceState() {
 		var promises = [];
-		return profilesCache.then(function(res) {
+		return profilesInterfaceState.then(function(res) {
 			for (var k in res) {
 				if (res.hasOwnProperty(k)) {
 					promises.push($localForage.setItem(k, res[k]));
@@ -73,7 +75,7 @@ profileService.factory('ProfileService', function($localForage, $http)
 		});
 	}
 
-	function loadCache() {
+	function loadProfilesInterfaceState() {
 		return $localForage.keys().then(function(keys, err) {
 			var profilePromises = [];
 			keys.forEach(function(key) {
@@ -82,8 +84,7 @@ profileService.factory('ProfileService', function($localForage, $http)
 
 			if (profilePromises.length === 0) {
 				return {
-					currentProfileUUID : null,
-					profiles : []
+					currentProfileUUID : null
 				}
 			}
 
@@ -98,41 +99,70 @@ profileService.factory('ProfileService', function($localForage, $http)
 		});
 	}
 
-	profilesCache = loadCache();
+	function _getAllProfiles() {
+		if (!FirebaseService.loggedIn()) { return Promise.resolve(null); }
+		return FirebaseService.db().collection("profiles")
+			.where("accountId", "==", FirebaseService.userId())
+			.get()
+			.then(function (querySnapshot) {
+				var profiles = [];
+				querySnapshot.forEach(function (doc) {
+					profiles.push(doc.data());
+				});
+				return profiles;
+			})
+			.catch(function (error) {
+				console.log("Error fetching profiles data");
+				return null;
+			});
+	}
+
+	profilesInterfaceState = loadProfilesInterfaceState();
 
 	return {
 		getAllProfiles: function()
 		{
-			return profilesCache.then(function(res)
-				{
-					return res.profiles;
-				});
+			return _getAllProfiles();
 		},
 
 		deleteAllProfiles: function()
 		{
-			return profilesCache.then(function(res){
-				res.profiles = Promise.resolve([]);
-				commitCache();
-				return res.profiles;
-			});
+			if (!FirebaseService.loggedIn()) { return Promise.resolve(null); }
+
+			return FirebaseService.db().collection("profiles")
+				.where("accountId", "==", FirebaseService.userId())
+				.get()
+				.then(function (querySnapshot) {
+					var deletes = [];
+					querySnapshot.forEach(function (doc) {
+						deletes.push(doc.ref.delete());
+					});
+					return Promise.all(deletes);
+				});
 		},
 
 		getCurrentProfile: function()
 		{
-			return profilesCache.then( function(res) {
-				var currentID = res['currentProfileUUID'];
-				var profiles = res['profiles'];
+			return profilesInterfaceState.then( function(res) {
+				var currentId = res['currentProfileUUID'];
 				var currentProfile = null;
-
-				if (profiles) {
-					var idx = profiles.findIndex(function(el) {
-						return el.uuid === currentID;
-					});
-					if (idx !== -1) currentProfile = profiles[idx];
+				if (currentId) {
+					return FirebaseService.db().collection("profiles")
+						.where("uuid", "==", currentId)
+						.get()
+						.then(function (querySnapshot) {
+							querySnapshot.forEach(function (doc) {
+								currentProfile = doc.data(); // there should only be one...
+							});
+							return currentProfile;
+						})
+						.catch(function (err) {
+							console.log(err);
+							return null;
+						});
+				} else {
+					return Promise.resolve(null);
 				}
-
-				return currentProfile;
 			});
 		},
 
@@ -153,35 +183,18 @@ profileService.factory('ProfileService', function($localForage, $http)
 
 		setCurrentProfile: function(profile)
 		{
-			return profilesCache.then( function (res) {
+			return profilesInterfaceState.then( function (res) {
 				res['currentProfileUUID'] = profile ? profile.uuid : null;
-				commitCache();
+				commitProfilesInterfaceState();
 				return res['currentProfileUUID'];
 			});
 		},
 
 		saveProfile: function(profile)
 		{
-			return profilesCache.then( function(res) {
-				var profiles = res['profiles'];
-				if (!profiles) {
-					profiles = [];
-				}
-
-				var idx = profiles.findIndex( function(el) {
-					return el.uuid == this.uuid;
-				}, profile);
-
-				if (idx !== -1) {
-					profiles[idx] = profile;
-				} else {
-					profiles.push(profile);
-				}
-
-				res['profiles'] = profiles;
-				commitCache();
-				return res['profiles'];
-			});
+			return FirebaseService.db().collection("profiles")
+				.doc(profile.uuid)
+				.set(profile);
 		},
 
 		createProfile: function()
@@ -191,26 +204,10 @@ profileService.factory('ProfileService', function($localForage, $http)
 
 		deleteProfile: function(profile)
 		{
-			return profilesCache.then(function(res){
-				var profiles = res['profiles'];
-				if (!profiles) {
-					profiles = [];
-				}
-
-				var idx = profiles.findIndex( function(el) {
-					return el.uuid == this.uuid;
-				}, profile);
-
-				if (idx !== -1) {
-					profiles.splice(idx, 1);
-				} else {
-					throw 'Profile doesn\'t exist';
-				}
-
-				res['profiles'] = profiles;
-				commitCache();
-				return res['profiles'];
-			})
+			return FirebaseService.db().collection("profiles")
+				.doc(profile.uuid)
+				.delete()
+				.then(_getAllProfiles);
 		},
 
 		lookupDefaultF3: function(profile) {

@@ -564,6 +564,11 @@ canvas {
 canvas {
   background-color: #ffffff; }
 
+.logout {
+  position: absolute;
+  right: 0;
+  top: 0; }
+
 .profiles__recordings .item-radio {
   border-bottom-style: solid;
   border-bottom-width: 2px;

@@ -40,8 +40,12 @@ firebaseService.factory('FirebaseService', function()
     return {
         app: function() { return firebaseApp; },
 
-        firestore: function() { return db; },
+        db: function() { return db; },
 
-        startUi: function() { ui.start('#firebaseui-auth-container', uiConfig); }
+        loggedIn: function() { return !!firebase.auth().currentUser; },
+
+        startUi: function() { ui.start('#firebaseui-auth-container', uiConfig); },
+
+        userId: function() { return firebase.auth().currentUser ? firebase.auth().currentUser.uid : null; }
     }
 });

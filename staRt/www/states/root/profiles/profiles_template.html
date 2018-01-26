@@ -1,7 +1,9 @@
-<ion-view view-title="Profiles" class="state-contentBox">
+<ion-view view-title="Profiles" class="state-contentBox" hide-nav-bar="false">
 	<div class="profiles-contentBox">
 
 		<ion-pane class="profiles">
+
+		<button class="button button-calm logout" ng-click="logOut()" ng-disabled="isEditing">Log out</button>
 
 		<div class="profiles__list">
 			<ion-list class="list">

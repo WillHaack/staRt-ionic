@@ -6,7 +6,9 @@
 
   <!-- Content -->
   <ion-nav-view name="content-view" id="content-container">
-      <div id="firebaseui-auth-container"></div>
+      <ion-view ng-if="!state.loggedIn">
+          <div id="firebaseui-auth-container"></div>
+      </ion-view>
   </ion-nav-view>
 
   <!-- Tabs -->

@@ -4,105 +4,111 @@
 	// this needs to be a flexbox
 }
 
-	.profiles__recordings .item-radio {
-		border-bottom-style: solid;
-		border-bottom-width: 2px;
-		border-bottom-color: black;
-	}
+.logout {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
 
-	.profiles__recordings ion-item.selected {
-		background-color: lightgray;
-	}
+.profiles__recordings .item-radio {
+	border-bottom-style: solid;
+	border-bottom-width: 2px;
+	border-bottom-color: black;
+}
 
-	.profiles__recordings ion-item.activated {
-		background-color: white;
-	}
+.profiles__recordings ion-item.selected {
+	background-color: lightgray;
+}
 
-	// .item-radio.uploaded {
-	// 	border-left-style: solid;
-	// 	border-left-width: 5px;
-	// 	border-left-color: green;
-	// }
+.profiles__recordings ion-item.activated {
+	background-color: white;
+}
 
-	.item-radio.not_uploaded {
-		border-left-style: solid;
-		border-left-width: 5px;
-		border-left-color: red;
-	}
+// .item-radio.uploaded {
+// 	border-left-style: solid;
+// 	border-left-width: 5px;
+// 	border-left-color: green;
+// }
 
-	.upload_badge.uploaded {
-		color: green;
-		font-weight: bold;
-	}
+.item-radio.not_uploaded {
+	border-left-style: solid;
+	border-left-width: 5px;
+	border-left-color: red;
+}
 
-	.upload_badge.not_uploaded {
-		color: red;
-		font-weight: bold;
-	}
+.upload_badge.uploaded {
+	color: green;
+	font-weight: bold;
+}
 
-	.profiles
-	{
-		flex-flow: row nowrap;
-		display: flex;
-	}
+.upload_badge.not_uploaded {
+	color: red;
+	font-weight: bold;
+}
 
-	.profiles button
-	{
-		font-size: 12px;
-		min-width: 100px;
-	}
+.profiles
+{
+	flex-flow: row nowrap;
+	display: flex;
+}
 
-	.profiles h2
-	{
-		font-size: 22px;
-	}
+.profiles button
+{
+	font-size: 12px;
+	min-width: 100px;
+}
 
-	.profiles__recordings ion-scroll{
-		height: 400px;
-	}
+.profiles h2
+{
+	font-size: 22px;
+}
 
-	.profiles__list
-	{
-		flex: 2 0 0%;
-		margin-right: 10px;
-	}
+.profiles__recordings ion-scroll{
+	height: 400px;
+}
 
-	.profiles__info
-	{
-		flex: 3 0 0%;
-		margin-right: 10px;
-	}
+.profiles__list
+{
+	flex: 2 0 0%;
+	margin-right: 10px;
+}
 
-	.profiles__recordings
-	{
-		flex: 3 0 0%;
-	}
+.profiles__info
+{
+	flex: 3 0 0%;
+	margin-right: 10px;
+}
 
-	.profiles-flex
-	{
-		flex-flow: row nowrap;
-		display: flex;
-		margin-top: 20px;
-	}
+.profiles__recordings
+{
+	flex: 3 0 0%;
+}
 
-	.column-div
-	{
-		flex: 1 0 0%;
-	}
+.profiles-flex
+{
+	flex-flow: row nowrap;
+	display: flex;
+	margin-top: 20px;
+}
 
-	.profiles-contentBox .radio-content .item-content
-	{
-		padding-right: 0px;
-		text-overflow: initial;
-	}
+.column-div
+{
+	flex: 1 0 0%;
+}
 
-	.profiles-contentBox .radio-content span
-	{
-		margin-right: 64px;
-	}
+.profiles-contentBox .radio-content .item-content
+{
+	padding-right: 0px;
+	text-overflow: initial;
+}
 
-	.upload_badge
-	{
-		color: #00bb00;
-		font-weight: bold;
-	}
+.profiles-contentBox .radio-content span
+{
+	margin-right: 64px;
+}
+
+.upload_badge
+{
+	color: #00bb00;
+	font-weight: bold;
+}

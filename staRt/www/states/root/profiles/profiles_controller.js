@@ -216,9 +216,11 @@ function compareRecordings(ra, rb) {
 		{
 			function doDelete()
 			{
-				$scope.data.currentProfile = undefined;
-				$scope.data.profiles = [];
-				ProfileService.deleteAllProfiles();
+				ProfileService.deleteAllProfiles().then(function () {
+					$scope.data.currentProfile = null;
+					$scope.data.profiles = [];
+					$scope.updateCurrentProfile(null);
+				});
 			}
 			if(navigator.notification)
 			{
@@ -235,6 +237,14 @@ function compareRecordings(ra, rb) {
 				doDelete();
 			}
 		};
+
+		$scope.logOut = function() {
+			firebase.auth().signOut().then(function (thing) {
+				console.log("Sign out successful");
+			}, function (err) {
+				console.trace(err);
+			});
+		}
 
 		var selected = [];
 

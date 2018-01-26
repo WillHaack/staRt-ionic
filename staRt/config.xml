@@ -71,11 +71,24 @@
     <allow-intent href="https://www.dropbox.com/sh/*" />
     <allow-intent href="https://docs.google.com/forms/*" />
     <icon src="resources/ios/icon/icon-small@3x.png" />
+    <universal-links>
+        <host name="com.ionicframework.start925154" scheme="https" />
+        <host name="start-firebase-3a446.firebaseapp.com" scheme="https">
+            <path url="/__/auth/callback" />
+        </host>
+    </universal-links>
+    <engine name="ios" spec="~4.5.4" />
     <plugin name="cordova-custom-config" spec="~2.0.3" />
     <plugin name="cordova-plugin-dialogs" spec="~1.2.1" />
-    <plugin name="cordova-plugin-file" spec="~4.2.0" />
-    <plugin name="cordova-plugin-file-transfer" spec="~1.5.1" />
+    <plugin name="cordova-plugin-file" spec="^5.0.0" />
     <plugin name="site.girlfriends.start.audio" spec="../audio-plugin" />
     <plugin name="cordova-sqlite-storage" spec="^2.1.2" />
     <plugin name="cordova-plugin-device" spec="^2.0.1" />
+    <plugin name="cordova-plugin-file-transfer" spec="^1.7.0" />
+    <plugin name="cordova-plugin-buildinfo" spec="^2.0.1" />
+    <plugin name="cordova-plugin-browsertab" spec="^0.2.0" />
+    <plugin name="cordova-plugin-customurlscheme" spec="^4.3.0">
+        <variable name="URL_SCHEME" value="com.ionicframework.start925154" />
+    </plugin>
+    <plugin name="cordova-universal-links-plugin" spec="git+https://github.com/aramando/cordova-universal-links-plugin.git#35b3ed7e9a0310b12f1ac92a5159b21ce50eee57" />
 </widget>
