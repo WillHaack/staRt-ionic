@@ -2,7 +2,7 @@
 
 'use strict';
 
-var practiceDirective = angular.module( 'practiceDirective', [ ] );
+var practiceDirective = angular.module( 'practiceDirective', [ 'firebaseService' ] );
 
 practiceDirective.directive( 'practiceDirective', function()
 {

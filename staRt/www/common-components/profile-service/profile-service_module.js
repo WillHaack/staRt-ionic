@@ -1,6 +1,8 @@
-var profileService = angular.module('profileService', [ 'firebaseService' ]);
+var LONG_TRIAL_TIME_MILLIS = 600000;
 
-profileService.factory('ProfileService', function($localForage, $http, FirebaseService)
+var profileService = angular.module('profileService', [ 'firebaseService', 'notifyingService' ]);
+
+profileService.factory('ProfileService', function($rootScope, $localForage, $http, FirebaseService, NotifyingService)
 {
 	function guid() {
 		return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
@@ -23,6 +25,14 @@ profileService.factory('ProfileService', function($localForage, $http, FirebaseS
 			heightFeet: undefined,
 			heightInches: undefined,
 			gender: undefined,
+			creationTimestamp: Date.now(),
+			lastLoginTimestamp: Date.now(),
+			firstSessionTimestamp: null,
+			lastSessionTimestamp: null,
+			pronunciationsRated: 0,
+			allTrialsCompleted: 0,
+			longTrialsCompleted: 0,
+			totalPracticeTime: 0,
 			uuid: guid()
 		};
 	};
@@ -117,6 +127,60 @@ profileService.factory('ProfileService', function($localForage, $http, FirebaseS
 			});
 	}
 
+	function _getCurrentProfile() {
+		return profilesInterfaceState.then( function(res) {
+			var currentId = res['currentProfileUUID'];
+			var currentProfile = null;
+			if (currentId) {
+				return FirebaseService.db().collection("profiles")
+					.where("uuid", "==", currentId)
+					.get()
+					.then(function (querySnapshot) {
+						querySnapshot.forEach(function (doc) {
+							currentProfile = doc.data(); // there should only be one...
+						});
+						return currentProfile;
+					})
+					.catch(function (err) {
+						console.log(err);
+						return null;
+					});
+			} else {
+				return Promise.resolve(null);
+			}
+		});
+	}
+
+	function _saveProfile(profile) {
+		return FirebaseService.db().collection("profiles")
+			.doc(profile.uuid)
+			.set(profile);
+	}
+
+	function _updateProfileForRecording(msg, session) {
+		_getCurrentProfile().then(function (profile) {
+			if (profile) {
+				var recordingTime = session.endTimestamp - session.startTimestamp;
+				if (profile.firstSessionTimestamp === null) profile.firstSessionTimestamp = session.startTimestamp;
+				profile.lastSessionTimestamp = session.startTimestamp;
+				profile.pronunciationsRated += session.ratings.length;
+				profile.totalPracticeTime += (session.endTimestamp - session.startTimestamp);
+
+				if (recordingTime >= LONG_TRIAL_TIME_MILLIS) {
+					profile.longTrialsCompleted += 1;
+				}
+
+				if (session.ratings.length === session.count) {
+					profile.allTrialsCompleted += 1;
+				}
+
+				_saveProfile(profile);
+			}
+		});
+	}
+
+	NotifyingService.subscribe('recording-completed', $rootScope, _updateProfileForRecording);
+
 	profilesInterfaceState = loadProfilesInterfaceState();
 
 	return {
@@ -143,27 +207,7 @@ profileService.factory('ProfileService', function($localForage, $http, FirebaseS
 
 		getCurrentProfile: function()
 		{
-			return profilesInterfaceState.then( function(res) {
-				var currentId = res['currentProfileUUID'];
-				var currentProfile = null;
-				if (currentId) {
-					return FirebaseService.db().collection("profiles")
-						.where("uuid", "==", currentId)
-						.get()
-						.then(function (querySnapshot) {
-							querySnapshot.forEach(function (doc) {
-								currentProfile = doc.data(); // there should only be one...
-							});
-							return currentProfile;
-						})
-						.catch(function (err) {
-							console.log(err);
-							return null;
-						});
-				} else {
-					return Promise.resolve(null);
-				}
-			});
+			return _getCurrentProfile();
 		},
 
 		getRecordingsForProfile: function(profile, cb) {
@@ -184,6 +228,10 @@ profileService.factory('ProfileService', function($localForage, $http, FirebaseS
 		setCurrentProfile: function(profile)
 		{
 			return profilesInterfaceState.then( function (res) {
+				if (profile && profile.uuid && (res['currentProfileUUID'] !== profile.uuid)) {
+					profile.lastLoginTime = Date.now();
+					_saveProfile(profile);
+				}
 				res['currentProfileUUID'] = profile ? profile.uuid : null;
 				commitProfilesInterfaceState();
 				return res['currentProfileUUID'];
@@ -192,9 +240,7 @@ profileService.factory('ProfileService', function($localForage, $http, FirebaseS
 
 		saveProfile: function(profile)
 		{
-			return FirebaseService.db().collection("profiles")
-				.doc(profile.uuid)
-				.set(profile);
+			return _saveProfile(profile);
 		},
 
 		createProfile: function()

@@ -39,10 +39,12 @@ function scrambleArray(array) {
 	}
 }
 
-function initialPracticeSession() {
+function initialPracticeSession(startTimestamp) {
 	return {
 		id: guid(),
-		ratings: []
+		ratings: [],
+		startTimestamp: startTimestamp,
+		endTimestamp: null
 	};
 }
 
@@ -86,7 +88,7 @@ function saveJSON(jsonObject, absolutePath, successCb)
 var practiceDirective = angular.module( 'practiceDirective' );
 
 practiceDirective.controller( 'PracticeDirectiveController',
-	function($scope, $timeout, $localForage, ProfileService, StartUIState, UploadService, $rootScope, $state, $http, $cordovaDialogs)
+	function($scope, $timeout, $localForage, NotifyingService, FirebaseService, ProfileService, StartUIState, UploadService, $rootScope, $state, $http, $cordovaDialogs)
 	{
 		// var uploadURLs = [
 		// 	"http://localhost:5000",
@@ -147,6 +149,8 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			console.log("LPC: " + files.LPC);
 			console.log("Audio: " + files.Audio);
 			var jsonPath = files.Metadata.replace("-meta.csv", "-ratings.json");
+			$scope.currentPracticeSession.count = $scope.count;
+			$scope.currentPracticeSession.endTimestamp = Date.now();
 
 			if ($scope.active && $scope.currentPracticeSession.ratings.length > 0) {
 				saveJSON($scope.currentPracticeSession.ratings, jsonPath, function() {
@@ -157,6 +161,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 					navigator.notification.confirm("Would you like to upload this " + practiceTypeStr + " session?",
 						function (index) {
 							if (index == 1) {
+								NotifyingService.notify("recording-completed", session);
 								session.uploadProgress = [0, 0, 0, 0];
 								session.uploadsComplete = [false, false, false, false];
 								UploadService.uploadPracticeSessionFiles(
@@ -178,7 +183,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		function beginPracticeForUser(user) {
 			if ($scope.isPracticing) return;
 			$scope.isPracticing = true;
-			$scope.currentPracticeSession = initialPracticeSession();
+			$scope.currentPracticeSession = initialPracticeSession(Date.now());
 			if (window.AudioPlugin !== undefined) {
 				AudioPlugin.startRecording(user, sessionDisplayString(), recordingDidStart, recordingDidFail);
 			}

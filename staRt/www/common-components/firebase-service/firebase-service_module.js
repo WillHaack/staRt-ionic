@@ -46,6 +46,8 @@ firebaseService.factory('FirebaseService', function()
 
         startUi: function() { ui.start('#firebaseui-auth-container', uiConfig); },
 
+        timestamp: function() { return firebase.firestore.FieldValue.serverTimestamp(); },
+
         userId: function() { return firebase.auth().currentUser ? firebase.auth().currentUser.uid : null; }
     }
 });

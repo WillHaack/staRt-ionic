@@ -6,8 +6,9 @@
 	[
 		'LocalForageModule',
 		'firebaseService',
-		'startStateService',
+		'notifyingService',
 		'profileService',
+		'startStateService',
 		'uploadService',
 		'lpcDirective',
 		'ngCordova',

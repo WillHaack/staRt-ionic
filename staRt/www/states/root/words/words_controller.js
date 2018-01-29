@@ -7,7 +7,7 @@
 {
 	var words = angular.module( 'words' );
 
-	words.controller('WordsController', function($scope, $timeout, $localForage, ProfileService, StartUIState, $rootScope, $state)
+	words.controller('WordsController', function($scope, $timeout, $localForage, FirebaseService, ProfileService, StartUIState, $rootScope, $state)
 	{
 		console.log('WordsController here!');
 
