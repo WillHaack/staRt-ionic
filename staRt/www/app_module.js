@@ -23,16 +23,6 @@ start.run(function($ionicPlatform, $rootScope, $state) {
 		if (next.name !== prev.name) {
 			$rootScope.$broadcast("$urlChangeStart", next.name);
 		}
-
-		// if (next.current.url === $scope.myURL) {
-		//   debugger;
-		//   $scope.active = true;
-		//   $scope.animate();
-		//   $scope.updateCanvasSize();
-		// } else {
-		//   debugger;
-		//   scope.active = false;
-		// }
 	});
 
 	$ionicPlatform.ready(function() {

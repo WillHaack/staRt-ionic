@@ -25,6 +25,8 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 			heightFeet: undefined,
 			heightInches: undefined,
 			gender: undefined,
+			allSessionTime: 0,
+			allFreeplayTime: 0,
 			creationTimestamp: Date.now(),
 			lastLoginTimestamp: Date.now(),
 			firstSessionTimestamp: null,
@@ -42,6 +44,9 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 	var norms;
 	var filterOrder;
 	var profilesInterfaceState;
+
+	var lastSessionChronoTime;
+	var profileSessionTimerId;
 
 	$http.get('data/F3r_norms_Lee_et_al_1999.csv').then(function(res)
 	{
@@ -172,6 +177,24 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 		});
 	}
 
+	function _logProfileUseInterval() {
+		var nextSessionChronoTime = Date.now();
+		var duration = nextSessionChronoTime - lastSessionChronoTime;
+		_getCurrentProfile().then(function (profile) {
+			if (profile) {
+				profile.allSessionTime = (profile.allSessionTime ? profile.allSessionTime : 0) + duration;
+				_saveProfile(profile);
+			}
+		})
+		lastSessionChronoTime = nextSessionChronoTime;
+	}
+
+	function _resetProfileChrono() {
+		if (profileSessionTimerId) clearInterval(profileSessionTimerId);
+		lastSessionChronoTime = Date.now();
+		setInterval(_logProfileUseInterval, 60000);
+	}
+
 	function _saveProfile(profile) {
 		return FirebaseService.db().collection("profiles")
 			.doc(profile.uuid)
@@ -200,7 +223,16 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 		});
 	}
 
+	// Notifications
 	NotifyingService.subscribe('recording-completed', $rootScope, _updateProfileForRecording);
+	NotifyingService.subscribe('freeplay-tick', $rootScope, function(msg, duration) {
+		_getCurrentProfile().then(function (profile) {
+			if (profile) {
+				profile.allFreeplayTime = (profile.allFreeplayTime ? profile.allFreeplayTime : 0) + duration;
+				_saveProfile(profile);
+			}
+		});
+	});
 
 	profilesInterfaceState = loadProfilesInterfaceState();
 
@@ -251,6 +283,7 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 			return profilesInterfaceState.then( function (res) {
 				if (profile && profile.uuid && (res['currentProfileUUID'] !== profile.uuid)) {
 					profile.lastLoginTime = Date.now();
+					_resetProfileChrono();
 					_saveProfile(profile);
 					_checkForPrompt(profile);
 				}
