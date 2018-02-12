@@ -8,6 +8,7 @@
 		'firebaseService',
 		'notifyingService',
 		'profileService',
+		'startServerService',
 		'startStateService',
 		'uploadService',
 		'lpcDirective',

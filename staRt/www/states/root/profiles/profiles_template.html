@@ -14,7 +14,7 @@
 				<ion-radio
 					name="name"
 					ng-model="data.currentProfileUUID"
-					ng-repeat="profile in data.profiles"
+					ng-repeat="profile in data.profiles track by profile.uuid"
 					ng-value="profile.uuid"
 					ng-change="updateCurrentProfile(profile)">
 						{{ (profile.name === undefined) ? 'New Profile' : profile.name }}
@@ -174,7 +174,7 @@
 			</h2>
 			<ion-scroll>
 				<ion-list
-					ng-repeat="recording in data.currentProfileRecordings"
+					ng-repeat="recording in data.currentProfileRecordings track by recording.sessionId"
 					ng-class="{uploaded:recording.uploaded, not_uploaded:!recording.uploaded}"
 				>
 					<ion-item ng-click="recordingClicked(recording)" ng-class="{ selected: recording.selected }">

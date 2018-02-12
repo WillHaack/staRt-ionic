@@ -24,12 +24,12 @@ firebaseService.factory('FirebaseService', function()
     };
 
     var firebaseApp = firebase.initializeApp({
-        apiKey: "AIzaSyCcifZep5wuYGaX0kg_EB3wdT75UJAQ0HY",
-        authDomain: "start-firebase-3a446.firebaseapp.com",
-        databaseURL: "https://start-firebase-3a446.firebaseio.com",
-        projectId: "start-firebase-3a446",
-        storageBucket: "start-firebase-3a446.appspot.com",
-        messagingSenderId: "333691923555"
+        apiKey: "AIzaSyAhXwmRqVnZUd1sKaMxNjTCAMm7-iZZFHQ",
+        authDomain: "start-app-59c52.firebaseapp.com",
+        databaseURL: "https://start-app-59c52.firebaseio.com",
+        projectId: "start-app-59c52",
+        storageBucket: "start-app-59c52.appspot.com",
+        messagingSenderId: "242774896654"
     });
 
     var db = firebaseApp.firestore();

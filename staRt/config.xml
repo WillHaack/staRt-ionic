@@ -72,8 +72,8 @@
     <allow-intent href="https://docs.google.com/forms/*" />
     <icon src="resources/ios/icon/icon-small@3x.png" />
     <universal-links>
-        <host name="com.ionicframework.start925154" scheme="https" />
-        <host name="start-firebase-3a446.firebaseapp.com" scheme="https">
+        <host name="mx949.app.goo.gl" scheme="https" />
+        <host name="start-app-59c52.firebaseapp.com" scheme="https">
             <path url="/__/auth/callback" />
         </host>
     </universal-links>

@@ -2,7 +2,7 @@ var LONG_TRIAL_TIME_MILLIS = 600000;
 
 var profileService = angular.module('profileService', [ 'firebaseService', 'notifyingService' ]);
 
-profileService.factory('ProfileService', function($rootScope, $localForage, $http, FirebaseService, NotifyingService)
+profileService.factory('ProfileService', function($rootScope, $localForage, $http, FirebaseService, NotifyingService, StartServerService)
 {
 	function guid() {
 		return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
@@ -106,6 +106,27 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 				console.log(retVal);
 				return retVal;
 			});
+		});
+	}
+
+	function _checkForPrompt(profile) {
+		StartServerService.getCredentials(function (credentials) {
+			if (credentials) {
+				var headers = {}, options = {};
+				headers['Authorization'] = 'Basic ' + btoa(credentials.username + ':' + credentials.password);
+				options.headers = headers;
+				var params = {
+					profile: profile
+				};
+				$http.post('https://byunlab.com/start/prompt', {name: "hey"} , options)
+					.success(function (res) {
+						console.log(res);
+					})
+					.error(function (err, status) {
+						console.log(err);
+						console.log(status);
+					});
+			}
 		});
 	}
 
@@ -231,6 +252,7 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 				if (profile && profile.uuid && (res['currentProfileUUID'] !== profile.uuid)) {
 					profile.lastLoginTime = Date.now();
 					_saveProfile(profile);
+					_checkForPrompt(profile);
 				}
 				res['currentProfileUUID'] = profile ? profile.uuid : null;
 				commitProfilesInterfaceState();

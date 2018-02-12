@@ -9,22 +9,8 @@ var uploadURLs = [
 
 var downloadStatusCache = {};
 
-uploadService.factory('UploadService', function($localForage, $http, $cordovaDialogs)
+uploadService.factory('UploadService', function($localForage, $http, $cordovaDialogs, StartServerService)
 {
-	function getCredentials($http, cb) {
-		$http.get("data/credentials.json",  {
-			headers: {
-				'Content-type': 'application/json'
-			}
-		})
-		.success(function(res) {
-			cb(res);
-		})
-		.error(function(data, status) {
-			cb(false);
-		})
-	}
-
 	function saveUploadStatusForSessionKey(sessionKey, status) {
 		var item = downloadStatusCache[sessionKey];
 		if (!item) item = {};
@@ -77,7 +63,7 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 					options.chunkedMode = true;
 
 					//call getCredentials and set http headers with username and password
-					getCredentials($http, function(credentials) {
+					StartServerService.getCredentials(function(credentials) {
 						var headers = {
 							'filename':options.fileName,
 						};
