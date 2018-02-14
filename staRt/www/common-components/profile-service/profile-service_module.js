@@ -1,4 +1,4 @@
-var LONG_TRIAL_TIME_MILLIS = 600000;
+var LONG_SESSION_MILLIS = 600000; // Ten minutes
 
 var profileService = angular.module('profileService', [ 'firebaseService', 'notifyingService' ]);
 
@@ -25,17 +25,30 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 			heightFeet: undefined,
 			heightInches: undefined,
 			gender: undefined,
-			allSessionTime: 0,
-			allFreeplayTime: 0,
-			creationTimestamp: Date.now(),
-			lastLoginTimestamp: Date.now(),
-			firstSessionTimestamp: null,
-			lastSessionTimestamp: null,
-			pronunciationsRated: 0,
-			allTrialsCompleted: 0,
-			longTrialsCompleted: 0,
-			totalPracticeTime: 0,
-			uuid: guid()
+			uuid: guid(),
+
+			// Profile cumulative statistics
+			allSessionTime: 0, // Milliseconds logged in for this profile
+			allFreeplayTime: 0, // Milliseconds spend in free play for this profile
+			allQuestTime: 0, // Milliseconds spend in a syllable/word quest
+			allTrialsCompleted: 0, // Total number of trials elicited and scored for a given profile
+			allTrialsCorrect: 0, // Total number of 'points' accumulated for a profile (good>1, okay>0.5, try again>0)
+			percentTrialsCorrect: 0, // 100 * correct / completed	
+			nQuestsInitiated: 0, // total number of quests initiated
+			nQuestsCompleted: 0, // total number of quests completed
+			nLongSessionsCompleted: 0, // total number of times a user is logged in for at least 10 minutes
+
+			// Profile component statistics
+			nWordQuizComplete: 0, // number of times Word Quiz has been completed
+			nSyllableQuizComplete: 0, // number of times Syllable Quiz has been completed
+			nTutorialComplete: 0, // number of times the tutorial has been completed
+			nIntroComplete: 0, // number of times intro sequence has been completed
+			
+			// Other profile statistics
+			firstSessionTimestamp: null, // Unix timestamp of first trial
+			lastSessionTimestamp: null, // Unix timestamp of most recent trial
+			creationTimestamp: Date.now(), // Unix timestamp profile creation
+			lastLoginTimestamp: Date.now(), // Unix time of last login
 		};
 	};
 
@@ -47,6 +60,16 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 
 	var lastSessionChronoTime;
 	var profileSessionTimerId;
+	var profileLongSessionTimerId;
+
+	var currentProfileStats = {
+		thisQuestTrialsCompleted: 0, // trials completed since the start of this session
+		thisQuestTrialsCorrect: 0, // score since the start of this session
+		thisQuestPercentTrialsCorrect: 0, // 100 * correct / completed
+		thisSessionTime: 0, // time elapsed since the start of this session
+		thisFreeplayTime: 0, // time elapsed in freeplay since the start of this session
+		thisQuestTime: 0 // time elapsed in quest since the start of this session
+	};
 
 	$http.get('data/F3r_norms_Lee_et_al_1999.csv').then(function(res)
 	{
@@ -182,17 +205,28 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 		var duration = nextSessionChronoTime - lastSessionChronoTime;
 		_getCurrentProfile().then(function (profile) {
 			if (profile) {
-				profile.allSessionTime = (profile.allSessionTime ? profile.allSessionTime : 0) + duration;
+				_incrementProfileStat(profile, "allSessionTime", duration);
+				_incrementProfileStat(currentProfileStats, "thisSessionTime", duration);
 				_saveProfile(profile);
 			}
 		})
 		lastSessionChronoTime = nextSessionChronoTime;
 	}
 
+	function _incrementProfileStat(profile, stat, increment) {
+		profile[stat] = (profile[stat] ? profile[stat] : 0) + increment;
+	}
+
 	function _resetProfileChrono() {
 		if (profileSessionTimerId) clearInterval(profileSessionTimerId);
 		lastSessionChronoTime = Date.now();
 		setInterval(_logProfileUseInterval, 60000);
+	}
+
+	function _resetSessionStats() {
+		for (var k in currentProfileStats) {
+			if (currentProfileStats.hasOwnProperty(k)) currentProfileStats[k] = 0;
+		}
 	}
 
 	function _saveProfile(profile) {
@@ -207,15 +241,30 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 				var recordingTime = session.endTimestamp - session.startTimestamp;
 				if (profile.firstSessionTimestamp === null) profile.firstSessionTimestamp = session.startTimestamp;
 				profile.lastSessionTimestamp = session.startTimestamp;
-				profile.pronunciationsRated += session.ratings.length;
-				profile.totalPracticeTime += (session.endTimestamp - session.startTimestamp);
 
-				if (recordingTime >= LONG_TRIAL_TIME_MILLIS) {
-					profile.longTrialsCompleted += 1;
+				if (session.ratings.length) {
+					// Remember, each rating is an array of length 2, eg ["target", <rating>]
+					var score = session.ratings.map(function (x) { return Math.max(0, (x[1] - 1) / 2 )})
+						.reduce(function (x, accum) { return x + accum; });
+
+					// Increment and calculate stats for the profile
+					_incrementProfileStat(profile, "allTrialsCompleted", session.ratings.length);
+					_incrementProfileStat(profile, "allTrialsCorrect", score);
+					profile.percentTrialsCorrect = (100 * profile.allTrialsCorrect / profile.allTrialsCompleted);
+
+					// Increment and calculate stats for the session
+					currentProfileStats.thisQuestTrialsCompleted = session.ratings.length;
+					currentProfileStats.thisQuestTrialsCorrect = score;
+					currentProfileStats.thisQuestPercentTrialsCorrect =
+						(100 * currentProfileStats.thisQuestPercentTrialsCorrect) / currentProfileStats.thisQuestTrialsCompleted;
 				}
 
 				if (session.ratings.length === session.count) {
-					profile.allTrialsCompleted += 1;
+					_incrementProfileStat(profile, "nQuestsCompleted", 1);
+					if (session.type.toLowerCase() === "word" && session.probe)
+						_incrementProfileStat(profile, "nWordQuizComplete", 1);
+					if (session.type.toLowerCase() === "syllable" && session.probe)
+						_incrementProfileStat(profile, "nSyllabeQuizComplete", 1);
 				}
 
 				_saveProfile(profile);
@@ -228,7 +277,33 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 	NotifyingService.subscribe('freeplay-tick', $rootScope, function(msg, duration) {
 		_getCurrentProfile().then(function (profile) {
 			if (profile) {
-				profile.allFreeplayTime = (profile.allFreeplayTime ? profile.allFreeplayTime : 0) + duration;
+				_incrementProfileStat(profile, "allFreeplayTime", duration);
+				_incrementProfileStat(currentProfileStats, "thisFreeplayTime", duration);
+				_saveProfile(profile);
+			}
+		});
+	});
+	NotifyingService.subscribe('quest-start', $rootScope, function(msg) {
+		_getCurrentProfile().then(function (profile) {
+			if (profile) {
+				_incrementProfileStat(profile, "nQuestsInitiated", 1);
+				_saveProfile(profile);
+			}
+		});
+	});
+	NotifyingService.subscribe('quest-tick', $rootScope, function(msg, duration) {
+		_getCurrentProfile().then(function (profile) {
+			if (profile) {
+				_incrementProfileStat(profile, "allQuestTime", duration);
+				_incrementProfileStat(currentProfileStats, "thisQuestTime", duration);
+				_saveProfile(profile);
+			}
+		});
+	});
+	NotifyingService.subscribe('tutorial-completed', $rootScope, function(msg) {
+		_getCurrentProfile().then(function (profile) {
+			if (profile) {
+				_incrementProfileStat(profile, "nTutorialComplete", 1);
 				_saveProfile(profile);
 			}
 		});
@@ -282,8 +357,15 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 		{
 			return profilesInterfaceState.then( function (res) {
 				if (profile && profile.uuid && (res['currentProfileUUID'] !== profile.uuid)) {
+					if (profileLongSessionTimerId) clearTimeout(profileLongSessionTimerId);
+					profileLongSessionTimerId = null;
+					profileLongSessionTimerId = setTimeout(function() {
+						_incrementProfileStat(profile, "nLongSessionsCompleted", 1);
+						_saveProfile(profile);
+					}, LONG_SESSION_MILLIS);
 					profile.lastLoginTime = Date.now();
 					_resetProfileChrono();
+					_resetSessionStats();
 					_saveProfile(profile);
 					_checkForPrompt(profile);
 				}

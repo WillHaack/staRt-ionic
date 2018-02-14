@@ -39,10 +39,12 @@ function scrambleArray(array) {
 	}
 }
 
-function initialPracticeSession(startTimestamp) {
+function initialPracticeSession(startTimestamp, type, probe) {
 	return {
 		id: guid(),
 		ratings: [],
+		probe: probe,
+		type: type,
 		startTimestamp: startTimestamp,
 		endTimestamp: null
 	};
@@ -160,8 +162,8 @@ practiceDirective.controller( 'PracticeDirectiveController',
 					var session = $scope.currentPracticeSession;
 					navigator.notification.confirm("Would you like to upload this " + practiceTypeStr + " session?",
 						function (index) {
+							NotifyingService.notify("recording-completed", session);
 							if (index == 1) {
-								NotifyingService.notify("recording-completed", session);
 								session.uploadProgress = [0, 0, 0, 0];
 								session.uploadsComplete = [false, false, false, false];
 								UploadService.uploadPracticeSessionFiles(
@@ -183,7 +185,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		function beginPracticeForUser(user) {
 			if ($scope.isPracticing) return;
 			$scope.isPracticing = true;
-			$scope.currentPracticeSession = initialPracticeSession(Date.now());
+			$scope.currentPracticeSession = initialPracticeSession(Date.now(), $scope.type || "word", $scope.probe || "quest");
 			if (window.AudioPlugin !== undefined) {
 				AudioPlugin.startRecording(user, sessionDisplayString(), recordingDidStart, recordingDidFail);
 			}

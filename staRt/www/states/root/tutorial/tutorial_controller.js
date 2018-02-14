@@ -5,11 +5,14 @@
 	var tutorial = angular.module( 'tutorial' );
 
 	tutorial.controller('TutorialController', 
-		function($scope, $timeout, $localForage, StartUIState, $rootScope, $state, $http, $stateParams, firstPanelData) 
+		function($scope, $timeout, $localForage, StartUIState, NotifyingService, $rootScope, $state, $http, $stateParams, firstPanelData) 
 		{
 
 			// =============================================================================
 			// GET DATA & ASSETS ---------------------------
+
+				// Count the number of tutorial steps, so we know when we're done
+				$scope.totalSteps = 0;
 
 				// Fetch first panel data and make sure it's ready for the view
 				$scope.p01data = firstPanelData.data;
@@ -22,6 +25,7 @@
 				$http.get('states/root/tutorial/tutorialData/coinData.json').success(function(data){
 					$scope.coinData = data;
 					$scope.makeActivePageObj();
+					$scope.totalSteps++;
 				});
 
 				$http.get('states/root/tutorial/tutorialData/p02data.json').success(function(data)
@@ -29,6 +33,7 @@
 					$scope.p02data = data;
 					$scope.p02s1 = $scope.p02data[0];
 					$scope.p02s2 = $scope.p02data[1];
+					$scope.totalSteps++;
 				});
 
 				$http.get('states/root/tutorial/tutorialData/p03data.json').success(function(data)
@@ -37,6 +42,7 @@
 					$scope.p03s1 = $scope.p03data[0];
 					$scope.p03s2 = $scope.p03data[1];
 					$scope.p03s3 = $scope.p03data[2];
+					$scope.totalSteps++;
 				});
 
 				$http.get('states/root/tutorial/tutorialData/p04data.json').success(function(data)
@@ -45,6 +51,7 @@
 					$scope.p04s1 = $scope.p04data[0];
 					$scope.p04s2 = $scope.p04data[1];
 					$scope.p04s3 = $scope.p04data[2];
+					$scope.totalSteps++;
 				});
 
 				$http.get('states/root/tutorial/tutorialData/p05data.json').success(function(data)
@@ -55,6 +62,7 @@
 					$scope.p05s3 = $scope.p05data[2];
 					$scope.p05s4 = $scope.p05data[3];
 					$scope.p05s5 = $scope.p05data[4];
+					$scope.totalSteps++;
 				});
 
 
@@ -108,9 +116,12 @@
 			// called from template partials (.inputBox)
 			// Updates coin graphic on the completion of each page (tutorial section)
 			$scope.coinUpdate = function(step) {
-				if(step !== undefined) {
+				if (step !== undefined) {
 					$scope[step] = true;
 					$scope.stepsCompleted.push(step);
+					if ($scope.stepsCompleted.length === $scope.totalSteps) {
+						NotifyingService.notify('tutorial-completed');
+					}
 				}
 			}
 

@@ -174,7 +174,7 @@
 			</h2>
 			<ion-scroll>
 				<ion-list
-					ng-repeat="recording in data.currentProfileRecordings track by recording.sessionId"
+					ng-repeat="recording in data.currentProfileRecordings track by recording.Metadata"
 					ng-class="{uploaded:recording.uploaded, not_uploaded:!recording.uploaded}"
 				>
 					<ion-item ng-click="recordingClicked(recording)" ng-class="{ selected: recording.selected }">
