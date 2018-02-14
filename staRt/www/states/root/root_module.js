@@ -8,6 +8,7 @@
 		'firebaseService',
 		'notifyingService',
 		'profileService',
+		'sessionStatsService',
 		'startServerService',
 		'startStateService',
 		'uploadService',

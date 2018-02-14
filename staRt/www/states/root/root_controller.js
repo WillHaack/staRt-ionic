@@ -4,7 +4,7 @@
 {
 	var root = angular.module( 'root' );
 
-	root.controller('RootController', function($scope, $timeout, $localForage, $ionicNavBarDelegate, FirebaseService, StartUIState, ProfileService, UploadService, $rootScope, $state)
+	root.controller('RootController', function($scope, $timeout, $localForage, $ionicNavBarDelegate, FirebaseService, StartUIState, ProfileService, SessionStatsService, UploadService, $rootScope, $state)
 	{
 		//console.log('RootController here!');
 
@@ -66,6 +66,8 @@
 		};
 
 		$scope.tabData = StartUIState.tabData;
+
+		SessionStatsService.init();
 	});
 
 } )(  );

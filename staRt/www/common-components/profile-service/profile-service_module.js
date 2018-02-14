@@ -1,5 +1,3 @@
-var LONG_SESSION_MILLIS = 600000; // Ten minutes
-
 var profileService = angular.module('profileService', [ 'firebaseService', 'notifyingService' ]);
 
 profileService.factory('ProfileService', function($rootScope, $localForage, $http, FirebaseService, NotifyingService, StartServerService)
@@ -57,19 +55,6 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 	var norms;
 	var filterOrder;
 	var profilesInterfaceState;
-
-	var lastSessionChronoTime;
-	var profileSessionTimerId;
-	var profileLongSessionTimerId;
-
-	var currentProfileStats = {
-		thisQuestTrialsCompleted: 0, // trials completed since the start of this session
-		thisQuestTrialsCorrect: 0, // score since the start of this session
-		thisQuestPercentTrialsCorrect: 0, // 100 * correct / completed
-		thisSessionTime: 0, // time elapsed since the start of this session
-		thisFreeplayTime: 0, // time elapsed in freeplay since the start of this session
-		thisQuestTime: 0 // time elapsed in quest since the start of this session
-	};
 
 	$http.get('data/F3r_norms_Lee_et_al_1999.csv').then(function(res)
 	{
@@ -137,27 +122,6 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 		});
 	}
 
-	function _checkForPrompt(profile) {
-		StartServerService.getCredentials(function (credentials) {
-			if (credentials) {
-				var headers = {}, options = {};
-				headers['Authorization'] = 'Basic ' + btoa(credentials.username + ':' + credentials.password);
-				options.headers = headers;
-				var params = {
-					profile: profile
-				};
-				$http.post('https://byunlab.com/start/prompt', {name: "hey"} , options)
-					.success(function (res) {
-						console.log(res);
-					})
-					.error(function (err, status) {
-						console.log(err);
-						console.log(status);
-					});
-			}
-		});
-	}
-
 	function _getAllProfiles() {
 		if (!FirebaseService.loggedIn()) { return Promise.resolve(null); }
 		return FirebaseService.db().collection("profiles")
@@ -200,114 +164,11 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 		});
 	}
 
-	function _logProfileUseInterval() {
-		var nextSessionChronoTime = Date.now();
-		var duration = nextSessionChronoTime - lastSessionChronoTime;
-		_getCurrentProfile().then(function (profile) {
-			if (profile) {
-				_incrementProfileStat(profile, "allSessionTime", duration);
-				_incrementProfileStat(currentProfileStats, "thisSessionTime", duration);
-				_saveProfile(profile);
-			}
-		})
-		lastSessionChronoTime = nextSessionChronoTime;
-	}
-
-	function _incrementProfileStat(profile, stat, increment) {
-		profile[stat] = (profile[stat] ? profile[stat] : 0) + increment;
-	}
-
-	function _resetProfileChrono() {
-		if (profileSessionTimerId) clearInterval(profileSessionTimerId);
-		lastSessionChronoTime = Date.now();
-		setInterval(_logProfileUseInterval, 60000);
-	}
-
-	function _resetSessionStats() {
-		for (var k in currentProfileStats) {
-			if (currentProfileStats.hasOwnProperty(k)) currentProfileStats[k] = 0;
-		}
-	}
-
 	function _saveProfile(profile) {
 		return FirebaseService.db().collection("profiles")
 			.doc(profile.uuid)
 			.set(profile);
 	}
-
-	function _updateProfileForRecording(msg, session) {
-		_getCurrentProfile().then(function (profile) {
-			if (profile) {
-				var recordingTime = session.endTimestamp - session.startTimestamp;
-				if (profile.firstSessionTimestamp === null) profile.firstSessionTimestamp = session.startTimestamp;
-				profile.lastSessionTimestamp = session.startTimestamp;
-
-				if (session.ratings.length) {
-					// Remember, each rating is an array of length 2, eg ["target", <rating>]
-					var score = session.ratings.map(function (x) { return Math.max(0, (x[1] - 1) / 2 )})
-						.reduce(function (x, accum) { return x + accum; });
-
-					// Increment and calculate stats for the profile
-					_incrementProfileStat(profile, "allTrialsCompleted", session.ratings.length);
-					_incrementProfileStat(profile, "allTrialsCorrect", score);
-					profile.percentTrialsCorrect = (100 * profile.allTrialsCorrect / profile.allTrialsCompleted);
-
-					// Increment and calculate stats for the session
-					currentProfileStats.thisQuestTrialsCompleted = session.ratings.length;
-					currentProfileStats.thisQuestTrialsCorrect = score;
-					currentProfileStats.thisQuestPercentTrialsCorrect =
-						(100 * currentProfileStats.thisQuestPercentTrialsCorrect) / currentProfileStats.thisQuestTrialsCompleted;
-				}
-
-				if (session.ratings.length === session.count) {
-					_incrementProfileStat(profile, "nQuestsCompleted", 1);
-					if (session.type.toLowerCase() === "word" && session.probe)
-						_incrementProfileStat(profile, "nWordQuizComplete", 1);
-					if (session.type.toLowerCase() === "syllable" && session.probe)
-						_incrementProfileStat(profile, "nSyllabeQuizComplete", 1);
-				}
-
-				_saveProfile(profile);
-			}
-		});
-	}
-
-	// Notifications
-	NotifyingService.subscribe('recording-completed', $rootScope, _updateProfileForRecording);
-	NotifyingService.subscribe('freeplay-tick', $rootScope, function(msg, duration) {
-		_getCurrentProfile().then(function (profile) {
-			if (profile) {
-				_incrementProfileStat(profile, "allFreeplayTime", duration);
-				_incrementProfileStat(currentProfileStats, "thisFreeplayTime", duration);
-				_saveProfile(profile);
-			}
-		});
-	});
-	NotifyingService.subscribe('quest-start', $rootScope, function(msg) {
-		_getCurrentProfile().then(function (profile) {
-			if (profile) {
-				_incrementProfileStat(profile, "nQuestsInitiated", 1);
-				_saveProfile(profile);
-			}
-		});
-	});
-	NotifyingService.subscribe('quest-tick', $rootScope, function(msg, duration) {
-		_getCurrentProfile().then(function (profile) {
-			if (profile) {
-				_incrementProfileStat(profile, "allQuestTime", duration);
-				_incrementProfileStat(currentProfileStats, "thisQuestTime", duration);
-				_saveProfile(profile);
-			}
-		});
-	});
-	NotifyingService.subscribe('tutorial-completed', $rootScope, function(msg) {
-		_getCurrentProfile().then(function (profile) {
-			if (profile) {
-				_incrementProfileStat(profile, "nTutorialComplete", 1);
-				_saveProfile(profile);
-			}
-		});
-	});
 
 	profilesInterfaceState = loadProfilesInterfaceState();
 
@@ -356,18 +217,8 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 		setCurrentProfile: function(profile)
 		{
 			return profilesInterfaceState.then( function (res) {
-				if (profile && profile.uuid && (res['currentProfileUUID'] !== profile.uuid)) {
-					if (profileLongSessionTimerId) clearTimeout(profileLongSessionTimerId);
-					profileLongSessionTimerId = null;
-					profileLongSessionTimerId = setTimeout(function() {
-						_incrementProfileStat(profile, "nLongSessionsCompleted", 1);
-						_saveProfile(profile);
-					}, LONG_SESSION_MILLIS);
-					profile.lastLoginTime = Date.now();
-					_resetProfileChrono();
-					_resetSessionStats();
-					_saveProfile(profile);
-					_checkForPrompt(profile);
+				if ((!profile ? null : profile.uuid) !== res['currentProfileUUID']) {
+					NotifyingService.notify('will-set-current-profile', profile);
 				}
 				res['currentProfileUUID'] = profile ? profile.uuid : null;
 				commitProfilesInterfaceState();
