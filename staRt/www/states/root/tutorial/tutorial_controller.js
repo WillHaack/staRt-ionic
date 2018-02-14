@@ -16,6 +16,7 @@
 
 				// Fetch first panel data and make sure it's ready for the view
 				$scope.p01data = firstPanelData.data;
+				$scope.totalSteps++;
 				for (var i = 0; i < $scope.p01data.length; i++)
 				{
 					$scope['p01s' + (i + 1)] = $scope.p01data[i];

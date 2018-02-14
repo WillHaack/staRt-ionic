@@ -43,6 +43,7 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 			nIntroComplete: 0, // number of times intro sequence has been completed
 			
 			// Other profile statistics
+			formalTester: true, // don't forget to make this false
 			firstSessionTimestamp: null, // Unix timestamp of first trial
 			lastSessionTimestamp: null, // Unix timestamp of most recent trial
 			creationTimestamp: Date.now(), // Unix timestamp profile creation
@@ -165,6 +166,7 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 	}
 
 	function _saveProfile(profile) {
+		NotifyingService.notify('profile-saved', profile);
 		return FirebaseService.db().collection("profiles")
 			.doc(profile.uuid)
 			.set(profile);
