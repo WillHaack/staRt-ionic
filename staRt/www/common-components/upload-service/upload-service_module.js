@@ -1,10 +1,17 @@
 var uploadService = angular.module('uploadService', []);
 
+// var uploadURLs = [
+// 	"https://byunlab.com/start/session/ratings",
+// 	"https://byunlab.com/start/session/metadata",
+// 	"https://byunlab.com/start/session/lpc",
+// 	"https://byunlab.com/start/session/audio"
+// ];
+
 var uploadURLs = [
-	"https://byunlab.com/start/session/ratings",
-	"https://byunlab.com/start/session/metadata",
-	"https://byunlab.com/start/session/lpc",
-	"https://byunlab.com/start/session/audio"
+	"http://localhost:3000/session/ratings",
+	"http://localhost:3000/session/metadata",
+	"http://localhost:3000/session/lpc",
+	"http://localhost:3000/session/audio"
 ];
 
 var downloadStatusCache = {};
@@ -107,7 +114,7 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 
 		uploadPracticeSessionFiles: function(session, id, progressCallback, completeCallback, errorCallback) {
 			var filesToUpload = [session.Ratings, session.Metadata, session.LPC, session.Audio];
-			var mimeTypes = ["text/json", "text/csv", "text/csv", "audio/mp4"];
+			var mimeTypes = ["application/json", "text/csv", "text/csv", "audio/mp4"];
 			var uploadTodos = [];
 
 			saveUploadStatusForSessionKey(session.Metadata.split('/').pop(), {uploading: true});

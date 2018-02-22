@@ -35,6 +35,8 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 			nQuestsInitiated: 0, // total number of quests initiated
 			nQuestsCompleted: 0, // total number of quests completed
 			nLongSessionsCompleted: 0, // total number of times a user is logged in for at least 10 minutes
+			nBiofeedbackSessionsCompleted: 0, // number of session trials completed with biofeedback
+			nNonBiofeedbackSessionsCompleted: 0, // number of session trials completed without biofeedback
 
 			// Profile component statistics
 			nWordQuizComplete: 0, // number of times Word Quiz has been completed

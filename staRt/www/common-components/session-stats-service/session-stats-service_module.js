@@ -199,7 +199,7 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
                 // _checkForPrompt(profile);
             }
         }
-    });
+	});
 
 	return {
         init: function() {
