@@ -10,12 +10,12 @@
 		<!-- Renderer will be inserted here -->
 		<canvas
 			id="lpc-canvas"
-			ng-hide="lpcHidden || probe || waveHidden" >
+			ng-hide="lpcHidden || probe || waveHidden || $root.rootWaveHidden" >
 		</canvas>
 
 		<div
 			class="waveLabel"
-			ng-hide="!(lpcHidden || probe || waveHidden)" >
+			ng-hide="!(lpcHidden || probe || waveHidden || $root.rootWaveHidden)" >
 			Wave Hidden
 		</div>
 
@@ -62,7 +62,7 @@
 			ng-click="showLPC()"
 			class="reset-button big-button"
 			ng-if="!probe && hideBtn"
-			ng-hide="!lpcHidden || rate">
+			ng-hide="!lpcHidden || rate || $root.rootWaveForced">
 			Show Wave
 		</button>
 

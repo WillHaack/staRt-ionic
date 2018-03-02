@@ -203,6 +203,23 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 			return _getCurrentProfile();
 		},
 
+		getProfileWithUUID: function(profileUUID) {
+			return FirebaseService.db().collection("profiles")
+				.where("uuid", "==", profileUUID)
+				.get()
+				.then(function (querySnapshot) {
+					var currentProfile = null;
+					querySnapshot.forEach(function (doc) {
+						currentProfile = doc.data(); // there should only be one...
+					});
+					return currentProfile;
+				})
+				.catch(function (err) {
+					console.log(err);
+					return null;
+				});
+		},
+
 		getRecordingsForProfile: function(profile, cb) {
 			if (window.AudioPlugin !== undefined) {
 				var pluginRecordingsCallback = function(recordings) {
@@ -218,13 +235,13 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 			}
 		},
 
-		setCurrentProfile: function(profile)
+		setCurrentProfileUUID: function(profileUUID)
 		{
 			return profilesInterfaceState.then( function (res) {
-				if ((!profile ? null : profile.uuid) !== res['currentProfileUUID']) {
-					NotifyingService.notify('will-set-current-profile', profile);
+				if (profileUUID !== res['currentProfileUUID']) {
+					NotifyingService.notify('will-set-current-profile-uuid', profileUUID);
 				}
-				res['currentProfileUUID'] = profile ? profile.uuid : null;
+				res['currentProfileUUID'] = profileUUID;
 				commitProfilesInterfaceState();
 				return res['currentProfileUUID'];
 			});

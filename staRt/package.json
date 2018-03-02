@@ -4,17 +4,17 @@
   "description": "staRt: An Ionic project",
   "dependencies": {
     "audio-plugin": "file:../audio-plugin",
-    "cordova-custom-config": "~2.0.3",
+    "cordova-custom-config": "^2.0.3",
     "cordova-ios": "~4.5.4",
     "cordova-plugin-browsertab": "^0.2.0",
     "cordova-plugin-buildinfo": "^2.0.1",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-customurlscheme": "^4.3.0",
     "cordova-plugin-device": "^2.0.1",
-    "cordova-plugin-dialogs": "~1.2.1",
+    "cordova-plugin-dialogs": "^1.2.1",
     "cordova-plugin-file": "^5.0.0",
-    "cordova-plugin-file-transfer": "^1.7.0",
-    "cordova-sqlite-storage": "^2.1.2",
+    "cordova-plugin-file-transfer": "^1.7.1",
+    "cordova-sqlite-storage": "^2.2.1",
     "cordova-universal-links-plugin": "git+https://github.com/aramando/cordova-universal-links-plugin.git#35b3ed7e9a0310b12f1ac92a5159b21ce50eee57",
     "localforage-cordovasqlitedriver": "^1.6.0",
     "path": "^0.12.7",
@@ -36,14 +36,7 @@
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
-    {
-      "locator": "../audio-plugin/"
-    },
     "cordova-custom-config",
-    {
-      "locator": "../audio-plugin",
-      "id": "site.girlfriends.start.audio"
-    },
     "cordova-plugin-file",
     "cordova-plugin-file-transfer",
     "cordova-plugin-dialogs"
@@ -56,7 +49,6 @@
       "cordova-custom-config": {},
       "cordova-plugin-dialogs": {},
       "cordova-plugin-file": {},
-      "site.girlfriends.start.audio": {},
       "cordova-sqlite-storage": {},
       "cordova-plugin-device": {},
       "cordova-plugin-file-transfer": {},
@@ -65,7 +57,8 @@
       "cordova-plugin-customurlscheme": {
         "URL_SCHEME": "com.ionicframework.start925154"
       },
-      "cordova-universal-links-plugin": {}
+      "cordova-universal-links-plugin": {},
+      "site.girlfriends.start.audio": {}
     },
     "platforms": [
       "ios"

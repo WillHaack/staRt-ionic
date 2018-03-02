@@ -2,7 +2,7 @@ var LONG_SESSION_MILLIS = 600000; // Ten minutes
 
 var sessionStatsService = angular.module('sessionStatsService', [ 'firebaseService', 'notifyingService', 'profileService' ]);
 
-sessionStatsService.factory('SessionStatsService', function($rootScope, $localForage, $http, FirebaseService, NotifyingService, ProfileService)
+sessionStatsService.factory('SessionStatsService', function($rootScope, $localForage, $http, FirebaseService, NotifyingService, ProfileService, $state)
 {
 	var lastSessionChronoTime;
 	var profileSessionTimerId;
@@ -14,7 +14,8 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 		thisQuestPercentTrialsCorrect: 0, // 100 * correct / completed
 		thisSessionTime: 0, // time elapsed since the start of this session
 		thisFreeplayTime: 0, // time elapsed in freeplay since the start of this session
-		thisQuestTime: 0 // time elapsed in quest since the start of this session
+		thisQuestTime: 0, // time elapsed in quest since the start of this session
+		thisCurrentView: $state.current.url // whichever view the user is currently looking at
     };
 
 	// function _checkForPrompt(profile) {
@@ -93,12 +94,12 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
                     _updateProfileStat(profile, "percentTrialsCorrect", (100 * profile.allTrialsCorrect / profile.allTrialsCompleted), changelist);
 
                     // Increment and calculate stats for the session
-                    _updateProfileStat(currentProfileStats, "thisQuestTrialsCompleted", session.ratings.length, changelist);
-                    _updateProfileStat(currentProfileStats, "thisQuestTrialsCorrect", score, changelist);
+                    _incrementProfileStat(currentProfileStats, "thisQuestTrialsCompleted", session.ratings.length, changelist);
+                    _incrementProfileStat(currentProfileStats, "thisQuestTrialsCorrect", score, changelist);
                     _updateProfileStat(
                         currentProfileStats,
-                        "thisQuestTrialsCorrect",
-                        (100 * currentProfileStats.thisQuestPercentTrialsCorrect) / currentProfileStats.thisQuestTrialsCompleted,
+                        "thisQuestPercentTrialsCorrect",
+                        (100 * currentProfileStats.thisQuestTrialsCorrect) / currentProfileStats.thisQuestTrialsCompleted,
                         changelist
                     );	
 				}
@@ -167,7 +168,22 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
                 _notifyChanges(profile, currentProfileStats, changelist);
 			}
 		});
-    });
+	});
+	NotifyingService.subscribe('session-completed', $rootScope, function(data) {
+		ProfileService.getCurrentProfile().then(function (profile) {
+			if (profile) {
+				var practice = data.practice;
+				var changelist = [];
+				if (practice === "BF") {
+					_incrementProfileStat(profile, "nBiofeedbackSessionsCompleted", 1, changelist);
+				} else {
+					_incrementProfileStat(profile, "nNonBiofeedbackSessionsCompleted", 1, changelist);
+				}
+				ProfileService.saveProfile(profile);
+                _notifyChanges(profile, currentProfileStats, changelist);
+			}
+		});
+	});
 	NotifyingService.subscribe('tutorial-completed', $rootScope, function(msg) {
 		ProfileService.getCurrentProfile().then(function (profile) {
 			if (profile) {
@@ -178,27 +194,38 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 			}
 		});
     });
-    NotifyingService.subscribe('will-set-current-profile', $rootScope, function(msg, profile) {
-        if (profile && profile.uuid) {
-            if (profileLongSessionTimerId) clearTimeout(profileLongSessionTimerId);
-            profileLongSessionTimerId = null;
-            profileLongSessionTimerId = setTimeout(function() {
-                var changelist = [];
-                _incrementProfileStat(profile, "nLongSessionsCompleted", 1, changelist);
-                ProfileService.saveProfile(profile);
-                _notifyChanges(profile, currentProfileStats, changelist);
-            }, LONG_SESSION_MILLIS);
+    NotifyingService.subscribe('will-set-current-profile-uuid', $rootScope, function(msg, profileUUID) {
+        if (profileUUID) {
+			ProfileService.getProfileWithUUID(profileUUID).then(function (profile) {
+				if (profileLongSessionTimerId) clearTimeout(profileLongSessionTimerId);
+				profileLongSessionTimerId = null;
+				profileLongSessionTimerId = setTimeout(function() {
+					var changelist = [];
+					_incrementProfileStat(profile, "nLongSessionsCompleted", 1, changelist);
+					ProfileService.saveProfile(profile);
+					_notifyChanges(profile, currentProfileStats, changelist);
+				}, LONG_SESSION_MILLIS);
 
-            {
-                var changelist = [];
-                _updateProfileStat(profile, "lastLoginTime", Date.now(), changelist);
-                _resetProfileChrono();
-                _resetSessionStats();
-                ProfileService.saveProfile(profile);
-                _notifyChanges(profile, currentProfileStats, changelist);
-                // _checkForPrompt(profile);
-            }
+				{
+					var changelist = [];
+					_updateProfileStat(profile, "lastLoginTime", Date.now(), changelist);
+					_resetProfileChrono();
+					_resetSessionStats();
+					ProfileService.saveProfile(profile);
+					_notifyChanges(profile, currentProfileStats, changelist);
+					// _checkForPrompt(profile);
+				}
+			});
         }
+	});
+	NotifyingService.subscribe('$stateChangeSuccess', $rootScope, function() {
+		ProfileService.getCurrentProfile().then(function (profile) {
+			if (profile) {
+				var changelist = [];
+				_updateProfileStat(currentProfileStats, 'thisCurrentView', $state.current.url, changelist);
+				_notifyChanges(profile, currentProfileStats, changelist);
+			}
+		});
 	});
 
 	return {

@@ -1,18 +1,18 @@
 var uploadService = angular.module('uploadService', []);
 
-// var uploadURLs = [
-// 	"https://byunlab.com/start/session/ratings",
-// 	"https://byunlab.com/start/session/metadata",
-// 	"https://byunlab.com/start/session/lpc",
-// 	"https://byunlab.com/start/session/audio"
-// ];
-
 var uploadURLs = [
-	"http://localhost:3000/session/ratings",
-	"http://localhost:3000/session/metadata",
-	"http://localhost:3000/session/lpc",
-	"http://localhost:3000/session/audio"
+	"https://byunlab.com/start/session/ratings",
+	"https://byunlab.com/start/session/metadata",
+	"https://byunlab.com/start/session/lpc",
+	"https://byunlab.com/start/session/audio"
 ];
+
+// var uploadURLs = [
+// 	"http://localhost:3000/session/ratings",
+// 	"http://localhost:3000/session/metadata",
+// 	"http://localhost:3000/session/lpc",
+// 	"http://localhost:3000/session/audio"
+// ];
 
 var downloadStatusCache = {};
 

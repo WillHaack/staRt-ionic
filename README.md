@@ -60,7 +60,7 @@ This file is in the `.gitignore` so that the username and password will not be a
 
 ```
 cd staRt
-ionic state reset
+ionic cordova prepare
 ```
 This will load the audio plugin into the app, as well as a few other plugins. You need to run the `ionic state reset` command every time you change and rebuild the plugin.
 
@@ -71,7 +71,7 @@ bower install
 This downloads and installs all of the project javascript dependencies. You should only need to do this when you first set up the repository, or whenever you install a new package with npm or bower.
 
 ```
-ionic build
+ionic cordova prepare
 ```
 This builds the plugin. You will need to run this command whenever you change something in the ionic app, as well as whenever you rebuild the plugin. Finally, you can run the app. There are two ways to do this. You can run
 
@@ -91,7 +91,7 @@ Then choose your target (simulator or iOS) and run
 - Make some change to the audio plugin
 - Rebuild the UniversalLib target
 - ```cd staRt```
-- ```ionic state reset```
+- ```ionic cordova prepare```
 - ```open platforms/ios/staRt.xcodeproj```
 - Build and run the app for the simulator or device
 
