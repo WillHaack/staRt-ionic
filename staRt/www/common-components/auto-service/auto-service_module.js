@@ -113,7 +113,7 @@ IntroAuto.shouldBegin = function(profile) {
     return profile.nIntroComplete === 0 && profile.formalTester;
 }
 
-// One of the eight guided runs thruogh the app
+// One of the eight guided runs through the app
 var SessionAuto = function(profile, currentStates, onShow) {
     AutoState.call(this, profile, currentStates, onShow);
 
@@ -280,7 +280,99 @@ SessionAuto.prototype = Object.create(AutoState.prototype);
 SessionAuto.shouldBegin = function(profile) {
     var introGood = profile.nIntroComplete >= 1;
     var formalGood = !!profile.formalTester;
-    return introGood && formalGood;
+    var biofeedbackCompleteGood = profile.nBiofeedbackSessionsCompleted < 4;
+    var nonBiofeedbackCompleteGood = profile.nNonBiofeedbackSessionsCompleted < 4;
+    var treatmentComplete = !!profile.nFormalTreatmentComplete;
+    return introGood && formalGood && (biofeedbackCompleteGood || nonBiofeedbackCompleteGood) && !treatmentComplete;
+}
+
+// The concluding guided auto run, which measures syllable and word performance at the end of the series
+var ConclusionAuto = function(profile, currentStates, onShow) {
+    AutoState.call(this, profile, currentStates, onShow);
+
+    this.hasAcceptedSessionPrompt = false;
+    this.wantsToDoItLater = false;
+    this.didFinishSession = false;
+
+    var initialWordQuizCount = profile.nWordQuizComplete;
+    var initialSyllableQuizCount = profile.nSyllableQuizComplete;
+
+    var steps = {};
+
+    steps.confirm = {
+        next: (function() {
+            if (this.hasAcceptedSessionPrompt) return steps.wordQuizPrompt;
+            if (this.wantsToDoItLater) return steps.laterPrompt;
+            return null;
+        }).bind(this),
+        dialog: (function (profile, currentStates, changeList) {
+            return {
+                title: "Post-Treatment Assessment",
+                text: "Welcome back. Would you like to complete your post-treatment assessment now?",
+                buttons: ["Later", "Okay"],
+                callback: (function(index) {
+                    if (index === 0 || index === 1) { this.wantsToDoItLater = true; }
+                    if (index === 2) { this.hasAcceptedSessionPrompt = true; }
+                    this.processUpdate(profile, currentStates, []);
+                }).bind(this)
+            };
+        }).bind(this)
+    };
+
+    steps.laterPrompt = {
+        dialog: {
+            title: "See You Later",
+            text: "You'll be prompted to complete your post-treatment assessment the next time you pick this profile."
+        }
+    };
+
+    steps.wordQuizPrompt = {
+        next: function(profile, currentStates) {
+            if (initialWordQuizCount < profile.nWordQuizComplete) return steps.syllableQuizPrompt;
+            return null;
+        },
+        dialog: {
+            text: "Please begin navigate to Quiz and complete our Long Word Quiz measure.",
+            title: "Word Quiz",
+            button: "Okay"
+        }
+    };
+
+    steps.syllableQuizPrompt = {
+        next: (function(profile, currentStates) {
+            if (initialSyllableQuizCount < profile.nSyllableQuizComplete) {
+                this.didFinishSession;
+                return steps.conclusionPrompt;
+            }
+            return null;
+        }).bind(this),
+        dialog: {
+            text: "Please proceed to our Syllable Quiz measure.",
+            title: "Syllable Quiz",
+            button: "Okay"
+        }
+    };
+
+    steps.conclusionPrompt = {
+        dialog: function(profile, currentStates) {
+            var text = "Thank you again for supporting our research! " +
+                "You are free to keep using the staRt app, but your time as a formal pilot tester is complete.";
+            return {
+                text: text,
+                title: "All done"
+            };
+        }
+    }
+
+    this.firstStep = steps.confirm;
+}
+ConclusionAuto.prototype = Object.create(AutoState.prototype);
+ConclusionAuto.shouldBegin = function(profile) {
+    var biofeedbackCompleteGood = profile.nBiofeedbackSessionsCompleted >= 4;
+    var nonBiofeedbackCompleteGood = profile.nNonBiofeedbackSessionsCompleted >= 4;
+    var formalGood = !!profile.formalTester;
+    var treatmentComplete = !!profile.nFormalTreatmentComplete;
+    return biofeedbackCompleteGood && nonBiofeedbackCompleteGood && formalGood && !treatmentComplete;
 }
 
 firebaseService.factory('AutoService', function($rootScope, $ionicPlatform, NotifyingService, ProfileService, SessionStatsService, $cordovaDialogs)
@@ -337,6 +429,21 @@ firebaseService.factory('AutoService', function($rootScope, $ionicPlatform, Noti
                             NotifyingService.notify('session-completed', {
                                 profile: profile,
                                 practice: currentAuto.biofeedback 
+                            });
+                        }
+                        _setCurrentAuto(null);
+                    }
+                }));
+            }
+
+            // Conclusion session
+            if (!currentAuto && ConclusionAuto.shouldBegin(profile, currentStates)) {
+                _setCurrentAuto(new ConclusionAuto(profile, currentStates, function(message, completed) {
+                    if (message) _showMessage(message);
+                    if (completed) {
+                        if (currentAuto.didFinishSession) {
+                            NotifyingService.notify('conclusion-completed', {
+                                profile: profile
                             });
                         }
                         _setCurrentAuto(null);

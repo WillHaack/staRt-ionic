@@ -43,6 +43,7 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 			nSyllableQuizComplete: 0, // number of times Syllable Quiz has been completed
 			nTutorialComplete: 0, // number of times the tutorial has been completed
 			nIntroComplete: 0, // number of times intro sequence has been completed
+			nFormalTreatmentComplete: 0, // number of times the formal treatment has been completed
 			
 			// Other profile statistics
 			formalTester: true, // don't forget to make this false

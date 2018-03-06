@@ -169,6 +169,16 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 			}
 		});
 	});
+	NotifyingService.subscribe('tutorial-completed', $rootScope, function(msg) {
+		ProfileService.getCurrentProfile().then(function (profile) {
+			if (profile) {
+				var changelist = [];
+				_incrementProfileStat(profile, "nTutorialComplete", 1, changelist);
+				ProfileService.saveProfile(profile);
+				_notifyChanges(profile, currentProfileStats, changelist);
+			}
+		});
+	});
 	NotifyingService.subscribe('session-completed', $rootScope, function(data) {
 		ProfileService.getCurrentProfile().then(function (profile) {
 			if (profile) {
@@ -184,16 +194,16 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 			}
 		});
 	});
-	NotifyingService.subscribe('tutorial-completed', $rootScope, function(msg) {
+	NotifyingService.subscribe('conclusion-completed', $rootScope, function(msg) {
 		ProfileService.getCurrentProfile().then(function (profile) {
 			if (profile) {
-                var changelist = [];
-				_incrementProfileStat(profile, "nTutorialComplete", 1, changelist);
-                ProfileService.saveProfile(profile);
-                _notifyChanges(profile, currentProfileStats, changelist);
+				var changelist = [];
+				_incrementProfileStat(profile, "nFormalTreatmentComplete", 1, changelist);
+				ProfileService.saveProfile(profile);
+				_notifyChanges(profile, currentProfileStats, changelist);
 			}
 		});
-    });
+	});
     NotifyingService.subscribe('will-set-current-profile-uuid', $rootScope, function(msg, profileUUID) {
         if (profileUUID) {
 			ProfileService.getProfileWithUUID(profileUUID).then(function (profile) {
