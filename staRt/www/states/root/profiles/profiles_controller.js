@@ -142,7 +142,7 @@ function compareRecordings(ra, rb) {
 					{
 						$scope.data.profiles = res;
 						$scope.setIsEditing(false);
-						ProfileService.setCurrentProfile($scope.data.currentProfile.uuid);
+						ProfileService.setCurrentProfileUUID($scope.data.currentProfile.uuid);
 					});
 				});
 			} else {

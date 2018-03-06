@@ -70,6 +70,7 @@
     </platform>
     <allow-intent href="https://www.dropbox.com/sh/*" />
     <allow-intent href="https://docs.google.com/forms/*" />
+    <allow-intent href="https://wp.nyu.edu/*" />
     <icon src="resources/ios/icon/icon-small@3x.png" />
     <universal-links>
         <host name="mx949.app.goo.gl" scheme="https" />

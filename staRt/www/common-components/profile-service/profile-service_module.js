@@ -46,7 +46,8 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 			nFormalTreatmentComplete: 0, // number of times the formal treatment has been completed
 			
 			// Other profile statistics
-			formalTester: true, // don't forget to make this false
+			brandNew: true,
+			formalTester: false, // don't forget to make this false
 			firstSessionTimestamp: null, // Unix timestamp of first trial
 			lastSessionTimestamp: null, // Unix timestamp of most recent trial
 			creationTimestamp: Date.now(), // Unix timestamp profile creation

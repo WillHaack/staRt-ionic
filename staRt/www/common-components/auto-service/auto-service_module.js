@@ -475,6 +475,37 @@ firebaseService.factory('AutoService', function($rootScope, $ionicPlatform, Noti
         }
     }
 
+    function _presentFormalPasswordChallenge(profile) {
+        $cordovaDialogs.alert(
+            "This is where the formal challenge would go"
+        );
+    }
+
+    function _promptForFormalParticipation(profile) {
+        var weblink = "https://wp.nyu.edu/byunlab/projects/start/participate/";
+        var text = "Do you want to participate as a formal pilot tester in our research study? " +
+            "Please note that we must obtain informed consent from the clinician, client, and client’s " +
+            "family before formal participation is possible. Please see our website " +
+            "or email nyuchildspeech@gmail.com for more information.";
+        var title = "Formal Study";
+        $cordovaDialogs.confirm(
+            text,
+            "Formal Research Pilot",
+            ["No", "Visit Website", "Yes"]
+        ).then( function (idx) {
+            if (idx === 0 || idx === 1) {
+                $cordovaDialogs.alert(
+                    "If you decide later that you want to be a formal tester, you can opt in from the profiles page.",
+                    "Formal Research Pilot"
+                );
+            } else if (idx === 2) {
+                window.open(weblink, "_blank", 'location=yes');
+            } else if (idx === 3) {
+                _presentFormalPasswordChallenge(profile);
+            }
+        });
+    }
+
     NotifyingService.subscribe('will-set-current-profile-uuid', $rootScope, function(msg, profileUUID) {
         _setCurrentAuto(null);
         if (!profileUUID) return;
@@ -493,6 +524,10 @@ firebaseService.factory('AutoService', function($rootScope, $ionicPlatform, Noti
         if (currentAuto) {
             currentAuto.processUpdate(profile, currentStates, changeList);
         }
+
+        if (changeList.indexOf('brandNew') !== -1) {
+            _promptForFormalParticipation(profile);
+        }
     });
 
     $ionicPlatform.on('resume', function() {
@@ -509,6 +544,10 @@ firebaseService.factory('AutoService', function($rootScope, $ionicPlatform, Noti
     return {
         init: function() {
             console.log("Auto Service initialized");
-        }
+        },
+
+        promptForFormalParticipation: function(profile) {
+			_promptForFormalParticipation(profile);
+		}
     }
 });

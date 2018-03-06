@@ -225,6 +225,13 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 					_notifyChanges(profile, currentProfileStats, changelist);
 					// _checkForPrompt(profile);
 				}
+
+				if (!!profile.brandNew) {
+					var changelist = [];
+					_updateProfileStat(profile, "brandNew", false, changelist);
+					ProfileService.saveProfile(profile);
+					_notifyChanges(profile, currentProfileStats, changelist);
+				}	
 			});
         }
 	});
