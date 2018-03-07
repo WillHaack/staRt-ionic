@@ -8,15 +8,18 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 	var profileSessionTimerId;
 	var profileLongSessionTimerId;
 
-	var currentProfileStats = {
-		thisQuestTrialsCompleted: 0, // trials completed since the start of this session
-		thisQuestTrialsCorrect: 0, // score since the start of this session
-		thisQuestPercentTrialsCorrect: 0, // 100 * correct / completed
-		thisSessionTime: 0, // time elapsed since the start of this session
-		thisFreeplayTime: 0, // time elapsed in freeplay since the start of this session
-		thisQuestTime: 0, // time elapsed in quest since the start of this session
-		thisCurrentView: $state.current.url // whichever view the user is currently looking at
-    };
+	function ProfileStats(contextString) {
+		this.thisContextString = contextString; // user-defined string specifying the context of the current session
+		this.thisQuestTrialsCompleted = 0; // trials completed since the start of this session
+		this.thisQuestTrialsCorrect = 0; // score since the start of this session
+		this.thisQuestPercentTrialsCorrect = 0; // 100 * correct / completed
+		this.thisSessionTime = 0; // time elapsed since the start of this session
+		this.thisFreeplayTime = 0; // time elapsed in freeplay since the start of this session
+		this.thisQuestTime = 0; // time elapsed in quest since the start of this session
+		this.thisCurrentView = $state.current.url; // whichever view the user is currently looking at
+	}
+
+	var currentProfileStats = null;
 
 	// function _checkForPrompt(profile) {
 	// 	StartServerService.getCredentials(function (credentials) {
@@ -46,7 +49,7 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 			if (profile) {
                 var changelist = [];
 				_incrementProfileStat(profile, "allSessionTime", duration, changelist);
-				_incrementProfileStat(currentProfileStats, "thisSessionTime", duration, changelist);
+				if (currentProfileStats) _incrementProfileStat(currentProfileStats, "thisSessionTime", duration, changelist);
                 ProfileService.saveProfile(profile);
                 _notifyChanges(profile, currentProfileStats, changelist);
 			}
@@ -55,8 +58,8 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 	}
 
 	function _incrementProfileStat(profile, stat, increment, changelist) {
-        var newValue = (profile[stat] ? profile[stat] : 0) + increment;
-        _updateProfileStat(profile, stat, newValue, changelist);
+		var newValue = (profile[stat] ? profile[stat] : 0) + increment;
+		_updateProfileStat(profile, stat, newValue, changelist);
 	}
 	
 	function _notifyChanges(profile, currentProfileStats, changelist) {
@@ -67,12 +70,6 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 		if (profileSessionTimerId) clearInterval(profileSessionTimerId);
 		lastSessionChronoTime = Date.now();
 		setInterval(_logProfileUseInterval, 60000);
-	}
-
-	function _resetSessionStats() {
-		for (var k in currentProfileStats) {
-			if (currentProfileStats.hasOwnProperty(k)) currentProfileStats[k] = 0;
-		}
 	}
 
 	function _updateProfileForRecording(msg, session) {
@@ -93,15 +90,17 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
                     _incrementProfileStat(profile, "allTrialsCorrect", score, changelist);
                     _updateProfileStat(profile, "percentTrialsCorrect", (100 * profile.allTrialsCorrect / profile.allTrialsCompleted), changelist);
 
-                    // Increment and calculate stats for the session
-                    _incrementProfileStat(currentProfileStats, "thisQuestTrialsCompleted", session.ratings.length, changelist);
-                    _incrementProfileStat(currentProfileStats, "thisQuestTrialsCorrect", score, changelist);
-                    _updateProfileStat(
-                        currentProfileStats,
-                        "thisQuestPercentTrialsCorrect",
-                        (100 * currentProfileStats.thisQuestTrialsCorrect) / currentProfileStats.thisQuestTrialsCompleted,
-                        changelist
-                    );	
+					// Increment and calculate stats for the session
+					if (currentProfileStats) {
+						_incrementProfileStat(currentProfileStats, "thisQuestTrialsCompleted", session.ratings.length, changelist);
+						_incrementProfileStat(currentProfileStats, "thisQuestTrialsCorrect", score, changelist);
+						_updateProfileStat(
+							currentProfileStats,
+							"thisQuestPercentTrialsCorrect",
+							(100 * currentProfileStats.thisQuestTrialsCorrect) / currentProfileStats.thisQuestTrialsCompleted,
+							changelist
+						);	
+					}
 				}
 
 				if (session.ratings.length === session.count) {
@@ -119,10 +118,10 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
     }
     
     function _updateProfileStat(profile, stat, value, changelist) {
-        profile[stat] = value;
-        if (changelist.indexOf(stat) === -1) {
-            changelist.push(stat);
-        }
+		profile[stat] = value;
+		if (changelist.indexOf(stat) === -1) {
+			changelist.push(stat);
+		}
     }
 
 	// Notifications
@@ -132,7 +131,7 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 			if (profile) {
                 var changelist = [];
 				_incrementProfileStat(profile, "allFreeplayTime", duration, changelist);
-				_incrementProfileStat(currentProfileStats, "thisFreeplayTime", duration, changelist);
+				if (currentProfileStats) _incrementProfileStat(currentProfileStats, "thisFreeplayTime", duration, changelist);
                 ProfileService.saveProfile(profile);
                 _notifyChanges(profile, currentProfileStats, changelist);
 			}
@@ -153,7 +152,7 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 			if (profile) {
                 var changelist = [];
 				_incrementProfileStat(profile, "allQuestTime", duration, changelist);
-				_incrementProfileStat(currentProfileStats, "thisQuestTime", duration, changelist);
+				if (currentProfileStats) _incrementProfileStat(currentProfileStats, "thisQuestTime", duration, changelist);
                 ProfileService.saveProfile(profile);
                 _notifyChanges(profile, currentProfileStats, changelist);
 			}
@@ -230,7 +229,6 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 					var changelist = [];
 					_updateProfileStat(profile, "lastLoginTime", Date.now(), changelist);
 					_resetProfileChrono();
-					_resetSessionStats();
 					ProfileService.saveProfile(profile);
 					_notifyChanges(profile, currentProfileStats, changelist);
 					// _checkForPrompt(profile);
@@ -249,7 +247,7 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 		ProfileService.getCurrentProfile().then(function (profile) {
 			if (profile) {
 				var changelist = [];
-				_updateProfileStat(currentProfileStats, 'thisCurrentView', $state.current.url, changelist);
+				if (currentProfileStats) _updateProfileStat(currentProfileStats, 'thisCurrentView', $state.current.url, changelist);
 				_notifyChanges(profile, currentProfileStats, changelist);
 			}
 		});
@@ -262,6 +260,14 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 		
 		getCurrentProfileStats: function() {
 			return currentProfileStats;
+		},
+
+		beginContext(contextString) {
+			currentProfileStats = new ProfileStats(contextString);
+		},
+
+		endContext() {
+			currentProfileStats = null;
 		}
 	}
 

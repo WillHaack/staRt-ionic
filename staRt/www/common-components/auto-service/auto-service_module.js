@@ -22,6 +22,7 @@ var AutoState = function(profile, currentStates, onShow) {
     this.onShow = onShow;
     this.currentStep = null;
     this.restrictions = {};
+    this.contextString = "abstact";
 }
 AutoState.prototype = {
     currentMessage: function(profile, currentStates, changeList) {
@@ -110,6 +111,7 @@ var IntroAuto = function(profile, currentStates, onShow) {
     };
 
     this.firstStep = steps.welcome;
+    this.contextString = "introduction"
 }
 IntroAuto.prototype = Object.create(AutoState.prototype);
 IntroAuto.shouldBegin = function(profile) {
@@ -280,6 +282,7 @@ var SessionAuto = function(profile, currentStates, onShow) {
     }
 
     this.firstStep = steps.confirm;
+    this.contextString = this.biofeedback + "-" + sessionIndex;
 }
 SessionAuto.prototype = Object.create(AutoState.prototype);
 SessionAuto.shouldBegin = function(profile) {
@@ -370,6 +373,7 @@ var ConclusionAuto = function(profile, currentStates, onShow) {
     }
 
     this.firstStep = steps.confirm;
+    this.contextString = "assessment";
 }
 ConclusionAuto.prototype = Object.create(AutoState.prototype);
 ConclusionAuto.shouldBegin = function(profile) {
@@ -394,6 +398,10 @@ autoService.factory('AutoService', function($rootScope, $ionicPlatform, Notifyin
                     }
                 }
             }
+
+            if (currentAuto) {
+                SessionStatsService.endContext()
+            }
         }
 
         currentAuto = auto;
@@ -408,6 +416,8 @@ autoService.factory('AutoService', function($rootScope, $ionicPlatform, Notifyin
                     }
                 }
             }
+
+            SessionStatsService.beginContext(currentAuto.contextString);
         }
     }
 
