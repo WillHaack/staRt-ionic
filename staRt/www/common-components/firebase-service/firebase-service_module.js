@@ -48,6 +48,8 @@ firebaseService.factory('FirebaseService', function()
 
         timestamp: function() { return firebase.firestore.FieldValue.serverTimestamp(); },
 
-        userId: function() { return firebase.auth().currentUser ? firebase.auth().currentUser.uid : null; }
+        userId: function() { return firebase.auth().currentUser ? firebase.auth().currentUser.uid : null; },
+
+        userName: function() { return firebase.auth().currentUser ? firebase.auth().currentUser.displayName : null; }
     }
 });

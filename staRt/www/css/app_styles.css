@@ -564,6 +564,12 @@ canvas {
 canvas {
   background-color: #ffffff; }
 
+p.display-name {
+  margin-bottom: 0px;
+  padding: 10px;
+  display: table-cell;
+  vertical-align: middle; }
+
 .flex-align-right {
   display: flex;
   flex-direction: row-reverse; }

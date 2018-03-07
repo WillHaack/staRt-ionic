@@ -376,7 +376,7 @@ ConclusionAuto.shouldBegin = function(profile) {
     return biofeedbackCompleteGood && nonBiofeedbackCompleteGood && formalGood && !treatmentComplete;
 }
 
-firebaseService.factory('AutoService', function($rootScope, $ionicPlatform, NotifyingService, ProfileService, SessionStatsService, $cordovaDialogs)
+autoService.factory('AutoService', function($rootScope, $ionicPlatform, NotifyingService, ProfileService, SessionStatsService, $cordovaDialogs)
 {
     var currentAuto = null;
     var currentRestrictions = null;

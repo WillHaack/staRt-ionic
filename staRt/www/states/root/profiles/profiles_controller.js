@@ -26,7 +26,7 @@ function compareRecordings(ra, rb) {
 {
 	var profiles = angular.module( 'profiles' );
 
-	profiles.controller('ProfilesController', function($scope, $timeout, $localForage, AutoService, StartUIState, ProfileService, UploadService, $rootScope, $state, $cordovaDialogs)
+	profiles.controller('ProfilesController', function($scope, $timeout, $localForage, AutoService, FirebaseService, StartUIState, ProfileService, UploadService, $rootScope, $state, $cordovaDialogs)
 	{
 		console.log('ProfilesController here!');
 
@@ -46,6 +46,7 @@ function compareRecordings(ra, rb) {
 
 			$scope.isEditing = false;
 			$scope.uploadCount = 0;
+			$scope.displayName = FirebaseService.userName();
 			$scope.data = {};
 
 			$scope.data.uploadMessage = "";
