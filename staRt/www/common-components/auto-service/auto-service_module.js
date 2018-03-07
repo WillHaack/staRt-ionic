@@ -1,7 +1,9 @@
 var autoService = angular.module('autoService', []);
 
-var INTRO_FREEPLAY_TIME = 10000; // Five minutes
-var SESSION_FREEPLAY_TIME = 10000; // Five minutes
+var INTRO_FREEPLAY_TIME = 300000; // Five minutes
+var SESSION_FREEPLAY_TIME = 300000; // Five minutes
+var SPEEDY_INTRO_FREEPLAY_TIME = 10000; // Ten seconds. Use this if the profile is named 'Speedy' for testing
+var SPEEDY_SESSION_FREEPLAY_TIME = 10000; // Ten seconds. Use this if the profile is named 'Speedy' for testing
 
 function _hasIntersection(arrayA, arrayB) {
     return arrayA.filter(function(a) { return arrayB.indexOf(a) !== -1}).length > 0;
@@ -91,7 +93,8 @@ var IntroAuto = function(profile, currentStates, onShow) {
 
     steps.freePlay = {
         next: function(profile, currentStates, changeList) {
-            if (currentStates.thisFreeplayTime >= INTRO_FREEPLAY_TIME) return steps.complete;
+            var timeThreshold = profile.name === 'Speedy' ? SPEEDY_INTRO_FREEPLAY_TIME : INTRO_FREEPLAY_TIME;
+            if (currentStates.thisFreeplayTime >= timeThreshold) return steps.complete;
         },
         dialog: {
             text: "Please navigate to Free Play and try out the wave for approximately five minutes.",
@@ -200,7 +203,8 @@ var SessionAuto = function(profile, currentStates, onShow) {
 
     steps.freePlay = {
         next: function(profile, currentStates) {
-            if (currentStates.thisFreeplayTime >= SESSION_FREEPLAY_TIME) return steps.quest;
+            var timeThreshold = profile.name === 'Speedy' ? SPEEDY_SESSION_FREEPLAY_TIME : SESSION_FREEPLAY_TIME;
+            if (currentStates.thisFreeplayTime >= timeThreshold) return steps.quest;
             return null;
         },
         dialog: {

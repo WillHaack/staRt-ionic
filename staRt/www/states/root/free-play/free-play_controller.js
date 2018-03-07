@@ -18,7 +18,7 @@
 		}
 
 		// Start a timer to log the time spend in free play
-		var ticker = setInterval(logInterval, 60000);
+		var ticker = setInterval(logInterval, 10000);
 
 		$scope.$on('$destroy', function() {
 			logInterval();
