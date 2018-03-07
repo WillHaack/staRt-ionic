@@ -3,8 +3,6 @@
 
 		<ion-pane class="profiles">
 
-		<button class="button button-calm logout" ng-click="logOut()" ng-disabled="isEditing">Log out</button>
-
 		<div class="profiles__list">
 			<ion-list class="list">
 				<h2>
@@ -21,25 +19,27 @@
 				</ion-radio>
 
 				<div class="profiles-flex">
-					<div class="column-div">
-						<button
-							class="button button-calm column-div"
-							ng-click="createProfile()"
-							ng-disabled="isEditing"
-							ng-hide="isEditing">
-							<i class="icon ion-person-add"></i>
-							New
-						</button>
-					</div>
-					<div class="column-div">
-						<button
-							class="button button-stable column-div"
-							ng-click="deleteAllProfiles()"
-							ng-disabled="isEditing"
-							ng-hide="isEditing || !data.currentProfile">
-							<i class="icon ion-trash-b"></i>
-							Delete All
-						</button>
+					<div class="button-row">
+						<div class="column-div">
+							<button
+								class="button button-calm column-div"
+								ng-click="createProfile()"
+								ng-disabled="isEditing"
+								ng-hide="isEditing">
+								<i class="icon ion-person-add"></i>
+								New
+							</button>
+						</div>
+						<div class="column-div">
+							<button
+								class="button button-stable column-div"
+								ng-click="deleteAllProfiles()"
+								ng-disabled="isEditing"
+								ng-hide="isEditing || !data.currentProfile">
+								<i class="icon ion-trash-b"></i>
+								Delete All
+							</button>
+						</div>
 					</div>
 				</div>
 			</ion-list>
@@ -128,47 +128,64 @@
 						</ion-radio>
 					</label>
 					<div class="profiles-flex">
-						<div class="column-div">
-							<button
-								type="button"
-								class="button button-balanced column-div"
-								ng-click="setIsEditing(true)"
-								ng-hide="isEditing"
-								ng-disabled="!data.currentProfile"
-								ng-hide="!data.currentProfile">
-								<i class="icon ion-edit"></i>
-								Edit
-							</button>
-							<button 
-								type="button" 
-								class="button column-div" 
-								ng-click="saveProfile()" 
-								ng-hide="!isEditing">
-								Save
-							</button>
+						<div class="button-row">
+							<div class="column-div">
+								<button
+									type="button"
+									class="button button-balanced column-div"
+									ng-click="setIsEditing(true)"
+									ng-hide="isEditing"
+									ng-disabled="!data.currentProfile"
+									ng-hide="!data.currentProfile">
+									<i class="icon ion-edit"></i>
+									Edit
+								</button>
+								<button 
+									type="button" 
+									class="button button-positive olumn-div" 
+									ng-click="saveProfile()" 
+									ng-hide="!isEditing">
+									Save
+								</button>
+							</div>
+							<div class="column-div">
+								<button
+									type="button"
+									class="button button-calm column-div"
+									ng-click="cancelEdit()"
+									ng-hide="!isEditing">
+									Cancel
+								</button>
+								<button
+									type="button"
+									class="button button-assertive column-div"
+									ng-click="deleteProfile(data.currentProfile)"
+									ng-show="!isEditing"
+									ng-disabled="!data.currentProfile">
+									<i class="icon ion-trash-b"></i>
+									Discard
+								</button>
+							</div>
 						</div>
-						<div class="column-div">
-							<button
-								type="button"
-								class="button column-div"
-								ng-click="cancelEdit()"
-								ng-hide="!isEditing">
-								Cancel
-							</button>
-							<button
-								type="button"
-								class="button button-assertive column-div"
-								ng-click="deleteProfile(data.currentProfile)"
-								ng-show="!isEditing"
-								ng-disabled="!data.currentProfile">
-								<i class="icon ion-trash-b"></i>
-								Discard
-							</button>
+						<div class="button-row">
+							<div class="column-div">
+								<button
+									type="button"
+									class="button button-royal column-div"
+									ng-click="optInFormalTesting"
+									ng-hide="isEditing || !data.currentProfile"
+									ng-disabled="!data.currentProfile">
+									Formal Testing
+								</button>
+							</div>
 						</div>
 					</div>
 		</div>
 
 		<div class="profiles__recordings">
+			<div class="flex-align-right">
+				<button class="button button-calm logout" ng-click="logOut()" ng-disabled="isEditing">Log out</button>
+			</div>
 			<h2>
 				Recordings
 			</h2>
@@ -187,22 +204,24 @@
 				</ion-list>
 			</ion-scroll>
 			<div class="profiles-flex">
-				<div class="column-div">
-					<button
-						class="button button-calm column-div"
-						ng-click="uploadSelectedRecordings()"
-						ng-disabled="!data.selectedProfileRecordings.length || uploadCount > 0" >
-						Upload
-					</button>
-				</div>
-				<div class="column-div">
-					<button
-						class="button button-stable column-div"
-						ng-click="deleteSelectedRecordings()"
-						ng-disabled="!data.selectedProfileRecordings.length || uploadCount > 0" >
-						<i class="icon ion-trash-b"></i>
-						Delete
-					</button>
+				<div class="button-row">
+					<div class="column-div">
+						<button
+							class="button button-calm column-div"
+							ng-click="uploadSelectedRecordings()"
+							ng-disabled="!data.selectedProfileRecordings.length || uploadCount > 0" >
+							Upload
+						</button>
+					</div>
+					<div class="column-div">
+						<button
+							class="button button-stable column-div"
+							ng-click="deleteSelectedRecordings()"
+							ng-disabled="!data.selectedProfileRecordings.length || uploadCount > 0" >
+							<i class="icon ion-trash-b"></i>
+							Delete
+						</button>
+					</div>
 				</div>
 			</div>
 			<p>

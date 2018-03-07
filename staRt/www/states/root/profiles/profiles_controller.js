@@ -26,7 +26,7 @@ function compareRecordings(ra, rb) {
 {
 	var profiles = angular.module( 'profiles' );
 
-	profiles.controller('ProfilesController', function($scope, $timeout, $localForage, StartUIState, ProfileService, UploadService, $rootScope, $state, $cordovaDialogs)
+	profiles.controller('ProfilesController', function($scope, $timeout, $localForage, AutoService, StartUIState, ProfileService, UploadService, $rootScope, $state, $cordovaDialogs)
 	{
 		console.log('ProfilesController here!');
 
@@ -243,6 +243,12 @@ function compareRecordings(ra, rb) {
 				console.log("Sign out successful");
 			}, function (err) {
 				console.trace(err);
+			});
+		}
+
+		$scope.optInFormalTesting = function() {
+			ProfileService.getCurrentProfile().then(function (profile) {
+				if (profile) AutoService.promptForFormalParticipation(profile);
 			});
 		}
 

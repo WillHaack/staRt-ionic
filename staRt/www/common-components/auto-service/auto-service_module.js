@@ -264,8 +264,9 @@ var SessionAuto = function(profile, currentStates, onShow) {
                 " To complete your tasks as a formal pilot tester, please schedule one more visit to complete the Word Quiz and the Syllable Quiz " +
                 "at the post-treatment time point.";
             } else {
-                text = `Congratulations, you have completed this quest! You scored approximately ${currentStates.thisQuestPercentTrialsCorrect}% correct. ` + 
-                "Please come back soon to complete your next session.";
+                text = "Congratulations, you have completed this quest! You scored approximately " + 
+                    currentStates.thisQuestPercentTrialsCorrect + "% correct. " + 
+                    "Please come back soon to complete your next session.";
             }
             return {
                 text: text,
@@ -504,6 +505,16 @@ firebaseService.factory('AutoService', function($rootScope, $ionicPlatform, Noti
     }
 
     function _promptForFormalParticipation(profile) {
+
+        if (profile.formalTester) {
+            $cordovaDialogs.alert(
+                profile.name + " is already participating as a formal pilot tester",
+                "Formal Research Pilot"
+            );
+
+            return;
+        }
+
         var weblink = "https://wp.nyu.edu/byunlab/projects/start/participate/";
         var text = "Do you want to participate as a formal pilot tester in our research study? " +
             "Please note that we must obtain informed consent from the clinician, client, and client’s " +

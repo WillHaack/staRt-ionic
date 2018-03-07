@@ -66,6 +66,7 @@ gulp.task('inject', function()
 		.pipe( inject( bowerSource, bowerInjectOptions ) )
 		.pipe( inject( sortedAppJs,
 			injectOptions ) )
+		.on('error', (error) => console.dir(error))
 		.pipe( gulp.dest( './www' ) )
 		.pipe( connect.reload() );
 });

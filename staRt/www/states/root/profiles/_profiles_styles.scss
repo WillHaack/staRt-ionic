@@ -5,9 +5,12 @@
 }
 
 .logout {
-	position: absolute;
-	right: 0;
-	top: 0;
+
+}
+
+.flex-align-right{
+	display: flex;
+	flex-direction: row-reverse;
 }
 
 .profiles__recordings .item-radio {
@@ -64,7 +67,7 @@
 }
 
 .profiles__recordings ion-scroll{
-	height: 400px;
+	height: 340px;
 }
 
 .profiles__list
@@ -86,9 +89,17 @@
 
 .profiles-flex
 {
+	flex-flow: column;
+	display: flex;
+	margin-top: 20px;
+}
+
+.button-row
+{
 	flex-flow: row nowrap;
 	display: flex;
 	margin-top: 20px;
+	width: 100%;
 }
 
 .column-div

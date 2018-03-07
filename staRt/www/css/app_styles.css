@@ -564,10 +564,9 @@ canvas {
 canvas {
   background-color: #ffffff; }
 
-.logout {
-  position: absolute;
-  right: 0;
-  top: 0; }
+.flex-align-right {
+  display: flex;
+  flex-direction: row-reverse; }
 
 .profiles__recordings .item-radio {
   border-bottom-style: solid;
@@ -605,7 +604,7 @@ canvas {
   font-size: 22px; }
 
 .profiles__recordings ion-scroll {
-  height: 400px; }
+  height: 340px; }
 
 .profiles__list {
   flex: 2 0 0%;
@@ -619,9 +618,15 @@ canvas {
   flex: 3 0 0%; }
 
 .profiles-flex {
-  flex-flow: row nowrap;
+  flex-flow: column;
   display: flex;
   margin-top: 20px; }
+
+.button-row {
+  flex-flow: row nowrap;
+  display: flex;
+  margin-top: 20px;
+  width: 100%; }
 
 .column-div {
   flex: 1 0 0%; }
