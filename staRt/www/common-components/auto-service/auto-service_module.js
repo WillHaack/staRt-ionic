@@ -476,9 +476,31 @@ firebaseService.factory('AutoService', function($rootScope, $ionicPlatform, Noti
     }
 
     function _presentFormalPasswordChallenge(profile) {
-        $cordovaDialogs.alert(
-            "This is where the formal challenge would go"
-        );
+        var weblink = "https://wp.nyu.edu/byunlab/projects/start/participate/";
+        $cordovaDialogs.prompt(
+            "To initiate formal testing mode, please enter the code that you received after completion of the consent process.",
+            "Formal Research Pilot",
+            ["Cancel", "Confirm"]
+        ).then(function(result) {
+            if (result.buttonIndex <= 1) {
+                $cordovaDialogs.alert(
+                    "If you decide later that you want to be a formal tester, you can opt in from the profiles page.",
+                    "Formal Research Pilot"
+                );
+            } else {
+                if (result.input1 !== "biofeedback") {
+                    $cordovaDialogs.confirm(
+                        "Please see our website for information on formal study participation, and to receive a code to begin testing.",
+                        "Invalid Password",
+                        ["Okay", "Visit Website"]
+                    ).then(function(idx) {
+                        if (idx === 2) window.open(weblink, "_blank", 'location=yes');
+                    });
+                } else {
+                    NotifyingService.notify('formal-testing-validated', profile);
+                }
+            }
+        });
     }
 
     function _promptForFormalParticipation(profile) {
@@ -487,7 +509,6 @@ firebaseService.factory('AutoService', function($rootScope, $ionicPlatform, Noti
             "Please note that we must obtain informed consent from the clinician, client, and client’s " +
             "family before formal participation is possible. Please see our website " +
             "or email nyuchildspeech@gmail.com for more information.";
-        var title = "Formal Study";
         $cordovaDialogs.confirm(
             text,
             "Formal Research Pilot",
@@ -523,10 +544,10 @@ firebaseService.factory('AutoService', function($rootScope, $ionicPlatform, Noti
 
         if (currentAuto) {
             currentAuto.processUpdate(profile, currentStates, changeList);
-        }
-
-        if (changeList.indexOf('brandNew') !== -1) {
+        } else if (changeList.indexOf('brandNew') !== -1) {
             _promptForFormalParticipation(profile);
+        } else if (changeList.indexOf('formalTester') !== -1) {
+            _checkForAuto(profile, SessionStatsService.getCurrentProfileStats(), changeList);
         }
     });
 

@@ -204,6 +204,16 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 			}
 		});
 	});
+	NotifyingService.subscribe('formal-testing-validated', $rootScope, function(msg) {
+		ProfileService.getCurrentProfile().then(function (profile) {
+			if (profile) {
+				var changelist = [];
+				_updateProfileStat(profile, "formalTester", true, changelist);
+				ProfileService.saveProfile(profile);
+				_notifyChanges(profile, currentProfileStats, changelist);
+			}
+		});
+	});
     NotifyingService.subscribe('will-set-current-profile-uuid', $rootScope, function(msg, profileUUID) {
         if (profileUUID) {
 			ProfileService.getProfileWithUUID(profileUUID).then(function (profile) {
