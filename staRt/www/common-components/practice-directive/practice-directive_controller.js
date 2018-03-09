@@ -198,7 +198,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 					navigator.notification.alert("Rate pronunciation before advancing!", null, "No rating");
 					return;
 				}
-				$scope.currentPracticeSession.ratings.push([$scope.currentWord, $scope.rating]);
+				$scope.currentPracticeSession.ratings.push([$scope.currentWord, $scope.rating, Date.now()]);
 				$scope.rating = 0;
 				$scope.$broadcast("resetRating");
 			}
