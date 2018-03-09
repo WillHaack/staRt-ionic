@@ -90,7 +90,7 @@ function saveJSON(jsonObject, absolutePath, successCb)
 var practiceDirective = angular.module( 'practiceDirective' );
 
 practiceDirective.controller( 'PracticeDirectiveController',
-	function($scope, $timeout, $localForage, NotifyingService, FirebaseService, ProfileService, StartUIState, UploadService, $rootScope, $state, $http, $cordovaDialogs)
+	function($scope, $timeout, $localForage, NotifyingService, FirebaseService, ProfileService, SessionStatsService, StartUIState, UploadService, $rootScope, $state, $http, $cordovaDialogs)
 	{
 		// var uploadURLs = [
 		// 	"http://localhost:5000",
@@ -126,7 +126,9 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			var type = $scope.type ? $scope.type.toLowerCase() : "word";
 			var sesh = $scope.probe ? "quiz" : "quest";
 			var hidden = $scope.forceWaveHidden ? " hidden" : "";
-			return type + " " + sesh + hidden;
+			var stats = SessionStatsService.getCurrentProfileStats();
+			var session = stats ? stats.thisContextString : "";
+			return type + " " + sesh + hidden + " " + stats;
 		}
 
 		function uploadCallbackForSession(session) {
