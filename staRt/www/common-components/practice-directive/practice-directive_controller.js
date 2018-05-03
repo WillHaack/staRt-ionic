@@ -128,7 +128,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			var hidden = $scope.forceWaveHidden ? " hidden" : "";
 			var stats = SessionStatsService.getCurrentProfileStats();
 			var session = stats ? stats.thisContextString : "";
-			return type + " " + sesh + hidden + " " + stats;
+			return type + " " + sesh + hidden + " " + session;
 		}
 
 		function uploadCallbackForSession(session) {
