@@ -219,10 +219,12 @@ practiceDirective.controller( 'PracticeDirectiveController',
 
 			if ($scope.pauseEvery && $scope.pauseEvery > 0 && $scope.currentWordIdx > 0) {
 				if ($scope.currentWordIdx % $scope.pauseEvery === 0) {
-					$scope.isFeedbacking = true;
+				    $scope.isFeedbacking = true;
 					navigator.notification.confirm("Pausing for feedback",
-						function () {
-							$scope.isFeedbacking = false;
+								       function () {
+									   $scope.$apply(() => {
+									       $scope.isFeedbacking = false;
+									   });
 						}, "",
 						["Done"]);
 				}
@@ -289,7 +291,9 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		$scope.reloadCSVData = function() {
 			console.log("Clearing word list");
 			$scope.wordList = [];
-			var loadTasks = [];
+		    var loadTasks = [];
+		    console.log('reloadCSVData');
+		    console.log($scope.csvs);
 			$scope.csvs.forEach(function (csv) {
 				loadTasks.push(
 					$http.get(csv, {
