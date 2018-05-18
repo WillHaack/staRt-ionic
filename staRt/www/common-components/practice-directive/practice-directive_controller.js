@@ -292,8 +292,6 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			console.log("Clearing word list");
 			$scope.wordList = [];
 		    var loadTasks = [];
-		    console.log('reloadCSVData');
-		    console.log($scope.csvs);
 			$scope.csvs.forEach(function (csv) {
 				loadTasks.push(
 					$http.get(csv, {
