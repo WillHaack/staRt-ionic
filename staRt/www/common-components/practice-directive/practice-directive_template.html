@@ -1,41 +1,49 @@
 <div class="words-contentBox" >
 
-	<button
-		style="margin:40px;"
-		ng-click="beginWordPractice()"
-		ng-hide="suppressStartButton || isPracticing || !hasValidWordList">
-		Start {{type}} {{probe ? "probe" : "practice"}}
-	</button>
-	<button
-		style="margin:40px;"
-		ng-click="nextWord()"
-		ng-hide="!isPracticing"
-		ng-if="false">
-		Next {{type}}
-	</button>
-	<div class="word-status">
-	<p
-		ng-hide="!isPracticing"
-		class="words-word">
-		{{currentWord}}
-	</p>
-	<p
-		ng-hide="!isPracticing"
-		class="words-progress-indicator">
-		--- {{currentWordIdx + 1}} of {{count}}
-	</p>
-	</div>
-
-	<lpc-directive
-		probe="probe"
-		slider="true"
-		rate="isPracticing"
-		reset="true"
-		sand="true"
-		tutorial="false"
-		type="type"
-		wave-hidden="forceWaveHidden || isFeedbacking"
-		hide-btn="true"
-	/>
+  <button
+    style="margin:40px;"
+    ng-click="beginWordPractice()"
+    ng-hide="suppressStartButton || isPracticing || !hasValidWordList">
+    Start {{type}} {{probe ? "probe" : "practice"}}
+  </button>
+  <button
+    style="margin:40px;"
+    ng-click="nextWord()"
+    ng-hide="!isPracticing"
+    ng-if="false">
+    Next {{type}}
+  </button>
+  <div class="word-status">
+    <p
+      ng-hide="!isPracticing"
+      class="words-word">
+      {{carrier_phrase.replace("___", currentWord)}}
+    </p>
+    <p
+      ng-hide="!isPracticing"
+      class="words-progress-indicator">
+      --- {{currentWordIdx + 1}} of {{count}}
+    </p>
+  </div>
+  <div class="debug"
+       style="display: none">
+    Trial number: {{currentWordIdx + 1}}<br />
+    Block score: {{block_score}}<br />
+    Weighted Average: {{block_score / 10}}<br />
+    Difficulty Level: {{difficulty}}<br />
+    Carrier phrase: {{carrier_phrase}}<br />
+    {{csvs}}
+  </div>
+  <lpc-directive
+    probe="probe"
+    slider="true"
+    rate="isPracticing"
+    reset="true"
+    sand="true"
+    tutorial="false"
+    type="type"
+    wave-hidden="forceWaveHidden || isFeedbacking"
+    hide-btn="true"
+    />
 
 </div> <!-- end words-contentBox-->
