@@ -376,6 +376,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 
 	$scope.$on('ratingChange', function(event, data)
 	    {
+		console.log('rating change! ' + data);
 		$scope.rating = data === undefined ? 0 : data;
 		if (!!$scope.rating) {
 		    $scope.nextWord();

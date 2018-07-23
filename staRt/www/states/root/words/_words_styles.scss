@@ -1,3 +1,8 @@
+// hackzorz
+ion-view &[view-title="Quest"] {
+    margin-top: 0;
+}
+
 // parent ele for all the quest content
 .quest-contentBox {
 	//border: 1px solid violet;
@@ -33,7 +38,7 @@
 }
 
 .words-word {
-	font-size: 3rem;
+	font-size: 2rem;
 	font-weight: 700;
 	text-transform: uppercase;
 	line-height: 1.5;
