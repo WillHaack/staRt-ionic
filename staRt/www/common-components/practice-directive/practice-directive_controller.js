@@ -120,16 +120,13 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	/* --------------------------------
 	   adaptive difficulty
   	   -------------------------------- */
-	// shouldn't need to use scope
-	// but kludging
 	$scope.block_score = 0;
+	$scope.session_score = 0;
 	$scope.difficulty = 1;
 	var carrier_phrases = carrier_phrases_bank[0];
 	var increase_difficulty_threshold = 0.8;
 	var decrease_difficulty_threshold = 0.5;
 
-	$scope.block_score_highscore = 0;
-	
 	// remap data according to specs
 	const remap_adaptive_difficulty_score = {
 	    3: 1,
@@ -143,9 +140,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	
 	function revise_difficulty(){
 	    if($scope.type == "Syllable"
-		// hackzorz: we know that we're doing a Word Quiz and not a Quest
-		// if requested CSV is data/Word_Probe
-	       || $scope.csvs[0] == "data/Word_Probe.csv"){
+	       || $scope.probe){
 		// hackzorz
 		// don't modify carrier phrase if doing a Syllable Quest or Word Quiz
 		return;
@@ -174,6 +169,30 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	   visual reinforcement
   	   -------------------------------- */
 
+	$scope.highscores = {
+	    session: {
+		score: {
+		    total: 0,
+		    date: null
+		},
+		golds: {
+		    total: 0,
+		    date: null
+		}
+	    },
+	    block: {
+		score: {
+		    total: 0,
+		    date: null
+		},
+		golds: {
+		    total: 0,
+		    date: null
+		}
+	    }
+	};
+
+	
 	// push to array so that history can be preserved
 	$scope.block_coins = [[]];
 
@@ -189,9 +208,11 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	    1: "bronze"
 	}
 
-	$scope.block_coins_highscore = 0;
-	$scope.coins_consecutive_gold = 0;
-	$scope.coins_consecutive_gold_breakpoints = [3, 5, 8, 10];
+	$scope.block_golds_highscore = 0;
+	$scope.block_score_highscore = 0;
+
+	$scope.consecutive_golds = 0;
+	$scope.consecutive_golds_breakpoints = [3, 5, 8, 10];
 
 
 
@@ -267,6 +288,17 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	}
 
 	function beginPracticeForUser(user) {
+	    /* --------------------------------
+	       visual reinforcement
+  	       -------------------------------- */
+	    if(user.highscores){
+		// if there is user data on highscores
+		// load them here
+		$scope.highscores = user.highscores;
+	    }
+	    // implied else
+	    // use default highscores 
+
 	    if ($scope.isPracticing) return;
 	    $scope.isPracticing = true;
 	    $scope.currentPracticeSession = initialPracticeSession(Date.now(), $scope.type || "word", $scope.probe || "quest");
@@ -305,13 +337,17 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	    if ($scope.pauseEvery && $scope.pauseEvery > 0 && $scope.currentWordIdx > 0) {
 		if ($scope.currentWordIdx % $scope.pauseEvery === 0) {
 		    $scope.isFeedbacking = true;
-		    navigator.notification.confirm("Pausing for feedback",
-						   function () {
-						       $scope.$apply(() => {
-							   $scope.isFeedbacking = false;
-						       });
-						   }, "",
-						   ["Done"]);
+		    if(navigator.notification){
+			// will not trigger if serving
+			navigator.notification.confirm("Pausing for feedback",
+						       function () {
+							   $scope.$apply(() => {
+							       $scope.isFeedbacking = false;
+							   });
+						       }, "",
+						       ["Done"]);
+		    }else{
+		    }
 		}
 	    }
 	}
@@ -342,6 +378,40 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	};
 
 	$scope.endWordPractice = function() {
+	    /* --------------------------------
+	       visual reinforcement
+  	       -------------------------------- */
+	    // check if new highscores
+	    
+	    let shouldUpdateHighscores = false;
+	    if($scope.block_score_highscore > $scope.highscores.block.score.total){
+		shouldUpdateHighscores = true;
+		$scope.highscores.block.score.total = $scope.block_score_highscore;
+		$scope.highscores.block.score.date = Date.now();
+	    }
+	    if($scope.block_golds_highscore > $scope.highscores.block.golds.total){
+		shouldUpdateHighscores = true;
+		$scope.highscores.block.golds.total = $scope.block_golds_highscore;
+		$scope.highscores.block.golds.date = Date.now();
+	    }
+
+	    if($scope.session_score > $scope.highscores.session.score.total){
+		shouldUpdateHighscores = true;
+		$scope.highscores.session.score.total = $scope.session_score;
+		$scope.highscores.session.score.date = Date.now();
+	    }
+	    if($scope.session_coins['gold'] > $scope.highscores.session.golds.total){
+		shouldUpdateHighscores = true;
+		$scope.highscores.session.golds.total = $scope.session_coins['gold'];
+		$scope.highscores.session.golds.date = Date.now();
+	    }
+	    
+	    if(shouldUpdateHighscores){
+		NotifyingService.notify("update-highscores", $scope.highscores);
+	    }
+
+	    // todo: send highscores
+
 	    $scope.isPracticing = false;
 	    $scope.rating = 0;
 	    $scope.$broadcast("resetRating");
@@ -397,16 +467,14 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		});
 
 		$scope.wordList = tempWordList;
-	    
+		
 		$scope.reorderWords();
 		if ($scope.hasValidWordList && !$scope.isPracticing && $scope.beginOnLoad) {
 		    $scope.beginWordPractice();
 		}
 	    }
 	    if($scope.type == "Syllable"
-		// hackzorz: we know that we're doing a Word Quiz and not a Quest
-		// if requested CSV is data/Word_Probe
-	       || $scope.csvs[0] == "data/Word_Probe.csv"){
+	       || $scope.probe){
 		$scope.wordList = [];
 		var loadTasks = [];
 		$scope.csvs.forEach(function (csv) {
@@ -444,28 +512,27 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		    $scope.block_coins[$scope.block_coins.length - 1].push(visual_reinforcement_coin_color_map[data]);
 		    $scope.session_coins[visual_reinforcement_coin_color_map[data]]++;
 		    if(visual_reinforcement_coin_color_map[data] == "gold"){
-			$scope.coins_consecutive_gold++;
-			let temp_coins_consecutive_gold_display = 0;
-			$scope.coins_consecutive_gold_breakpoints.forEach((value) => {
-			    if($scope.coins_consecutive_gold >= value){
-				temp_coins_consecutive_gold_display = value;
+			$scope.consecutive_golds++;
+			let temp_golds_consecutive_gold_display = 0;
+			$scope.consecutive_golds_breakpoints.forEach((value) => {
+			    if($scope.consecutive_golds >= value){
+				temp_golds_consecutive_gold_display = value;
 			    }
 			})
-			$scope.coins_consecutive_gold_display = temp_coins_consecutive_gold_display;
+			$scope.consecutive_golds_display = temp_golds_consecutive_gold_display;
 		    }else{
-			$scope.coins_consecutive_gold = 0;
+			$scope.consecutive_golds = 0;
 		    }
 		    
 		    // adaptive difficulty
 		    
 		    $scope.block_score += remap_adaptive_difficulty_score[data];
-		    let trial_count = $scope.currentWordIdx + 1;
-
+		    $scope.session_score += remap_adaptive_difficulty_score[data];
 		    
-		    if(trial_count % 10 == 0){
+		    if($scope.currentWordIdx % 10 == 0
+		       && $scope.currentWordIdx != 0){
 			// todo: ratingChange emit error is preventing accurate calculation
 
-			
 			// recalculate difficulty			
 			let performance = calculate_difficulty_performance(
 			    $scope.block_score,
@@ -476,7 +543,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			
 			// recalculate highscores
 			$scope.block_score_highscore = Math.max($scope.block_score_highscore, $scope.block_score);
-			$scope.block_coins_highscore = Math.max($scope.block_coins_highscore,
+			$scope.block_golds_highscore = Math.max($scope.block_golds_highscore,
 								$scope.block_coins[$scope.block_coins.length - 1].filter(color => color == "gold").length);
 
 			// reset scores
@@ -486,8 +553,8 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			$scope.block_coins.push([]);
 
 			// reset consecutive count
-			$scope.coins_consecutive_gold = 0;
-			$scope.coins_consecutive_gold_display = 0;
+			$scope.consecutive_golds = 0;
+			$scope.consecutive_golds_display = 0;
 			
 			if(performance >= increase_difficulty_threshold
 			   && $scope.difficulty < 5){
