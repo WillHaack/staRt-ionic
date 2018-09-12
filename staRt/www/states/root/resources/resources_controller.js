@@ -10,8 +10,15 @@
 
 		$scope.data = {
 			configuring: false,
-			lpcOrder: 35,
-		};
+      lpcOrder: 35,
+      version: "",
+      platform: ""
+    };
+
+    cordova.getAppVersion.getVersionNumber().then(function (version) {
+      $scope.data.version = `${version}`;
+      $scope.data.platform = `${device.platform} ${device.version}`
+    });
 
 		$scope.$on("$ionicView.enter", function() {
 			console.log('view content loaded!');

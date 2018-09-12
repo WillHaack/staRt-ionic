@@ -1,6 +1,11 @@
 <ion-view view-title="SLP Resources" class="state-contentBox">
 	<div class="resources-contentBox">
 
+    <div class="version-display">
+        <p>staRt app version {{data.version}}</p>
+        <p>{{data.platform}}</p>
+    </div>
+
 		<div class="resources-links-container resources" ng-if="!data.configuring">
 			<button ng-click="configureLPC()" class="button button-calm adjust-profile">Adjust Profile LPC</button>
 			<h3>Downloads</h3>

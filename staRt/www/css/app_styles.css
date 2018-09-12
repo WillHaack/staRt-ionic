@@ -1149,6 +1149,9 @@ div.needleBox {
 .resources p {
   margin: 0; }
 
+.version-display {
+  position: absolute; }
+
 lpc-directive {
   display: -webkit-flex;
   -webkit-flex: 1;
