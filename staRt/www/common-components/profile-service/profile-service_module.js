@@ -31,7 +31,7 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 			allQuestTime: 0, // Milliseconds spend in a syllable/word quest
 			allTrialsCompleted: 0, // Total number of trials elicited and scored for a given profile
 			allTrialsCorrect: 0, // Total number of 'points' accumulated for a profile (good>1, okay>0.5, try again>0)
-			percentTrialsCorrect: 0, // 100 * correct / completed	
+			percentTrialsCorrect: 0, // 100 * correct / completed
 			nQuestsInitiated: 0, // total number of quests initiated
 			nQuestsCompleted: 0, // total number of quests completed
 			nLongSessionsCompleted: 0, // total number of times a user is logged in for at least 10 minutes
@@ -44,7 +44,7 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 			nTutorialComplete: 0, // number of times the tutorial has been completed
 			nIntroComplete: 0, // number of times intro sequence has been completed
 			nFormalTreatmentComplete: 0, // number of times the formal treatment has been completed
-			
+
 			// Other profile statistics
 			brandNew: true,
 			formalTester: false, // don't forget to make this false
@@ -203,7 +203,13 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 		getCurrentProfile: function()
 		{
 			return _getCurrentProfile();
-		},
+    },
+
+    getProfileTransactionHandle(profileData)
+    {
+      const profileUUID = profileData.uuid;
+      return FirebaseService.db().collection("profiles").doc(profileUUID);
+    },
 
 		getProfileWithUUID: function(profileUUID) {
 			return FirebaseService.db().collection("profiles")
@@ -248,6 +254,43 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 				return res['currentProfileUUID'];
 			});
 		},
+
+    // @param profileHandle - A proflie handle as returned by getProfileTransactionHandle
+    // @param transactionFunction - A function that takes as its first argument a profile
+    //  handle (profileHandle), as its second argument the profile doc itself (profileDoc)
+    //  and as its third the transaction that can be used with the handle to update the
+    //  profile. Call transaction.update(profileHandle, { <key>: <value> }) for each update
+    //  transaction. As an example:
+    //    ProfileService.runTransactionFor(profileHandle, function(handle, doc, t) {
+    //      t.update(handle, { counter: doc.data().counter + 1 });
+    //    });
+    runTransaction: function(profileHandle, transactionFunction) {
+      return FirebaseService.db().runTransaction(function(transaction) {
+        return transaction.get(profileHandle).then(function(profileDoc) {
+          return transactionFunction(profileHandle, profileDoc, transaction);
+        });
+      });
+    },
+
+    // @param transactionFunction - A function that takes as its first argument a profile
+    //  handle (profileHandle), as its second argument the profile doc itself (profileDoc)
+    //  and as its third the transaction that can be used with the handle to update the
+    //  profile. Call transaction.update(profileHandle, { <key>: <value> }) for each update
+    //  transaction. As an example:
+    //    ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+    //      t.update(handle, { counter: doc.data().counter + 1 });
+    //    });
+    runTransactionForCurrentProfile(transactionFunction) {
+      return this.getCurrentProfile().then((function(profile) {
+        if (profile) {
+          const handle = this.getProfileTransactionHandle(profile);
+          if (handle) {
+            return this.runTransaction(handle, transactionFunction);
+          }
+        }
+        return Promise.reject("No current profile to run a transaction for.");
+      }).bind(this));
+    },
 
 		saveProfile: function(profile)
 		{

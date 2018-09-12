@@ -40,30 +40,50 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 	// 				});
 	// 		}
 	// 	});
-	// }
+  // }
+
+  function _handleSuccessfulChanges(changes) {
+    const { profileChanges, statsChanges } = changes;
+    if (currentProfileStats) Object.assign(currentProfileStats, statsChanges);
+    ProfileService.getCurrentProfile().then(function(profile) {
+      _notifyChanges(profile, currentProfileStats, Object.assign({}, profileChanges, statsChanges));
+    });
+  }
+
+  function _incrementProfileStat(profile, stat, increment, changes) {
+		const newValue = (profile[stat] ? profile[stat] : 0) + increment;
+		_updateProfileStat(stat, newValue, changes);
+  }
+
+  function _updateProfileStat(stat, value, changes) {
+    changes[stat] = value;
+  }
 
 	function _logProfileUseInterval() {
 		var nextSessionChronoTime = Date.now();
-        var duration = nextSessionChronoTime - lastSessionChronoTime;
-        ProfileService.getCurrentProfile().then(function (profile) {
-			if (profile) {
-                var changelist = [];
-				_incrementProfileStat(profile, "allSessionTime", duration, changelist);
-				if (currentProfileStats) _incrementProfileStat(currentProfileStats, "thisSessionTime", duration, changelist);
-                ProfileService.saveProfile(profile);
-                _notifyChanges(profile, currentProfileStats, changelist);
-			}
-		})
+    var duration = nextSessionChronoTime - lastSessionChronoTime;
+
+    ProfileService.runTransactionForCurrentProfile(function(handle, profile, t) {
+      let changes = {};
+      let profileData = profile.data();
+      _incrementProfileStat(profileData, "allSessionTime", duration, changes);
+      if (currentProfileStats) _incrementProfileStat(profileData, "thisSessionTime", duration, changes);
+      t.update(handle, changes);
+      return changes;
+    }).then(function(updateData) {
+      if (updateData) {
+        ProfileService.getCurrentProfile().then(function(profile) {
+          _notifyChanges(profile, currentProfileStats, updateData);
+        });
+      }
+    }).catch(function(e) {
+      console.log(e);
+    });
 		lastSessionChronoTime = nextSessionChronoTime;
 	}
 
-	function _incrementProfileStat(profile, stat, increment, changelist) {
-		var newValue = (profile[stat] ? profile[stat] : 0) + increment;
-		_updateProfileStat(profile, stat, newValue, changelist);
-	}
-	
-	function _notifyChanges(profile, currentProfileStats, changelist) {
-		NotifyingService.notify('profile-stats-updated', [profile, currentProfileStats, changelist]);
+	function _notifyChanges(profile, currentProfileStats, changes) {
+		NotifyingService.notify('profile-stats-updated', [profile, currentProfileStats, Object.keys(changes)]);
 	}
 
 	function _resetProfileChrono() {
@@ -73,182 +93,240 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 	}
 
 	function _updateProfileForRecording(msg, session) {
-		ProfileService.getCurrentProfile().then(function (profile) {
-			if (profile) {
-				var recordingTime = session.endTimestamp - session.startTimestamp;
-				if (profile.firstSessionTimestamp === null) profile.firstSessionTimestamp = session.startTimestamp;
-				profile.lastSessionTimestamp = session.startTimestamp;
-                var changelist = [];
 
-				if (session.ratings.length) {
-					// Remember, each rating is an array of length 2, eg ["target", <rating>]
-					var score = session.ratings.map(function (x) { return Math.max(0, (x[1] - 1) / 2 )})
-						.reduce(function (x, accum) { return x + accum; });
+    ProfileService.runTransactionForCurrentProfile(function(handle, profileDoc, t) {
+      const profile = profileDoc.data();
+      let profileChanges = {};
+      let statsChanges = {};
+      let recordingTime = session.endTimestamp - session.startTimestamp;
+      if (profile.firstSessionTimestamp === null) {
+        _updateProfileStat("firstSessionTimestamp", session.startTimestamp, profileChanges);
+      }
+      _updateProfileStat("lastSessionTimestamp", session.startTimestamp, profileChanges);
 
-					// Increment and calculate stats for the profile
-					_incrementProfileStat(profile, "allTrialsCompleted", session.ratings.length, changelist);
-                    _incrementProfileStat(profile, "allTrialsCorrect", score, changelist);
-                    _updateProfileStat(profile, "percentTrialsCorrect", (100 * profile.allTrialsCorrect / profile.allTrialsCompleted), changelist);
 
-					// Increment and calculate stats for the session
-					if (currentProfileStats) {
-						_incrementProfileStat(currentProfileStats, "thisQuestTrialsCompleted", session.ratings.length, changelist);
-						_incrementProfileStat(currentProfileStats, "thisQuestTrialsCorrect", score, changelist);
-						_updateProfileStat(
-							currentProfileStats,
-							"thisQuestPercentTrialsCorrect",
-							(100 * currentProfileStats.thisQuestTrialsCorrect) / currentProfileStats.thisQuestTrialsCompleted,
-							changelist
-						);	
-					}
-				}
+      if (session.ratings.length) {
+        // Remember, each rating is an array of length 2, eg ["target", <rating>]
+        var score = session.ratings.map(function (x) { return Math.max(0, (x[1] - 1) / 2 )})
+          .reduce(function (x, accum) { return x + accum; });
 
-				if (session.ratings.length === session.count) {
-					_incrementProfileStat(profile, "nQuestsCompleted", 1, changelist);
-					if (session.type.toLowerCase() === "word" && session.probe)
-						_incrementProfileStat(profile, "nWordQuizComplete", 1, changelist);
-					if (session.type.toLowerCase() === "syllable" && session.probe)
-						_incrementProfileStat(profile, "nSyllableQuizComplete", 1, changelist);
-				}
+        // Increment and calculate stats for the profile
+        _incrementProfileStat(profile, "allTrialsCompleted", session.ratings.length, profileChanges);
+        _incrementProfileStat(profile, "allTrialsCorrect", score, profileChanges);
+        _updateProfileStat("percentTrialsCorrect", (100 * profile.allTrialsCorrect / profile.allTrialsCompleted), profileChanges);
 
-                ProfileService.saveProfile(profile);
-                _notifyChanges(profile, currentProfileStats, changelist);
-			}
-		});
-    }
-    
-    function _updateProfileStat(profile, stat, value, changelist) {
-		profile[stat] = value;
-		if (changelist.indexOf(stat) === -1) {
-			changelist.push(stat);
-		}
-    }
+        // Increment and calculate stats for the session
+        if (currentProfileStats) {
+          _incrementProfileStat(currentProfileStats, "thisQuestTrialsCompleted", session.ratings.length, statsChanges);
+          _incrementProfileStat(currentProfileStats, "thisQuestTrialsCorrect", score, statsChanges);
+          _updateProfileStat(
+            "thisQuestPercentTrialsCorrect",
+            (100 * currentProfileStats.thisQuestTrialsCorrect) / currentProfileStats.thisQuestTrialsCompleted,
+            statsChanges
+          );
+        }
+      }
+
+      if (session.ratings.length === session.count) {
+        _incrementProfileStat(profile, "nQuestsCompleted", 1, profileChanges);
+        if (session.type.toLowerCase() === "word" && session.probe) _incrementProfileStat(profile, "nWordQuizComplete", 1, profileChanges);
+        if (session.type.toLowerCase() === "syllable" && session.probe) _incrementProfileStat(profile, "nSyllableQuizComplete", 1, profileChanges);
+      }
+
+      t.update(handle, profileChanges);
+      return { profileChanges, statsChanges };
+
+    }).then(function(changes) {
+      _handleSuccessfulChanges(changes);
+    }).catch(function(e) {
+      console.log(e);
+    });
+  }
 
 	// Notifications
 	NotifyingService.subscribe('recording-completed', $rootScope, _updateProfileForRecording);
 	NotifyingService.subscribe('freeplay-tick', $rootScope, function(msg, duration) {
-		ProfileService.getCurrentProfile().then(function (profile) {
-			if (profile) {
-                var changelist = [];
-				_incrementProfileStat(profile, "allFreeplayTime", duration, changelist);
-				if (currentProfileStats) _incrementProfileStat(currentProfileStats, "thisFreeplayTime", duration, changelist);
-                ProfileService.saveProfile(profile);
-                _notifyChanges(profile, currentProfileStats, changelist);
-			}
-		});
+    ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+      const profileChanges = {};
+      const statsChanges = {};
+      const profile = doc.data();
+      _incrementProfileStat(profile, "allFreeplayTime", duration, profileChanges);
+      if (currentProfileStats) _incrementProfileStat(currentProfileStats, "thisFreeplayTime", duration, statsChanges);
+      t.update(handle, profileChanges);
+      return { profileChanges, statsChanges };
+    }).then(function(changes) {
+      _handleSuccessfulChanges(changes);
+    }).catch(function(e) {
+      console.log(e);
+    });
 	});
 	NotifyingService.subscribe('quest-start', $rootScope, function(msg) {
-		ProfileService.getCurrentProfile().then(function (profile) {
-			if (profile) {
-                var changelist = [];
-				_incrementProfileStat(profile, "nQuestsInitiated", 1, changelist);
-                ProfileService.saveProfile(profile);
-                _notifyChanges(profile, currentProfileStats, changelist);
-			}
-		});
+    ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+      const profileChanges = {};
+      const statsChanges = {};
+      const profile = doc.data();
+      _incrementProfileStat(profile, "nQuestsInitiated", 1, profileChanges);
+      t.update(handle, profileChanges);
+      return { profileChanges, statsChanges };
+    }).then(function(changes) {
+      _handleSuccessfulChanges(changes);
+    }).catch(function(e) {
+      console.log(e);
+    });
 	});
 	NotifyingService.subscribe('quest-tick', $rootScope, function(msg, duration) {
-		ProfileService.getCurrentProfile().then(function (profile) {
-			if (profile) {
-                var changelist = [];
-				_incrementProfileStat(profile, "allQuestTime", duration, changelist);
-				if (currentProfileStats) _incrementProfileStat(currentProfileStats, "thisQuestTime", duration, changelist);
-                ProfileService.saveProfile(profile);
-                _notifyChanges(profile, currentProfileStats, changelist);
-			}
-		});
+    ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+      const profileChanges = {};
+      const statsChanges = {};
+      const profile = doc.data();
+      _incrementProfileStat(profile, "allQuestTime", duration, profileChanges);
+      if (currentProfileStats) _incrementProfileStat(currentProfileStats, "thisQuestTime", duration, statsChanges);
+      t.update(handle, profileChanges);
+      return { profileChanges, statsChanges };
+    }).then(function(changes) {
+      _handleSuccessfulChanges(changes);
+    }).catch(function(e) {
+      console.log(e);
+    });
 	});
 	NotifyingService.subscribe('intro-completed', $rootScope, function(msg) {
-		ProfileService.getCurrentProfile().then(function (profile) {
-			if (profile) {
-                var changelist = [];
-				_incrementProfileStat(profile, "nIntroComplete", 1, changelist);
-                ProfileService.saveProfile(profile);
-                _notifyChanges(profile, currentProfileStats, changelist);
-			}
-		});
+    ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+      const profileChanges = {};
+      const statsChanges = {};
+      const profile = doc.data();
+      _incrementProfileStat(profile, "nIntroComplete", 1, profileChanges);
+      t.update(handle, profileChanges);
+      return { profileChanges, statsChanges };
+    }).then(function(changes) {
+      _handleSuccessfulChanges(changes);
+    }).catch(function(e) {
+      console.log(e);
+    });
 	});
 	NotifyingService.subscribe('tutorial-completed', $rootScope, function(msg) {
-		ProfileService.getCurrentProfile().then(function (profile) {
-			if (profile) {
-				var changelist = [];
-				_incrementProfileStat(profile, "nTutorialComplete", 1, changelist);
-				ProfileService.saveProfile(profile);
-				_notifyChanges(profile, currentProfileStats, changelist);
-			}
-		});
+    ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+      const profileChanges = {};
+      const statsChanges = {};
+      const profile = doc.data();
+      _incrementProfileStat(profile, "nTutorialComplete", 1, profileChanges);
+      t.update(handle, profileChanges);
+      return { profileChanges, statsChanges };
+    }).then(function(changes) {
+      _handleSuccessfulChanges(changes);
+    }).catch(function(e) {
+      console.log(e);
+    });
 	});
 	NotifyingService.subscribe('session-completed', $rootScope, function(data) {
-		ProfileService.getCurrentProfile().then(function (profile) {
-			if (profile) {
-				var practice = data.practice;
-				var changelist = [];
-				if (practice === "BF") {
-					_incrementProfileStat(profile, "nBiofeedbackSessionsCompleted", 1, changelist);
-				} else {
-					_incrementProfileStat(profile, "nNonBiofeedbackSessionsCompleted", 1, changelist);
-				}
-				ProfileService.saveProfile(profile);
-                _notifyChanges(profile, currentProfileStats, changelist);
-			}
-		});
+    ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+      const profileChanges = {};
+      const statsChanges = {};
+      const profile = doc.data();
+      if (practice === "BF") {
+        _incrementProfileStat(profile, "nBiofeedbackSessionsCompleted", 1, profileChanges);
+      } else {
+        _incrementProfileStat(profile, "nNonBiofeedbackSessionsCompleted", 1, profileChanges);
+      }
+      t.update(handle, profileChanges);
+      return { profileChanges, statsChanges };
+    }).then(function(changes) {
+      _handleSuccessfulChanges(changes);
+    }).catch(function(e) {
+      console.log(e);
+    });
 	});
 	NotifyingService.subscribe('conclusion-completed', $rootScope, function(msg) {
-		ProfileService.getCurrentProfile().then(function (profile) {
-			if (profile) {
-				var changelist = [];
-				_incrementProfileStat(profile, "nFormalTreatmentComplete", 1, changelist);
-				ProfileService.saveProfile(profile);
-				_notifyChanges(profile, currentProfileStats, changelist);
-			}
-		});
+    ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+      const profileChanges = {};
+      const statsChanges = {};
+      const profile = doc.data();
+      _incrementProfileStat(profile, "nFormalTreatmentComplete", 1, profileChanges);
+      t.update(handle, profileChanges);
+      return { profileChanges, statsChanges };
+    }).then(function(changes) {
+      _handleSuccessfulChanges(changes);
+    }).catch(function(e) {
+      console.log(e);
+    });
 	});
 	NotifyingService.subscribe('formal-testing-validated', $rootScope, function(msg) {
-		ProfileService.getCurrentProfile().then(function (profile) {
-			if (profile) {
-				var changelist = [];
-				_updateProfileStat(profile, "formalTester", true, changelist);
-				ProfileService.saveProfile(profile);
-				_notifyChanges(profile, currentProfileStats, changelist);
-			}
-		});
+    ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+      const profileChanges = {};
+      const statsChanges = {};
+      const profile = doc.data();
+      _updateProfileStat("formalTester", true, profileChanges);
+      t.update(handle, profileChanges);
+      return { profileChanges, statsChanges };
+    }).then(function(changes) {
+      _handleSuccessfulChanges(changes);
+    }).catch(function(e) {
+      console.log(e);
+    });
 	});
     NotifyingService.subscribe('will-set-current-profile-uuid', $rootScope, function(msg, profileUUID) {
-        if (profileUUID) {
-			ProfileService.getProfileWithUUID(profileUUID).then(function (profile) {
-				if (profileLongSessionTimerId) clearTimeout(profileLongSessionTimerId);
-				profileLongSessionTimerId = null;
-				profileLongSessionTimerId = setTimeout(function() {
-					var changelist = [];
-					_incrementProfileStat(profile, "nLongSessionsCompleted", 1, changelist);
-					ProfileService.saveProfile(profile);
-					_notifyChanges(profile, currentProfileStats, changelist);
-				}, LONG_SESSION_MILLIS);
 
-				{
-					var changelist = [];
-					_updateProfileStat(profile, "lastLoginTime", Date.now(), changelist);
-					_resetProfileChrono();
-					ProfileService.saveProfile(profile);
-					_notifyChanges(profile, currentProfileStats, changelist);
-					// _checkForPrompt(profile);
-				}
+      if (profileUUID) {
+        ProfileService.getProfileWithUUID(profileUUID).then(function(profile) {
+          if (profile) {
+            if (profileLongSessionTimerId) clearTimeout(profileLongSessionTimerId);
+            profileLongSessionTimerId = null;
+            profileLongSessionTimerId = setTimeout(function() {
+              const handle = ProfileService.getProfileTransactionHandle(profile);
+              ProfileService.runTransaction(handle, function(handle, doc, t) {
+                const profileChanges = {};
+                const statsChanges = {};
+                _incrementProfileStat(doc.data(), "nLongSessionsCompleted", 1, profileChanges);
+                t.update(handle, profileChanges)
+                return { profileChanges, statsChanges };
+              }).then(function(changes) {
+                _handleSuccessfulChanges(changes);
+              }).catch(function(e) {
+                console.log(e);
+              });
+            }, LONG_SESSION_MILLIS);
 
-				if (!!profile.brandNew) {
-					var changelist = [];
-					_updateProfileStat(profile, "brandNew", false, changelist);
-					ProfileService.saveProfile(profile);
-					_notifyChanges(profile, currentProfileStats, changelist);
-				}	
-			});
-        }
+            {
+              const handle = ProfileService.getProfileTransactionHandle(profile);
+              ProfileService.runTransaction(handle, function(handle, doc, t) {
+                const profileChanges = {};
+                const statsChanges = {};
+                _updateProfileStat("lastLoginTime", Date.now(), profileChanges);
+                _resetProfileChrono();
+                t.update(handle, profileChanges)
+                return { profileChanges, statsChanges };
+              }).then(function(changes) {
+                _handleSuccessfulChanges(changes);
+              }).catch(function(e) {
+                console.log(e);
+              });
+            }
+
+            if (!!profile.brandNew) {
+              const handle = ProfileService.getProfileTransactionHandle(profile);
+              ProfileService.runTransaction(handle, function(handle, doc, t) {
+                const profileChanges = {};
+                const statsChanges = {};
+                _updateProfileStat("brandNew", false, profileChanges);
+                t.update(handle, profileChanges)
+                return { profileChanges, statsChanges };
+              }).then(function(changes) {
+                _handleSuccessfulChanges(changes);
+              }).catch(function(e) {
+                console.log(e);
+              });
+            }
+          }
+        });
+      }
 	});
 	NotifyingService.subscribe('$stateChangeSuccess', $rootScope, function() {
 		ProfileService.getCurrentProfile().then(function (profile) {
 			if (profile) {
-				var changelist = [];
-				if (currentProfileStats) _updateProfileStat(currentProfileStats, 'thisCurrentView', $state.current.url, changelist);
-				_notifyChanges(profile, currentProfileStats, changelist);
+				const profileChanges = {};
+        const statsChanges = {};
+        if (currentProfileStats) _updateProfileStat('thisCurrentView', $state.current.url, statsChanges);
+        const changes = { profileChanges, statsChanges };
+				_handleSuccessfulChanges(changes);
 			}
 		});
 	});
@@ -257,7 +335,7 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
         init: function() {
             console.log("Session stats tracking initialized");
 		},
-		
+
 		getCurrentProfileStats: function() {
 			return currentProfileStats;
 		},

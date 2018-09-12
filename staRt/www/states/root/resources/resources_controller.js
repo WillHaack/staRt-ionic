@@ -58,13 +58,10 @@
 
 		$scope.updatePluginLPCOrder = function() {
 			if (window.AudioPlugin !== undefined) {
-				AudioPlugin.setLPCOrder($scope.data.lpcOrder, $scope.logPluginLPCOrder);
-				ProfileService.getCurrentProfile().then(function (res) {
-					if (res) {
-						res.lpcOrder = $scope.data.lpcOrder;
-						ProfileService.saveProfile(res);
-					}
-				});
+        ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+          AudioPlugin.setLPCOrder($scope.data.lpcOrder, $scope.logPluginLPCOrder);
+          t.update(handle, {lpcOrder: $scope.data.lpcOrder});
+        });
 			}
 		};
 
