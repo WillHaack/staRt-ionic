@@ -206,6 +206,9 @@ practiceDirective.controller( 'PracticeDirectiveController',
 
 	    $scope.consecutive_golds = 0;
 	    $scope.consecutive_golds_breakpoints = [3, 5, 8, 10];
+
+	    // create helper variable to iterate through and create sandholes
+	    $scope.sandholes = new Array(Math.ceil($scope.count / 10));
 	}
 	
 	// need this outside for some reason
