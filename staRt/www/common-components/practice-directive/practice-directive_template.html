@@ -24,18 +24,6 @@
       {{currentWordIdx + 1}}/{{count}}
     </p>
   </div>
-  <div class="debug">
-    <div ng-if="coins_consecutive_gold > coins_consecutive_gold_breakpoints[0]">
-      Congratulations! <strong>{{coins_consecutive_gold_display}}</strong> golds in a row!
-    </div>
-    highscore block: {{block_golds_highscore}} gold, {{block_score_highscore}} points <br />
-    highscore session: {{session_coins.gold}} gold, {{session_score}} points<br />
-    coins session summary: {{session_coins}}<br />
-    coins by block:
-    <div ng-repeat="block in block_coins">
-      {{block}}
-    </div>
-  </div>
   <lpc-directive
     probe="probe"
     slider="true"
