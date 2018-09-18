@@ -1,9 +1,59 @@
-// parent ele for all the profiles content
+// base layout
 .profiles-contentBox {
-	//border: 1px solid violet;
-	// this needs to be a flexbox
+	position: relative;
+	display: flex;
+	width: 100vw;
+	height: 100vh;
+
+	.profiles-ion-nav-bar {
+		.bar-header { // styles <ion-header-bar>
+		  background-color: $blue-light;
+		  //height-min: 106px; //iOS cordova will overwrite this
+		  height: $rowH !important; //iOS cordova will overwrite this if not !important
+		  display: flex;
+		  align-items: center; // vertical align, but doesn't work w/ iOS cordova
+		  //justify-content: space-between;
+		  box-shadow: $itemShadow;
+		  padding-left: $navW;
+		  //border: 1px solid red; //#db
+
+		  .title { // // styles .title w/in <ion-header-bar>
+		    position: relative;
+		    display: block;
+		    text-transform: uppercase;
+		    color: $blue-main;
+		    font-weight: bold;
+		    font-size: $header-type;
+		    line-height: 0; // this adjusts for weird iOS stuff
+		    padding-top: 10px; // also adjusts for weird iOS styling
+		    text-align: left;
+		    overflow: visible;
+		  } //end .title
+		} // end .bar-header
+	} // end profiles-ion-nav-bar
+
+	.profiles-bg {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+	}
+
+	.profiles-layout {
+		margin-top: $rowH * 1.5;
+		margin-left: $navW;
+		height: $rowH * 5;
+		width: $colW * 9;
+		flex-flow: row nowrap;
+		display: flex;
+		z-index: 10;
+		// border: 1px solid cyan;
+	}
 }
 
+// ================================================
+// STATE STYLES
+// ================================================
 .logout {
 
 }
@@ -54,12 +104,6 @@ p.display-name {
 .upload_badge.not_uploaded {
 	color: red;
 	font-weight: bold;
-}
-
-.profiles
-{
-	flex-flow: row nowrap;
-	display: flex;
 }
 
 .profiles button

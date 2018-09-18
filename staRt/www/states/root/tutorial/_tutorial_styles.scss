@@ -1,3 +1,6 @@
+//$rowH: 100vh / 7; //106px;
+//$rowHalf: $rowH/2;
+
 .tut-contentBox  { // parent ele for tut content
 	// needs to be a flex
 	position: relative;
@@ -18,7 +21,7 @@
 	//border: 1px solid yellow;
 }
 
-.pane { // this is class for ionic <ion-nav-view> eles 
+.pane { // this is class for ionic <ion-nav-view> eles
 	background-color: transparent;
 }
 
@@ -77,7 +80,7 @@
 
 
 	// STYLES THE WAVE CONTENT COMMON TO ALL TUTORIAL LAYOUTS
-	// NOTES: 
+	// NOTES:
 		// all styles for the live lpc wave are in _lpc-directive_styles.scss
 		// all directive styles overwrite individual state styles, see app_module.scss
 
@@ -98,7 +101,7 @@
 			//max-height: $rowH * 3;
 			width: 65%;
 			//border: 1px solid lightBlue;
-			
+
 			.leftRow {
 				display: flex;
 				flex-direction: column;
@@ -211,7 +214,7 @@
 			padding-top: 10px;
 			margin-bottom: $rowH;
 			//border: 1px solid orange;
-			
+
 			.rightRow1 {
 				position: relative;
 				display: flex;
@@ -296,7 +299,7 @@ button.tutBtn, a.tutBtn {
 // --------------------------------------------
 // TEXT ADJUSTMENTS
 	/* typography
-		.txtBold 
+		.txtBold
 		.txtBold-blue
 		.txtBold-blueDark
 		.txtBold-blueLight
@@ -365,7 +368,7 @@ button.tutBtn, a.tutBtn {
 	}
 
 	//p05s4
-	div.needleBox {  
+	div.needleBox {
 		position: relative;
 		display: block;
 		height: 130px;

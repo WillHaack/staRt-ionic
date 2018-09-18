@@ -1,7 +1,66 @@
-// parent ele for all the resources content
+// base layout
 .resources-contentBox {
-	//border: 1px solid violet;
+	position: relative;
+  display: flex;
+	width: 100vw;
+	height: 100vh;
+	background-color: $c-bg;
+
+	.resources-ion-nav-bar {
+		.bar-header { // styles <ion-header-bar>
+		  background-color: $blue-light;
+		  height: $rowH !important;
+		  display: flex;
+		  align-items: center;
+		  box-shadow: $itemShadow;
+		  padding-left: $navW;
+
+		  .title { // // styles .title w/in <ion-header-bar>
+		    position: relative;
+		    display: block;
+		    text-transform: uppercase;
+		    color: $blue-main;
+		    font-weight: bold;
+		    font-size: $header-type;
+		    line-height: 0; // this adjusts for weird iOS stuff
+		    padding-top: 10px; // also adjusts for weird iOS styling
+		    text-align: left;
+		    overflow: visible;
+		  } //end .title
+		} // end .bar-header
+	} // end profiles-ion-nav-bar
+
+	.resources-bg {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		// border: 1px solid cyan;
+	}
+
+	.resources-layout {
+		margin-top: $rowH * 1.5;
+		margin-left: $navW;
+		height: $rowH * 4;
+		width: $colW * 9;
+		flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+		display: flex;
+		z-index: 10;
+		// border: 1px solid cyan;
+	}
 }
+
+// ================================================
+// STATE STYLES
+// ================================================
+//
+//
+//
+// .resources-contentBox {
+// 	//border: 1px solid violet;
+// }
 
 .resources-links-container {
 	display: flex;

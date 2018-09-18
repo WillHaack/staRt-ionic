@@ -1,77 +1,87 @@
 <ion-view class="state-contentBox">
-	<ion-nav-title>{{data.navTitle}}</ion-nav-title>
+
 	<div class="auto-contentBox">
+		<ion-nav-bar class="auto-ion-nav-bar">
+			<ion-nav-title>{{data.navTitle}}</ion-nav-title>
+		</ion-nav-bar>
 
-		<div class="probe-header" ng-hide="practicing">
-			<h2 class="text-and-lpc__text">
-				What would you like to test?
-			</h2>
-
-			<p> Use the quizzes to track your progress over time. </p>
-			<p> You can compare your scores before and after a period of practice. </p>
+		<div class="auto-bg">
+			<!-- full-width eles go here -->
 		</div>
 
-		<div class="probe-description-row" ng-hide="practicing">
-			<div class="probe-description">
-				<h3>Syllable Quiz</h3>
-				<p>
-					Imitate the clinician's model of syllables containing /r/
-					 (ten syllables, three times each).
-				</p>
-			</div>
-			<div class="probe-description">
-				<h3>Word Quiz</h3>
-				<p>
-					Read words containing /r/. The long quiz
-					 contains 50 words and the short quiz contains 25 words.
-				</p>
-			</div>
-		</div>
+		<div class="auto-layout">
 
-		<div class="probe-buttons" ng-hide="practicing">
-			<div class="probe-button-class">
-				<!-- 30 items, sequential -->
-				<button
-					class="big-button"
-					ng-click="beginSyllableProbe()"
-					ng-hide="practicing"
-				>
-					Syllable Quiz
-				</button>
+			<div class="probe-header" ng-hide="practicing">
+				<h2 class="text-and-lpc__text">
+					What would you like to test?
+				</h2>
+
+				<p> Use the quizzes to track your progress over time. </p>
+				<p> You can compare your scores before and after a period of practice. </p>
 			</div>
 
-			<div class="probe-button-class">
-				<!-- 50 items, random -->
-				<button
-					class="big-button"
-					ng-click="beginWordProbe(50)"
-					ng-hide="practicing"
-				>
-					Long Word Quiz
-				</button>
-
-				<!-- 25 items, random -->
-				<button
-					class="big-button"
-					ng-click="beginWordProbe(25)"
-					ng-hide="practicing"
-				>
-					Short Word Quiz
-				</button>
+			<div class="probe-description-row" ng-hide="practicing">
+				<div class="probe-description">
+					<h3>Syllable Quiz</h3>
+					<p>
+						Imitate the clinician's model of syllables containing /r/
+						 (ten syllables, three times each).
+					</p>
+				</div>
+				<div class="probe-description">
+					<h3>Word Quiz</h3>
+					<p>
+						Read words containing /r/. The long quiz
+						 contains 50 words and the short quiz contains 25 words.
+					</p>
+				</div>
 			</div>
-		</div>
 
-		<practice-directive
-			begin-on-load="true"
-			ng-if="practicing"
-			probe="true"
-			csvs="csvs"
-			order="order"
-			count="count"
-			type="type"
-			suppress-start-button="true"
-			end-practice-callback="endProbeCallback()">
-		</practice-directive>
+			<div class="probe-buttons" ng-hide="practicing">
+				<div class="probe-button-class">
+					<!-- 30 items, sequential -->
+					<button
+						class="big-button"
+						ng-click="beginSyllableProbe()"
+						ng-hide="practicing"
+					>
+						Syllable Quiz
+					</button>
+				</div>
 
+				<div class="probe-button-class">
+					<!-- 50 items, random -->
+					<button
+						class="big-button"
+						ng-click="beginWordProbe(50)"
+						ng-hide="practicing"
+					>
+						Long Word Quiz
+					</button>
+
+					<!-- 25 items, random -->
+					<button
+						class="big-button"
+						ng-click="beginWordProbe(25)"
+						ng-hide="practicing"
+					>
+						Short Word Quiz
+					</button>
+				</div>
+			</div>
+
+			<practice-directive
+				begin-on-load="true"
+				ng-if="practicing"
+				probe="true"
+				csvs="csvs"
+				order="order"
+				count="count"
+				type="type"
+				suppress-start-button="true"
+				end-practice-callback="endProbeCallback()">
+			</practice-directive>
+
+		</div> <!-- .auto-layout -->
 	</div> <!-- .auto-contentBox -->
 </ion-view>
