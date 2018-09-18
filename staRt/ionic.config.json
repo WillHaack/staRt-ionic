@@ -1,6 +1,8 @@
 {
   "name": "staRt",
-  "app_id": "",
+  "integrations": {
+    "cordova": {}
+  },
   "gulpStartupTasks": [
     "sass",
     "watch",
@@ -10,8 +12,5 @@
     "www/**/*",
     "!www/lib/**/*"
   ],
-  "integrations": {
-    "cordova": {}
-  },
   "type": "ionic1"
 }

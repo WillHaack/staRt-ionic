@@ -394,8 +394,8 @@ input, textarea {
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both; }
 
-/* 
-    These are here b/c I couldn't get the ng-show, ng-hide, & ng-if to trigger as soon as the class changed. They would stay in the DOM and display other eles and then get cleaned up after ~0.25s 
+/*
+    These are here b/c I couldn't get the ng-show, ng-hide, & ng-if to trigger as soon as the class changed. They would stay in the DOM and display other eles and then get cleaned up after ~0.25s
   */
 .animated.ng-enter,
 .animate-if.ng-leave {
@@ -429,6 +429,7 @@ input, textarea {
   display: block; }
 
 #app-container {
+  position: relative;
   display: -webkit-flex;
   -webkit-flex-direction: row;
   line-height: 1.7;
@@ -436,37 +437,12 @@ input, textarea {
   width: 100vw;
   color: #4d4d4d; }
 
-/* unfortunately, I think the correct way to update this is with native code:
-      https://developer.apple.com/reference/uikit/uiviewcontroller#//apple_ref/occ/instm/UIViewController/preferredStatusBarStyle  */
-#statusBar-bg {
-  height: 2.9vh;
-  width: 100vw;
-  background-color: #53c8e9;
-  border-bottom: 1px solid #F0F9FC; }
-
 #nav-and-content-container {
+  position: relative;
   display: flex;
-  flex-flow: row nowrap;
-  margin-top: 2.9vh; }
-
-.bar-header {
-  background-color: #c5f3ff;
-  height: 13.87143vh !important;
-  display: flex;
-  align-items: center;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
-  padding-left: 16.66vw; }
-  .bar-header .title {
-    position: relative;
-    display: block;
-    text-transform: uppercase;
-    color: #53c8e9;
-    font-weight: bold;
-    font-size: 50px;
-    line-height: 0;
-    padding-top: 10px;
-    text-align: left;
-    overflow: visible; }
+  height: 100vh;
+  width: 100vw;
+  flex-flow: row nowrap; }
 
 #content-container {
   display: -webkit-flex;
@@ -474,26 +450,15 @@ input, textarea {
   -webkit-flex-direction: column;
   justify-content: flex-start;
   text-align: center;
-  height: 83.22857vh;
-  width: 100vw;
-  margin-top: 13.87143vh; }
-
-.state-contentBox--wide {
-  margin-left: 0;
-  padding: 0;
-  width: 100vw; }
-
-.pane {
-  flex-flow: column; }
-
-canvas {
-  background-color: #ffffff; }
+  height: 100%;
+  width: 100%;
+  border: 1px solid red; }
 
 #nav-container {
   display: -webkit-flex;
   -webkit-flex-direction: column;
   width: 10vw;
-  height: 97.1vh;
+  height: 100vh;
   z-index: 999; }
 
 .nav-container {
@@ -562,7 +527,7 @@ canvas {
   background-color: transparent; }
 
 canvas {
-  background-color: #ffffff; }
+  background-color: transparent; }
 
 p.display-name {
   margin-bottom: 0px;
