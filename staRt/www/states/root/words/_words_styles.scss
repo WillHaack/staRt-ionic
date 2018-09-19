@@ -7,9 +7,10 @@
 
 
 	.quest-ion-nav-bar {
+
 		.bar-header { // styles <ion-header-bar>
 		  background-color: $blue-light;
-		  height: $rowH !important; //iOS cordova will overwrite this if not !important
+		  height: $row-h !important; //iOS cordova will overwrite this if not !important
 		  display: flex;
 		  align-items: center;
 		  box-shadow: $itemShadow;
@@ -32,19 +33,22 @@
 
 	.quest-bg {
 		position: absolute;
+		top: 0;
+		left: 0;
 		width: 100%;
 		height: 100%;
 		z-index: 1;
 	}
 
 	.quest-layout {
-		margin-top: $rowH * 1.5;
-		margin-left: $navW;
-		height: $rowH * 4;
-		width: $colW * 9;
-		flex-flow: column nowrap;
-		justify-content: space-around;
+		position: relative;
 		display: flex;
+		flex-flow: column nowrap;
+		margin-top: $row-h * 1.5;
+		margin-left: $navW;
+		height: $row-h * 4;
+		width: $col-w * 9;
+		justify-content: space-around;
 		z-index: 10;
 		// border: 1px solid cyan;
 	}
@@ -142,6 +146,6 @@
     color: #808080;
     z-index: 100000;
     position: absolute;
-    top: $rowH;
+    top: $row-h;
     padding: 10px;
 }

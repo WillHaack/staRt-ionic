@@ -537,7 +537,7 @@ input, textarea {
 
   At this point, these are essentially just a css reset, which creates a full-width, full-height .state-contentBox.
 
-  NOTE: Styles for everything below ion-view.state-contentBox are in the state's .scss file -- even for theme-like elements, such as layout or the  header bar. Currently each state is self-contained thing, responisble for implementing its own layout and styles.
+  NOTE: Styles for everything below ion-view.state-contentBox are in the state's .scss file -- even theme-like elements, such as layout or the  header bar. Currently each state is self-contained thing, responsisble for implementing its own layout and styles.
 */
 .state-contentBox {
   position: relative;
@@ -599,16 +599,19 @@ input, textarea {
       overflow: visible; }
   .profiles-contentBox .profiles-bg {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     z-index: 1; }
   .profiles-contentBox .profiles-layout {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
     margin-top: 25vh;
     margin-left: 16.66vw;
     height: 83.33333vh;
     width: 75vw;
-    flex-flow: row nowrap;
-    display: flex;
     z-index: 10; }
 
 p.display-name {
@@ -691,11 +694,31 @@ p.display-name {
   color: #00bb00;
   font-weight: bold; }
 
+.tut-ion-nav-bar .bar-header {
+  background-color: #c5f3ff;
+  height: 16.66667vh !important;
+  display: flex;
+  align-items: center;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+  padding-left: 16.66vw; }
+  .tut-ion-nav-bar .bar-header .title {
+    position: relative;
+    display: block;
+    text-transform: uppercase;
+    color: #53c8e9;
+    font-weight: bold;
+    font-size: 50px;
+    line-height: 0;
+    padding-top: 10px;
+    text-align: left;
+    overflow: visible; }
+
 .tut-contentBox {
   position: relative;
+  top: 21.42857vh;
+  height: 71.42857vh;
   margin: 0;
   padding: 0;
-  height: 83.33333vh;
   width: 100%; }
 
 .sceneBox {
@@ -862,7 +885,7 @@ p.display-name {
     height: 100%;
     width: 33%;
     padding-top: 10px;
-    margin-bottom: 16.66667vh; }
+    margin-bottom: 14.28571vh; }
     .tutWave-content .rightBox .rightRow1, .tutWave-content .rightBox--short .rightRow1 {
       position: relative;
       display: flex;
@@ -885,7 +908,7 @@ p.display-name {
     .tutWave-content .rightBox .absImg, .tutWave-content .rightBox--short .absImg {
       position: absolute; }
   .tutWave-content .rightBox--short {
-    height: 66.66667vh; }
+    height: 57.14286vh; }
 
 .inputBox {
   position: absolute;
@@ -895,13 +918,13 @@ p.display-name {
   justify-content: center;
   width: 65%;
   height: auto;
-  top: 58.33333vh;
-  margin-bottom: 8.33333vh; }
+  top: 50vh;
+  margin-bottom: 7.14286vh; }
 
 button.tutBtn, a.tutBtn {
-  min-height: 8.33333vh;
+  min-height: 7.14286vh;
   min-width: 150px;
-  border-radius: 8.33333vh;
+  border-radius: 7.14286vh;
   padding: 15px 20px;
   border: none;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
@@ -912,9 +935,9 @@ button.tutBtn, a.tutBtn {
 
 .sandbarBox {
   position: relative;
-  height: 33.33333vh;
+  height: 28.57143vh;
   width: 100%;
-  top: 66.66667vh;
+  top: 57.14286vh;
   display: flex;
   flex-direction: column;
   z-index: 1;
@@ -1039,16 +1062,19 @@ div.needleBox {
       overflow: visible; }
   .auto-contentBox .auto-bg {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     z-index: 1; }
   .auto-contentBox .auto-layout {
+    position: relative;
+    display: flex;
+    flex-direction: column;
     margin-top: 25vh;
     margin-left: 16.66vw;
     height: 66.66667vh;
     width: 75vw;
-    display: flex;
-    flex-direction: column;
     justify-content: space-around;
     z-index: 10; }
 
@@ -1088,8 +1114,7 @@ div.needleBox {
   position: relative;
   display: flex;
   width: 100vw;
-  height: 100vh;
-  background-color: #c2f2f2; }
+  height: 100vh; }
   .free-contentBox .free-ion-nav-bar .bar-header {
     background-color: #c5f3ff;
     height: 16.66667vh !important;
@@ -1110,18 +1135,21 @@ div.needleBox {
       overflow: visible; }
   .free-contentBox .free-bg {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     z-index: 1; }
   .free-contentBox .free-layout {
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
     margin-top: 25vh;
     margin-left: 16.66vw;
     height: 66.66667vh;
     width: 75vw;
-    flex-flow: column nowrap;
     justify-content: space-between;
     align-items: center;
-    display: flex;
     z-index: 10; }
 
 .quest-contentBox {
@@ -1149,17 +1177,20 @@ div.needleBox {
       overflow: visible; }
   .quest-contentBox .quest-bg {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     z-index: 1; }
   .quest-contentBox .quest-layout {
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
     margin-top: 25vh;
     margin-left: 16.66vw;
     height: 66.66667vh;
     width: 75vw;
-    flex-flow: column nowrap;
     justify-content: space-around;
-    display: flex;
     z-index: 10; }
 
 .words-progress-indicator {
@@ -1262,20 +1293,23 @@ div.needleBox {
       padding-top: 10px;
       text-align: left;
       overflow: visible; }
-  .resources-contentBox .resources-bg {
+  .resources-contentBox .quest-bg {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     z-index: 1; }
   .resources-contentBox .resources-layout {
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
     margin-top: 25vh;
     margin-left: 16.66vw;
     height: 66.66667vh;
     width: 75vw;
-    flex-flow: column nowrap;
     justify-content: space-between;
     align-items: center;
-    display: flex;
     z-index: 10; }
 
 .resources-links-container {

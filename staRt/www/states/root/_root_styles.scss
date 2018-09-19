@@ -36,13 +36,11 @@ input, textarea {
     display: block;
   }
 
-
 // =================================================================
 // ROOT TEMPLATE & GRID VARS
 // =================================================================
-  $rowH: 100vh/6;
-  $rowHalf: $rowH/2;
-  $colW: 100vw/12;
+  $row-h: 100vh/6;
+  $col-w: 100vw/12;
 
   $nav-btnW: 10vw; // width of left nav
   $col-pad: 6.66vw; //
@@ -161,7 +159,7 @@ input, textarea {
 
   At this point, these are essentially just a css reset, which creates a full-width, full-height .state-contentBox.
 
-  NOTE: Styles for everything below ion-view.state-contentBox are in the state's .scss file -- even for theme-like elements, such as layout or the  header bar. Currently each state is self-contained thing, responisble for implementing its own layout and styles.
+  NOTE: Styles for everything below ion-view.state-contentBox are in the state's .scss file -- even theme-like elements, such as layout or the  header bar. Currently each state is self-contained thing, responsisble for implementing its own layout and styles.
 */
     .state-contentBox {
       position: relative;

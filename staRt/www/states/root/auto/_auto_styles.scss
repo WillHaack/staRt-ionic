@@ -8,14 +8,11 @@
 	.auto-ion-nav-bar {
 		.bar-header { // styles <ion-header-bar>
 		  background-color: $blue-light;
-		  //height-min: 106px; //iOS cordova will overwrite this
-		  height: $rowH !important; //iOS cordova will overwrite this if not !important
+		  height: $row-h !important; //iOS cordova will overwrite this if not !important
 		  display: flex;
-		  align-items: center; // vertical align, but doesn't work w/ iOS cordova
-		  //justify-content: space-between;
+		  align-items: center;
 		  box-shadow: $itemShadow;
 		  padding-left: $navW;
-		  //border: 1px solid red; //#db
 
 		  .title { // // styles .title w/in <ion-header-bar>
 		    position: relative;
@@ -34,20 +31,22 @@
 
 	.auto-bg {
 		position: absolute;
+		top: 0;
+		left: 0;
 		width: 100%;
 		height: 100%;
 		z-index: 1;
 	}
 
 	.auto-layout {
-		margin-top: $rowH * 1.5;
-		margin-left: $navW;
-		height: $rowH * 4;
-		width: $colW * 9;
-
-		// height: 95%;
+		position: relative;
 		display: flex;
 		flex-direction: column;
+		margin-top: $row-h * 1.5;
+		margin-left: $navW;
+		height: $row-h * 4;
+		width: $col-w * 9;
+
 		justify-content: space-around;
 		z-index: 10;
 		// border: 1px solid cyan;
