@@ -5,10 +5,11 @@
   height: 100%;
   width: 100%;
   background-position: bottom right;
-  // width: 100%;
-  opacity: 1;
   background-repeat: no-repeat;
+  background-color: $c-bg;
+  opacity: 1;
   z-index: 1;
+
   // border: 1px solid red;
 }
 // ------------------------------------------------

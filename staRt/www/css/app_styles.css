@@ -378,8 +378,9 @@ input[type=range]::-webkit-slider-thumb {
   height: 100%;
   width: 100%;
   background-position: bottom right;
-  opacity: 1;
   background-repeat: no-repeat;
+  background-color: #c2f2f2;
+  opacity: 1;
   z-index: 1; }
 
 .img-bg_qz-BG {
@@ -1273,16 +1274,15 @@ div.needleBox {
   position: relative;
   display: flex;
   width: 100vw;
-  height: 100vh;
-  background-color: #c2f2f2; }
-  .resources-contentBox .resources-ion-nav-bar .bar-header {
+  height: 100vh; }
+  .resources-contentBox .resources-ion-nav-bar--old .bar-header {
     background-color: #c5f3ff;
     height: 16.66667vh !important;
     display: flex;
     align-items: center;
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
     padding-left: 16.66vw; }
-    .resources-contentBox .resources-ion-nav-bar .bar-header .title {
+    .resources-contentBox .resources-ion-nav-bar--old .bar-header .title {
       position: relative;
       display: block;
       text-transform: uppercase;
@@ -1293,7 +1293,25 @@ div.needleBox {
       padding-top: 10px;
       text-align: left;
       overflow: visible; }
-  .resources-contentBox .quest-bg {
+  .resources-contentBox .resources-ion-nav-bar .bar {
+    background-image: none !important; }
+  .resources-contentBox .resources-ion-nav-bar .bar-header {
+    background-color: transparent;
+    height: 16.66667vh !important;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    padding-left: 16.66vw;
+    padding-right: 8.33333vw; }
+    .resources-contentBox .resources-ion-nav-bar .bar-header .title {
+      position: relative;
+      display: block;
+      text-transform: uppercase;
+      font-weight: 500;
+      font-size: 1.75em;
+      color: #7ab5b8; }
+  .resources-contentBox .resources-bg {
     position: absolute;
     top: 0;
     left: 0;
@@ -1371,7 +1389,10 @@ div.needleBox {
   margin: 0; }
 
 .version-display {
-  position: absolute; }
+  position: absolute;
+  margin-left: 75vw;
+  margin-top: 1em;
+  z-index: 10; }
 
 lpc-directive {
   display: -webkit-flex;

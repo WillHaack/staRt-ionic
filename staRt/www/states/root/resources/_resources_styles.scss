@@ -4,9 +4,9 @@
   display: flex;
 	width: 100vw;
 	height: 100vh;
-	background-color: $c-bg;
+	//background-color: $c-bg;
 
-	.resources-ion-nav-bar {
+	.resources-ion-nav-bar--old {
 		.bar-header { // styles <ion-header-bar>
 		  background-color: $blue-light;
 		  height: $row-h !important;
@@ -28,9 +28,36 @@
 		    overflow: visible;
 		  } //end .title
 		} // end .bar-header
+	} // end resources-ion-nav-bar--OLD
+
+	.resources-ion-nav-bar { // new styles goes here
+		.bar { //ionic style
+			background-image: none !important;
+		}
+
+		.bar-header { //ionic style for <ion-header-bar>
+			background-color: transparent;
+			height: $row-h !important;
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: center;
+			align-items: center;
+			padding-left: $navW;
+			padding-right: $col-w;
+
+			.title { //ionic style for .title w/in <ion-header-bar>
+				position: relative;
+				display: block;
+				text-transform: uppercase;
+				font-weight: 500;
+				font-size: 1.75em;
+				color: $c-text-subtle;
+			} //end .title
+		} // end .bar-header
 	} // end profiles-ion-nav-bar
 
-	.quest-bg {
+
+	.resources-bg {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -44,6 +71,7 @@
 		display: flex;
 		flex-flow: column nowrap;
 		margin-top: $row-h * 1.5;
+		// margin-left: $col-w * 1;
 		margin-left: $navW;
 		height: $row-h * 4;
 		width: $col-w * 9;
@@ -57,12 +85,6 @@
 // ================================================
 // STATE STYLES
 // ================================================
-//
-//
-//
-// .resources-contentBox {
-// 	//border: 1px solid violet;
-// }
 
 .resources-links-container {
 	display: flex;
@@ -140,7 +162,9 @@
 	margin: 0;
 }
 
-.version-display
-{
+.version-display {
   position: absolute;
+	margin-left: $col-w * 9;
+	margin-top: 1em;
+	z-index: 10;
 }
