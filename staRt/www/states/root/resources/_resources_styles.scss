@@ -30,7 +30,7 @@
 		} // end .bar-header
 	} // end resources-ion-nav-bar--OLD
 
-	.resources-ion-nav-bar { // new styles goes here
+	.resources-ion-nav-bar { // new styles are here
 		.bar { //ionic style
 			background-image: none !important;
 		}
@@ -71,7 +71,6 @@
 		display: flex;
 		flex-flow: column nowrap;
 		margin-top: $row-h * 1.5;
-		// margin-left: $col-w * 1;
 		margin-left: $navW;
 		height: $row-h * 4;
 		width: $col-w * 9;
