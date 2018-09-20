@@ -1,11 +1,62 @@
-// parent ele for all the auto content
+// base layout
 .auto-contentBox {
-	//border: 1px solid violet;
+	position: relative;
 	display: flex;
-	height: 95%;
-	flex-direction: column;
-	justify-content: space-around;
+	width: 100vw;
+	height: 100vh;
+
+	.auto-ion-nav-bar {
+		.bar-header { // styles <ion-header-bar>
+		  background-color: $blue-light;
+		  height: $row-h !important; //iOS cordova will overwrite this if not !important
+		  display: flex;
+		  align-items: center;
+		  box-shadow: $itemShadow;
+		  padding-left: $navW;
+
+		  .title { // // styles .title w/in <ion-header-bar>
+		    position: relative;
+		    display: block;
+		    text-transform: uppercase;
+		    color: $blue-main;
+		    font-weight: bold;
+		    font-size: $header-type;
+		    line-height: 0; // this adjusts for weird iOS stuff
+		    padding-top: 10px; // also adjusts for weird iOS styling
+		    text-align: left;
+		    overflow: visible;
+		  } //end .title
+		} // end .bar-header
+	} // end profiles-ion-nav-bar
+
+	.auto-bg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+	}
+
+	.auto-layout {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		margin-top: $row-h * 1.5;
+		margin-left: $navW;
+		height: $row-h * 4;
+		width: $col-w * 9;
+
+		justify-content: space-around;
+		z-index: 10;
+		// border: 1px solid cyan;
+	}
 }
+
+// ================================================
+// STATE STYLES
+// ================================================
+
 
 .probe-header {
 	width: 100%;

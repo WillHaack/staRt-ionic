@@ -1,16 +1,32 @@
 <ion-view view-title="Free Play" class="state-contentBox">
-	<div class="free-contentBox">
 
-		<div class="text-and-lpc__text">
-			This is the place to practice your /r/ sounds on your own. There are no prompts or words to match here. It's just you and the wave.
-		</div>
-		<lpc-directive
-			slider="true"
-			reset="true"
-			sand="true"
-			tutorial="false"
-			active="lpcActive">
-		</lpc-directive>
+	<div class="free-contentBox">
+		<ion-nav-bar class="free-ion-nav-bar"></ion-nav-bar>
+
+		<!-- full-width eles go here -->
+		<div class="free-bg"></div>
+
+		<!-- content goes here -->
+		<div class="free-layout">
+
+			<!-- <div class="text-and-lpc__text"> -->
+			<div class="free-header">
+				This is the place to practice your /r/ sounds on your own. There are no prompts or words to match here. It's just you and the wave.
+			</div>
+
+			<div class="free-lpcBox">
+				<lpc-directive
+					slider="true"
+					reset="true"
+					sand="true"
+					tutorial="false"
+					active="lpcActive">
+				</lpc-directive>
+			</div>
+
+
+		</div> <!-- end free-layout-->
 
 	</div> <!-- end free-contentBox-->
+
 </ion-view>

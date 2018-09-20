@@ -1,82 +1,101 @@
 <ion-view view-title="SLP Resources" class="state-contentBox">
+
 	<div class="resources-contentBox">
 
-    <div class="version-display">
-        <p>staRt app version {{data.version}}</p>
-        <p>{{data.platform}}</p>
-    </div>
+		<!-- ion-nav-bar -->
+		<ion-nav-bar ng-class="{
+      'resources-ion-nav-bar': !data.configuring,
+      'resources-ion-nav-bar--old': data.configuring
+    }">
+			<ion-nav-title>{{data.navTitle}}</ion-nav-title>
+		</ion-nav-bar>
 
-		<div class="resources-links-container resources" ng-if="!data.configuring">
-			<button ng-click="configureLPC()" class="button button-calm adjust-profile">Adjust Profile LPC</button>
-			<h3>Downloads</h3>
-			<h4>Download resources directly to your device as PDFs</h4>
-			<div class="resources-links-row">
-				<a href="https://www.dropbox.com/sh/z4uvvnm6wajgve3/AADxCwlmmB6yKa3Ijs4lD26Va">
-					<button class="button button-calm"> Guide for Starting Pilot Study </button>
-				</a>
-				<a href="https://www.dropbox.com/sh/uanqcaau83s5uaa/AABnlD5sca9EmmnptSYyCHF9a">
-					<button class="button button-calm"> Checklist for Interested Clinicians </button>
-				</a>
-				<a href="https://www.dropbox.com/sh/x5m8iz4u6crve6r/AACxiy7yjmz9yH_n8vIscBqca">
-					<button class="button button-calm"> staRt User Manual </button>
-				</a>
-				<a href="https://www.dropbox.com/sh/dw2l2l4555ucwrj/AAD6JzC3WMfZ4SdexFLWRI4ka">
-					<button class="button button-calm"> Principal Letter </button>
-				</a>
-			</div>
-			<div class="resources-links-row">
-				<a href="https://www.dropbox.com/sh/41fay3xx5aniw1e/AACV8basbDgEX13Da68y9EJOa">
-					<button class="button button-calm"> Parent Letter </button>
-				</a>
-				<a href="https://www.dropbox.com/sh/pq5p6j0fz03sgjw/AAC-Wy7W9t61ugTfO-tZNEg0a">
-					<button class="button button-calm questionnaire"> SLP Informational Letter </button>
-				</a>
-				<a href="https://www.dropbox.com/sh/p79m84qq9kprare/AACmj0X28Xmr6HFPk8I_erOAa">
-					<button class="button button-calm questionnaire"> Clinician Questionnaires </button>
-				</a>
-			</div>
-			<h3>Links</h3>
-			<h4>Open Google Forms in your device's browser</h4>
-			<div class="resources-links-row">
-				<a href="https://docs.google.com/forms/d/e/1FAIpQLSewiD8Uxle5WRPh5ArgUwYNQA6lktpjA8-xwSQVqinTW1IQiA/viewform?c=0&w=1">
-					<button class="button button-calm"> Pilot Tester Survey </button>
-				</a>
-				<a href="https://docs.google.com/forms/d/e/1FAIpQLScfSrv-fbkMg7AaZerT0ssXAbLJ20LD2h-XZQXBFAXbyUkWmw/viewform?c=0&w=1">
-					<button class="button button-calm"> Bug Report </button>
-				</a>
-			</div>
+
+		<!-- full-width & abs pos eles go here -->
+		<div ng-if="!data.configuring" ng-class="{'resources-bg': true, 'img-bg': !data.configuring, 'img-bg_res': !data.configuring}"></div>
+
+		<div class="version-display">
+				<p>staRt app version {{data.version}}</p>
+				<p>{{data.platform}}</p>
 		</div>
 
-		<div class="text-and-lpc__text resources" ng-if="data.configuring">
-			<p>
-				Use the slider to manually adjust the LPC filter order. <strong>In general, the filter order should be between 35 and 45.</strong>
-			</p>
 
-			<div class="range-container">
-				<div class="range-label">
-					min. 25
+		<!-- content goes here -->
+		<div class="resources-layout">
+
+			<!-- ===================================== -->
+			<div class="resources-links-container resources" ng-if="!data.configuring">
+				<button ng-click="configureLPC()" class="button button-calm adjust-profile">Adjust Profile LPC</button>
+				<h3>Downloads</h3>
+				<h4>Download resources directly to your device as PDFs</h4>
+				<div class="resources-links-row">
+					<a href="https://www.dropbox.com/sh/z4uvvnm6wajgve3/AADxCwlmmB6yKa3Ijs4lD26Va">
+						<button class="button button-calm"> Guide for Starting Pilot Study </button>
+					</a>
+					<a href="https://www.dropbox.com/sh/uanqcaau83s5uaa/AABnlD5sca9EmmnptSYyCHF9a">
+						<button class="button button-calm"> Checklist for Interested Clinicians </button>
+					</a>
+					<a href="https://www.dropbox.com/sh/x5m8iz4u6crve6r/AACxiy7yjmz9yH_n8vIscBqca">
+						<button class="button button-calm"> staRt User Manual </button>
+					</a>
+					<a href="https://www.dropbox.com/sh/dw2l2l4555ucwrj/AAD6JzC3WMfZ4SdexFLWRI4ka">
+						<button class="button button-calm"> Principal Letter </button>
+					</a>
+				</div>
+				<div class="resources-links-row">
+					<a href="https://www.dropbox.com/sh/41fay3xx5aniw1e/AACV8basbDgEX13Da68y9EJOa">
+						<button class="button button-calm"> Parent Letter </button>
+					</a>
+					<a href="https://www.dropbox.com/sh/pq5p6j0fz03sgjw/AAC-Wy7W9t61ugTfO-tZNEg0a">
+						<button class="button button-calm questionnaire"> SLP Informational Letter </button>
+					</a>
+					<a href="https://www.dropbox.com/sh/p79m84qq9kprare/AACmj0X28Xmr6HFPk8I_erOAa">
+						<button class="button button-calm questionnaire"> Clinician Questionnaires </button>
+					</a>
+				</div>
+				<h3>Links</h3>
+				<h4>Open Google Forms in your device's browser</h4>
+				<div class="resources-links-row">
+					<a href="https://docs.google.com/forms/d/e/1FAIpQLSewiD8Uxle5WRPh5ArgUwYNQA6lktpjA8-xwSQVqinTW1IQiA/viewform?c=0&w=1">
+						<button class="button button-calm"> Pilot Tester Survey </button>
+					</a>
+					<a href="https://docs.google.com/forms/d/e/1FAIpQLScfSrv-fbkMg7AaZerT0ssXAbLJ20LD2h-XZQXBFAXbyUkWmw/viewform?c=0&w=1">
+						<button class="button button-calm"> Bug Report </button>
+					</a>
+				</div>
+			</div>
+
+			<div class="text-and-lpc__text resources" ng-if="data.configuring">
+				<p>
+					Use the slider to manually adjust the LPC filter order. <strong>In general, the filter order should be between 35 and 45.</strong>
+				</p>
+
+				<div class="range-container">
+					<div class="range-label">
+						min. 25
+					</div>
+
+					<input type="range" min="25" max="45" ng-model="data.lpcOrder" ng-change="updatePluginLPCOrder()" />
+
+					<div class="range-label">
+						max. 45
+					</div>
+
+					<button name="reset" ng-click="resetPluginLPCOrder()" class="reset-button big-button">Reset</button>
 				</div>
 
-				<input type="range" min="25" max="45" ng-model="data.lpcOrder" ng-change="updatePluginLPCOrder()" />
+				<p>
+					The filter order is now <em>{{data.lpcOrder}}</em>
+				</p>
 
-				<div class="range-label">
-					max. 45
-				</div>
-
-				<button name="reset" ng-click="resetPluginLPCOrder()" class="reset-button big-button">Reset</button>
+			</div>
+			<div ng-if="data.configuring">
+			<lpc-directive
+				sand="false"
+				slider="false">
+			</lpc-directive>
 			</div>
 
-			<p>
-				The filter order is now <em>{{data.lpcOrder}}</em>
-			</p>
-
-		</div>
-		<div ng-if="data.configuring">
-		<lpc-directive
-			sand="false"
-			slider="false">
-		</lpc-directive>
-		</div>
-
+		</div> <!-- end resources-layout-->
 	</div> <!-- end resources-contentBox-->
 </ion-view>

@@ -12,9 +12,10 @@
 			configuring: false,
       lpcOrder: 35,
       version: "",
-      platform: ""
-    };
+      platform: "",
+			navTitle: "SLP Resources"
 
+    };
     cordova.getAppVersion.getVersionNumber().then(function (version) {
       $scope.data.version = `${version}`;
       $scope.data.platform = `${device.platform} ${device.version}`
