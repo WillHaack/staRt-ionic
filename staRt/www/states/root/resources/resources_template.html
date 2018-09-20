@@ -3,18 +3,16 @@
 	<div class="resources-contentBox">
 
 		<!-- ion-nav-bar -->
-		<ion-nav-bar ng-if="!data.configuring" class="resources-ion-nav-bar"> 
-			<ion-nav-title>{{data.navTitle}}</ion-nav-title>
-		</ion-nav-bar>
-
-		<ion-nav-bar ng-if="data.configuring" class="resources-ion-nav-bar--old">
+		<ion-nav-bar ng-class="{
+      'resources-ion-nav-bar': !data.configuring,
+      'resources-ion-nav-bar--old': data.configuring
+    }">
 			<ion-nav-title>{{data.navTitle}}</ion-nav-title>
 		</ion-nav-bar>
 
 
 		<!-- full-width & abs pos eles go here -->
-		<div ng-if="!data.configuring" class="resources-bg img-bg img-bg_res"></div>
-		<div ng-if="data.configuring" class="resources-bg"></div>
+		<div ng-if="!data.configuring" ng-class="{'resources-bg': true, 'img-bg': !data.configuring, 'img-bg_res': !data.configuring}"></div>
 
 		<div class="version-display">
 				<p>staRt app version {{data.version}}</p>
