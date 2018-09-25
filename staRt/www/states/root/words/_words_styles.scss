@@ -44,10 +44,10 @@
 		position: relative;
 		display: flex;
 		flex-flow: column nowrap;
-		margin-top: $row-h * 1.5;
-		margin-left: $navW;
-		height: $row-h * 4;
-		width: $col-w * 9;
+		margin-top: $row-h;
+		margin-left: $nav-btnW;
+		height: 100%;
+		width: 100%;
 		justify-content: space-around;
 		z-index: 10;
 		// border: 1px solid cyan;

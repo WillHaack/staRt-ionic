@@ -36,7 +36,8 @@ lpcDirective.directive( 'lpcDirective', function()
 			reset: '=',
 			rate: '=',
 			hideBtn: '=',
-			waveHidden: "=",
+      waveHidden: "=",
+      transparent: "=",
 			tutorial: "="
 		},
 		templateUrl: 'common-components/lpc-directive/lpc-directive_template.html'
