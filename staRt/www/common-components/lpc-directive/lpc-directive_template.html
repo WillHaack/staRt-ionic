@@ -24,24 +24,53 @@
 	<div class="lpc-buttons">
 
 		<div class="rate-box" ng-if="rate">
-			<button
-				ng-click="data.rating = 3"
-				ng-class="{selected: data.rating === 3}"
-			>
-				Great
-			</button>
-			<button
-				ng-click="data.rating = 2"
-				ng-class="{selected: data.rating === 2}"
-			>
-				Good
-			</button>
-			<button
-				ng-click="data.rating = 1"
-				ng-class="{selected: data.rating === 1}"
-			>
-				Try Again
-			</button>
+      <!-- Great -->
+      <div
+        ng-class="{
+          selected: data.rating === 3,
+          great: true,
+          'rating-button-container': true
+        }"
+      >
+        <button
+          ng-click="data.rating = 3"
+          class="rateBtnTxt"
+        >
+          Great
+        </button>
+      </div>
+
+      <!-- Good -->
+      <div
+        ng-class="{
+          selected: data.rating === 2,
+          good: true,
+          'rating-button-container': true
+        }"
+      >
+        <button
+          ng-click="data.rating = 2"
+          class="rateBtnTxt"
+        >
+          Good
+        </button>
+      </div>
+
+      <!-- Try again -->
+      <div
+        ng-class="{
+          selected: data.rating === 1,
+          'try-again': true,
+          'rating-button-container': true
+        }"
+      >
+        <button
+          ng-click="data.rating = 1"
+          class="rateBtnTxt"
+        >
+          Try Again
+        </button>
+      </div>
 		</div>
 
 		<button
