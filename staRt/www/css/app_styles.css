@@ -1217,12 +1217,11 @@ div.needleBox {
   font-size: 30px; }
 
 .words-word {
-  font-size: 3rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  line-height: 1.5;
+  font-size: 3.5em;
+  line-height: 1em;
   display: inline-block;
-  vertical-align: middle; }
+  vertical-align: middle;
+  color: #3D6D84; }
 
 .quest-contentBox button[disabled] {
   background-color: lightgray;
