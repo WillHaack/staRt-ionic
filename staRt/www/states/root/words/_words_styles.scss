@@ -44,8 +44,8 @@
 		position: relative;
 		display: flex;
 		flex-flow: column nowrap;
-		margin-top: $row-h;
-		margin-left: $nav-btnW;
+		padding-top: $row-h;
+		padding-left: $nav-btnW;
 		height: 100%;
 		width: 100%;
 		justify-content: space-around;
@@ -98,7 +98,8 @@
 
 .quest-header {
 	width: 100%;
-	flex: 1 0 auto;
+  flex: 1 0 auto;
+  margin-top: 10vh;
 }
 
 .quest-header h2 {
@@ -117,7 +118,9 @@
 	width: 100%;
 	flex: 1 0 auto;
 	display: flex;
-	justify-content: space-around;
+  justify-content: space-around;
+  padding-left: 10vh;
+  padding-right: 10vh;
 }
 
 .quest-description {
@@ -137,7 +140,9 @@
 
 .quest-buttons {
 	display: flex;
-	flex: 1 0 auto;
+  flex: 1 0 auto;
+  padding-left: 10vh;
+  padding-right: 10vh;
 }
 
 .back-button {

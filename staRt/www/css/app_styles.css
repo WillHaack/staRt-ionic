@@ -1189,8 +1189,8 @@ div.needleBox {
     position: relative;
     display: flex;
     flex-flow: column nowrap;
-    margin-top: 16.66667vh;
-    margin-left: 10vw;
+    padding-top: 16.66667vh;
+    padding-left: 10vw;
     height: 100%;
     width: 100%;
     justify-content: space-around;
@@ -1229,7 +1229,8 @@ div.needleBox {
 
 .quest-header {
   width: 100%;
-  flex: 1 0 auto; }
+  flex: 1 0 auto;
+  margin-top: 10vh; }
 
 .quest-header h2 {
   text-align: center;
@@ -1245,7 +1246,9 @@ div.needleBox {
   width: 100%;
   flex: 1 0 auto;
   display: flex;
-  justify-content: space-around; }
+  justify-content: space-around;
+  padding-left: 10vh;
+  padding-right: 10vh; }
 
 .quest-description {
   width: 30%; }
@@ -1261,7 +1264,10 @@ div.needleBox {
 
 .quest-buttons {
   display: flex;
-  flex: 1 0 auto; }
+  flex: 1 0 auto;
+  margin-bottom: 20vh;
+  padding-left: 10vh;
+  padding-right: 10vh; }
 
 .back-button {
   background: #d3d3d3;
