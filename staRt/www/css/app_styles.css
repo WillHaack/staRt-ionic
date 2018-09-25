@@ -1265,7 +1265,6 @@ div.needleBox {
 .quest-buttons {
   display: flex;
   flex: 1 0 auto;
-  margin-bottom: 20vh;
   padding-left: 10vh;
   padding-right: 10vh; }
 
@@ -1405,9 +1404,10 @@ lpc-directive {
   display: -webkit-flex;
   -webkit-flex: 1;
   margin: auto;
-  flex-flow: column;
+  flex-flow: row;
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  justify-content: space-around; }
 
 #lpc-canvas {
   margin: auto;
