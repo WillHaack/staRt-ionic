@@ -1,37 +1,14 @@
-// base layout
-.quest-contentBox {
+// ================================================
+// LAYOUT
+// ================================================
+
+.quest-layout_view-container {
 	position: relative;
 	display: flex;
 	width: 100vw;
 	height: 100vh;
 
-
-	.quest-ion-nav-bar {
-
-		.bar-header { // styles <ion-header-bar>
-		  background-color: $blue-light;
-		  height: $row-h !important; //iOS cordova will overwrite this if not !important
-		  display: flex;
-		  align-items: center;
-		  box-shadow: $itemShadow;
-		  padding-left: $navW;
-
-		  .title { // // styles .title w/in <ion-header-bar>
-		    position: relative;
-		    display: block;
-		    text-transform: uppercase;
-		    color: $blue-main;
-		    font-weight: bold;
-		    font-size: $header-type;
-		    line-height: 0;
-		    padding-top: 10px;
-		    text-align: left;
-		    overflow: visible;
-		  } //end .title
-		} // end .bar-header
-	} // end profiles-ion-nav-bar
-
-	.quest-bg {
+	.quest-layout_bg-container {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -40,19 +17,21 @@
 		z-index: 1;
 	}
 
-	.quest-layout {
+	.quest-layout_content-container {
 		position: relative;
 		display: flex;
 		flex-flow: column nowrap;
-		margin-top: $row-h * 1.5;
-		margin-left: $navW;
-		height: $row-h * 4;
-		width: $col-w * 9;
+		padding-top: $row-h;
+		padding-left: $nav-btnW;
+		height: 100%;
+		width: 100%;
 		justify-content: space-around;
 		z-index: 10;
 		// border: 1px solid cyan;
 	}
 }
+
+
 
 // ================================================
 // STATE STYLES
@@ -98,7 +77,8 @@
 
 .quest-header {
 	width: 100%;
-	flex: 1 0 auto;
+  flex: 1 0 auto;
+  margin-top: 10vh;
 }
 
 .quest-header h2 {
@@ -117,7 +97,9 @@
 	width: 100%;
 	flex: 1 0 auto;
 	display: flex;
-	justify-content: space-around;
+  justify-content: space-around;
+  padding-left: 10vh;
+  padding-right: 10vh;
 }
 
 .quest-description {
@@ -137,7 +119,9 @@
 
 .quest-buttons {
 	display: flex;
-	flex: 1 0 auto;
+  flex: 1 0 auto;
+  padding-left: 10vh;
+  padding-right: 10vh;
 }
 
 .back-button {

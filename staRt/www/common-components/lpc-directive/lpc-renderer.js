@@ -103,7 +103,8 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 	{
 		// this.renderer.setPixelRatio( 1 );
 		this.renderer.setSize(this.WIDTH, this.HEIGHT);
-		this.renderer.setClearColor(0xc5f3ff, 1.0);
+		//this.renderer.setClearColor(0xc5f3ff, 1.0); // OLD
+		this.renderer.setClearColor( 0x000000, 0 );
 
 		this.camera.position.set(0, 0, 100);
 		this.camera.aspect = this.WIDTH/this.HEIGHT;
@@ -505,7 +506,7 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 
 	LPCRenderer.prototype.initialize = function(parentElement, canvasElement)
 	{
-		this.renderer = new THREE.WebGLRenderer({ antialias: true, canvas: canvasElement });
+		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, canvas: canvasElement });
 		// this.renderer.setPixelRatio( window.devicePixelRatio );
 		this.renderer.setPixelRatio( 1 );
 

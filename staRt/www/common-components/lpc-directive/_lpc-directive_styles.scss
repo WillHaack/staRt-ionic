@@ -2,9 +2,10 @@ lpc-directive {
 	display: -webkit-flex;
 	-webkit-flex: 1;
 	margin: auto;
-	flex-flow: column;
+	flex-flow: row;
 	width: 100%;
-	height: 100%;
+  height: 100%;
+  justify-content: space-around;
 }
 
 // This is the THREEjs element.
@@ -49,8 +50,8 @@ lpc-directive {
 
 
 .lpc-container {  /* This is the light blue box*/
-	position: relative;
-	width: 800px;
+  position: relative;
+  width: 100%;
 	height: 460px;
 	margin: 0;
 	padding: 0;
@@ -59,7 +60,14 @@ lpc-directive {
 	background-color: #F0F9FC;
 	border: 15px solid #F0F9FC;
 	border-bottom: 25px solid #F0F9FC;
-	box-shadow: 1px 1px 1px rgba(0,0,0,0.15);
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.15);
+
+  &.transparent-background {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
 }
 
 .slider-and-canvas {
@@ -80,38 +88,83 @@ lpc-directive {
 	display: inline-block;
 	position: absolute;
 	width: 12%;
-	right: 0;
+  right: 0;
 }
 
 .reset-button {
 	float: right;
 	margin-top: 0px;
-	margin-right: 0px;
+  margin-right: 0px;
+  top: 250px;
 }
 
-.rate-box button {
+.rate-box {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: absolute;
+  top: -100;
+  height: 230px;
+  width: 130px;
+}
+
+.rate-box .rating-button-container {
 	float: right;
-	height: 75px;
-	width: 75px;
-	padding: 10px;
-	border-radius: 75px;
-	margin-bottom: 20px;
+	height: 72px;
+	width: 125px;
 	border: 0px solid red;
 	position: relative;
 	font-size: 0.90em;
 	font-weight: bold;
 	text-align: center;
 	color: #fff;
-	background-color: #53C8E9;
-	box-shadow: 1px 1px 1px rgba(0,0,0,0.15);
 	z-index: 99;
 	border: 0;
-	display: block;
+  display: block;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-end;
 
-	&.activated
-	{
-		background-color: #04c541;
-	}
+  &.great {
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20125%2072%22%3E%3Cg%20id%3D%22goldOFF%22%3E%3Cpath%20id%3D%22bottom%22%20fill%3D%22%23ffc95f%22%20d%3D%22M125%2072H41.78L24.59%2036H125v36z%22/%3E%3Cpath%20id%3D%22top%22%20fill%3D%22%23ffd576%22%20d%3D%22M125%200H41.78L24.59%2036H125V0z%22/%3E%3C/g%3E%3C/svg%3E");
+    .rateBtnTxt {
+      background-color: #ffc95f;
+    }
+  }
+
+  &.good {
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20125%2072%22%3E%3Cg%20id%3D%22silverOFF%22%3E%3Cpath%20id%3D%22bottom%22%20fill%3D%22%23f0f9fc%22%20d%3D%22M125%2072H41.29L24%2036h101v36z%22/%3E%3Cpath%20id%3D%22top%22%20fill%3D%22%23fff%22%20d%3D%22M125%200H41.29L24%2036h101V0z%22/%3E%3C/g%3E%3C/svg%3E");
+    .rateBtnTxt {
+      background-color: #f0f9fc;
+      color: #408BA2;
+    }
+  }
+
+  &.try-again {
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20125%2072%22%3E%3Cg%20id%3D%22bronzeOFF%22%3E%3Cpath%20id%3D%22bottom%22%20fill%3D%22%23efbd88%22%20d%3D%22M125%2072H41.29L24%2036h101v36z%22/%3E%3Cpath%20id%3D%22top%22%20fill%3D%22%23f7c8a1%22%20d%3D%22M125%200H41.29L24%2036h101V0z%22/%3E%3C/g%3E%3C/svg%3E");
+    .rateBtnTxt {
+      background-color: #efbd88;
+    }
+  }
+}
+
+.rateBtnTxt {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  width: 76px;
+  height: 49px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  padding-left: 8px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.85em;
+  font-weight: 500;
+  color: white;
+  border: 0;
 }
 
 .lpc-range {
