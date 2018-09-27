@@ -1,15 +1,18 @@
 <ion-view class="state-contentBox">
 
-	<div class="auto-contentBox">
-		<ion-nav-bar class="auto-ion-nav-bar">
+	<div class="auto-layout_view-container">
+		<ion-nav-bar class="ion-nav-bar--old">
 			<ion-nav-title>{{data.navTitle}}</ion-nav-title>
 		</ion-nav-bar>
 
-		<div class="auto-bg">
-			<!-- full-width eles go here -->
+		<div class="auto-layout_bg-container">
+			<!-- full-width & abs pos eles go in here -->
 		</div>
 
-		<div class="auto-layout">
+
+		<!-- ===================================== -->
+		<!-- flexbox page content goes here -->
+		<div class="auto-layout_content-container">
 
 			<div class="probe-header" ng-hide="practicing">
 				<h2 class="text-and-lpc__text">
