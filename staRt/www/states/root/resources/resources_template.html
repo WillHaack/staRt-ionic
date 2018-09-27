@@ -87,14 +87,15 @@
 					The filter order is now <em>{{data.lpcOrder}}</em>
 				</p>
 
-			</div>
-			<div ng-if="data.configuring">
-			<lpc-directive
-				sand="false"
-				slider="false">
-			</lpc-directive>
+				<div ng-if="data.configuring" class="res-lpcBox">
+					<lpc-directive
+						sand="false"
+						slider="false">
+					</lpc-directive>
+				</div>
+
 			</div>
 
-		</div> <!-- end resources-layout-->
-	</div> <!-- end resources-contentBox-->
+		</div> <!-- end resources-layout_content-container-->
+	</div> <!-- end resources-layout_view-container-->
 </ion-view>

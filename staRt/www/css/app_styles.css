@@ -1315,6 +1315,10 @@ div.needleBox {
   margin-top: 1em;
   z-index: 10; }
 
+.res-lpcBox {
+  width: 50vw;
+  margin-top: 4.16667vh; }
+
 lpc-directive {
   display: -webkit-flex;
   -webkit-flex: 1;

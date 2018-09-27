@@ -29,8 +29,9 @@
     align-items: center;
 		z-index: 10;
 		// border: 2px solid cyan;
-	}
-}
+	} // end resources-layout_content-container
+
+} // end resources-layout_view-container
 
 
 // ================================================
@@ -118,4 +119,10 @@
 	margin-left: $col-w * 9;
 	margin-top: 1em;
 	z-index: 10;
+}
+
+.res-lpcBox {
+	width: $col-w * 6;
+	margin-top: $row-h * 0.25;
+	// border: 1px solid red;
 }
