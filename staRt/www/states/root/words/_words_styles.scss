@@ -15,6 +15,23 @@
 		width: 100%;
 		height: 100%;
 		z-index: 1;
+
+		.img-bg_qtBF--BG {
+			background-image: url("../img/bgImg/bg_quest-BF--background.svg");
+			z-index: 1;
+		}
+		.img-bg_qtNoBF {
+			background-image: url("../img/bgImg/bg_quest-NoBF.svg");
+			z-index: 1;
+		}
+		.img-bg_qtBF--MG {
+			background-image: url("../img/bgImg/bg_quest-BF--midground.svg");
+			z-index: 3;
+		}
+		.img-bg_qtBF--FG {
+			background-image: url("../img/bgImg/bg_quest-BF--foreground.svg");
+			z-index: 5;
+		}
 	}
 
 	.quest-layout_content-container {
