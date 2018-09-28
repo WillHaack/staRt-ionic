@@ -1,5 +1,26 @@
 /*  PALETTE  ============================================== */
 
+// 2018 COLORS -------------------------------
+
+//text
+$c-text-main: #3D6D84; //navy blue
+$c-text-subtle: #7ab5b8;
+
+// eles
+$c-bg: #c2f2f2; //sky blue
+
+$c-gold-400: #ffd576;
+$c-gold-500: #ffc95f; // main gold
+
+$c-silver-400: #fff;
+$c-silver-500: #f0f9fc; // main silver
+
+$c-bronze-400: #f7c8a1;
+$c-bronze-500: #efbd88; // main bronze
+
+
+
+// OLD COLORS -------------------------------
 	$blue-main: #53c8e9;		// primary-c
 	$yellow-main: #FFC95F;		// secondary-c or accent-c
 	$grey-txtMain: #4d4d4d;  		// text-c
@@ -12,24 +33,6 @@
 	//$brown:;					// sand-dark
 
 	$white: #ffffff;			// white
-
-
-/* LAYOUT ================================================= */
-	// I've applied these to #app-container (height: and width:) to set the dimesnions for for entire app. Styles written for all elements within #app-container will be responsive (% or vw - based) 
-	$appW:  100vw; //1024px;
-	$statusBarH: 2.9vh; //22px
-	$appH:  100vh - $statusBarH; //746px;
- 
-	// padding-right: for #app-container & flex-row elements
-	//$elePadding-R: $appW * 0.07;  // 7% of appW
-
-	$rowH: $appH / 7; //106px;
-	$rowHalf: $rowH/2; //54px; 
-
-
-	$nav-btnW: 10vw; //100px; 
-	$col-pad: 6.66vw; //70px; //
-	$navW: $nav-btnW + $col-pad; //16.66vw; //170px;
 
 
 /* MISC STYLES ================================================= */

@@ -282,15 +282,10 @@ lpcDirective.controller( 'LpcDirectiveController',
 		$scope.lpcRenderer.sliderPosition = sliderPosition;
 		$scope.lpcRenderer.targetFrequency = $scope.data.targetF3;
 
-		//Update current user's Target F3
-		ProfileService.getCurrentProfile().then(function(res)
-		{
-			if (res) {
-				var currentProfile = res;
-				currentProfile.targetF3 = parseInt($scope.data.targetF3);
-				ProfileService.saveProfile(currentProfile);
-			}
-		})
+    //Update current user's Target F3
+    ProfileService.runTransactionForCurrentProfile(function(handle, profile, t) {
+      t.update(handle, { targetF3: parseInt($scope.data.targetF3) });
+    });
 	};
 
 	$scope.resetF3 = function() {

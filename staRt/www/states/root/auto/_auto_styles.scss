@@ -1,11 +1,41 @@
-// parent ele for all the auto content
-.auto-contentBox {
-	//border: 1px solid violet;
+// ================================================
+// LAYOUT
+// ================================================
+.auto-layout_view-container {
+	position: relative;
 	display: flex;
-	height: 95%;
-	flex-direction: column;
-	justify-content: space-around;
+	width: 100vw;
+	height: 100vh;
+
+	.auto-layout_bg-container {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+	}
+
+	.auto-layout_content-container  {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		margin-top: $row-h * 1.5;
+		margin-left: $navW;
+		height: $row-h * 4;
+		width: $col-w * 9;
+
+		justify-content: space-around;
+		z-index: 10;
+		// border: 1px solid cyan;
+	}
 }
+
+
+// ================================================
+// STATE STYLES
+// ================================================
+
 
 .probe-header {
 	width: 100%;

@@ -10,8 +10,16 @@
 
 		$scope.data = {
 			configuring: false,
-			lpcOrder: 35,
-		};
+      lpcOrder: 35,
+      version: "",
+      platform: "",
+			navTitle: "SLP Resources"
+
+    };
+    cordova.getAppVersion.getVersionNumber().then(function (version) {
+      $scope.data.version = `${version}`;
+      $scope.data.platform = `${device.platform} ${device.version}`
+    });
 
 		$scope.$on("$ionicView.enter", function() {
 			console.log('view content loaded!');
@@ -58,13 +66,10 @@
 
 		$scope.updatePluginLPCOrder = function() {
 			if (window.AudioPlugin !== undefined) {
-				AudioPlugin.setLPCOrder($scope.data.lpcOrder, $scope.logPluginLPCOrder);
-				ProfileService.getCurrentProfile().then(function (res) {
-					if (res) {
-						res.lpcOrder = $scope.data.lpcOrder;
-						ProfileService.saveProfile(res);
-					}
-				});
+        ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+          AudioPlugin.setLPCOrder($scope.data.lpcOrder, $scope.logPluginLPCOrder);
+          t.update(handle, {lpcOrder: $scope.data.lpcOrder});
+        });
 			}
 		};
 

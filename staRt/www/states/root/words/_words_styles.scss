@@ -1,16 +1,41 @@
-// hackzorz
-ion-view &[view-title="Quest"] {
-    margin-top: 0;
+// ================================================
+// LAYOUT
+// ================================================
+
+.quest-layout_view-container {
+	position: relative;
+	display: flex;
+	width: 100vw;
+	height: 100vh;
+
+	.quest-layout_bg-container {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+	}
+
+	.quest-layout_content-container {
+		position: relative;
+		display: flex;
+		flex-flow: column nowrap;
+		padding-top: $row-h;
+		padding-left: $nav-btnW;
+		height: 100%;
+		width: 100%;
+		justify-content: space-around;
+		z-index: 10;
+		// border: 1px solid cyan;
+	}
 }
 
-// parent ele for all the quest content
-.quest-contentBox {
-	//border: 1px solid violet;
-	display: flex;
-	height: 95%;
-	flex-direction: column;
-	justify-content: space-around;
-}
+
+
+// ================================================
+// STATE STYLES
+// ================================================
 
 .words-progress-indicator {
 	display: inline-block;
@@ -38,12 +63,11 @@ ion-view &[view-title="Quest"] {
 }
 
 .words-word {
-	font-size: 2rem;
-	font-weight: 700;
-	text-transform: uppercase;
-	line-height: 1.5;
+  font-size: 3.5em;
+	line-height: 1em;
 	display: inline-block;
-	vertical-align: middle;
+  vertical-align: middle;
+  color: #3D6D84;
 }
 
 .quest-contentBox button[disabled] {
@@ -53,7 +77,8 @@ ion-view &[view-title="Quest"] {
 
 .quest-header {
 	width: 100%;
-	flex: 1 0 auto;
+  flex: 1 0 auto;
+  margin-top: 10vh;
 }
 
 .quest-header h2 {
@@ -72,7 +97,9 @@ ion-view &[view-title="Quest"] {
 	width: 100%;
 	flex: 1 0 auto;
 	display: flex;
-	justify-content: space-around;
+  justify-content: space-around;
+  padding-left: 10vh;
+  padding-right: 10vh;
 }
 
 .quest-description {
@@ -92,7 +119,9 @@ ion-view &[view-title="Quest"] {
 
 .quest-buttons {
 	display: flex;
-	flex: 1 0 auto;
+  flex: 1 0 auto;
+  padding-left: 10vh;
+  padding-right: 10vh;
 }
 
 .back-button {
@@ -100,6 +129,6 @@ ion-view &[view-title="Quest"] {
     color: #808080;
     z-index: 100000;
     position: absolute;
-    top: 0;
+    top: $row-h;
     padding: 10px;
 }

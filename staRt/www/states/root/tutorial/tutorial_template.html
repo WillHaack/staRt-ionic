@@ -1,28 +1,30 @@
-<ion-view 
-	view-title="Tutorial" 
-	class="state-contentBox--wide">
-	
-	<div class="tut-contentBox">
+<ion-view
+	view-title="Tutorial"
+	class="state-contentBox">
+
+	<ion-nav-bar class="ion-nav-bar--old"></ion-nav-bar>
+
+	<div class="tutorial-layout_view-container">
 
 	<!-- ==================================
-	SAND BAR 
+	SAND BAR
 		Note: The activeCoin class is not actually controlled by the ui-router. Instead it is added to the coin text div (id="{{coin.coinRef}}") by the controller of 1st scene (state) of each page. (Sorry, design flaw. Can fix in future versions, if needed.)
 	-->
-	
-		<div class="sandbarBox">	
+
+		<div class="sandbarBox">
 
 			<list class="sandbar-coinRow">
 				<item  ng-repeat="coin in coinData">
 					<div class="sandbar-coinBox"
 					ui-sref="{{'root.tutorial.' + coin.sref }}"
 					ui-sref-active="activeCoin"
-					>	
+					>
 						<div class="sandbar-coinImgBox">
-				          <img id="{{coin.id}}"	            
+				          <img id="{{coin.id}}"
 				            ng-src="{{coin.img}}"
 				            ng-show="{{coin.id}}"
-							style="width:{{coin.width}}; 
-								height:{{coin.width}}; 
+							style="width:{{coin.width}};
+								height:{{coin.width}};
 								top:{{coin.top}};
 								position: relative;">
 						</div>
@@ -42,15 +44,13 @@
 	<!-- ==================================
 	SCENE CONTENT -->
 		<div class="sceneBox">
-			<!--	
-				for some reason, making this an <ion-view> does NOT work 
+			<!--
+				for some reason, making this an <ion-view> does NOT work
 				Why? IDK https://ionicframework.com/docs/api/directive/ionView/
 			-->
 			<ui-view id="pageView" name="pageView">
 			</ui-view>
 		</div> <!-- end sceneBox -->
-	
+
 	</div> <!-- end tut-contentBox -->
 </ion-view>
-
-
