@@ -39,15 +39,15 @@ input, textarea {
 // =================================================================
 // ROOT TEMPLATE & GRID VARS
 // =================================================================
-  $row-h: 100vh/6;
-  $col-w: 100vw/12;
+$row-h: 100vh/6;
+$col-w: 100vw/12;
 
-  $nav-btnW: 10vw; // width of left nav
-  $col-pad: 6.66vw; //
-  $navW: $nav-btnW + $col-pad; //
+$nav-btnW: 10vw; // width of left nav, OLD nav
+$col-pad: 6.66vw; // OLD nav
+$navW: $nav-btnW + $col-pad; // OLD nav
 
 
-// LAYOUT ----------------------------------
+// LAYOUT ==========================================
 
 //parent <ion-nav-view> in index.html
 #app-container {
@@ -119,10 +119,6 @@ input, textarea {
     } //end .title
   } // end .bar-header
 } // end ion-nav-bar
-
-
-
-
 
 // <ion-nav-view> in root_template
 // this is the ROUTER CONTROLLED content container
@@ -223,14 +219,29 @@ input, textarea {
       font-size: 1rem;
     }
 
-    .pane {  // i wonder what this is #?
+    .pane {  // not sure what this is #?
       flex-flow: column;
       background-color: transparent;
     }
 
 
+    // positions the full-screen graphics in img/bgImg
+    .img-bg {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      height: 100%;
+      width: 100%;
+      background-position: bottom right;
+      background-repeat: no-repeat;
+      background-color: $c-bg;
+      opacity: 1;
+      z-index: 1;
+    }
+
+
 // ==================================================
-// KEYFRAME ANIMATION BASE  =================================================================
+// KEYFRAME ANIMATION BASE  ====================================================
 // #hc (notes from 2016, worth revisiting)
 
 
