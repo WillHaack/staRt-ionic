@@ -1115,6 +1115,7 @@ div.needleBox {
     height: 100%;
     z-index: 1; }
     .quest-layout_view-container .quest-layout_bg-container .img-bg_qtBF--BG {
+      background-color: #c2f2f2;
       background-image: url("../img/bgImg/bg_quest-BF--background.svg");
       z-index: 1; }
     .quest-layout_view-container .quest-layout_bg-container .img-bg_qtNoBF {

@@ -1,12 +1,14 @@
 <ion-view class="state-contentBox">
 
 	<div class="auto-layout_view-container">
-		<ion-nav-bar class="ion-nav-bar--old">
+		<ion-nav-bar class="{{ (practicing) ? 'ion-nav-bar' : 'ion-nav-bar--old' }}">
 			<ion-nav-title>{{data.navTitle}}</ion-nav-title>
 		</ion-nav-bar>
 
+		<!-- full-width & abs pos eles go in here -->
 		<div class="auto-layout_bg-container">
-			<!-- full-width & abs pos eles go in here -->
+			<div ng-if="practicing" class="img-bg img-bg_qz--BG"></div>
+			<div ng-if="practicing" class="img-bg img-bg_qz--FG"></div>
 		</div>
 
 
