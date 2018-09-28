@@ -15,6 +15,12 @@
 		width: 100%;
 		height: 100%;
 		z-index: 1;
+
+		.img-bg_res {
+			background-color: $c-bg;
+			background-image: url("../img/bgImg/bg_resources.svg");
+			z-index: 1 !important;
+		}
 	}
 
 	.resources-layout_content-container {
