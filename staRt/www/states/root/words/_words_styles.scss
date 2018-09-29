@@ -41,25 +41,89 @@
 		display: flex;
 		flex-flow: column nowrap;
 		padding-top: $row-h;
-		padding-left: $nav-btnW;
+		padding-left: $col-w;
 		height: 100%;
 		width: 100%;
 		justify-content: space-around;
 		z-index: 10;
-		// border: 1px solid cyan;
+		border: 1px solid cyan;
 	}
 }
-
 
 
 // ================================================
 // STATE STYLES
 // ================================================
-
-.words-progress-indicator {
-	display: inline-block;
-	vertical-align: middle;
+.quest-button-class {
+	flex: 1 0;
+	display: flex;
+	justify-content: center;
 }
+
+.quest-button-class button[selected] {
+	background-color: green;
+	color: white;
+}
+
+.quest-buttons {
+	display: flex;
+  flex: 1 0 auto;
+  padding-left: 10vh;
+  padding-right: 10vh;
+}
+
+.back-button {
+	background: #d3d3d3;
+  color: #808080;
+  z-index: 100000;
+  position: absolute;
+  top: $row-h;
+	left: $col-w * 11;
+  padding: 10px;
+}
+
+.quest-contentBox button[disabled] {
+	background-color: lightgray;
+	color: gray;
+}
+
+
+// MENU PAGE ---------------------------------------------
+// Styles used ONLY in Quest Menu Page (!praciting && !configuring)
+.quest-header-row {
+	width: 100%;
+  flex: 1 0 auto;
+  margin-top: 10vh;
+
+	h2 {
+		text-align: center;
+		width: 55%;
+		margin: auto;
+	}
+
+	p {
+		text-align: center;
+		width: 55%;
+		margin: auto;
+	}
+}
+
+.quest-description-row {
+	width: 100%;
+	flex: 1 0 auto;
+	display: flex;
+  justify-content: space-around;
+  padding-left: 10vh;
+  padding-right: 10vh;
+
+	.quest-description {
+		width: 30%;
+	}
+}
+
+
+// CONFIG PAGE ---------------------------------------------
+// Styles used ONLY in Quest Config (!praciting && configuring)
 
 .word-quest-wave-visible {
 	display: flex;
@@ -81,73 +145,20 @@
 	font-size: 30px;
 }
 
+
+
+// QUEST ---------------------------------------------
+// The ui for the Quests (praciting && !configuring) are handled by the practice-directive & lpc-directive
+
+.words-progress-indicator {
+	display: inline-block;
+	vertical-align: middle;
+}
+
 .words-word {
   font-size: 3.5em;
 	line-height: 1em;
 	display: inline-block;
   vertical-align: middle;
   color: #3D6D84;
-}
-
-.quest-contentBox button[disabled] {
-	background-color: lightgray;
-	color: gray;
-}
-
-.quest-header {
-	width: 100%;
-  flex: 1 0 auto;
-  margin-top: 10vh;
-}
-
-.quest-header h2 {
-	text-align: center;
-	width: 55%;
-	margin: auto;
-}
-
-.quest-header p {
-	text-align: center;
-	width: 55%;
-	margin: auto;
-}
-
-.quest-description-row {
-	width: 100%;
-	flex: 1 0 auto;
-	display: flex;
-  justify-content: space-around;
-  padding-left: 10vh;
-  padding-right: 10vh;
-}
-
-.quest-description {
-	width: 30%;
-}
-
-.quest-button-class {
-	flex: 1 0;
-	display: flex;
-	justify-content: center;
-}
-
-.quest-button-class button[selected] {
-	background-color: green;
-	color: white;
-}
-
-.quest-buttons {
-	display: flex;
-  flex: 1 0 auto;
-  padding-left: 10vh;
-  padding-right: 10vh;
-}
-
-.back-button {
-	background: #d3d3d3;
-    color: #808080;
-    z-index: 100000;
-    position: absolute;
-    top: $row-h;
-    padding: 10px;
 }
