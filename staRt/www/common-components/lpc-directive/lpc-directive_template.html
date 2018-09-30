@@ -1,3 +1,16 @@
+<div class="rateBtn-container" ng-if="rate">
+ 	<div ng-click="data.rating = 3" class="rateBtn rate-gold">
+		<span class="rateBtn-textbox">Great</span>
+	</div>
+ 	<div ng-click="data.rating = 2" class="rateBtn rate-silver" >
+		<span class="rateBtn-textbox">Good</span>
+	</div>
+ 	<div ng-click="data.rating = 1" class="rateBtn rate-bronze">
+		<span class="rateBtn-textbox">Try Again</span>
+	</div>
+ </div>
+
+
 <!-- .lpc-container is the light blue containing box-->
 <div ng-class="{'lpc-container': !tutorial, 'lpc-container-tutorial': tutorial, 'transparent-background': transparent}">
 
@@ -21,10 +34,12 @@
 
 	</div>
 
+	<!--
 	<div class="lpc-buttons">
 
+
 		<div class="rate-box" ng-if="rate">
-      <!-- Great -->
+
       <div
         ng-class="{
           selected: data.rating === 3,
@@ -40,7 +55,7 @@
         </button>
       </div>
 
-      <!-- Good -->
+
       <div
         ng-class="{
           selected: data.rating === 2,
@@ -56,7 +71,7 @@
         </button>
       </div>
 
-      <!-- Try again -->
+
       <div
         ng-class="{
           selected: data.rating === 1,
@@ -72,6 +87,7 @@
         </button>
       </div>
 		</div>
+		-->
 
 		<button
 			ng-click="stopPractice()"

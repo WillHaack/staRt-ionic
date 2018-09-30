@@ -1342,7 +1342,8 @@ lpc-directive {
   flex-flow: row;
   width: 100%;
   height: 100%;
-  justify-content: space-around; }
+  justify-content: space-around;
+  border: 1px solid red; }
 
 #lpc-canvas {
   margin: auto;
@@ -1403,48 +1404,29 @@ lpc-directive {
   margin-right: 0px;
   top: 250px; }
 
-.rate-box {
+.rateBtn-container {
+  position: absolute;
+  top: 12.5vh;
+  right: 0;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
   align-items: flex-end;
-  position: absolute;
-  top: -100;
-  height: 230px;
-  width: 130px; }
+  height: 33.33333vh;
+  width: 16.66667vw; }
 
-.rate-box .rating-button-container {
-  float: right;
-  height: 72px;
-  width: 125px;
-  border: 0px solid red;
-  position: relative;
-  font-size: 0.90em;
-  font-weight: bold;
-  text-align: center;
-  color: #fff;
-  z-index: 99;
-  border: 0;
-  display: block;
+.rateBtn {
+  display: flex;
+  width: 100%;
+  height: 10.66667vh;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  align-items: flex-end; }
-  .rate-box .rating-button-container.great {
-    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20125%2072%22%3E%3Cg%20id%3D%22goldOFF%22%3E%3Cpath%20id%3D%22bottom%22%20fill%3D%22%23ffc95f%22%20d%3D%22M125%2072H41.78L24.59%2036H125v36z%22/%3E%3Cpath%20id%3D%22top%22%20fill%3D%22%23ffd576%22%20d%3D%22M125%200H41.78L24.59%2036H125V0z%22/%3E%3C/g%3E%3C/svg%3E"); }
-    .rate-box .rating-button-container.great .rateBtnTxt {
-      background-color: #ffc95f; }
-  .rate-box .rating-button-container.good {
-    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20125%2072%22%3E%3Cg%20id%3D%22silverOFF%22%3E%3Cpath%20id%3D%22bottom%22%20fill%3D%22%23f0f9fc%22%20d%3D%22M125%2072H41.29L24%2036h101v36z%22/%3E%3Cpath%20id%3D%22top%22%20fill%3D%22%23fff%22%20d%3D%22M125%200H41.29L24%2036h101V0z%22/%3E%3C/g%3E%3C/svg%3E"); }
-    .rate-box .rating-button-container.good .rateBtnTxt {
-      background-color: #f0f9fc;
-      color: #408BA2; }
-  .rate-box .rating-button-container.try-again {
-    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20125%2072%22%3E%3Cg%20id%3D%22bronzeOFF%22%3E%3Cpath%20id%3D%22bottom%22%20fill%3D%22%23efbd88%22%20d%3D%22M125%2072H41.29L24%2036h101v36z%22/%3E%3Cpath%20id%3D%22top%22%20fill%3D%22%23f7c8a1%22%20d%3D%22M125%200H41.29L24%2036h101V0z%22/%3E%3C/g%3E%3C/svg%3E"); }
-    .rate-box .rating-button-container.try-again .rateBtnTxt {
-      background-color: #efbd88; }
+  align-items: flex-end;
+  user-select: none;
+  z-index: 50; }
 
-.rateBtnTxt {
+.rateBtn-textbox {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -1453,12 +1435,40 @@ lpc-directive {
   height: 49px;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
-  padding-left: 8px;
+  padding: 0 8px;
   font-family: 'Quicksand', sans-serif;
-  font-size: 0.85em;
-  font-weight: 500;
-  color: white;
-  border: 0; }
+  font-size: 0.9em;
+  font-weight: 700;
+  line-height: 1.2em;
+  color: white; }
+
+.rate-gold {
+  background-image: url("../img/rateBtns/rate-gold--off.svg");
+  background-repeat: no-repeat;
+  background-position: right center; }
+  .rate-gold:active {
+    background-image: url("../img/rateBtns/rate-gold--on.svg"); }
+  .rate-gold .rateBtn-textbox {
+    background-color: #ffc95f; }
+
+.rate-silver {
+  background-image: url("../img/rateBtns/rate-silver--off.svg");
+  background-repeat: no-repeat;
+  background-position: right center; }
+  .rate-silver:active {
+    background-image: url("../img/rateBtns/rate-silver--on.svg"); }
+  .rate-silver .rateBtn-textbox {
+    background-color: #f0f9fc;
+    color: #408BA2; }
+
+.rate-bronze {
+  background-image: url("../img/rateBtns/rate-bronze--off.svg");
+  background-repeat: no-repeat;
+  background-position: right center; }
+  .rate-bronze:active {
+    background-image: url("../img/rateBtns/rate-bronze--on.svg"); }
+  .rate-bronze .rateBtn-textbox {
+    background-color: #efbd88; }
 
 .lpc-range {
   height: 400px;
