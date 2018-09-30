@@ -1029,44 +1029,51 @@ div.needleBox {
     position: relative;
     display: flex;
     flex-direction: column;
-    margin-top: 25vh;
-    margin-left: 16.66vw;
-    height: 66.66667vh;
-    width: 75vw;
+    padding-left: 8.33333vw;
+    height: 100%;
+    width: 100%;
     justify-content: space-around;
     z-index: 10; }
 
-.probe-header {
+.quiz-menu-page {
+  height: 100%;
+  padding: 16.66667vh 8.33333vw; }
+
+.quiz-menu-row {
+  position: relative;
+  display: flex;
   width: 100%;
-  flex: 1 0 auto; }
+  min-height: 16.66667vh;
+  padding-top: 8.33333vh; }
 
-.probe-header h2 {
-  text-align: center;
-  width: 55%;
-  margin: auto; }
+.quiz-header-row {
+  flex-flow: column nowrap;
+  text-align: center; }
+  .quiz-header-row h2 {
+    margin-bottom: 1em; }
 
-.probe-header p {
-  text-align: center;
-  width: 55%;
-  margin: auto; }
+.quiz-description-row {
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding-bottom: 12.5vh; }
+  .quiz-description-row .quiz-description {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    width: 30%; }
+    .quiz-description-row .quiz-description p {
+      min-height: 12.5vh; }
+    .quiz-description-row .quiz-description .btn-row {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-around;
+      align-items: flex-start;
+      margin: 0;
+      padding: 0; }
 
-.probe-description-row {
-  width: 100%;
-  flex: 1 0 auto;
-  display: flex;
-  justify-content: space-around; }
-
-.probe-description {
-  width: 30%; }
-
-.probe-button-class {
-  flex: 1 0;
-  display: flex;
-  justify-content: center; }
-
-.probe-buttons {
-  display: flex;
-  flex: 1 0 auto; }
+.quiz-practice-page {
+  height: 100%; }
 
 .free-layout_view-container {
   position: relative;
@@ -1124,16 +1131,94 @@ div.needleBox {
     position: relative;
     display: flex;
     flex-flow: column nowrap;
-    padding-top: 16.66667vh;
-    padding-left: 10vw;
+    padding-left: 8.33333vw;
     height: 100%;
     width: 100%;
     justify-content: space-around;
     z-index: 10; }
 
-.words-progress-indicator {
-  display: inline-block;
-  vertical-align: middle; }
+.quest-button-class {
+  display: flex;
+  justify-content: center; }
+
+.quest-button-class button[selected] {
+  background-color: green;
+  color: white; }
+
+.quest-buttons {
+  display: flex;
+  flex: 1 0 auto;
+  padding-left: 10vh;
+  padding-right: 10vh; }
+
+.back-button {
+  background: #d3d3d3;
+  color: #808080;
+  position: absolute;
+  top: 16.66667vh;
+  left: 91.66667vw;
+  padding: 10px;
+  z-index: 100000; }
+
+.quest-contentBox button[disabled] {
+  background-color: lightgray;
+  color: gray; }
+
+.quest-menu-page {
+  height: 100%;
+  padding: 16.66667vh 8.33333vw; }
+
+.quest-menu-row {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 16.66667vh;
+  padding-top: 8.33333vh; }
+
+.quest-header-row {
+  flex-flow: column nowrap;
+  text-align: center; }
+  .quest-header-row h2 {
+    margin-bottom: 1em; }
+
+.quest-description-row {
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding-bottom: 12.5vh; }
+  .quest-description-row .quest-description {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    width: 30%; }
+    .quest-description-row .quest-description p {
+      min-height: 12.5vh; }
+    .quest-description-row .quest-description .btn-row {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-around;
+      align-items: flex-start;
+      margin: 0;
+      padding: 0; }
+
+.quest-config-page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  padding: 0 8.33333vw;
+  padding-top: 16.66667vh; }
+
+.quest-config-row {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width: 100%; }
+
+.r-category-container {
+  height: 25vh; }
 
 .word-quest-wave-visible {
   display: flex;
@@ -1151,65 +1236,8 @@ div.needleBox {
 .word-quest-wave-visible .input-label {
   font-size: 30px; }
 
-.words-word {
-  font-size: 3.5em;
-  line-height: 1em;
-  display: inline-block;
-  vertical-align: middle;
-  color: #3D6D84; }
-
-.quest-contentBox button[disabled] {
-  background-color: lightgray;
-  color: gray; }
-
-.quest-header {
-  width: 100%;
-  flex: 1 0 auto;
-  margin-top: 10vh; }
-
-.quest-header h2 {
-  text-align: center;
-  width: 55%;
-  margin: auto; }
-
-.quest-header p {
-  text-align: center;
-  width: 55%;
-  margin: auto; }
-
-.quest-description-row {
-  width: 100%;
-  flex: 1 0 auto;
-  display: flex;
-  justify-content: space-around;
-  padding-left: 10vh;
-  padding-right: 10vh; }
-
-.quest-description {
-  width: 30%; }
-
-.quest-button-class {
-  flex: 1 0;
-  display: flex;
-  justify-content: center; }
-
-.quest-button-class button[selected] {
-  background-color: green;
-  color: white; }
-
-.quest-buttons {
-  display: flex;
-  flex: 1 0 auto;
-  padding-left: 10vh;
-  padding-right: 10vh; }
-
-.back-button {
-  background: #d3d3d3;
-  color: #808080;
-  z-index: 100000;
-  position: absolute;
-  top: 16.66667vh;
-  padding: 10px; }
+.quest-practice-page {
+  height: 100%; }
 
 .resources-layout_view-container {
   position: relative;
@@ -1498,3 +1526,35 @@ lpc-directive {
   bottom: 0px;
   width: 100.3%;
   background-color: #FFC95F; }
+
+.practice-directive-container {
+  height: 100%; }
+
+.promptBox-layout {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  margin-top: 16.66667vh;
+  height: 16.66667vh;
+  width: 100%; }
+  .promptBox-layout .promptBox {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+    margin-left: 16.66667vw;
+    align-items: center;
+    height: 16.66667vh;
+    width: 54.16667vw;
+    border-bottom: 1px solid white; }
+
+.words-word {
+  font-size: 5em;
+  line-height: 1em;
+  display: inline-block;
+  vertical-align: middle;
+  color: #3D6D84; }
+
+.words-progress-indicator {
+  display: inline-block;
+  vertical-align: middle; }
