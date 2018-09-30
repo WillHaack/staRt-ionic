@@ -40,7 +40,6 @@
 		position: relative;
 		display: flex;
 		flex-flow: column nowrap;
-		padding-top: $row-h;
 		padding-left: $col-w;
 		height: 100%;
 		width: 100%;
@@ -89,7 +88,10 @@
 
 // MENU PAGE ---------------------------------------------
 // Styles used ONLY in Quest Menu Page (!praciting && !configuring)
-.quest-menu-page {}
+.quest-menu-page {
+	height: 100%;
+	padding: $row-h $col-w;
+}
 
 .quest-menu-row {
 	position: relative;
@@ -97,9 +99,7 @@
 	width: 100%;
 	min-height: $row-h;
 	padding-top: $row-h * 0.5;
-	padding-left:  $col-w;
-	padding-right:  $col-w;
-	//border: 1px solid pink;
+	// border: 1px solid pink;
 }
 
 .quest-header-row {
@@ -149,6 +149,7 @@
 	flex-flow: column nowrap;
 	justify-content: space-around;
 	padding: 0 $col-w;
+	padding-top: $row-h;
 }
 
 .quest-config-row {
@@ -190,17 +191,6 @@
 // QUEST ---------------------------------------------
 // The ui for the Quests (praciting && !configuring) are handled by the practice-directive & lpc-directive
 
-.quest-practice-page {}
-
-.words-progress-indicator {
-	display: inline-block;
-	vertical-align: middle;
-}
-
-.words-word {
-  font-size: 3.5em;
-	line-height: 1em;
-	display: inline-block;
-  vertical-align: middle;
-  color: #3D6D84;
+.quest-practice-page {
+	height: 100%;
 }

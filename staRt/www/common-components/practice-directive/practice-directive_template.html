@@ -1,11 +1,27 @@
-<div class="words-contentBox" >
+<div class="words-contentBox practice-directive-container">
 
+	<div class="promptBox-layout" ng-hide="!isPracticing">
+		<div class="promptBox">
+
+			<p class="words-progress-indicator">
+				{{currentWordIdx + 1}} of {{count}}
+			</p>
+
+			<p class="words-word"> {{currentWord}} </p>
+
+		</div>
+	</div>
+
+
+
+	<!-- Ask #sjt if the 2 btns below are all about? -->
 	<button
 		style="margin:40px;"
 		ng-click="beginWordPractice()"
 		ng-hide="suppressStartButton || isPracticing || !hasValidWordList">
 		Start {{type}} {{probe ? "probe" : "practice"}}
 	</button>
+
 	<button
 		style="margin:40px;"
 		ng-click="nextWord()"
@@ -13,18 +29,7 @@
 		ng-if="false">
 		Next {{type}}
 	</button>
-	<div class="word-status">
-	<p
-		ng-hide="!isPracticing"
-		class="words-word">
-		{{currentWord}}
-	</p>
-	<p
-		ng-hide="!isPracticing"
-		class="words-progress-indicator">
-		--- {{currentWordIdx + 1}} of {{count}}
-	</p>
-	</div>
+
 
   <lpc-directive
     transparent="true"

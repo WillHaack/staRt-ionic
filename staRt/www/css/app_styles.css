@@ -1029,21 +1029,22 @@ div.needleBox {
     position: relative;
     display: flex;
     flex-direction: column;
-    padding-top: 16.66667vh;
     padding-left: 8.33333vw;
     height: 100%;
     width: 100%;
     justify-content: space-around;
     z-index: 10; }
 
+.quiz-menu-page {
+  height: 100%;
+  padding: 16.66667vh 8.33333vw; }
+
 .quiz-menu-row {
   position: relative;
   display: flex;
   width: 100%;
   min-height: 16.66667vh;
-  padding-top: 8.33333vh;
-  padding-left: 8.33333vw;
-  padding-right: 8.33333vw; }
+  padding-top: 8.33333vh; }
 
 .quiz-header-row {
   flex-flow: column nowrap;
@@ -1070,6 +1071,9 @@ div.needleBox {
       align-items: flex-start;
       margin: 0;
       padding: 0; }
+
+.quiz-practice-page {
+  height: 100%; }
 
 .free-layout_view-container {
   position: relative;
@@ -1127,7 +1131,6 @@ div.needleBox {
     position: relative;
     display: flex;
     flex-flow: column nowrap;
-    padding-top: 16.66667vh;
     padding-left: 8.33333vw;
     height: 100%;
     width: 100%;
@@ -1161,14 +1164,16 @@ div.needleBox {
   background-color: lightgray;
   color: gray; }
 
+.quest-menu-page {
+  height: 100%;
+  padding: 16.66667vh 8.33333vw; }
+
 .quest-menu-row {
   position: relative;
   display: flex;
   width: 100%;
   min-height: 16.66667vh;
-  padding-top: 8.33333vh;
-  padding-left: 8.33333vw;
-  padding-right: 8.33333vw; }
+  padding-top: 8.33333vh; }
 
 .quest-header-row {
   flex-flow: column nowrap;
@@ -1202,7 +1207,8 @@ div.needleBox {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-around;
-  padding: 0 8.33333vw; }
+  padding: 0 8.33333vw;
+  padding-top: 16.66667vh; }
 
 .quest-config-row {
   position: relative;
@@ -1230,16 +1236,8 @@ div.needleBox {
 .word-quest-wave-visible .input-label {
   font-size: 30px; }
 
-.words-progress-indicator {
-  display: inline-block;
-  vertical-align: middle; }
-
-.words-word {
-  font-size: 3.5em;
-  line-height: 1em;
-  display: inline-block;
-  vertical-align: middle;
-  color: #3D6D84; }
+.quest-practice-page {
+  height: 100%; }
 
 .resources-layout_view-container {
   position: relative;
@@ -1529,14 +1527,15 @@ lpc-directive {
   width: 100.3%;
   background-color: #FFC95F; }
 
-.words-contentBox {
-  border: 1px solid red; }
+.practice-directive-container {
+  height: 100%; }
 
 .promptBox-layout {
   position: relative;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+  margin-top: 16.66667vh;
   height: 16.66667vh;
   width: 100%; }
   .promptBox-layout .promptBox {
@@ -1544,7 +1543,6 @@ lpc-directive {
     flex-flow: column nowrap;
     justify-content: flex-end;
     margin-left: 16.66667vw;
-    padding-bottom: 1em;
     align-items: center;
     height: 16.66667vh;
     width: 54.16667vw;
@@ -1559,5 +1557,4 @@ lpc-directive {
 
 .words-progress-indicator {
   display: inline-block;
-  vertical-align: middle;
-  margin-left: 3em; }
+  vertical-align: middle; }

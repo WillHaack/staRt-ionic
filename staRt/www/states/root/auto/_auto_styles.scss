@@ -30,13 +30,12 @@
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		padding-top: $row-h;
 		padding-left: $col-w;
 		height: 100%;
 		width: 100%;
 		justify-content: space-around;
 		z-index: 10;
-		// border: 1px solid cyan;
+		//border: 1px solid cyan;
 	}
 }
 
@@ -46,7 +45,10 @@
 
 // MENU PAGE ---------------------------------------------
 // Styles used ONLY in Quiz menu page (!practicing)
-.quiz-menu-page {}
+.quiz-menu-page {
+	height: 100%;
+	padding: $row-h $col-w;
+}
 
 .quiz-menu-row {
 	position: relative;
@@ -54,8 +56,6 @@
 	width: 100%;
 	min-height: $row-h;
 	padding-top: $row-h * 0.5;
-	padding-left:  $col-w;
-	padding-right:  $col-w;
 	//border: 1px solid pink;
 }
 
@@ -97,4 +97,7 @@
 
 // QUIZ PAGES ---------------------------------------------
 // The ui styles for the Quiz pages (practicing) are handled by the practice-directive & lpc-directive.
-.quiz-practice-page {}
+.quiz-practice-page {
+	height: 100%;
+	//border: 1px solid red;
+}
