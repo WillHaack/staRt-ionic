@@ -26,68 +26,7 @@
 			ng-hide="lpcHidden || probe || waveHidden || $root.rootWaveHidden" >
 		</canvas>
 
-		<div
-			class="waveLabel"
-			ng-hide="!(lpcHidden || probe || waveHidden || $root.rootWaveHidden)" >
-			Wave Hidden
-		</div>
-
 	</div>
-
-	<!--
-	<div class="lpc-buttons">
-
-
-		<div class="rate-box" ng-if="rate">
-
-      <div
-        ng-class="{
-          selected: data.rating === 3,
-          great: true,
-          'rating-button-container': true
-        }"
-      >
-        <button
-          ng-click="data.rating = 3"
-          class="rateBtnTxt"
-        >
-          Great
-        </button>
-      </div>
-
-
-      <div
-        ng-class="{
-          selected: data.rating === 2,
-          good: true,
-          'rating-button-container': true
-        }"
-      >
-        <button
-          ng-click="data.rating = 2"
-          class="rateBtnTxt"
-        >
-          Good
-        </button>
-      </div>
-
-
-      <div
-        ng-class="{
-          selected: data.rating === 1,
-          'try-again': true,
-          'rating-button-container': true
-        }"
-      >
-        <button
-          ng-click="data.rating = 1"
-          class="rateBtnTxt"
-        >
-          Try Again
-        </button>
-      </div>
-		</div>
-		-->
 
 		<button
 			ng-click="stopPractice()"

@@ -6,7 +6,7 @@ lpc-directive {
 	width: 100%;
   height: 100%;
   justify-content: space-around;
-	border: 1px solid red;
+	// border: 1px solid red;
 }
 
 // This is the THREEjs element.
@@ -29,11 +29,6 @@ lpc-directive {
 	&.buttons_visible {
 		width: 88%;
 	}
-}
-
-.waveLabel {
-	font-size: 35px;
-	width: 100%;
 }
 
 .lpcCanvasSize-big { // not working

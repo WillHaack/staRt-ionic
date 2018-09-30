@@ -455,8 +455,9 @@ input, textarea {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  padding-left: 16.66vw;
-  padding-right: 8.33333vw; }
+  margin-left: 25vw;
+  margin-right: 16.66667vw;
+  width: 54.16667vw; }
   .ion-nav-bar .bar-header .title {
     position: relative;
     display: block;
@@ -1342,8 +1343,7 @@ lpc-directive {
   flex-flow: row;
   width: 100%;
   height: 100%;
-  justify-content: space-around;
-  border: 1px solid red; }
+  justify-content: space-around; }
 
 #lpc-canvas {
   margin: auto;
@@ -1359,10 +1359,6 @@ lpc-directive {
   align-items: center; }
   #lpc-canvas-parentSize.buttons_visible {
     width: 88%; }
-
-.waveLabel {
-  font-size: 35px;
-  width: 100%; }
 
 .lpc-container {
   /* This is the light blue box*/
@@ -1544,7 +1540,7 @@ lpc-directive {
   position: relative;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-top: 16.66667vh;
   height: 16.66667vh;
   width: 100%; }

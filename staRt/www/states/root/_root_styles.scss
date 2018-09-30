@@ -107,8 +107,11 @@ $navW: $nav-btnW + $col-pad; // OLD nav
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    padding-left: $navW;
-    padding-right: $col-w;
+    // nb: margins are the same as the practice-directive promptBox
+    margin-left: $col-w * 3;
+    margin-right: $col-w * 2;
+    width: $col-w * 6.5;
+    // border: 1px solid white;
      .title { //ionic style for .title w/in <ion-header-bar>
       position: relative;
       display: block;
