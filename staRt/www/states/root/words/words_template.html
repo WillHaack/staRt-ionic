@@ -19,64 +19,71 @@
 		<!-- flexbox page content goes here -->
 		<div class="quest-layout_content-container">
 
-			<div class="quest-header-row" ng-hide="practicing || configuring">
-				<h2 class="text-and-lpc__text">
-					What would you like to practice?
-				</h2>
+			<div class="quest-menu-page" ng-hide="practicing || configuring">
 
-				<p> Use the wave to practice your /r/ pronunciation. </p>
-				<p> You can choose between practicing just the syllables or whole words. </p>
-			</div>
+				<div class="quest-menu-row quest-header-row">
+					<h2 class="text-and-lpc__text">
+						What would you like to practice?
+					</h2>
 
-			<div class="quest-description-row" ng-hide="practicing || configuring">
-				<div class="quest-description">
-					<h3>Syllable Quest</h3>
-					<p>
-						Read syllables containing /r/. Different syllables
-						 have the /r/ sound in different positions.
-					</p>
-				</div>
-				<div class="quest-description">
-					<h3>Word Quest</h3>
-					<p>
-						Read words containing /r/. Different sets of words have the /r/ sound in different positions.
-					</p>
-				</div>
-			</div>
-
-			<div class="quest-buttons" ng-hide="practicing || configuring">
-				<div class="quest-button-class">
-					<!-- 30 items, sequential -->
-					<button
-						class="big-button"
-						ng-click="beginSyllableQuestConfiguration()"
-						ng-hide="practicing"
-					>
-						Syllable Quest
-					</button>
+					<p> Use the wave to practice your /r/ pronunciation. <br/>
+					You can choose between practicing just the syllables or whole words. </p>
 				</div>
 
-				<div class="quest-button-class">
-					<!-- 50 items, random -->
-					<button
-						class="big-button"
-						ng-click="beginWordQuestConfiguration()"
-						ng-hide="practicing"
-					>
-						Word Quest
-					</button>
-				</div>
-			</div>
+				<div class="quest-menu-row quest-description-row" ng-hide="practicing || configuring">
+					<div class="quest-description">
+						<h3>Syllable Quest</h3>
+						<p>
+							Read syllables containing /r/. Different syllables
+							 have the /r/ sound in different positions.
+						</p>
+						<div class="btn-row">
+							<!-- 30 items, sequential -->
+							<button
+								class="big-button"
+								ng-click="beginSyllableQuestConfiguration()"
+								ng-hide="practicing"
+							>
+								Syllable Quest
+							</button>
+						</div>
+					</div>
 
-			<div class="quest-word-config" ng-if="configuring && !practicing">
-				<div
-					class="back-button"
+
+					<div class="quest-description">
+						<h3>Word Quest</h3>
+						<p>
+							Read words containing /r/. Different sets of words have the /r/ sound in different positions.
+						</p>
+						<div class="btn-row">
+							<button
+								class="big-button"
+								ng-click="beginWordQuestConfiguration()"
+								ng-hide="practicing"
+							>
+								Word Quest
+							</button>
+						</div>
+					</div>
+
+				</div>
+
+			</div> <!-- end quest-menu-page -->
+
+
+			<!-- ============================== -->
+			<div class="quest-config-page" ng-if="configuring && !practicing">
+
+				<div class="back-button"
 					ng-click="goBackToLanding()">
 					Back
 				</div>
-				<div class="r-category-container">
+
+				<div class="quest-config-row r-category-container">
 					<h2>Select /r/ Categories</h2>
-					<p ng-if="!!data.categoryString && data.categoryString.length"> {{data.categoryString}} </p>
+					<p ng-if="!!data.categoryString && data.categoryString.length">
+						{{data.categoryString}}
+					</p>
 					<div class="quest-button-class">
 						<button
 							class="big-button"
@@ -111,20 +118,20 @@
 					</div>
 				</div>
 
-				<div class="word-quest-trial-goal">
+				<div class="quest-config-row word-quest-trial-goal">
 					<h2>Select Session Trial Goal</h2>
 					<p>{{data.count}} Trials</p>
 					<input type="range" min="15" max="100" step="5" ng-model="data.count" ng-change="updateCount()" />
 				</div>
 
-				<div class="word-quest-wave-visible">
+				<div class="quest-config-row word-quest-wave-visible">
 					<ion-item>
 						<ion-label>Wave Hidden</ion-label>
 						<ion-checkbox ng-model="data.waveHidden"></ion-checkbox>
 					</ion-item>
 				</div>
 
-				<div class="quest-button-class">
+				<div class="quest-config-row quest-button-class">
 					<button
 							class="big-button"
 							ng-click="beginQuest()"
@@ -134,25 +141,27 @@
 							Begin {{data.type}} Quest
 					</button>
 				</div>
-			</div>
+			</div> <!-- end quest-config-page -->
 
-			<practice-directive
-				ng-if="practicing && !configuring"
-				probe="false"
-				csvs="data.csvs"
-				force-wave-hidden="data.waveHidden"
-				order="order"
-				count="data.count"
-				type="data.type"
-				begin-on-load="true"
-				pause-every="10"
-				suppress-start-button="true"
-				end-practice-callback="endQuestCallback()">
-			</practice-directive>
-			
+			<!-- ============================== -->
+			<div class="quest-practice-page">
+
+				<practice-directive
+					ng-if="practicing && !configuring"
+					probe="false"
+					csvs="data.csvs"
+					force-wave-hidden="data.waveHidden"
+					order="order"
+					count="data.count"
+					type="data.type"
+					begin-on-load="true"
+					pause-every="10"
+					suppress-start-button="true"
+					end-practice-callback="endQuestCallback()">
+				</practice-directive>
+
+			</div> <!-- end quest-practice-page -->
+
 		</div> <!-- end .quest-layout -->
-
-
-
 	</div> <!-- .quest-contentBox -->
 </ion-view>

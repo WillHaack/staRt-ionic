@@ -1029,10 +1029,10 @@ div.needleBox {
     position: relative;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: 100%;
     padding-top: 16.66667vh;
     padding-left: 8.33333vw;
+    height: 100%;
+    width: 100%;
     justify-content: space-around;
     z-index: 10; }
 
@@ -1055,7 +1055,7 @@ div.needleBox {
   flex-flow: row nowrap;
   justify-content: space-around;
   align-items: flex-start;
-  padding-bottom: 8.33333vh; }
+  padding-bottom: 12.5vh; }
   .quiz-description-row .quiz-description {
     display: flex;
     flex-flow: column nowrap;
@@ -1132,11 +1132,9 @@ div.needleBox {
     height: 100%;
     width: 100%;
     justify-content: space-around;
-    z-index: 10;
-    border: 1px solid cyan; }
+    z-index: 10; }
 
 .quest-button-class {
-  flex: 1 0;
   display: flex;
   justify-content: center; }
 
@@ -1153,38 +1151,68 @@ div.needleBox {
 .back-button {
   background: #d3d3d3;
   color: #808080;
-  z-index: 100000;
   position: absolute;
   top: 16.66667vh;
   left: 91.66667vw;
-  padding: 10px; }
+  padding: 10px;
+  z-index: 100000; }
 
 .quest-contentBox button[disabled] {
   background-color: lightgray;
   color: gray; }
 
-.quest-header-row {
+.quest-menu-row {
+  position: relative;
+  display: flex;
   width: 100%;
-  flex: 1 0 auto;
-  margin-top: 10vh; }
+  min-height: 16.66667vh;
+  padding-top: 8.33333vh;
+  padding-left: 8.33333vw;
+  padding-right: 8.33333vw; }
+
+.quest-header-row {
+  flex-flow: column nowrap;
+  text-align: center; }
   .quest-header-row h2 {
-    text-align: center;
-    width: 55%;
-    margin: auto; }
-  .quest-header-row p {
-    text-align: center;
-    width: 55%;
-    margin: auto; }
+    margin-bottom: 1em; }
 
 .quest-description-row {
-  width: 100%;
-  flex: 1 0 auto;
-  display: flex;
+  flex-flow: row nowrap;
   justify-content: space-around;
-  padding-left: 10vh;
-  padding-right: 10vh; }
+  align-items: flex-start;
+  padding-bottom: 12.5vh; }
   .quest-description-row .quest-description {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
     width: 30%; }
+    .quest-description-row .quest-description p {
+      min-height: 12.5vh; }
+    .quest-description-row .quest-description .btn-row {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-around;
+      align-items: flex-start;
+      margin: 0;
+      padding: 0; }
+
+.quest-config-page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  padding: 0 8.33333vw; }
+
+.quest-config-row {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width: 100%; }
+
+.r-category-container {
+  height: 25vh; }
 
 .word-quest-wave-visible {
   display: flex;

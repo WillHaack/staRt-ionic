@@ -46,7 +46,7 @@
 		width: 100%;
 		justify-content: space-around;
 		z-index: 10;
-		border: 1px solid cyan;
+		// border: 1px solid cyan;
 	}
 }
 
@@ -55,7 +55,6 @@
 // STATE STYLES
 // ================================================
 .quest-button-class {
-	flex: 1 0;
 	display: flex;
 	justify-content: center;
 }
@@ -75,11 +74,11 @@
 .back-button {
 	background: #d3d3d3;
   color: #808080;
-  z-index: 100000;
   position: absolute;
   top: $row-h;
 	left: $col-w * 11;
   padding: 10px;
+	z-index: 100000;
 }
 
 .quest-contentBox button[disabled] {
@@ -90,34 +89,52 @@
 
 // MENU PAGE ---------------------------------------------
 // Styles used ONLY in Quest Menu Page (!praciting && !configuring)
-.quest-header-row {
+.quest-menu-page {}
+
+.quest-menu-row {
+	position: relative;
+	display: flex;
 	width: 100%;
-  flex: 1 0 auto;
-  margin-top: 10vh;
+	min-height: $row-h;
+	padding-top: $row-h * 0.5;
+	padding-left:  $col-w;
+	padding-right:  $col-w;
+	//border: 1px solid pink;
+}
 
-	h2 {
-		text-align: center;
-		width: 55%;
-		margin: auto;
-	}
+.quest-header-row {
+	flex-flow: column nowrap;
+	text-align: center;
 
-	p {
-		text-align: center;
-		width: 55%;
-		margin: auto;
-	}
+	h2 { margin-bottom: 1em; }
+
+	p {}
 }
 
 .quest-description-row {
-	width: 100%;
-	flex: 1 0 auto;
-	display: flex;
-  justify-content: space-around;
-  padding-left: 10vh;
-  padding-right: 10vh;
+	flex-flow: row nowrap;
+	justify-content: space-around;
+	align-items: flex-start;
+	padding-bottom: $row-h * 0.75;
 
 	.quest-description {
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: space-between;
 		width: 30%;
+
+		p {
+			min-height: $row-h * 0.75;
+		}
+
+		.btn-row {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: space-around;
+			align-items: flex-start;
+			margin: 0;
+			padding: 0;
+		}
 	}
 }
 
@@ -125,10 +142,33 @@
 // CONFIG PAGE ---------------------------------------------
 // Styles used ONLY in Quest Config (!praciting && configuring)
 
+.quest-config-page {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-around;
+	padding: 0 $col-w;
+}
+
+.quest-config-row {
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	width: 100%;
+	// border: 1px solid pink;
+}
+
+.r-category-container {
+	height: $row-h * 1.5;
+}
+
 .word-quest-wave-visible {
 	display: flex;
 	width: 100%;
 	justify-content: center;
+	// border: 1px solid pink;
 }
 
 .word-quest-wave-visible > .item {
@@ -149,6 +189,8 @@
 
 // QUEST ---------------------------------------------
 // The ui for the Quests (praciting && !configuring) are handled by the practice-directive & lpc-directive
+
+.quest-practice-page {}
 
 .words-progress-indicator {
 	display: inline-block;
