@@ -1345,6 +1345,10 @@ lpc-directive {
   height: 100%;
   justify-content: space-around; }
 
+.lpc-contentBox {
+  width: 100%;
+  height: 100%; }
+
 #lpc-canvas {
   margin: auto;
   width: 100%;
@@ -1537,6 +1541,21 @@ lpc-directive {
   bottom: 0px;
   width: 100.3%;
   background-color: #FFC95F; }
+
+.coinBox-layout {
+  text-align: left;
+  margin: auto;
+  margin-top: -400px; }
+
+.coin_stack {
+  display: inline-block;
+  position: relative;
+  height: 80px;
+  width: 33px;
+  margin: 0 4px -21px 4px; }
+
+img.coin {
+  position: absolute; }
 
 .practice-directive-container {
   height: 100%; }

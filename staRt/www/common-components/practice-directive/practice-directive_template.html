@@ -18,7 +18,7 @@
 			<p class="words-progress-indicator"> {{currentWordIdx + 1}} of {{count}} </p>
 			<p class="words-word"> {{carrier_phrase.replace("___", currentWord)}} </p>
 		</div>
-	</div>
+  </div>
 
   <lpc-directive
     beachpost="true"
@@ -32,19 +32,21 @@
     type="type"
     wave-hidden="forceWaveHidden || isFeedbacking"
     hide-btn="true"
-    />
+    ></lpc-directive>
 
-    <div class="coinBox-layout" style="width: {{sandholes.length * 41}}px; text-align: left; margin: auto">
+    <div class="coinBox-layout" style="width: {{sandholes.length * 41}}px;">
       <div class="sand_coins">
-        <div ng-repeat="stack_coins in block_coins track by $index" class="coin_stack"
-       style="display: inline-block; position: relative; height: 80px; width: 33px; margin: 0 4px -21px 4px;">
-    <img ng-repeat="stack_coin in stack_coins track by $index"
-         src="img/stackCoins/stackCoin-{{stack_coin}}.png"
-         style="position: absolute; bottom: {{$index * 6}}px"/>
+        <div ng-repeat="stack_coins in block_coins track by $index" class="coin_stack">
+          <img
+            ng-repeat="stack_coin in stack_coins track by $index"
+            src="img/stackCoins/stackCoin-{{stack_coin}}.png"
+            class="coin"
+            style="bottom: {{$index * 6}}px"/>
         </div>
       </div>
       <div class="sand_holes">
         <img ng-repeat="i in sandholes track by $index" src="img/stackCoins/sandHole.png" />
       </div>
     </div>
+
 </div> <!-- end words-contentBox-->

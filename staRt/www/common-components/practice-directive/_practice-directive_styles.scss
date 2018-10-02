@@ -2,6 +2,24 @@
 		//border: 1px solid lime;
 }
 
+.coinBox-layout {
+  text-align: left;
+  margin: auto;
+  margin-top: -400px;
+}
+
+.coin_stack {
+  display: inline-block;
+  position: relative;
+  height: 80px;
+  width: 33px;
+  margin: 0 4px -21px 4px;
+}
+
+img.coin {
+  position: absolute;
+}
+
 .practice-directive-container {
   height: 100%;
 }
