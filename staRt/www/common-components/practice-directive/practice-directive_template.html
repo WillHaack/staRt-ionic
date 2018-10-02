@@ -1,46 +1,53 @@
-<div class="words-contentBox practice-directive-container">
-
-	<div class="promptBox-layout" ng-hide="!isPracticing">
-		<div class="promptBox">
-
-			<p class="words-progress-indicator">
-				{{currentWordIdx + 1}} of {{count}}
-			</p>
-
-			<p class="words-word"> {{currentWord}} </p>
-
-		</div>
-	</div>
-
-
-	<!-- Ask #sjt if the 2 btns below are all about? -->
-	<button
-		style="margin:40px;"
-		ng-click="beginWordPractice()"
-		ng-hide="suppressStartButton || isPracticing || !hasValidWordList">
-		Start {{type}} {{probe ? "probe" : "practice"}}
-	</button>
-
-	<button
-		style="margin:40px;"
-		ng-click="nextWord()"
-		ng-hide="!isPracticing"
-		ng-if="false">
-		Next {{type}}
-	</button>
-
+<div class="words-contentBox practice-directive-container" >
+  <button
+    style="margin:40px;"
+    ng-click="beginWordPractice()"
+    ng-hide="suppressStartButton || isPracticing || !hasValidWordList">
+    Start {{type}} {{probe ? "probe" : "practice"}}
+  </button>
+  <button
+    style="margin:40px;"
+    ng-click="nextWord()"
+    ng-hide="!isPracticing"
+    ng-if="false">
+    Next {{type}}
+  </button>
+  <div class="promptBox-layout" ng-hide="!isPracticing">
+    <p
+      ng-hide="!isPracticing"
+      class="words-word">
+      {{carrier_phrase.replace("___", currentWord)}}
+    </p>
+    <p
+      ng-hide="!isPracticing"
+      class="words-progress-indicator">
+      {{currentWordIdx + 1}}/{{count}}
+    </p>
+  </div>
+  <div style="width: {{sandholes.length * 41}}px; text-align: left; margin: auto">
+    <div class="sand_coins">
+      <div ng-repeat="stack_coins in block_coins track by $index" class="coin_stack"
+	   style="display: inline-block; position: relative; height: 80px; width: 33px; margin: 0 4px -21px 4px;">
+	<img ng-repeat="stack_coin in stack_coins track by $index"
+	     src="img/stackCoins/stackCoin-{{stack_coin}}.png"
+	     style="position: absolute; bottom: {{$index * 6}}px"/>
+      </div>
+    </div>
+    <div class="sand_holes">
+      <img ng-repeat="i in sandholes track by $index" src="img/stackCoins/sandHole.png" />
+    </div>
+  </div>
 
   <lpc-directive
     transparent="true"
-		probe="probe"
-		slider="true"
-		rate="isPracticing"
-		reset="true"
-		sand="true"
-		tutorial="false"
-		type="type"
-		wave-hidden="forceWaveHidden || isFeedbacking"
-		hide-btn="true"
-	/>
-
+    probe="probe"
+    slider="true"
+    rate="isPracticing"
+    reset="true"
+    sand="true"
+    tutorial="false"
+    type="type"
+    wave-hidden="forceWaveHidden || isFeedbacking"
+    hide-btn="true"
+    />
 </div> <!-- end words-contentBox-->

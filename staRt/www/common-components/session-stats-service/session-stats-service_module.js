@@ -3,20 +3,20 @@ var LONG_SESSION_MILLIS = 600000; // Ten minutes
 var sessionStatsService = angular.module('sessionStatsService', [ 'firebaseService', 'notifyingService', 'profileService' ]);
 
 sessionStatsService.factory('SessionStatsService', function($rootScope, $localForage, $http, FirebaseService, NotifyingService, ProfileService, $state)
-{
+    {
 	var lastSessionChronoTime;
 	var profileSessionTimerId;
 	var profileLongSessionTimerId;
 
 	function ProfileStats(contextString) {
-		this.thisContextString = contextString; // user-defined string specifying the context of the current session
-		this.thisQuestTrialsCompleted = 0; // trials completed since the start of this session
-		this.thisQuestTrialsCorrect = 0; // score since the start of this session
-		this.thisQuestPercentTrialsCorrect = 0; // 100 * correct / completed
-		this.thisSessionTime = 0; // time elapsed since the start of this session
-		this.thisFreeplayTime = 0; // time elapsed in freeplay since the start of this session
-		this.thisQuestTime = 0; // time elapsed in quest since the start of this session
-		this.thisCurrentView = $state.current.url; // whichever view the user is currently looking at
+	    this.thisContextString = contextString; // user-defined string specifying the context of the current session
+	    this.thisQuestTrialsCompleted = 0; // trials completed since the start of this session
+	    this.thisQuestTrialsCorrect = 0; // score since the start of this session
+	    this.thisQuestPercentTrialsCorrect = 0; // 100 * correct / completed
+	    this.thisSessionTime = 0; // time elapsed since the start of this session
+	    this.thisFreeplayTime = 0; // time elapsed in freeplay since the start of this session
+	    this.thisQuestTime = 0; // time elapsed in quest since the start of this session
+	    this.thisCurrentView = $state.current.url; // whichever view the user is currently looking at
 	}
 
 	var currentProfileStats = null;
@@ -87,13 +87,12 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 	}
 
 	function _resetProfileChrono() {
-		if (profileSessionTimerId) clearInterval(profileSessionTimerId);
-		lastSessionChronoTime = Date.now();
-		setInterval(_logProfileUseInterval, 60000);
+	    if (profileSessionTimerId) clearInterval(profileSessionTimerId);
+	    lastSessionChronoTime = Date.now();
+	    setInterval(_logProfileUseInterval, 60000);
 	}
 
 	function _updateProfileForRecording(msg, session) {
-
     ProfileService.runTransactionForCurrentProfile(function(handle, profileDoc, t) {
       const profile = profileDoc.data();
       let profileChanges = {};
@@ -144,6 +143,13 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
   }
 
 	// Notifications
+
+	/* --------------------------------
+	   visual reinforcement
+  	   -------------------------------- */
+	// NotifyingService.subscribe('update-highscores', $rootScope, _updateHighscores);
+
+
 	NotifyingService.subscribe('recording-completed', $rootScope, _updateProfileForRecording);
 	NotifyingService.subscribe('freeplay-tick', $rootScope, function(msg, duration) {
     ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
@@ -340,13 +346,12 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 			return currentProfileStats;
 		},
 
-		beginContext(contextString) {
-			currentProfileStats = new ProfileStats(contextString);
-		},
+	    beginContext(contextString) {
+		currentProfileStats = new ProfileStats(contextString);
+	    },
 
-		endContext() {
-			currentProfileStats = null;
-		}
+	    endContext() {
+		currentProfileStats = null;
+	    }
 	}
-
 });
