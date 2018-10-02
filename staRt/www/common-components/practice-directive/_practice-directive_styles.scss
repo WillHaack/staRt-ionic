@@ -1,0 +1,43 @@
+.words-contentBox { // parent ele (is this still in use?)
+		//border: 1px solid lime;
+}
+
+.practice-directive-container {
+  height: 100%;
+}
+
+ .promptBox-layout {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  margin-top: $row-h;
+  height: $row-h;
+  width: 100%;
+  //border: 1px solid tan;
+
+   .promptBox {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+    margin-left: $col-w * 2;
+    align-items: center;
+    height: $row-h;
+    width: $col-w * 6.5;
+    border-bottom: 1px solid white;
+  }
+}
+
+ .words-word {
+  font-size: 5em;
+  line-height: 1em;
+  display: inline-block;
+  vertical-align: middle;
+  color: $c-text-main;
+  // border: 1px solid red;
+}
+ .words-progress-indicator {
+	display: inline-block;
+	vertical-align: middle;
+	//border: 1px solid red;
+}

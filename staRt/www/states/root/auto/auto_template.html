@@ -1,12 +1,15 @@
 <ion-view class="state-contentBox">
 
 	<div class="auto-layout_view-container">
-		<ion-nav-bar class="ion-nav-bar--old">
+		<ion-nav-bar class="{{ (practicing) ? 'ion-nav-bar' : 'ion-nav-bar--old' }}">
 			<ion-nav-title>{{data.navTitle}}</ion-nav-title>
 		</ion-nav-bar>
 
+		<!-- full-screen & abs pos eles go in here -->
 		<div class="auto-layout_bg-container">
-			<!-- full-width & abs pos eles go in here -->
+			<div ng-if="practicing" class="img-bg img-bg_qz--BG"></div>
+
+			<div ng-if="practicing" class="img-bg img-bg_qz--FG"></div>
 		</div>
 
 
@@ -14,76 +17,81 @@
 		<!-- flexbox page content goes here -->
 		<div class="auto-layout_content-container">
 
-			<div class="probe-header" ng-hide="practicing">
-				<h2 class="text-and-lpc__text">
-					What would you like to test?
-				</h2>
+			<div class="quiz-menu-page" ng-hide="practicing">
 
-				<p> Use the quizzes to track your progress over time. </p>
-				<p> You can compare your scores before and after a period of practice. </p>
-			</div>
+				<div class="quiz-menu-row quiz-header-row">
+					<h2 class="text-and-lpc__text">
+						What would you like to test?
+					</h2>
 
-			<div class="probe-description-row" ng-hide="practicing">
-				<div class="probe-description">
-					<h3>Syllable Quiz</h3>
-					<p>
-						Imitate the clinician's model of syllables containing /r/
-						 (ten syllables, three times each).
-					</p>
-				</div>
-				<div class="probe-description">
-					<h3>Word Quiz</h3>
-					<p>
-						Read words containing /r/. The long quiz
-						 contains 50 words and the short quiz contains 25 words.
-					</p>
-				</div>
-			</div>
-
-			<div class="probe-buttons" ng-hide="practicing">
-				<div class="probe-button-class">
-					<!-- 30 items, sequential -->
-					<button
-						class="big-button"
-						ng-click="beginSyllableProbe()"
-						ng-hide="practicing"
-					>
-						Syllable Quiz
-					</button>
+					<p> Use the quizzes to track your progress over time. <br/>
+					You can compare your scores before and after a period of practice. </p>
 				</div>
 
-				<div class="probe-button-class">
-					<!-- 50 items, random -->
-					<button
-						class="big-button"
-						ng-click="beginWordProbe(50)"
-						ng-hide="practicing"
-					>
-						Long Word Quiz
-					</button>
+				<div class="quiz-menu-row quiz-description-row">
 
-					<!-- 25 items, random -->
-					<button
-						class="big-button"
-						ng-click="beginWordProbe(25)"
-						ng-hide="practicing"
-					>
-						Short Word Quiz
-					</button>
+					<div class="quiz-description">
+						<h3>Syllable Quiz</h3>
+						<p>
+							Imitate the clinician's model of syllables containing /r/
+							 (ten syllables, three times each).
+						</p>
+
+						<div class="btn-row">
+							<button
+								class="big-button"
+								ng-click="beginSyllableProbe()"
+								ng-hide="practicing"
+							>
+								Syllable Quiz
+							</button>
+						</div>
+					</div>
+
+					<div class="quiz-description">
+						<h3>Word Quiz</h3>
+						<p>
+							Read words containing /r/. The long quiz
+							 contains 50 words and the short quiz contains 25 words.
+						</p>
+						<div class="btn-row">
+							<button
+								class="big-button"
+								ng-click="beginWordProbe(50)"
+								ng-hide="practicing"
+							>
+								Long Word Quiz
+							</button>
+
+							<button
+								class="big-button"
+								ng-click="beginWordProbe(25)"
+								ng-hide="practicing"
+							>
+								Short Word Quiz
+							</button>
+						</div>
+					</div>
 				</div>
-			</div>
+			</div> <!-- end quiz-menu-page -->
 
-			<practice-directive
-				begin-on-load="true"
-				ng-if="practicing"
-				probe="true"
-				csvs="csvs"
-				order="order"
-				count="count"
-				type="type"
-				suppress-start-button="true"
-				end-practice-callback="endProbeCallback()">
-			</practice-directive>
+
+			<!-- ============================== -->
+			<div class="quiz-practice-page" ng-hide="!practicing">
+
+				<practice-directive
+					begin-on-load="true"
+					ng-if="practicing"
+					probe="true"
+					csvs="csvs"
+					order="order"
+					count="count"
+					type="type"
+					suppress-start-button="true"
+					end-practice-callback="endProbeCallback()">
+				</practice-directive>
+
+			</div> <!-- end quiz-practice-page -->
 
 		</div> <!-- .auto-layout -->
 	</div> <!-- .auto-contentBox -->

@@ -1,4 +1,4 @@
-<div class="words-contentBox" >
+<div class="words-contentBox practice-directive-container" >
   <button
     style="margin:40px;"
     ng-click="beginWordPractice()"
@@ -12,7 +12,7 @@
     ng-if="false">
     Next {{type}}
   </button>
-  <div class="word-status">
+  <div class="promptBox-layout" ng-hide="!isPracticing">
     <p
       ng-hide="!isPracticing"
       class="words-word">
@@ -37,7 +37,9 @@
       <img ng-repeat="i in sandholes track by $index" src="img/stackCoins/sandHole.png" />
     </div>
   </div>
+
   <lpc-directive
+    transparent="true"
     probe="probe"
     slider="true"
     rate="isPracticing"

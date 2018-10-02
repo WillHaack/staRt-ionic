@@ -4,7 +4,8 @@
 @import 'common-styles/ui';
 @import 'common-styles/navAnimate';
 
-@import 'common-styles/dev/img-bg';
+// dev, to be deleted after redesign
+//@import 'common-styles/dev/img-bg';
 
 // State styles
 @import 'states/root/root_styles';
@@ -18,3 +19,4 @@
 
 // Directive styles
 @import 'common-components/lpc-directive/lpc-directive_styles';
+@import 'common-components/practice-directive/practice-directive_styles';

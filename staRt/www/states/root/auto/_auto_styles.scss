@@ -14,64 +14,90 @@
 		width: 100%;
 		height: 100%;
 		z-index: 1;
+
+		.img-bg_qz--BG {
+			background-color: $c-bg;
+			background-image: url("../img/bgImg/bg_quiz--background.svg");
+			z-index: 1 !important;
+		}
+		.img-bg_qz--FG {
+			background-image: url("../img/bgImg/bg_quiz--foreground.svg");
+			z-index: 5 !important;
+		}
 	}
 
 	.auto-layout_content-container  {
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		margin-top: $row-h * 1.5;
-		margin-left: $navW;
-		height: $row-h * 4;
-		width: $col-w * 9;
-
+		padding-left: $col-w;
+		height: 100%;
+		width: 100%;
 		justify-content: space-around;
 		z-index: 10;
-		// border: 1px solid cyan;
+		//border: 1px solid cyan;
 	}
 }
 
-
 // ================================================
-// STATE STYLES
+// QUIZ STATE STYLES
 // ================================================
 
-
-.probe-header {
-	width: 100%;
-	flex: 1 0 auto;
+// MENU PAGE ---------------------------------------------
+// Styles used ONLY in Quiz menu page (!practicing)
+.quiz-menu-page {
+	height: 100%;
+	padding: $row-h $col-w;
 }
 
-.probe-header h2 {
-	text-align: center;
-	width: 55%;
-	margin: auto;
-}
-
-.probe-header p {
-	text-align: center;
-	width: 55%;
-	margin: auto;
-}
-
-.probe-description-row {
-	width: 100%;
-	flex: 1 0 auto;
+.quiz-menu-row {
+	position: relative;
 	display: flex;
+	width: 100%;
+	min-height: $row-h;
+	padding-top: $row-h * 0.5;
+	//border: 1px solid pink;
+}
+
+.quiz-header-row {
+	flex-flow: column nowrap;
+	text-align: center;
+
+	h2 { margin-bottom: 1em; }
+
+	p {}
+}
+
+.quiz-description-row {
+	flex-flow: row nowrap;
 	justify-content: space-around;
+	align-items: flex-start;
+	padding-bottom: $row-h * 0.75;
+
+	.quiz-description {
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: space-between;
+		width: 30%;
+
+		p {
+			min-height: $row-h * 0.75;
+		}
+
+		.btn-row {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: space-around;
+			align-items: flex-start;
+			margin: 0;
+			padding: 0;
+		}
+	}
 }
 
-.probe-description {
-	width: 30%;
-}
-
-.probe-button-class {
-	flex: 1 0;
-	display: flex;
-	justify-content: center;
-}
-
-.probe-buttons {
-	display: flex;
-	flex: 1 0 auto;
+// QUIZ PAGES ---------------------------------------------
+// The ui styles for the Quiz pages (practicing) are handled by the practice-directive & lpc-directive.
+.quiz-practice-page {
+	height: 100%;
+	//border: 1px solid red;
 }

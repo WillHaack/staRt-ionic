@@ -90,7 +90,7 @@
     <plugin name="cordova-plugin-customurlscheme" spec="^4.3.0">
         <variable name="URL_SCHEME" value="com.ionicframework.start925154" />
     </plugin>
-    <plugin name="cordova-universal-links-plugin" spec="git+https://github.com/aramando/cordova-universal-links-plugin.git#35b3ed7e9a0310b12f1ac92a5159b21ce50eee57" />
-    <plugin name="site.girlfriends.start.audio" spec="../audio-plugin" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
+    <plugin name="cordova-universal-links-plugin" spec="~1.2.1" />
+    <plugin name="site.girlfriends.start.audio" spec="../audio-plugin" />
 </widget>
