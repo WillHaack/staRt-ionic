@@ -1307,7 +1307,8 @@ div.needleBox {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
-  align-items: flex-end; }
+  align-items: flex-end;
+  width: 75vw; }
 
 .range-label {
   line-height: 100%;
@@ -1319,6 +1320,9 @@ div.needleBox {
   .range-label:first-child {
     padding-left: 0; }
 
+.res-reset-button {
+  top: 9px !important; }
+
 .resources strong {
   display: block;
   color: #53c8e9; }
@@ -1328,13 +1332,13 @@ div.needleBox {
 
 .version-display {
   position: absolute;
-  margin-left: 75vw;
-  margin-top: 1em;
-  z-index: 10; }
+  margin-left: 16.66667vw;
+  margin-top: 16.66667vh;
+  z-index: 99; }
 
 .res-lpcBox {
-  width: 50vw;
-  margin-top: 4.16667vh; }
+  width: 75vw;
+  margin-top: 4.16667vh auto; }
 
 lpc-directive {
   display: -webkit-flex;

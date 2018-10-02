@@ -3,14 +3,15 @@
 	<div class="resources-layout_view-container">
 
 		<!-- ion-nav-bar -->
-		<ion-nav-bar ng-class="!data.configuring ? 'ion-nav-bar' : 'ion-nav-bar--old'">
+		<!-- <ion-nav-bar ng-class="!data.configuring ? 'ion-nav-bar' : 'ion-nav-bar--old'"> -->
+		<ion-nav-bar class="ion-nav-bar--old"></ion-nav-bar>
 			<ion-nav-title>{{data.navTitle}}</ion-nav-title>
 		</ion-nav-bar>
 
 
 		<!-- full-width & abs pos eles go here -->
 		<div class="resources-layout_bg-container">
-			<div ng-if="!data.configuring" class="img-bg img-bg_res"></div>
+			<!-- <div ng-if="!data.configuring" class="img-bg img-bg_res"></div> -->
 
 			<div class="version-display">
 					<p>staRt app version {{data.version}}</p>
@@ -80,7 +81,7 @@
 						max. 45
 					</div>
 
-					<button name="reset" ng-click="resetPluginLPCOrder()" class="reset-button big-button">Reset</button>
+					<button name="reset" ng-click="resetPluginLPCOrder()" class="reset-button res-reset-button big-button">Reset</button>
 				</div>
 
 				<p>
