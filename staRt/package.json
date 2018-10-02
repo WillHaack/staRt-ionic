@@ -21,8 +21,8 @@
     "localforage-cordovasqlitedriver": "^1.6.0",
     "path": "^0.12.7",
     "run-sequence": "^1.2.1",
-    "cordova-universal-links-plugin": "~1.2.1",
-    "site.girlfriends.start.audio": "../audio-plugin"
+    "site.girlfriends.start.audio": "../audio-plugin",
+    "cordova-universal-links-plugin": "~1.2.1"
   },
   "devDependencies": {
     "bower": "^1.8.2",
@@ -61,8 +61,8 @@
         "URL_SCHEME": "com.ionicframework.start925154"
       },
       "cordova-plugin-app-version": {},
-      "cordova-universal-links-plugin": {},
-      "site.girlfriends.start.audio": {}
+      "site.girlfriends.start.audio": {},
+      "cordova-universal-links-plugin": {}
     },
     "platforms": [
       "ios"

@@ -147,9 +147,9 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 	/* --------------------------------
 	   visual reinforcement
   	   -------------------------------- */
-	NotifyingService.subscribe('update-highscores', $rootScope, _updateHighscores);
+	// NotifyingService.subscribe('update-highscores', $rootScope, _updateHighscores);
 
-	
+
 	NotifyingService.subscribe('recording-completed', $rootScope, _updateProfileForRecording);
 	NotifyingService.subscribe('freeplay-tick', $rootScope, function(msg, duration) {
     ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
