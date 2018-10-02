@@ -27,8 +27,14 @@ lpc-directive {
 	align-items: center;
 
 	&.buttons_visible {
-		width: 88%;
-	}
+    width: 88%;
+
+    &.beachpost-aligned {
+      left: 20vh;
+      bottom: 10vh;
+      width: 83vh;
+    }
+  }
 }
 
 .lpcCanvasSize-big { // not working
@@ -77,7 +83,7 @@ lpc-directive {
 	&.full-width
 	{
 		width: 100%;
-	}
+  }
 }
 
 .lpc-buttons {

@@ -1359,6 +1359,10 @@ lpc-directive {
   align-items: center; }
   #lpc-canvas-parentSize.buttons_visible {
     width: 88%; }
+    #lpc-canvas-parentSize.buttons_visible.beachpost-aligned {
+      left: 20vh;
+      bottom: 10vh;
+      width: 83vh; }
 
 .lpc-container {
   /* This is the light blue box*/
