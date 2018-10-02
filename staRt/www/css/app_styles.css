@@ -1349,6 +1349,10 @@ lpc-directive {
   height: 100%;
   justify-content: space-around; }
 
+.lpc-contentBox {
+  width: 100%;
+  height: 100%; }
+
 #lpc-canvas {
   margin: auto;
   width: 100%;
@@ -1363,6 +1367,10 @@ lpc-directive {
   align-items: center; }
   #lpc-canvas-parentSize.buttons_visible {
     width: 88%; }
+    #lpc-canvas-parentSize.buttons_visible.beachpost-aligned {
+      left: 20vh;
+      bottom: 10vh;
+      width: 83vh; }
 
 .lpc-container {
   /* This is the light blue box*/
@@ -1399,21 +1407,22 @@ lpc-directive {
   right: 0; }
 
 .reset-button {
-  float: right;
   margin-top: 0px;
-  margin-right: 0px;
-  top: 250px; }
+  margin-right: 0px; }
 
-.rateBtn-container {
+.button-side-container {
   position: absolute;
-  top: 12.5vh;
   right: 0;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
   align-items: flex-end;
-  height: 33.33333vh;
   width: 16.66667vw; }
+  .button-side-container.rateBtn-container {
+    top: 12.5vh;
+    height: 33.33333vh; }
+  .button-side-container.ctlBtn-container {
+    top: 52.5vh; }
 
 .rateBtn {
   display: flex;
@@ -1536,6 +1545,21 @@ lpc-directive {
   bottom: 0px;
   width: 100.3%;
   background-color: #FFC95F; }
+
+.coinBox-layout {
+  text-align: left;
+  margin: auto;
+  margin-top: -400px; }
+
+.coin_stack {
+  display: inline-block;
+  position: relative;
+  height: 80px;
+  width: 33px;
+  margin: 0 4px -21px 4px; }
+
+img.coin {
+  position: absolute; }
 
 .practice-directive-container {
   height: 100%; }

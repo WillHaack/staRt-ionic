@@ -16,12 +16,13 @@
     "cordova-plugin-file": "^5.0.0",
     "cordova-plugin-file-transfer": "^1.7.1",
     "cordova-sqlite-storage": "^2.2.1",
-    "cordova-universal-links-plugin": "git+https://github.com/aramando/cordova-universal-links-plugin.git#35b3ed7e9a0310b12f1ac92a5159b21ce50eee57",
+    "cordova-universal-links-plugin-fix": "^1.2.1",
     "gulp": "^3.9.1",
     "localforage-cordovasqlitedriver": "^1.6.0",
     "path": "^0.12.7",
     "run-sequence": "^1.2.1",
-    "site.girlfriends.start.audio": "../audio-plugin"
+    "site.girlfriends.start.audio": "../audio-plugin",
+    "cordova-universal-links-plugin": "~1.2.1"
   },
   "devDependencies": {
     "bower": "^1.8.2",
@@ -59,9 +60,9 @@
       "cordova-plugin-customurlscheme": {
         "URL_SCHEME": "com.ionicframework.start925154"
       },
-      "cordova-universal-links-plugin": {},
+      "cordova-plugin-app-version": {},
       "site.girlfriends.start.audio": {},
-      "cordova-plugin-app-version": {}
+      "cordova-universal-links-plugin": {}
     },
     "platforms": [
       "ios"
