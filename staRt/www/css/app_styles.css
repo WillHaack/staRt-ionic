@@ -1399,21 +1399,22 @@ lpc-directive {
   right: 0; }
 
 .reset-button {
-  float: right;
   margin-top: 0px;
-  margin-right: 0px;
-  top: 250px; }
+  margin-right: 0px; }
 
-.rateBtn-container {
+.button-side-container {
   position: absolute;
-  top: 12.5vh;
   right: 0;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
   align-items: flex-end;
-  height: 33.33333vh;
   width: 16.66667vw; }
+  .button-side-container.rateBtn-container {
+    top: 12.5vh;
+    height: 33.33333vh; }
+  .button-side-container.ctlBtn-container {
+    top: 52.5vh; }
 
 .rateBtn {
   display: flex;

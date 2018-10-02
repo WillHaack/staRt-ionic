@@ -94,27 +94,32 @@ lpc-directive {
 }
 
 .reset-button {
-	float: right;
 	margin-top: 0px;
   margin-right: 0px;
-  top: 250px;
 }
 
 // ================================================
-// RATING BUTTONS
+// RATING + RESET BUTTONS
 // ================================================
 
-.rateBtn-container {
-	position:absolute;
-	top: $row-h * 0.75;
+.button-side-container {
+  position:absolute;
 	right: 0;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
   align-items: flex-end;
-  height: $row-h * 2;
   width: $col-w * 2;
- }
+
+  &.rateBtn-container {
+    top: $row-h * 0.75;
+    height: $row-h * 2;
+  }
+
+  &.ctlBtn-container {
+    top: $row-h * 0.75 + 40vh;
+  }
+}
 
  .rateBtn {
 	display: flex;

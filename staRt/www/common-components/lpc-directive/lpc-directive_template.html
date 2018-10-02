@@ -1,4 +1,4 @@
-<div class="rateBtn-container" ng-if="rate">
+<div class="button-side-container rateBtn-container" ng-if="rate">
  	<div ng-click="data.rating = 3" class="rateBtn rate-gold">
 		<span class="rateBtn-textbox">Great</span>
 	</div>
@@ -8,12 +8,11 @@
  	<div ng-click="data.rating = 1" class="rateBtn rate-bronze">
 		<span class="rateBtn-textbox">Try Again</span>
 	</div>
- </div>
+</div>
 
 
 <!-- .lpc-container is the light blue containing box-->
 <div ng-class="{
-  'beachpost-aligned': beachpost,
   'lpc-container': !tutorial,
   'lpc-container-tutorial': tutorial,
   'transparent-background': transparent}"
@@ -35,36 +34,36 @@
 		</canvas>
 
 	</div>
+</div>
 
-		<button
-			ng-click="stopPractice()"
-			class="reset-button big-button"
-			ng-if="rate">
-			Stop {{type}} {{probe ? "probe" : "practice"}}
-		</button>
+<div class="button-side-container ctlBtn-container">
+  <button
+    ng-click="stopPractice()"
+    class="reset-button big-button"
+    ng-if="rate">
+    Stop {{type}} {{probe ? "probe" : "practice"}}
+  </button>
 
-		<button
-			ng-click="resetF3()"
-			class="reset-button big-button"
-			ng-if="reset && !probe">
-			Reset Target
-		</button>
+  <button
+    ng-click="resetF3()"
+    class="reset-button big-button"
+    ng-if="reset && !probe">
+    Reset Target
+  </button>
 
-		<button
-			ng-click="showLPC()"
-			class="reset-button big-button"
-			ng-if="!probe && hideBtn"
-			ng-hide="!lpcHidden || rate || $root.rootWaveForced">
-			Show Wave
-		</button>
+  <button
+    ng-click="showLPC()"
+    class="reset-button big-button"
+    ng-if="!probe && hideBtn"
+    ng-hide="!lpcHidden || rate || $root.rootWaveForced">
+    Show Wave
+  </button>
 
-		<button
-			ng-click="hideLPC()"
-			class="reset-button big-button"
-			ng-if="!probe && hideBtn"
-			ng-hide="true || lpcHidden || rate">
-			Hide Wave
-		</button>
-	</div>
-
+  <button
+    ng-click="hideLPC()"
+    class="reset-button big-button"
+    ng-if="!probe && hideBtn"
+    ng-hide="true || lpcHidden || rate">
+    Hide Wave
+  </button>
 </div>
