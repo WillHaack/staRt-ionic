@@ -1,12 +1,11 @@
 // ================================================
-// LAYOUT
+// STATE LAYOUT
 // ================================================
 .resources-layout_view-container {
 	position: relative;
   display: flex;
 	width: 100vw;
 	height: 100vh;
-	//background-color: $c-bg;
 
 	.resources-layout_bg-container {
 		position: absolute;
@@ -16,10 +15,19 @@
 		height: 100%;
 		z-index: 1;
 
-		.img-bg_res {
+		.res-temp-img-pos {
 			background-color: $c-bg;
-			background-image: url("../img/bgImg/bg_resources.svg");
-			z-index: 1 !important;
+			width: 100%;
+			height: 100%;
+			z-index: 1;
+
+			.img-bg_res {
+				top: 18px;
+				width: 100%;
+				height: 100%;
+				background-image: url("../img/bgImg/bg_resources.svg");
+				z-index: 1 !important;
+			}
 		}
 	}
 
@@ -27,23 +35,131 @@
 		position: relative;
 		display: flex;
 		flex-flow: column nowrap;
-		margin-top: $row-h * 1.5;
-		margin-left: $navW;
-		height: $row-h * 4;
-		width: $col-w * 9;
+		margin-top: $row-h * 1.25;
+		margin-left: $col-w * 2;
     justify-content: space-between;
     align-items: center;
 		z-index: 10;
-		// border: 2px solid cyan;
+		//border: 2px solid cyan;
 	} // end resources-layout_content-container
 
 } // end resources-layout_view-container
 
 
 // ================================================
-// STATE STYLES
+// STATE > PAGE STYLES
 // ================================================
+// container for page-level content
+// purpose: selector for indiv page content
+.res-index-page {
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-around;
+	width: 100%;
+	margin-left: $col-w * 1;
+	height: $row-h * 4;
+	width: $col-w * 7;
+	padding-bottom: 1em;
+	//border: 1px solid blue;
+}
 
+.version-display {
+  position: absolute;
+	margin-left: $col-w * 9.25;
+	margin-top: 3em;
+	width: $col-w * 2;
+	font-size: 0.8em;
+	line-height: 1.5;
+	font-weight: 500;
+	text-align: right;
+	color: $c-text-subtle; //$c-text-main;
+	z-index: 99;
+	//border: 1px solid cyan;
+}
+.res-important {
+	font-weight: 700;
+	// color: $c-text-main;
+}
+
+
+.res-sect {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  justify-content: space-between;
+  padding-bottom: 3em;
+
+  .head {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    justify-content: space-between;
+    border-bottom: 1px solid white;
+
+    .resTitle {
+      text-transform: uppercase;
+      color: $c-text-main;
+      font-size: 1em;
+      font-weight: 500;
+      // padding-left: 0.5em;
+    }
+    .resDesc {
+      color: $c-text-main;
+      font-size: 0.8em;
+      font-weight: 400;
+      // padding-right: 0.5em;
+    }
+  } // end head
+
+	.body {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: flex-start;
+		width: 100%;
+		padding-top: 1em;
+		// border: 1px solid lightGray;
+
+		.btn {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			min-height: 64px;
+			width: 128px;
+			max-width: 128px;
+			margin: 0 1em;
+			margin-right: 1em;
+			padding: 0.5em 1.35em;
+
+			font-size: 0.8em;
+			line-height: 1.5;
+			font-weight: 500;
+			color: $c-text-main;
+			text-decoration: none;
+
+			border-radius: 10px;
+			background-color: #ACE2E5;
+			border-bottom: 1px solid #A1D3D3;
+			border-right: 1px solid #A1D3D3;
+			z-index: 10;
+			cursor: pointer;
+		}
+		:active {
+			background-color: #D7F4F3;
+		}
+		:visited {
+			background-color: #bfdddc;
+			color: #799999;
+		}
+	}
+} // end res-sect
+
+
+
+
+
+// -------------------------------------
 .resources-links-container {
 	display: flex;
 	flex-wrap: wrap;
@@ -86,6 +202,9 @@
 	justify-content: center;
 }
 
+
+// ------------------------------
+
 .range-container
 {
 	display: flex;
@@ -109,23 +228,16 @@
 	}
 }
 
-.resources strong
-{
+.resources strong {
 	display: block;
 	color: $blue-main;
 }
 
-.resources p
-{
+.resources p {
 	margin: 0;
 }
 
-.version-display {
-  position: absolute;
-	margin-left: $col-w * 9;
-	margin-top: 1em;
-	z-index: 10;
-}
+
 
 .res-lpcBox {
 	width: $col-w * 6;
