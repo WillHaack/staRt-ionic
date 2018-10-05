@@ -16,10 +16,11 @@
 		z-index: 1;
 
 		.res-temp-img-pos {
+			position: fixed;
 			background-color: $c-bg;
 			width: 100%;
 			height: 100%;
-			z-index: 1;
+			z-index: 1 !important;
 
 			.img-bg_res {
 				top: 18px;
@@ -79,6 +80,7 @@
 }
 .res-important {
 	font-weight: 700;
+	z-index: 99;
 	// color: $c-text-main;
 }
 
