@@ -1,4 +1,5 @@
 <div class="lpc-contentBox">
+
   <div class="button-side-container rateBtn-container" ng-if="rate">
     <div ng-click="data.rating = 3" class="rateBtn rate-gold">
       <span class="rateBtn-textbox">Great</span>
@@ -10,6 +11,7 @@
       <span class="rateBtn-textbox">Try Again</span>
     </div>
   </div>
+
 
   <!-- .lpc-container is the light blue containing box-->
   <div ng-class="{
@@ -32,7 +34,6 @@
         id="lpc-canvas"
         ng-hide="lpcHidden || probe || waveHidden || $root.rootWaveHidden" >
       </canvas>
-
     </div>
   </div>
 
@@ -67,4 +68,5 @@
       Hide Wave
     </button>
   </div>
+
 </div>

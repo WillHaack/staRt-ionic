@@ -20,21 +20,29 @@
 		</div>
   </div>
 
-  <lpc-directive
-    beachpost="true"
-    transparent="true"
-    probe="probe"
-    slider="true"
-    rate="isPracticing"
-    reset="true"
-    sand="true"
-    tutorial="false"
-    type="type"
-    wave-hidden="forceWaveHidden || isFeedbacking"
-    hide-btn="true"
-    ></lpc-directive>
+  <div class="quest-lpcDir-layout">
+    <div class="waveBox-layout">
+      <lpc-directive
+        beachpost="true"
+        transparent="true"
+        probe="probe"
+        slider="true"
+        rate="isPracticing"
+        reset="true"
+        sand="false"
+        tutorial="false"
+        type="type"
+        wave-hidden="forceWaveHidden || isFeedbacking"
+        hide-btn="true"
+        >
+      </lpc-directive>
+    </div>
+  </div> <!-- end quest-lpcDir-layout -->
+
+  <div class="coin-row-layout ">
 
     <div class="coinBox-layout" style="width: {{sandholes.length * 41}}px;">
+
       <div class="sand_coins">
         <div ng-repeat="stack_coins in block_coins track by $index" class="coin_stack">
           <img
@@ -47,6 +55,11 @@
       <div class="sand_holes">
         <img ng-repeat="i in sandholes track by $index" src="img/stackCoins/sandHole.png" />
       </div>
+
     </div>
+
+
+  </div>
+
 
 </div> <!-- end words-contentBox-->
