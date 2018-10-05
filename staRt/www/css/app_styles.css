@@ -1349,24 +1349,15 @@ lpc-directive {
   width: 100%;
   height: 100%; }
 
-#lpc-canvas {
-  margin: auto;
-  width: 100%;
-  height: 100%;
-  z-index: 10; }
-
 #lpc-canvas-parentSize {
   z-index: 10;
   width: 100%;
   height: 88%;
   display: flex;
   align-items: center; }
-  #lpc-canvas-parentSize.buttons_visible {
-    width: 88%; }
-    #lpc-canvas-parentSize.buttons_visible.beachpost-aligned {
-      left: 20vh;
-      bottom: 10vh;
-      width: 83vh; }
+  #lpc-canvas-parentSize.buttons_visible.beachpost-aligned {
+    height: 100%;
+    width: 100%; }
 
 .lpc-container {
   /* This is the light blue box*/
@@ -1374,7 +1365,6 @@ lpc-directive {
   width: 100%;
   height: 460px;
   margin: 0;
-  padding: 0;
   border-radius: 4px;
   display: block;
   background-color: #F0F9FC;
@@ -1384,17 +1374,11 @@ lpc-directive {
   .lpc-container.transparent-background {
     background-color: transparent;
     border: none;
-    box-shadow: none; }
-
-.slider-and-canvas {
-  display: inline-block;
-  width: 88%;
-  height: 88%;
-  margin-top: 4%;
-  position: absolute;
-  left: 0; }
-  .slider-and-canvas.full-width {
-    width: 100%; }
+    box-shadow: none;
+    top: 41.66667vh;
+    left: 16.66667vw;
+    width: 58.33333vw;
+    height: 41.66667vh; }
 
 .lpc-buttons {
   display: inline-block;
@@ -1552,8 +1536,7 @@ lpc-directive {
   justify-content: flex-start;
   margin-top: 16.66667vh;
   height: 16.66667vh;
-  width: 100%;
-  border: 1px solid tan; }
+  width: 100%; }
   .promptBox-layout .promptBox {
     display: flex;
     flex-flow: column nowrap;
