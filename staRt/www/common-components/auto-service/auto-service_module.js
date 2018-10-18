@@ -146,7 +146,7 @@ var SessionAuto = function(profile, currentStates, onShow) {
     _scramble(biofeedback);
 
     this.biofeedback = biofeedback.pop();
-    this.biofeedback = "TRAD";
+
     if (this.biofeedback === "BF") {
         this.restrictions.rootWaveForced = true;
         this.restrictions.rootWaveHidden = false;
@@ -189,7 +189,7 @@ var SessionAuto = function(profile, currentStates, onShow) {
         }).bind(this),
         dialog: (function(profile, currentStates, changeList) {
             var text = this.biofeedback === "BF"
-                ? "Please complete this session with biofeedback." 
+                ? "Please complete this session with biofeedback."
                 : "Please complete this session using traditional (no-biofeedback) practice).";
             return {
                 text: text,
@@ -270,8 +270,8 @@ var SessionAuto = function(profile, currentStates, onShow) {
                 " To complete your tasks as a formal pilot tester, please schedule one more visit to complete the Word Quiz and the Syllable Quiz " +
                 "at the post-treatment time point.";
             } else {
-                text = "Congratulations, you have completed this quest! You scored approximately " + 
-                    currentStates.thisQuestPercentTrialsCorrect + "% correct. " + 
+                text = "Congratulations, you have completed this quest! You scored approximately " +
+                    currentStates.thisQuestPercentTrialsCorrect + "% correct. " +
                     "Please come back soon to complete your next session.";
             }
             return {
@@ -443,7 +443,7 @@ autoService.factory('AutoService', function($rootScope, $ionicPlatform, Notifyin
                         if (currentAuto.didFinishSession) {
                             NotifyingService.notify('session-completed', {
                                 profile: profile,
-                                practice: currentAuto.biofeedback 
+                                practice: currentAuto.biofeedback
                             });
                         }
                         _setCurrentAuto(null);
