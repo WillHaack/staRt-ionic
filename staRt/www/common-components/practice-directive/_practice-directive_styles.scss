@@ -28,17 +28,16 @@ img.coin {
   position: relative;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: flex-start;
+  justify-content: center;
   margin-top: $row-h;
   height: $row-h;
-  width: 100%;
+  width: 96%;
   //border: 1px solid tan;
 
    .promptBox {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-end;
-    margin-left: $col-w * 2;
     align-items: center;
     height: $row-h;
     width: $col-w * 6.5;
@@ -53,6 +52,14 @@ img.coin {
   vertical-align: middle;
   color: $c-text-main;
   // border: 1px solid red;
+
+  &.small {
+    font-size: 3.75em;
+  }
+
+  &.tiny {
+    font-size: 2.5em;
+  }
 }
  .words-progress-indicator {
 	display: inline-block;

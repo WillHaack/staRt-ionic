@@ -335,7 +335,9 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	    $scope.currentWord = $scope.wordList[$scope.wordOrder[lookupIdx]];
 
 	    // also select a random carrier phrase
-	    $scope.carrier_phrase = carrier_phrases[Math.floor(Math.random() * carrier_phrases.length)]
+      $scope.carrier_phrase = carrier_phrases[Math.floor(Math.random() * carrier_phrases.length)];
+      $scope.smallFont = $scope.carrier_phrase.length >= 16;
+      $scope.tinyFont = $scope.carrier_phrase.length >= 32;
 	  }
 
 	  if ($scope.pauseEvery && $scope.pauseEvery > 0 && $scope.currentWordIdx > 0) {

@@ -1564,15 +1564,14 @@ img.coin {
   position: relative;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: flex-start;
+  justify-content: center;
   margin-top: 16.66667vh;
   height: 16.66667vh;
-  width: 100%; }
+  width: 96%; }
   .promptBox-layout .promptBox {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-end;
-    margin-left: 16.66667vw;
     align-items: center;
     height: 16.66667vh;
     width: 54.16667vw;
@@ -1584,6 +1583,10 @@ img.coin {
   display: inline-block;
   vertical-align: middle;
   color: #3D6D84; }
+  .words-word.small {
+    font-size: 3.75em; }
+  .words-word.tiny {
+    font-size: 2.5em; }
 
 .words-progress-indicator {
   display: inline-block;
