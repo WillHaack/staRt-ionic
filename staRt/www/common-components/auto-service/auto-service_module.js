@@ -154,6 +154,7 @@ var SessionAuto = function(profile, currentStates, onShow) {
         this.restrictions.rootWaveForced = true;
         this.restrictions.rootWaveHidden = true;
     }
+    this.restrictions.rootTrialCount = 100;
 
     steps.confirm = {
         next: (function() {
