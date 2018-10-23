@@ -27,16 +27,15 @@
 		<!-- ===================================== -->
 		<!-- page content goes here -->
 
-
 		<div class="resources-layout_content-container">
 
 			<!-- Resourses Main Page -->
-			<div ng-if="!data.configuring" class="res-index-page">
+			<div ng-if="!data.configuring" class="res-page-index">
 
 				<div class="res-sect">
 					<div class="head">
 						<div class="resTitle">SETTINGS</div>
-						<div class="resDesc">Adjust wave settings for the active user's profile.</div>
+						<div class="resDesc">adjust wave settings for the active user's profile</div>
 					</div>
 					<div class="body">
 						<div class="btn" ng-click="configureLPC()">
@@ -47,22 +46,20 @@
 
 				<div class="res-sect">
 					<div class="head">
-						<div class="resTitle">{{resPageData.downloads.title}}</div>
-						<div class="resDesc">{{resPageData.downloads.description}}</div>
+						<div class="resTitle">DOWNLOADS</div>
+						<div class="resDesc">download .pdf resources to your device</div>
 					</div>
 					<div class="body">
-						<a ng-repeat="item in resPageData.downloads.items"
-								href="{{item.url}}"
-								class="btn" >
-							{{item.title}}
+						<a href="https://www.dropbox.com/sh/x5m8iz4u6crve6r/AACxiy7yjmz9yH_n8vIscBqca" class="btn">
+							staRt User Manual
 						</a>
 					</div>
 				</div>
 
 				<div class="res-sect">
 					<div class="head">
-						<div class="resTitle">{{resPageData.links.title}}</div>
-						<div class="resDesc">{{resPageData.links.description}}</div>
+						<div class="resTitle">LINKS</div>
+						<div class="resDesc">opens in your device's browser</div>
 					</div>
 					<div class="body">
 						<a href="https://www.youtube.com/watch?v=kGFdED4HDcw" class="btn">
@@ -77,9 +74,13 @@
 
 
 			<!-- Adjust Filter Order Page -->
-			<div class="text-and-lpc__text resources" ng-if="data.configuring">
+			<div class="resources text-and-lpc__text" ng-if="data.configuring">
+
+				<div class="back-btn" ng-click="data.configuring = false">Back</div>
+
 				<p>
-					Use the slider to manually adjust the LPC filter order. <strong>In general, the filter order should be between 35 and 45.</strong>
+					Use the slider to manually adjust the LPC filter order.
+					<strong>In general, the filter order should be between 35 and 45.</strong>
 				</p>
 
 				<div class="range-container">
@@ -103,7 +104,8 @@
 				<div ng-if="data.configuring" class="res-lpcBox">
 					<lpc-directive
 						sand="false"
-						slider="false">
+						slider="false"
+						transparent="transparent">
 					</lpc-directive>
 				</div>
 

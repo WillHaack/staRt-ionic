@@ -1274,7 +1274,7 @@ div.needleBox {
     align-items: center;
     z-index: 10; }
 
-.res-index-page {
+.res-page-index {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
@@ -1356,40 +1356,16 @@ div.needleBox {
       background-color: #bfdddc;
       color: #666666; }
 
-.resources-links-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around; }
-
-.resources-links-container .button {
-  width: 120px;
-  height: 100px;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-bottom: 20px;
-  line-height: 20px; }
-
-.resources-links-container .adjust-profile {
-  position: absolute;
-  right: 0px;
-  height: 60px; }
-
-.resources-links-container .questionnaire {
-  font-size: 12px; }
-
-.resources-links-container h3 {
-  width: 100%;
-  margin-bottom: 0px;
-  font-weight: bold;
-  color: #53c8e9; }
-
-.resources-links-container h4 {
-  width: 100%; }
-
-.resources-links-row {
-  display: flex;
-  width: 80%;
-  justify-content: center; }
+.resources .back-btn {
+  background: #d3d3d3;
+  color: #808080;
+  position: relative;
+  top: -4.16667vh;
+  float: right;
+  height: auto;
+  width: 64px;
+  padding: 10px;
+  z-index: 100000; }
 
 .range-container {
   display: flex;
@@ -1415,8 +1391,17 @@ div.needleBox {
   margin: 0; }
 
 .res-lpcBox {
-  width: 50vw;
+  width: 75vw;
+  height: 50vh;
   margin-top: 4.16667vh; }
+
+.resources .lpc-container {
+  height: 50vh;
+  width: 75vw; }
+
+.resources #lpc-canvas-parentSize {
+  width: 72.08333vw;
+  height: 41.66667vh; }
 
 lpc-directive {
   display: -webkit-flex;
