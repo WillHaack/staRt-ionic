@@ -33,9 +33,8 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 
 	// Returns a promise that resolves when the upload is complete (or fails)
 	function uploadFile(absolutePath, destURL, mimeType, sessionID, progressCb, $http, $cordovaDialogs)
-	{
+    {
 		return new Promise(function (resolve, reject) {
-
 			var win = function (r) {
 				console.log("Code = " + r.responseCode);
 				console.log("Response = " + r.response);

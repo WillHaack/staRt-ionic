@@ -29,7 +29,8 @@ lpcDirective.directive( 'lpcDirective', function()
 		controller: 'LpcDirectiveController',
 		scope:
 		{
-			active: "=",
+      active: "=",
+      beachpost: "=",
 			probe: '=',
 			sand: '=',
 			slider: '=',

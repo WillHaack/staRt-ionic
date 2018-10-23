@@ -9,6 +9,11 @@ lpc-directive {
 	// border: 1px solid red;
 }
 
+.lpc-contentBox {
+  width: 100%;
+  height: 100%;
+}
+
 // This is the THREEjs element.
 // Its H & W should be determined by its parent ele.
 #lpc-canvas {
@@ -27,8 +32,14 @@ lpc-directive {
 	align-items: center;
 
 	&.buttons_visible {
-		width: 88%;
-	}
+    width: 88%;
+
+    &.beachpost-aligned {
+      left: 20vh;
+      bottom: 10vh;
+      width: 83vh;
+    }
+  }
 }
 
 .lpcCanvasSize-big { // not working
@@ -77,7 +88,7 @@ lpc-directive {
 	&.full-width
 	{
 		width: 100%;
-	}
+  }
 }
 
 .lpc-buttons {
@@ -88,27 +99,32 @@ lpc-directive {
 }
 
 .reset-button {
-	float: right;
 	margin-top: 0px;
   margin-right: 0px;
-  top: 250px;
 }
 
 // ================================================
-// RATING BUTTONS
+// RATING + RESET BUTTONS
 // ================================================
 
-.rateBtn-container {
-	position:absolute;
-	top: $row-h * 0.75;
+.button-side-container {
+  position:absolute;
 	right: 0;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
   align-items: flex-end;
-  height: $row-h * 2;
   width: $col-w * 2;
- }
+
+  &.rateBtn-container {
+    top: $row-h * 0.75;
+    height: $row-h * 2;
+  }
+
+  &.ctlBtn-container {
+    top: $row-h * 0.75 + 40vh;
+  }
+}
 
  .rateBtn {
 	display: flex;

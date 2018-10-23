@@ -36,10 +36,11 @@
 		$scope.order = "random";
 		$scope.data = {
 			categoryString: null,
-			count: 50,
+			count: $rootScope.rootTrialCount || 50,
 			csvs: [],
 			navTitle: "Quest",
-			selectedCategories: [],
+      selectedCategories: [],
+      trialCountSelectorDisabled: !!$rootScope.rootTrialCount,
 			type: null,
 			waveHidden: false
 		};

@@ -18,8 +18,10 @@ practiceDirective.directive( 'practiceDirective', function()
 			forceWaveHidden: "=",
 			order: "=",
 			probe: "=",
-			pauseEvery: "=",
-			suppressStartButton: "=",
+      pauseEvery: "=",
+      smallFont: "=",
+      suppressStartButton: "=",
+      tinyFont: "=",
 			type: "=",
 			startPracticeCallback: "&startPracticeCallback",
 			endPracticeCallback: "&endPracticeCallback"
