@@ -175,39 +175,25 @@
 			"wave": {
 				"lpcLive": false,
 				"lpcImg": "img/tutorial/waves/goodR-dots.png",
-				"labelTitle": "NEW STUFF"
+				"labelTitle": "Good /R/ with 2 Peaks"
 			}
 		},
 
 		"LRow2": {
 			"wave": {
-				"lpcLive": true,
-				"needle": {
-					"img": "img/tutorial/waves/dots.png",
-					"h": "100%",
-					"w": "100%",
-					"top": "0px",
-					"left":"0px"
-				},
-				"labelTitle": "Your Speech Wave"
+				"lpcLive": false,
+				"lpcImg": "img/tutorial/waves/goodR-2peaks.png",
+				"labelTitle": "Good /R/ with 2 Peaks"
 			}
 		},
 
 		"RRow1": {
 			"txtSquish": true,
 			"items":[
-				"<p class='txt-boldBlueDark--try'>NEW STUFF GOES HERE</p>",
-				"<p>Can you get your wave’s <span class='numbBub--yellowMain'>3</span>rd peak to match the target line when you <span class='txtBold'>say “r?”</span></p>"
+				"<p>Sometimes the <span class='numbBub--blueDark'>2</span>nd and <span class='numbBub--yellowMain'>3</span>rd peaks move so close together that they look like just one peak.</p>",
+				"<p class='txtBold'>If you see just two peaks for /r/, focus on getting the second peak below the white dotted line.</p>",
+				"<div class='rightRow-spacer'>.</div>"
 			]
-		},
-
-		"pic": {
-			"imgAbs": false,
-			"img":"img/tutorial/starMic.png",
-			"h": "260px",
-			"w": "265px",
-			"top": "5px",
-			"left":"0px"
 		},
 
 		"input": {
