@@ -4,8 +4,8 @@
 {
 	var tutorial = angular.module( 'tutorial' );
 
-	tutorial.controller('TutorialController', 
-		function($scope, $timeout, $localForage, StartUIState, NotifyingService, $rootScope, $state, $http, $stateParams, firstPanelData) 
+	tutorial.controller('TutorialController',
+		function($scope, $timeout, $localForage, StartUIState, NotifyingService, $rootScope, $state, $http, $stateParams, firstPanelData)
 		{
 
 			// =============================================================================
@@ -22,7 +22,7 @@
 					$scope['p01s' + (i + 1)] = $scope.p01data[i];
 				}
 
-				//get data for tutorial_template.html 
+				//get data for tutorial_template.html
 				$http.get('states/root/tutorial/tutorialData/coinData.json').success(function(data){
 					$scope.coinData = data;
 					$scope.makeActivePageObj();
@@ -63,6 +63,7 @@
 					$scope.p05s3 = $scope.p05data[2];
 					$scope.p05s4 = $scope.p05data[3];
 					$scope.p05s5 = $scope.p05data[4];
+					$scope.p05s6 = $scope.p05data[5];
 					$scope.totalSteps++;
 				});
 
@@ -70,16 +71,16 @@
 
 			// =============================================================================
 			// SETS UP PROGRESS MARKERS ---------------------------
-			
+
 			// Holds child scope of current page
 			$scope.currStep;
 
-			// Holds active page marker for to ng-class 'activeCoin' on horizontal tutorial nav.  
-			$scope.activePage = {};  
+			// Holds active page marker for to ng-class 'activeCoin' on horizontal tutorial nav.
+			$scope.activePage = {};
 
 			// List of steps completed triggered by coinUpdates.
 			// May be useful for progress tracking in the future.
-			$scope.stepsCompleted = []; 
+			$scope.stepsCompleted = [];
 
 			// Simply records the last page visited.
 			// May be useful for user continuity in the future.
@@ -110,7 +111,7 @@
 				for (var prop in $scope.activePage) {
 					$scope.activePage[prop] = false;
 				}
-				$scope.activePage[page] = true;	
+				$scope.activePage[page] = true;
 				//console.log($scope.activePage);
 			}
 

@@ -175,6 +175,69 @@
 			"wave": {
 				"lpcLive": false,
 				"lpcImg": "img/tutorial/waves/goodR-dots.png",
+				"labelTitle": "NEW STUFF"
+			}
+		},
+
+		"LRow2": {
+			"wave": {
+				"lpcLive": true,
+				"needle": {
+					"img": "img/tutorial/waves/dots.png",
+					"h": "100%",
+					"w": "100%",
+					"top": "0px",
+					"left":"0px"
+				},
+				"labelTitle": "Your Speech Wave"
+			}
+		},
+
+		"RRow1": {
+			"txtSquish": true,
+			"items":[
+				"<p class='txt-boldBlueDark--try'>NEW STUFF GOES HERE</p>",
+				"<p>Can you get your wave’s <span class='numbBub--yellowMain'>3</span>rd peak to match the target line when you <span class='txtBold'>say “r?”</span></p>"
+			]
+		},
+
+		"pic": {
+			"imgAbs": false,
+			"img":"img/tutorial/starMic.png",
+			"h": "260px",
+			"w": "265px",
+			"top": "5px",
+			"left":"0px"
+		},
+
+		"input": {
+			"txt":"Next",
+			"stepDone": " 'step5' ",
+			"next": "root.tutorial.p05s5"
+		}
+	},
+
+	{
+		"idx": 4,
+		"sref": "p05s5",
+		"page":"p05",
+		"nav": {
+			"id": "p5s5",
+			"page": 5,
+			"scene": 5
+		},
+
+		"template":"imgTemplate.html",
+
+		"bgImg": {
+			"status": "done",
+			"url":"img/tutorial/oldSlides/p05s4.png"
+		},
+
+		"LRow1": {
+			"wave": {
+				"lpcLive": false,
+				"lpcImg": "img/tutorial/waves/goodR-dots.png",
 				"labelTitle": "Image of Good /R/"
 			}
 		},
@@ -213,18 +276,18 @@
 		"input": {
 			"txt":"Next",
 			"stepDone": " 'step5' ",
-			"next": "root.tutorial.p05s5"
+			"next": "root.tutorial.p05s6"
 		}
 	},
 
 	{
-		"idx": 4,
-		"sref": "p05s5",
+		"idx": 5,
+		"sref": "p05s6",
 		"page":"p05",
 		"nav": {
-			"id": "p5s5",
+			"id": "p5s6",
 			"page": 5,
-			"scene": 5
+			"scene": 6
 		},
 
 		"template":"imgTemplate.html",
