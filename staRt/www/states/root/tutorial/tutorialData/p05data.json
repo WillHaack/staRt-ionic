@@ -10,7 +10,7 @@
 		},
 
 		"template":"tutPartial_default.html",
-		
+
 		"bgImg": {
 			"status": "done",
 			"url":"img/tutorial/oldSlides/p05s1.png"
@@ -40,7 +40,7 @@
 				"<p></p>"
 			]
 		},
-		
+
 		"pic": {
 			"imgAbs": false,
 			"img":"img/tutorial/starPoint.png",
@@ -49,7 +49,7 @@
 			"top": "0px",
 			"left":"0px"
 		},
-		
+
 		"input": {
 			"txt":"Next",
 			"next": "root.tutorial.p05s2"
@@ -67,12 +67,12 @@
 		},
 
 		"template":"waveDouble.html",
-		
+
 		"bgImg": {
 			"status": "done",
 			"url":"img/tutorial/oldSlides/p05s2.png"
 		},
-		
+
 		"LRow1": {
 			"wave": {
 				"lpcLive": false,
@@ -93,12 +93,12 @@
 			"txtSquish": true,
 			"items":[
 				"<p class='txtBold'>Notice the different locations of the waves’ <span class='numbBub--yellowMain'>3</span>rd peaks?</p>",
-				"<p>The top picture is an /r/ that’s not so good. It sounds like uhh.</p>",
-				"<p>The bottom picture is a good /r/. It sounds like errr.</p>",
+				"<p>The top picture is an /r/ that’s not so good. It sounds like &quot;uhh.&quot;</p>",
+				"<p>The bottom picture is a good /r/. It sounds like &quot;errr&quot; - rhymes with &quother.&quot;</p>",
 				"<div class='rightRow-spacer'>.</div>"
 			]
 		},
-		
+
 		"input": {
 			"txt":"Next",
 			"next": "root.tutorial.p05s3"
@@ -116,7 +116,7 @@
 		},
 
 		"template":"waveDouble.html",
-		
+
 		"bgImg": {
 			"status": "done",
 			"url":"img/tutorial/oldSlides/p05s3.png"
@@ -147,7 +147,7 @@
 				"<div class='rightRow-spacer'>.</div>"
 			]
 		},
-		
+
 		"input": {
 			"txt":"Next",
 			"next": "root.tutorial.p05s4"
@@ -165,7 +165,7 @@
 		},
 
 		"template":"imgTemplate.html",
-		
+
 		"bgImg": {
 			"status": "done",
 			"url":"img/tutorial/oldSlides/p05s4.png"
@@ -209,7 +209,7 @@
 			"top": "5px",
 			"left":"0px"
 		},
-		
+
 		"input": {
 			"txt":"Next",
 			"stepDone": " 'step5' ",
@@ -228,7 +228,7 @@
 		},
 
 		"template":"imgTemplate.html",
-		
+
 		"bgImg": {
 			"status": "done",
 			"url":"img/tutorial/oldSlides/p05s5.png"
@@ -254,7 +254,7 @@
 				"<div class='rightRow-spacer'>.</div>"
 			]
 		},
-		
+
 		"input": {
 			"txt":"End Tutorial",
 			"next": "root.free-play"
