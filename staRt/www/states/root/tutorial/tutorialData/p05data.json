@@ -297,7 +297,7 @@
 		"RRow1": {
 			"txtSquish": true,
 			"items":[
-				"<p>Your SLP will set a target line by moving the starfish on the beach.</p>",
+				"<p>The app will suggest a target for you based on your age.</p>",
 				"<p>You will practice matching your wave’s <span class='numbBub--yellowMain'>3</span>rd peak to the target line.</p>",
 				"<p class='txtBold'>That’s all there is to it.</p>",
 				"<div class='rightRow-spacer'>.</div>"
