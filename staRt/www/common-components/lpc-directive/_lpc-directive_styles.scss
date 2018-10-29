@@ -14,16 +14,6 @@ lpc-directive {
   height: 100%;
 }
 
-// This is the THREEjs element.
-// Its H & W should be determined by its parent ele.
-#lpc-canvas {
-	// margin: auto;
-	//
-	// width: 100%; //conflict
-	// height: 100%; //conflict
-	// z-index: 10; //conflict
-}
-
 #lpc-canvas-parentSize {
 	z-index: 10;
 	width: 100%;
@@ -37,26 +27,9 @@ lpc-directive {
     &.beachpost-aligned {
 			height: 100%;
 			width: 100%;
-      // left: 20vh;
-      // bottom: 10vh;
-      // width: 83vh;
     }
   }
 }
-
-.lpcCanvasSize-big { // not working
-	// width: 780px;
-	// height: 380px; //#hc
-	//border: 1px solid lime;
-}
-
-.lpcCanvasSize-tutorial {  // not working
-	// width: 480px;
-	// height: 150px; //#hc
-	//border: 1px solid red;
-}
-
-
 
 .lpc-container {  /* This is the light blue box*/
   position: relative;
@@ -82,23 +55,6 @@ lpc-directive {
 		//border: 1px solid blue;
   }
 
-}
-
-
-
-
-.slider-and-canvas {
-	// display: inline-block;
-	// width: 88%;
-	// height: 88%;
-	// margin-top: 4%;
-	// position: absolute;
-	// left: 0;
-	//
-	// &.full-width
-	// {
-	// 	width: 100%;
-  // }
 }
 
 .lpc-buttons {
