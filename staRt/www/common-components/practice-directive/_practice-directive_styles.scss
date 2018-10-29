@@ -2,30 +2,12 @@
 		//border: 1px solid lime;
 }
 
-.coinBox-layout {
-  text-align: left;
-  margin: auto;
-  margin-top: -400px;
-}
-
-.coin_stack {
-  display: inline-block;
-  position: relative;
-  height: 80px;
-  width: 33px;
-  margin: 0 4px -21px 4px;
-}
-
-img.coin {
-  position: absolute;
-}
-
 .practice-directive-container {
   height: 100%;
 }
 
  .promptBox-layout {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -65,4 +47,28 @@ img.coin {
 	display: inline-block;
 	vertical-align: middle;
 	//border: 1px solid red;
+}
+
+// ------------------------------------
+.coin-row-layout {
+  position: absolute;
+  top: $row-h * 5;
+  left: $col-w * 3;
+  width: $col-w * 7;
+  height: $row-h * 0.8;
+  //border: 1px solid red;
+}
+ .coinBox-layout {
+  text-align: left;
+  margin: auto;
+}
+ .coin_stack {
+  display: inline-block;
+  position: relative;
+  height: 80px;
+  width: 33px;
+  margin: 0 4px -21px 4px;
+}
+ img.coin {
+  position: absolute;
 }
