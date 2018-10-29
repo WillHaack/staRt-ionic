@@ -184,25 +184,28 @@
 										ng-disabled="!data.currentProfile">
 										Formal Testing
 									</button>
-                </div>
-                <div class="column-div">
 									<button
 										type="button"
 										class="button button-royal column-div"
 										ng-click="startSession()"
-										ng-hide="isEditing || !data.currentProfile || !data.currentProfile.formalTester || data.sessionIsActive"
+										ng-hide="isEditing || !data.currentProfile || !data.currentProfile.formalTester || data.sessionIsActive || data.currentProfile.nFormalTreatmentComplete"
 										ng-disabled="!data.currentProfile">
 										Start Session
 									</button>
-                </div>
-                <div class="column-div">
 									<button
 										type="button"
 										class="button button-royal column-div"
 										ng-click="stopSession()"
-										ng-hide="isEditing || !data.currentProfile || !data.currentProfile.formalTester || !data.sessionIsActive"
+										ng-hide="isEditing || !data.currentProfile || !data.currentProfile.formalTester || !data.sessionIsActive || data.currentProfile.nFormalTreatmentComplete"
 										ng-disabled="!data.currentProfile">
 										Stop Session
+                  </button>
+                  <button
+										type="button"
+										class="button button-royal column-div"
+										ng-hide="!data.currentProfile.nFormalTreatmentComplete"
+										ng-disabled="true">
+										Formal Testing Completed
 									</button>
                 </div>
 							</div>

@@ -224,7 +224,7 @@ var SessionAuto = function (profile, currentStates, onShow) {
   };
 
   steps.quest = {
-    next: (function () {
+    next: (function (profile, currentStates) {
       if (this.hasAcceptedQuestPrompt && currentStates.thisCurrentView === "words") return steps.whichQuest;
       return null;
     }).bind(this),
@@ -252,7 +252,7 @@ var SessionAuto = function (profile, currentStates, onShow) {
       var text;
       if (profile.allTrialsCorrect < 100) {
         text = "Please choose Syllable Quest to practice at the syllable level. Each Quest is 100 " +
-          "is 100 syllables long, but you can break your Quest into shorter sessions if " +
+          "syllables long, but you can break your Quest into shorter sessions if " +
           "you need to. Remember that the clinician should provide a model before " +
           "each syllable.";
       } else {
@@ -360,7 +360,7 @@ var ConclusionAuto = function (profile, currentStates, onShow) {
   steps.syllableQuizPrompt = {
     next: (function (profile, currentStates) {
       if (initialSyllableQuizCount < profile.nSyllableQuizComplete) {
-        this.didFinishSession;
+        this.didFinishSession = true;
         return steps.conclusionPrompt;
       }
       return null;
@@ -568,7 +568,7 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
     console.log("Starting session");
     ProfileService.getCurrentProfile().then(function (profile) {
       if (profile) {
-        var currentStates = SessionStatsService.getCurrentProfileStats();
+        var currentStates = SessionStatsService.getCurrentProfileStats() || {};
         var changeList = ['resume'];
 
         _checkForAuto(profile, currentStates, changeList);
@@ -586,8 +586,14 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
     _setCurrentAuto(null);
     if (!profileUUID) return;
     ProfileService.getProfileWithUUID(profileUUID).then(function (profile) {
-      if (profile) {
-        _checkForAuto(profile, SessionStatsService.getCurrentProfileStats(), ['current']);
+      if (profile && profile.formalTester && (profile.nFormalTreatmentComplete === 0)) {
+        $cordovaDialogs.alert(
+          "Welcome back! Please press the purple \"start session\" button to begin your next session",
+          "Introduction",
+          "Okay"
+        ).then(function () {
+          // no-op
+        });
       }
     });
   });
@@ -602,24 +608,26 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
     } else if (changeList.indexOf('brandNew') !== -1) {
       _promptForFormalParticipation(profile);
     } else if (changeList.indexOf('formalTester') !== -1) {
-      _checkForAuto(profile, SessionStatsService.getCurrentProfileStats(), changeList);
+
+      $cordovaDialogs.alert(
+        "Welcome to the formal testing program! Please press the purple \"start session\" button at any time to begin",
+        "Introduction",
+        "Okay"
+      ).then(function () {
+        // no-op
+      });
+
+      // _checkForAuto(profile, SessionStatsService.getCurrentProfileStats(), changeList);
     }
-  });
-
-  $ionicPlatform.on('resume', function () {
-    ProfileService.getCurrentProfile().then(function (profile) {
-      if (profile) {
-        var currentStates = SessionStatsService.getCurrentProfileStats();
-        var changeList = ['resume'];
-
-        _checkForAuto(profile, currentStates, changeList);
-      }
-    });
   });
 
   return {
     init: function () {
       console.log("Auto Service initialized");
+    },
+
+    isSessionActive: function () {
+      return currentAuto !== null;
     },
 
     promptForFormalParticipation: function (profile) {
