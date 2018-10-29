@@ -180,11 +180,31 @@
 										type="button"
 										class="button button-royal column-div"
 										ng-click="optInFormalTesting()"
-										ng-hide="isEditing || !data.currentProfile"
+										ng-hide="isEditing || !data.currentProfile || data.currentProfile.formalTester"
 										ng-disabled="!data.currentProfile">
 										Formal Testing
 									</button>
-								</div>
+                </div>
+                <div class="column-div">
+									<button
+										type="button"
+										class="button button-royal column-div"
+										ng-click="startSession()"
+										ng-hide="isEditing || !data.currentProfile || !data.currentProfile.formalTester || data.sessionIsActive"
+										ng-disabled="!data.currentProfile">
+										Start Session
+									</button>
+                </div>
+                <div class="column-div">
+									<button
+										type="button"
+										class="button button-royal column-div"
+										ng-click="stopSession()"
+										ng-hide="isEditing || !data.currentProfile || !data.currentProfile.formalTester || !data.sessionIsActive"
+										ng-disabled="!data.currentProfile">
+										Stop Session
+									</button>
+                </div>
 							</div>
 						</div>
 			</div>

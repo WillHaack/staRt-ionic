@@ -51,7 +51,7 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 			firstSessionTimestamp: null, // Unix timestamp of first trial
 			lastSessionTimestamp: null, // Unix timestamp of most recent trial
 			creationTimestamp: Date.now(), // Unix timestamp profile creation
-			lastLoginTimestamp: Date.now(), // Unix time of last login
+      lastLoginTimestamp: Date.now(), // Unix time of last login
 		};
 	};
 
