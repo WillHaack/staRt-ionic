@@ -120,7 +120,7 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
           _incrementProfileStat(currentProfileStats, "thisQuestTrialsCorrect", score, statsChanges);
           _updateProfileStat(
             "thisQuestPercentTrialsCorrect",
-            (100 * currentProfileStats.thisQuestTrialsCorrect) / currentProfileStats.thisQuestTrialsCompleted,
+            (100 * statsChanges["thisQuestTrialsCorrect"]) / statsChanges["thisQuestTrialsCompleted"],
             statsChanges
           );
         }
@@ -223,12 +223,12 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
       console.log(e);
     });
 	});
-	NotifyingService.subscribe('session-completed', $rootScope, function(data) {
+	NotifyingService.subscribe('session-completed', $rootScope, function(msg, data) {
     ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
       const profileChanges = {};
       const statsChanges = {};
       const profile = doc.data();
-      if (practice === "BF") {
+      if (data.practice === "BF") {
         _incrementProfileStat(profile, "nBiofeedbackSessionsCompleted", 1, profileChanges);
       } else {
         _incrementProfileStat(profile, "nNonBiofeedbackSessionsCompleted", 1, profileChanges);

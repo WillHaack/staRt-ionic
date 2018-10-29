@@ -26,7 +26,7 @@ function compareRecordings(ra, rb) {
 {
 	var profiles = angular.module( 'profiles' );
 
-	profiles.controller('ProfilesController', function($scope, $timeout, $localForage, AutoService, FirebaseService, StartUIState, ProfileService, UploadService, $rootScope, $state, $cordovaDialogs)
+	profiles.controller('ProfilesController', function($scope, $timeout, $localForage, AutoService, FirebaseService, StartUIState, NotifyingService, ProfileService, UploadService, $rootScope, $state, $cordovaDialogs)
 	{
 		console.log('ProfilesController here!');
 
@@ -50,7 +50,25 @@ function compareRecordings(ra, rb) {
 			$scope.data = {};
 
 			$scope.data.uploadMessage = "";
-			$scope.data.selectedProfileRecordings = [];
+      $scope.data.selectedProfileRecordings = [];
+      $scope.data.sessionIsActive = AutoService.isSessionActive();
+
+      NotifyingService.subscribe("session-did-begin", $scope, function() {
+        $scope.data.sessionIsActive = true;
+      });
+
+      NotifyingService.subscribe("session-did-end", $scope, function() {
+        $scope.data.sessionIsActive = false;
+      });
+
+      NotifyingService.subscribe("profile-stats-updated", $scope, function(msg, updateData) {
+        let profile = updateData[0];
+        let currentProfileStats = updateData[1];
+        let updateKeys = updateData[2];
+        updateKeys.forEach(function(key) {
+          $scope.data.currentProfile[key] = profile[key];
+        });
+      });
 
 			ProfileService.getAllProfiles().then( function(res) {
 				console.log(res);
@@ -287,7 +305,15 @@ function compareRecordings(ra, rb) {
 					});
 				}
 			}
-		};
+    };
+
+    $scope.startSession = function() {
+      AutoService.startSession();
+    };
+
+    $scope.stopSession = function() {
+      AutoService.stopSession();
+    };
 
 		$scope.uploadSelectedRecordings = function() {
 
