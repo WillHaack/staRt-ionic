@@ -202,45 +202,45 @@ lpcDirective.controller( 'LpcDirectiveController',
 	///////////////////////////////////
 	//  RENDER
 	///////////////////////////////////
-		$scope.animate = function() {
-			if ($scope.active) {
+		$scope.animate = function () {
+		  if ($scope.active) {
 
-				if ($scope.lpcRenderer.WIDTH !== $scope.lpcRenderer.parentElement.clientWidth ||
-					$scope.lpcRenderer.HEIGHT !== $scope.lpcRenderer.parentElement.clientHeight
-				) {
-					$scope.updateCanvasSize();
-				}
+		    if ($scope.lpcRenderer.WIDTH !== $scope.lpcRenderer.parentElement.clientWidth ||
+		      $scope.lpcRenderer.HEIGHT !== $scope.lpcRenderer.parentElement.clientHeight
+		    ) {
+		      $scope.updateCanvasSize();
+		    }
 
-				if ($scope.renderTextSprite) {
-					if ( textSprite === undefined ) {
-						textSprite = Drawing.makeTextSprite(sliderFz);
-						textSprite.position.set(0,10,9);
-						label.add( textSprite );
-					} else {
-						label.remove( textSprite );
-						textSprite = Drawing.makeTextSprite(sliderFz);
-						textSprite.position.set(0,10,9);
-						label.add( textSprite );
-					}
-				}
+		    if ($scope.renderTextSprite) {
+		      if (textSprite === undefined) {
+		        textSprite = Drawing.makeTextSprite(sliderFz);
+		        textSprite.position.set(0, 10, 9);
+		        label.add(textSprite);
+		      } else {
+		        label.remove(textSprite);
+		        textSprite = Drawing.makeTextSprite(sliderFz);
+		        textSprite.position.set(0, 10, 9);
+		        label.add(textSprite);
+		      }
+		    }
 
-				if ($scope.pause === false) {
-					$scope.getLPCCoefficients($scope.lpcCoefficientCallback);
-				}
+		    if ($scope.pause === false) {
+		      $scope.getLPCCoefficients($scope.lpcCoefficientCallback);
+		    }
 
-				//stats.update();
-				window.requestAnimFrame($scope.animate);
-				if ($scope.targetNeedsUpdate) {
-					if ($scope.targetTextUpdateCount >= maxTargetTextUpdateCount) {
-						$scope.targetTextUpdateCount = 0;
-						$scope.updateTarget();
-						$scope.targetNeedsUpdate = false;
-					} else {
-						$scope.targetTextUpdateCount++;
-					}
-				}
-				$scope.lpcRenderer.render();
-			}
+		    //stats.update();
+		    window.requestAnimFrame($scope.animate);
+		    if ($scope.targetNeedsUpdate) {
+		      if ($scope.targetTextUpdateCount >= maxTargetTextUpdateCount) {
+		        $scope.targetTextUpdateCount = 0;
+		        $scope.updateTarget();
+		        $scope.targetNeedsUpdate = false;
+		      } else {
+		        $scope.targetTextUpdateCount++;
+		      }
+		    }
+		    $scope.lpcRenderer.render();
+		  }
 		};
 
 //--------------------------------------------------------------
