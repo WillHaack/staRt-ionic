@@ -10,12 +10,12 @@
 		},
 
 		"template":"noWave.html",
-		
+
 		"bgImg": {
 			"status": "done",
 			"url":"img/tutorial/oldSlides/p01s1.png"
 		},
-	
+
 		"LRow1": {
 			"items": [
 				"<img src='img/tutorial/hello-p01s1.png' height='50' width='182'>",
@@ -33,7 +33,7 @@
 			"top": "105px",
 			"left":"475px"
 		},
-		
+
 		"input": {
 			"txt":"Let's go!",
 			"next": "root.tutorial.p01s2"
@@ -52,7 +52,7 @@
 		},
 
 		"template":"default.html",
-		
+
 		"bgImg": {
 			"status": "done",
 			"url":"img/tutorial/oldSlides/p01s2.png"
@@ -69,7 +69,7 @@
 				"labelTitle": "Your Speech Wave"
 			}
 		},
-		
+
 		"LRow2": {
 			"items": [
 				"See how the wave moves around when you talk?"
@@ -95,7 +95,7 @@
 			"top": "5px",
 			"left":"0px"
 		},
-		
+
 		"input": {
 			"txt":"Next",
 			"next": "root.tutorial.p01s3"
@@ -115,7 +115,7 @@
 		},
 
 		"template":"waveSingle.html",
-		
+
 		"bgImg": {
 			"status": "done",
 			"url":"img/tutorial/oldSlides/p01s3.png"
@@ -154,7 +154,7 @@
 			"top": "0px",
 			"left":"0px"
 		},
-		
+
 		"input": {
 			"txt":"Next",
 			"next": "root.tutorial.p01s4"
@@ -174,12 +174,12 @@
 		},
 
 		"template":"waveSingle.html",
-		
+
 		"bgImg": {
 			"status": "done",
 			"url":"img/tutorial/oldSlides/p01s4.png"
 		},
-		
+
 		"header": {
 			"txt": "The dark lines are there to help you find the peaks in your wave, but ..."
 		},
@@ -222,13 +222,14 @@
 			"top": "0px",
 			"left":"0px"
 		},
-		
+
 		"input": {
 			"txt":"Next",
+			"stepDone": " 'step1' ",
 			"next": "root.tutorial.p01s5"
 		}
 	},
-	
+
 
 	{
 		"id": "p01s5",
@@ -240,7 +241,7 @@
 		},
 
 		"template":"waveNone.html",
-		
+
 		"bgImg": {
 			"status": "done",
 			"url":"img/tutorial/oldSlides/p01s5.png"
@@ -254,12 +255,11 @@
 
 		"LRow1": {
 			"items": [
-				"As you complete each step, you’ll receive one sand dollar in the sand bank.",
-				"<img src='img/tutorial/p01s5-coins.png' height='69' width='420'>",
-				"To return to a tutorial section, just touch the corresponding sand dollar."
+				"<p class='noWave3'>As you complete each step, a sand dollar will appear at the bottom of the page.</p>",
+				"<p class='noWave3 txtBold'>To return to a tutorial topic, just touch the corresponding sand dollar.</p>"
 			]
 		},
-			
+
 		"pic": {
 			"imgAbs": true,
 			"img":"img/tutorial/char-p01s5.png",
@@ -271,7 +271,6 @@
 
 		"input": {
 			"txt":"Next",
-			"stepDone": " 'step1' ",
 			"next":"root.tutorial.p02s1"
 		}
 
