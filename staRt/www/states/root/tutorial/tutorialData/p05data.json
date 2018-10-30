@@ -93,8 +93,8 @@
 			"txtSquish": true,
 			"items":[
 				"<p class='txtBold'>Notice the different locations of the waves’ <span class='numbBub--yellowMain'>3</span>rd peaks?</p>",
-				"<p>The top picture is an /r/ that’s not so good. It sounds like uhh.</p>",
-				"<p>The bottom picture is a good /r/. It sounds like errr.</p>",
+				"<p>The top picture is an /r/ that’s not so good. It sounds like &quot;uhh.&quot;</p>",
+				"<p>The bottom picture is a good /r/. It sounds like &quot;errr&quot; - rhymes with &quother.&quot;</p>",
 				"<div class='rightRow-spacer'>.</div>"
 			]
 		},
