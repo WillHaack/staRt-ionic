@@ -14,19 +14,33 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
+		background-color: $c-bg;
 		z-index: 1;
 	}
 
-	.profiles-layout_content-container {
-		position: relative;
+	.profiles-layout_drawer-left {
+		position: absolute;
 		display: flex;
-		flex-flow: row nowrap;
-		margin-top: $row-h * 1.5;
-		margin-left: $navW;
+		flex-flow: column nowrap;
+		//justify-content: space-around;
+		top: 0;
+		left: 0;
+		width: $col-w * 5;
+		height: 100%;
+		z-index: 90;
+		border: 1px solid violet;
+	}
+
+	.profiles-layout_content-container {
+		position: absolute;
+		display: flex;
+		flex-flow: column nowrap;
+		margin-top: $row-h;
+		margin-left: $col-w * 6;
 		height: $row-h * 5;
-		width: $col-w * 9;
+		width: $col-w * 5.5;
 		z-index: 10;
-		// border: 1px solid cyan;
+		border: 1px solid red;
 	}
 }
 
@@ -34,6 +48,105 @@
 // ================================================
 // STATE STYLES
 // ================================================
+
+// Profiles User List
+//.profiles-layout_drawer-left
+
+.profiles_list-head {
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-end;
+	height: $row-h * 1.25;
+	width: 100%;
+	background-color: pink;
+	border: 1px solid red;
+
+	.header-img {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+	}
+	.closeBox {
+		position: absolute;
+	}
+	.head-content {
+		position: relative;
+		display: flex;
+		flex-flow: column nowrap;
+		// justify-content: flex-end;
+
+		.title {
+			position: relative;
+			display: flex;
+			width: 100%;
+			height: $row-h * 0.25;
+			padding-left: $col-w * 2;
+			border: 1px solid red;
+		}
+		.searchBar {
+			position: relative;
+			display: flex;
+			width: 100%;
+			height: $row-h * 0.25;
+			padding-left: $col-w * 2;
+			border: 1px solid red;
+		}
+	}
+}
+
+
+.profiles_list-body {
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	// justify-content: flex-end;
+	height: $row-h * 3;
+	width: 100%;
+	background-color: lightGreen;
+}
+
+.profiles_list-foot {
+	position: relative;
+	display: flex;
+	//flex-flow: column nowrap;
+	//justify-content: flex-end;
+	height: $row-h * 1;
+	width: 100%;
+	background-color: lightBlue;
+	border: 1px solid blue;
+}
+
+
+.profiles__list {
+	height: 100%;
+	width: 100%;
+	background-color: lightgray;
+	// flex: 2 0 0%;
+	// margin-right: 10px;
+	border: 1px solid red;
+}
+
+.profiles-flex {
+	flex-flow: column;
+	display: flex;
+	//margin-top: 20px;
+}
+
+// ------------------------------
+
+.profiles-card {
+	display: flex;
+	background-color: $white;
+	width: 100%;
+	height: $row-h * 4.5;
+	border-radius: 10px;
+}
+
+
+
+// ------------------------------
+
 .logout {}
 
 p.display-name {
@@ -99,11 +212,7 @@ p.display-name {
 	height: 340px;
 }
 
-.profiles__list
-{
-	flex: 2 0 0%;
-	margin-right: 10px;
-}
+
 
 .profiles__info
 {
@@ -111,44 +220,33 @@ p.display-name {
 	margin-right: 10px;
 }
 
-.profiles__recordings
-{
+.profiles__recordings {
 	flex: 3 0 0%;
 }
 
-.profiles-flex
-{
-	flex-flow: column;
-	display: flex;
-	margin-top: 20px;
-}
 
-.button-row
-{
+
+.button-row {
 	flex-flow: row nowrap;
 	display: flex;
-	margin-top: 20px;
+	//margin-top: 20px;
 	width: 100%;
 }
 
-.column-div
-{
+.column-div {
 	flex: 1 0 0%;
 }
 
-.profiles-contentBox .radio-content .item-content
-{
+.profiles-contentBox .radio-content .item-content {
 	padding-right: 0px;
 	text-overflow: initial;
 }
 
-.profiles-contentBox .radio-content span
-{
+.profiles-contentBox .radio-content span {
 	margin-right: 64px;
 }
 
-.upload_badge
-{
+.upload_badge {
 	color: #00bb00;
 	font-weight: bold;
 }

@@ -1,267 +1,97 @@
 <ion-view view-title="Profiles" class="state-contentBox" hide-nav-bar="false">
 
 	<div class="profiles-layout_view-container">
-		<ion-nav-bar class="ion-nav-bar--old"></ion-nav-bar>
+		<ion-nav-bar class="ion-nav-bar"></ion-nav-bar>
+		<!-- <ion-nav-bar class="ion-nav-bar--old"></ion-nav-bar> -->
 
 		<div class="profiles-layout_bg-container">
 			<!-- full-width eles go here -->
 		</div>
 
-		<!-- content goes here -->
-		<ion-pane class="profiles-layout_content-container">
+		<div class="profiles-layout_drawer-left">
 
-			<div class="profiles__list">
-				<ion-list class="list">
-					<h2>
-						Registered Participants
-					</h2>
-
-					<ion-radio
-						name="name"
-						ng-model="data.currentProfileUUID"
-						ng-repeat="profile in data.profiles track by profile.uuid"
-						ng-value="profile.uuid"
-						ng-change="updateCurrentProfile(profile)">
-							{{ (profile.name === undefined) ? 'New Profile' : profile.name }}
-					</ion-radio>
-
-					<div class="profiles-flex">
-						<div class="button-row">
-							<div class="column-div">
-								<button
-									class="button button-calm column-div"
-									ng-click="createProfile()"
-									ng-disabled="isEditing"
-									ng-hide="isEditing">
-									<i class="icon ion-person-add"></i>
-									New
-								</button>
-							</div>
-							<div class="column-div">
-								<button
-									class="button button-stable column-div"
-									ng-click="deleteAllProfiles()"
-									ng-disabled="isEditing"
-									ng-hide="isEditing || !data.currentProfile">
-									<i class="icon ion-trash-b"></i>
-									Delete All
-								</button>
-							</div>
-						</div>
+			<div class="profiles_list-head">
+				<!-- <div class="header-img"></div>
+				<div class="closeBox"></div> -->
+				<div class="head-content">
+					<div class="title">
+						<p> Registered Participants </p>
 					</div>
-				</ion-list>
-			</div>
-
-			<div
-				class="profiles__info"
-				ng-hide="!data.currentProfile">
-						<label class="item item-input">
-							<span class="input-label">
-								Name
-							</span>
-							<input
-								type="text"
-								name="name"
-								class="profiles"
-								ng-model="data.currentProfile.name"
-								placeholder="Name"
-								ng-class="editing"
-								ng-disabled="!isEditing">
-						</label>
-						<label class="item item-input">
-							<span class="input-label">
-								Age
-							</span>
-							<input
-								type="number"
-								name="age"
-								class="profiles"
-								min="1"
-								max="99"
-								ng-model="data.currentProfile.age"
-								placeholder="Age"
-								ng-class="editing"
-								ng-disabled="!isEditing">
-						</label>
-						<label class="item item-input">
-							<span class="input-label">
-								Height (Feet)
-							</span>
-							<input
-								type="number"
-								name="heightFeet"
-								class="profiles"
-								min="0"
-								max="8"
-								ng-model="data.currentProfile.heightFeet"
-								placeholder="Feet"
-								ng-class="editing"
-								ng-disabled="!isEditing">
-						</label>
-						<label class="item item-input">
-							<span class="input-label">
-								Inches
-							</span>
-							<input
-								type="number"
-								name="heightInches"
-								class="profiles"
-								min="0"
-								max="11"
-								ng-model="data.currentProfile.heightInches"
-								placeholder="Inches"
-								ng-class="editing"
-								ng-disabled="!isEditing">
-						</label>
-						<label class="input item-input">
-							<div class="input-label">
-								Sex
-							</div>
-							<ion-radio
-								name="sex"
-								ng-model="data.currentProfile.gender"
-								ng-value="'Female'"
-								ng-class="editing"
-								ng-disabled="!isEditing">
-								Female
-							</ion-radio>
-							<ion-radio
-								name="sex"
-								ng-model="data.currentProfile.gender"
-								ng-value="'Male'"
-								ng-class="editing"
-								ng-disabled="!isEditing">
-								Male
-							</ion-radio>
-						</label>
-						<div class="profiles-flex">
-							<div class="button-row">
-								<div class="column-div">
-									<button
-										type="button"
-										class="button button-balanced column-div"
-										ng-click="setIsEditing(true)"
-										ng-hide="isEditing"
-										ng-disabled="!data.currentProfile"
-										ng-hide="!data.currentProfile">
-										<i class="icon ion-edit"></i>
-										Edit
-									</button>
-									<button
-										type="button"
-										class="button button-positive olumn-div"
-										ng-click="saveProfile()"
-										ng-hide="!isEditing">
-										Save
-									</button>
-								</div>
-								<div class="column-div">
-									<button
-										type="button"
-										class="button button-calm column-div"
-										ng-click="cancelEdit()"
-										ng-hide="!isEditing">
-										Cancel
-									</button>
-									<button
-										type="button"
-										class="button button-assertive column-div"
-										ng-click="deleteProfile(data.currentProfile)"
-										ng-show="!isEditing"
-										ng-disabled="!data.currentProfile">
-										<i class="icon ion-trash-b"></i>
-										Discard
-									</button>
-								</div>
-							</div>
-							<div class="button-row">
-								<div class="column-div">
-									<button
-										type="button"
-										class="button button-royal column-div"
-										ng-click="optInFormalTesting()"
-										ng-hide="isEditing || !data.currentProfile || data.currentProfile.formalTester"
-										ng-disabled="!data.currentProfile">
-										Formal Testing
-									</button>
-									<button
-										type="button"
-										class="button button-royal column-div"
-										ng-click="startSession()"
-										ng-hide="isEditing || !data.currentProfile || !data.currentProfile.formalTester || data.sessionIsActive || data.currentProfile.nFormalTreatmentComplete"
-										ng-disabled="!data.currentProfile">
-										Start Session
-									</button>
-									<button
-										type="button"
-										class="button button-royal column-div"
-										ng-click="stopSession()"
-										ng-hide="isEditing || !data.currentProfile || !data.currentProfile.formalTester || !data.sessionIsActive || data.currentProfile.nFormalTreatmentComplete"
-										ng-disabled="!data.currentProfile">
-										Stop Session
-                  </button>
-                  <button
-										type="button"
-										class="button button-royal column-div"
-										ng-hide="!data.currentProfile.nFormalTreatmentComplete"
-										ng-disabled="true">
-										Formal Testing Completed
-									</button>
-                </div>
-							</div>
-						</div>
-			</div>
-
-			<div class="profiles__recordings">
-				<div class="flex-align-right">
-					<button class="button button-calm logout" ng-click="logOut()" ng-disabled="isEditing">Log out</button>
-					<p class="display-name"> {{ displayName }} </p>
+					<div class="searchBar">Search</div>
 				</div>
-				<h2>
-					Recordings
-				</h2>
-				<ion-scroll>
-					<ion-list
-						ng-repeat="recording in data.currentProfileRecordings track by recording.Metadata"
-						ng-class="{uploaded:recording.uploaded, not_uploaded:!recording.uploaded}"
-					>
-						<ion-item ng-click="recordingClicked(recording)" ng-class="{ selected: recording.selected }">
-							<div>{{ recording.date }} </div>
-							<div>{{ recording.userString }} </div>
-							<div>{{ recording.totalTimeString }} </div>
-							<div ng-if=recording.uploaded class="upload_badge uploaded">Uploaded</div>
-							<div ng-if=!recording.uploaded class="upload_badge not_uploaded">Not Uploaded</div>
-						</ion-item>
-					</ion-list>
-				</ion-scroll>
-				<div class="profiles-flex">
-					<div class="button-row">
-						<div class="column-div">
+			</div>
+
+			<div class="profiles_list-body">
+				<!--  See if this should be an ion-pane for the scrolling feature. -->
+				<ion-list class="list">
+						<ion-radio
+							name="name"
+							ng-model="data.currentProfileUUID"
+							ng-repeat="profile in data.profiles track by profile.uuid"
+							ng-value="profile.uuid"
+							ng-change="updateCurrentProfile(profile)">
+								{{ (profile.name === undefined) ? 'New Profile' : profile.name }}
+						</ion-radio>
+					</ion-list> <!-- </ion-list> -->
+			</div> <!-- .profiles_list-body -->
+
+			<div class="profiles_list-foot">
+				register new
+				<div class="">
+					<div class="">
+						<div class="">
 							<button
 								class="button button-calm column-div"
-								ng-click="uploadSelectedRecordings()"
-								ng-disabled="!data.selectedProfileRecordings.length || uploadCount > 0" >
-								Upload
+								ng-click="createProfile()"
+								ng-disabled="isEditing"
+								ng-hide="isEditing">
+								<i class="icon ion-person-add"></i>
+								New
 							</button>
 						</div>
-						<div class="column-div">
+						<div class="">
 							<button
 								class="button button-stable column-div"
-								ng-click="deleteSelectedRecordings()"
-								ng-disabled="!data.selectedProfileRecordings.length || uploadCount > 0" >
+								ng-click="deleteAllProfiles()"
+								ng-disabled="isEditing"
+								ng-hide="isEditing || !data.currentProfile">
 								<i class="icon ion-trash-b"></i>
-								Delete
+								Delete All
 							</button>
 						</div>
 					</div>
-				</div>
-				<p>
-				 {{ data.uploadMessage }}
-				</p>
-			</div>
+			</div> <!-- profiles_list-foot -->
 
-		</ion-pane>
-		<!-- end .profiles-layout-->
+		</div>
+		<!-- end .profiles-layout_drawer-left -->
+
+
+			<!-- content goes here -->
+			<div class="profiles-layout_content-container">
+
+				<div class="profiles-card">
+
+					<div class="card-head">
+
+						<div class="header-info">
+							<h1>{{data.currentProfile.name}}</h1>
+						</div>
+
+						<div class="card-nav">
+							
+						</div>
+
+					</div> <!-- card-head -->
+
+					<div class="card-body">
+					</div> <!-- card-body -->
+
+					<div class="card-foot">
+					</div> <!-- card-foot -->
+
+				</div>
+		</div>
+		<!-- end .profiles-layout_content-container -->
 
 	</div> <!-- end profiles-contentBox-->
 

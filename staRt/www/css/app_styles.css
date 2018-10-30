@@ -592,16 +592,95 @@ input, textarea {
     left: 0;
     width: 100%;
     height: 100%;
+    background-color: #c2f2f2;
     z-index: 1; }
+  .profiles-layout_view-container .profiles-layout_drawer-left {
+    position: absolute;
+    display: flex;
+    flex-flow: column nowrap;
+    top: 0;
+    left: 0;
+    width: 41.66667vw;
+    height: 100%;
+    z-index: 90;
+    border: 1px solid violet; }
   .profiles-layout_view-container .profiles-layout_content-container {
+    position: absolute;
+    display: flex;
+    flex-flow: column nowrap;
+    margin-top: 16.66667vh;
+    margin-left: 50vw;
+    height: 83.33333vh;
+    width: 45.83333vw;
+    z-index: 10;
+    border: 1px solid red; }
+
+.profiles_list-head {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  height: 20.83333vh;
+  width: 100%;
+  background-color: pink;
+  border: 1px solid red; }
+  .profiles_list-head .header-img {
+    position: absolute;
+    width: 100%;
+    height: 100%; }
+  .profiles_list-head .closeBox {
+    position: absolute; }
+  .profiles_list-head .head-content {
     position: relative;
     display: flex;
-    flex-flow: row nowrap;
-    margin-top: 25vh;
-    margin-left: 16.66vw;
-    height: 83.33333vh;
-    width: 75vw;
-    z-index: 10; }
+    flex-flow: column nowrap; }
+    .profiles_list-head .head-content .title {
+      position: relative;
+      display: flex;
+      width: 100%;
+      height: 4.16667vh;
+      padding-left: 16.66667vw;
+      border: 1px solid red; }
+    .profiles_list-head .head-content .searchBar {
+      position: relative;
+      display: flex;
+      width: 100%;
+      height: 4.16667vh;
+      padding-left: 16.66667vw;
+      border: 1px solid red; }
+
+.profiles_list-body {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  height: 50vh;
+  width: 100%;
+  background-color: lightGreen; }
+
+.profiles_list-foot {
+  position: relative;
+  display: flex;
+  height: 16.66667vh;
+  width: 100%;
+  background-color: lightBlue;
+  border: 1px solid blue; }
+
+.profiles__list {
+  height: 100%;
+  width: 100%;
+  background-color: lightgray;
+  border: 1px solid red; }
+
+.profiles-flex {
+  flex-flow: column;
+  display: flex; }
+
+.profiles-card {
+  display: flex;
+  background-color: #ffffff;
+  width: 100%;
+  height: 75vh;
+  border-radius: 10px; }
 
 p.display-name {
   margin-bottom: 0px;
@@ -647,10 +726,6 @@ p.display-name {
 .profiles__recordings ion-scroll {
   height: 340px; }
 
-.profiles__list {
-  flex: 2 0 0%;
-  margin-right: 10px; }
-
 .profiles__info {
   flex: 3 0 0%;
   margin-right: 10px; }
@@ -658,15 +733,9 @@ p.display-name {
 .profiles__recordings {
   flex: 3 0 0%; }
 
-.profiles-flex {
-  flex-flow: column;
-  display: flex;
-  margin-top: 20px; }
-
 .button-row {
   flex-flow: row nowrap;
   display: flex;
-  margin-top: 20px;
   width: 100%; }
 
 .column-div {
@@ -769,8 +838,8 @@ p.display-name {
     padding-left: 20px;
     margin-bottom: 10px; }
     .tutNoWave-content .noWaveRow .noWave3 {
-      border: 1px solid green;
-      width: 50%; }
+      padding-top: 0.5em;
+      width: 70%; }
   .tutNoWave-content .charImg {
     position: absolute; }
 
