@@ -174,24 +174,25 @@
 		"LRow1": {
 			"wave": {
 				"lpcLive": false,
-				"lpcImg": "",
-				"labelTitle": "NEW IMG"
+				"lpcImg": "img/tutorial/waves/goodR-dots.png",
+				"labelTitle": "Good /R/ with 3 Peaks"
 			}
 		},
 
 		"LRow2": {
 			"wave": {
 				"lpcLive": false,
-				"lpcImg": "",
-				"labelTitle": "NEW IMG"
+				"lpcImg": "img/tutorial/waves/goodR-2peaks.png",
+				"labelTitle": "Good /R/ with 2 Peaks"
 			}
 		},
 
 		"RRow1": {
 			"txtSquish": true,
 			"items":[
-				"<p class='txt-boldBlueDark--try'>NEW TEXT</p>",
-				"<p></p>"
+				"<p>Sometimes the <span class='numbBub--blueDark'>2</span>nd and <span class='numbBub--yellowMain'>3</span>rd peaks move so close together that they look like just one peak.</p>",
+				"<p class='txtBold'>If you see only 2 peaks for /r/, focus on getting the second peak close to the white line.</p>",
+				"<p class='rightRow-spacer'>.</p>"
 			]
 		},
 
