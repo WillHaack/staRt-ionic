@@ -291,12 +291,12 @@
 
 		"LRow1": {
 			"items": [
-				"<div class='p05s5img'><img src='img/tutorial/waves/uiPreview.png' width='100%'></div>"
+				"<div class='p05s5img'><img src='img/tutorial/waves/uiPreview2.png' width='100%'></div>"
 			]
 		},
 
 		"RRow1": {
-			"txtSquish": false,
+			"txtSquish": true,
 			"items":[
 				"<p>The app will suggest a target line based on your age.</p>",
 				"<p>You or your SLP can move the target further <span class='txtBold'>to the left</span> for a more challenging target--but don't go further than about where you see the starfish in this picture.</p>",
