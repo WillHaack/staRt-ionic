@@ -31,16 +31,16 @@
 
 		// ============================================================================
 		// STATES & SUBPAGE CONTROLLERS
-			/* 
+			/*
 				NOTES:
 				I'm using the state urls as reference during dev.
 				They currently are not serving any functional purpose (like routing).
 
-				In most angular apps these would be 'components;' however, the component arch doesn't seem to work in our setup. 
+				In most angular apps these would be 'components;' however, the component arch doesn't seem to work in our setup.
 				For examples of non-component project structure (i.e. stuff that will work here), reference apps using Angular 1.4* or below.
 			*/
 
-		
+
 		// PAGE 1 The Wave --- (5 active scenes, 1 inactive) ---------------------------
 
 			.state('root.tutorial.p01s1', {
@@ -298,6 +298,19 @@
 					}
 				}
 			}) //end p05s5 state def
+
+			.state('root.tutorial.p05s6', {
+			url: '/p05s6',
+				views: {
+					'pageView': {
+						templateUrl: 'states/root/tutorial/partialTemplates/default.html',
+						controller: function($scope){
+							$scope.currStep = $scope.p05s6;
+							$scope.updateParentScope($scope.currStep);
+						}
+					}
+				}
+			}) //end p05s6 state def
 
 		// end of subState defs -------------------------------------------
 
