@@ -73,17 +73,34 @@
 
 					<div class="card-head">
 
-						<div class="header-info">
+						<div class="card-headBox">
 							<h1>{{data.currentProfile.name}}</h1>
 						</div>
 
-						<div class="card-nav">
-							
+						<div class="card-navBox">
+							<div class="pro_navitem"
+							ng-click="setCardState('recordings')">
+								recordings
+							</div>
+							<div class="pro_navitem"
+							ng-click="setCardState('progress')">
+								progress
+							</div>
+							<div class="pro_navitem"
+							ng-click="setCardState('profile')">
+								profile
+							</div>
+							<div class="pro_navitem"
+							ng-click="setCardState('settings')">
+								settings
+							</div>
+
 						</div>
 
 					</div> <!-- card-head -->
 
 					<div class="card-body">
+						<h1>{{cardState}}</h1>
 					</div> <!-- card-body -->
 
 					<div class="card-foot">

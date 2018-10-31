@@ -47,8 +47,12 @@ function compareRecordings(ra, rb) {
 			$scope.isEditing = false;
 			$scope.uploadCount = 0;
 			$scope.displayName = FirebaseService.userName();
-			$scope.data = {};
 
+			// use: to change display state of card
+			//values: recordings || progress || profile || settings
+			$scope.cardState = "recordings";
+
+			$scope.data = {};
 			$scope.data.uploadMessage = "";
       $scope.data.selectedProfileRecordings = [];
       $scope.data.sessionIsActive = AutoService.isSessionActive();
@@ -117,6 +121,24 @@ function compareRecordings(ra, rb) {
 			});
 		};
 
+
+
+
+		// ===========================================================
+		// CARD STATE
+		// ===========================================================
+		$scope.setCardState = function(navState) {
+			//let state = navState;
+			console.log(navState);
+			$scope.cardState = navState;
+		}
+
+
+
+		// ===========================================================
+		// CARD: RECORDINGS
+		// ===========================================================
+
 		$scope.updateRecordingsList = function() {
 			$scope.data.selectedProfileRecordings = [];
 			ProfileService.getRecordingsForProfile($scope.data.currentProfile, function(recordings) {
@@ -140,138 +162,6 @@ function compareRecordings(ra, rb) {
 				});
 			});
 		}
-
-		$scope.setIsEditing = function(isEditing)
-		{
-			$scope.isEditing = isEditing;
-			$scope.editing = isEditing ? "editing" : "";
-		};
-
-		$scope.saveProfile = function()
-		{
-			if ($scope.data.currentProfile.name !== undefined &&
-				$scope.data.currentProfile.age !== undefined &&
-				$scope.data.currentProfile.heightFeet !== undefined &&
-				$scope.data.currentProfile.heightInches !== undefined &&
-				$scope.data.currentProfile.gender !== undefined)
-			{
-				ProfileService.saveProfile($scope.data.currentProfile).then(function()
-				{
-					ProfileService.getAllProfiles().then(function(res)
-					{
-						$scope.data.profiles = res;
-						$scope.setIsEditing(false);
-						ProfileService.setCurrentProfileUUID($scope.data.currentProfile.uuid);
-					});
-				});
-			} else {
-				alert("Profile is missing some data");
-			}
-
-		};
-
-		$scope.cancelEdit = function()
-		{
-			ProfileService.getCurrentProfile().then( function(res) {
-				$scope.data.currentProfile = res;
-			});
-			$scope.setIsEditing(false);
-		};
-
-		$scope.createProfile = function()
-		{
-			$scope.data.currentProfile = ProfileService.createProfile();
-			$scope.setIsEditing(true);
-		};
-
-		function clamp(x, lo, hi)
-		{
-			return (x < lo ? lo : (x > hi ? hi : x));
-		}
-
-		$scope.deleteProfile = function(profile)
-		{
-			function doDelete()
-			{
-				var profileIdx = $scope.data.profiles.indexOf(profile);
-				profileIdx = clamp(profileIdx, 0, $scope.data.profiles.length - 2);
-				ProfileService.deleteProfile(profile).then(function()
-				{
-					ProfileService.getAllProfiles().then(function(res)
-					{
-						$scope.data.profiles = res;
-						if(!res.length)
-						{
-							$scope.data.currentProfile = null;
-							$scope.updateCurrentProfile(null);
-						}
-						else
-						{
-							$scope.data.currentProfile = $scope.data.profiles[profileIdx];
-							$scope.updateCurrentProfile($scope.data.currentProfile);
-						}
-					});
-				});
-			}
-
-			// Check if we're in the browser or in iOS
-			if(navigator.notification)
-			{
-				navigator.notification.confirm("Are you sure you want to delete " + profile.name + "?" , function(i)
-				{
-					if(i == 1)
-					{
-						doDelete();
-					}
-				}, "Delete All", ["OK", "Cancel"]);
-			}
-			else
-			{
-				doDelete();
-			}
-		}
-
-		$scope.deleteAllProfiles = function()
-		{
-			function doDelete()
-			{
-				ProfileService.deleteAllProfiles().then(function () {
-					$scope.data.currentProfile = null;
-					$scope.data.profiles = [];
-					$scope.updateCurrentProfile(null);
-				});
-			}
-			if(navigator.notification)
-			{
-				navigator.notification.confirm("Are you sure you want to delete all profiles?", function(i)
-				{
-					if(i == 1)
-					{
-						doDelete();
-					}
-				}, "Delete All", ["OK", "Cancel"]);
-			}
-			else
-			{
-				doDelete();
-			}
-		};
-
-		$scope.logOut = function() {
-			firebase.auth().signOut().then(function (thing) {
-				console.log("Sign out successful");
-			}, function (err) {
-				console.trace(err);
-			});
-		}
-
-		$scope.optInFormalTesting = function() {
-			ProfileService.getCurrentProfile().then(function (profile) {
-				if (profile) AutoService.promptForFormalParticipation(profile);
-			});
-		}
-
-		var selected = [];
 
 		$scope.recordingClicked = function (member) {
 			var index = $scope.data.selectedProfileRecordings.indexOf(member);
@@ -305,15 +195,7 @@ function compareRecordings(ra, rb) {
 					});
 				}
 			}
-    };
-
-    $scope.startSession = function() {
-      AutoService.startSession();
-    };
-
-    $scope.stopSession = function() {
-      AutoService.stopSession();
-    };
+		};
 
 		$scope.uploadSelectedRecordings = function() {
 
@@ -363,6 +245,187 @@ function compareRecordings(ra, rb) {
 				}
 			});
 		};
+
+		// ===========================================================
+		// CARD: PROGRESS
+		// ===========================================================
+
+
+
+		// ===========================================================
+		// CARD: PROFILES
+		// ===========================================================
+		// if
+		// $scope.isEditing = false;
+
+		$scope.createProfile = function()
+		{
+			$scope.data.currentProfile = ProfileService.createProfile();
+			$scope.setIsEditing(true);
+		};
+
+		$scope.setIsEditing = function(isEditing) {
+			$scope.isEditing = isEditing;
+			$scope.editing = isEditing ? "editing" : "";
+		};
+
+		$scope.cancelEdit = function()
+		{
+			ProfileService.getCurrentProfile().then( function(res) {
+				$scope.data.currentProfile = res;
+			});
+			$scope.setIsEditing(false);
+		};
+
+		$scope.saveProfile = function()
+		{
+			if ($scope.data.currentProfile.name !== undefined &&
+				$scope.data.currentProfile.age !== undefined &&
+				$scope.data.currentProfile.heightFeet !== undefined &&
+				$scope.data.currentProfile.heightInches !== undefined &&
+				$scope.data.currentProfile.gender !== undefined)
+			{
+				ProfileService.saveProfile($scope.data.currentProfile).then(function()
+				{
+					ProfileService.getAllProfiles().then(function(res)
+					{
+						$scope.data.profiles = res;
+						$scope.setIsEditing(false);
+						ProfileService.setCurrentProfileUUID($scope.data.currentProfile.uuid);
+					});
+				});
+			} else {
+				alert("Profile is missing some data");
+			}
+		};
+
+		function clamp(x, lo, hi)
+		{
+			return (x < lo ? lo : (x > hi ? hi : x));
+		}
+
+		$scope.deleteProfile = function(profile)
+		{
+			function doDelete()
+			{
+				var profileIdx = $scope.data.profiles.indexOf(profile);
+				profileIdx = clamp(profileIdx, 0, $scope.data.profiles.length - 2);
+				ProfileService.deleteProfile(profile).then(function()
+				{
+					ProfileService.getAllProfiles().then(function(res)
+					{
+						$scope.data.profiles = res;
+						if(!res.length)
+						{
+							$scope.data.currentProfile = null;
+							$scope.updateCurrentProfile(null);
+						}
+						else
+						{
+							$scope.data.currentProfile = $scope.data.profiles[profileIdx];
+							$scope.updateCurrentProfile($scope.data.currentProfile);
+						}
+					});
+				});
+			}
+
+			// Check if we're in the browser or in iOS
+			if(navigator.notification)
+			{
+				navigator.notification.confirm("Are you sure you want to delete " + profile.name + "?" , function(i)
+				{
+					if(i == 1)
+					{
+						doDelete();
+					}
+				}, "Delete All", ["OK", "Cancel"]);
+			}
+			else
+			{
+				doDelete();
+			}
+		}
+
+		// ===========================================================
+		// CARD: SETTINGS
+		// ===========================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		$scope.deleteAllProfiles = function()
+		{
+			function doDelete()
+			{
+				ProfileService.deleteAllProfiles().then(function () {
+					$scope.data.currentProfile = null;
+					$scope.data.profiles = [];
+					$scope.updateCurrentProfile(null);
+				});
+			}
+			if(navigator.notification)
+			{
+				navigator.notification.confirm("Are you sure you want to delete all profiles?", function(i)
+				{
+					if(i == 1)
+					{
+						doDelete();
+					}
+				}, "Delete All", ["OK", "Cancel"]);
+			}
+			else
+			{
+				doDelete();
+			}
+		};
+
+		$scope.logOut = function() {
+			firebase.auth().signOut().then(function (thing) {
+				console.log("Sign out successful");
+			}, function (err) {
+				console.trace(err);
+			});
+		}
+
+		$scope.optInFormalTesting = function() {
+			ProfileService.getCurrentProfile().then(function (profile) {
+				if (profile) AutoService.promptForFormalParticipation(profile);
+			});
+		}
+
+		var selected = [];
+
+
+
+
+
+    $scope.startSession = function() {
+      AutoService.startSession();
+    };
+
+    $scope.stopSession = function() {
+      AutoService.stopSession();
+    };
+
+		// ----------------
+
+		//$scope.displayName = FirebaseService.userName();
+		//$scope.data = {};
+		//$scope.data.currentProfile
+		//console.log($scope.data);
+		//---------------
+
+
 
 		init();
 

@@ -137,13 +137,39 @@
 
 .profiles-card {
 	display: flex;
+	flex-flow: column nowrap;
 	background-color: $white;
 	width: 100%;
 	height: $row-h * 4.5;
+	padding: 2em 0;
 	border-radius: 10px;
 }
 
+.card-head {
+	.card-headBox {
+		display: flex;
+		flex-direction: row nowrap;
+	}
+	.name {}
+} // end card-head
 
+.card-navBox {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-around;
+	height: auto;
+	width: 100%;
+	border-top: 2px solid $c-lightBlue;
+	border-bottom: 2px solid $c-lightBlue;
+
+	.pro_navitem {
+		padding: 0.5em 0;
+		color: $c-text-main;
+		font-size: 0.9em;
+		font-weight: 400;
+		//margin-right: 3em;
+	}
+}
 
 // ------------------------------
 
