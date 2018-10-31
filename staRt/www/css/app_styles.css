@@ -769,8 +769,8 @@ p.display-name {
     padding-left: 20px;
     margin-bottom: 10px; }
     .tutNoWave-content .noWaveRow .noWave3 {
-      border: 1px solid green;
-      width: 50%; }
+      padding-top: 0.5em;
+      width: 70%; }
   .tutNoWave-content .charImg {
     position: absolute; }
 
