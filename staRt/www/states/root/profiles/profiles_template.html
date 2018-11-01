@@ -1,115 +1,156 @@
 <ion-view view-title="Profiles" class="state-contentBox" hide-nav-bar="false">
 
 	<div class="profiles-layout_view-container">
+
 		<ion-nav-bar class="ion-nav-bar"></ion-nav-bar>
-		<!-- <ion-nav-bar class="ion-nav-bar--old"></ion-nav-bar> -->
 
 		<div class="profiles-layout_bg-container">
 			<!-- full-width eles go here -->
+
+			<div class="profiles-layout_toolbar-container">
+
+				<div class="slpInfoBox">
+					<p>Clinician: {{displayName}}</p>
+
+					<button class="button button-calm" 
+						ng-click="logOut()" 
+						ng-disabled="isEditing">
+						Log out
+					</button>
+
+				</div>
+			</div>
 		</div>
 
 		<div class="profiles-layout_drawer-left">
 
 			<div class="profiles_list-head">
-				<!-- <div class="header-img"></div>
-				<div class="closeBox"></div> -->
+				<div class="header-img"></div>
+				<div class="closeBox">X</div>
+
 				<div class="head-content">
-					<div class="title">
-						<p> Registered Participants </p>
+
+					<div class="title">REGISTERED PARTICIPANTS</div>
+
+					<div class="searchBox">
+						<div class="banner">
+							<div class="banner-hl"></div>
+						</div>
+						<div class="searchBar">Search Bar Placholder</div>
 					</div>
-					<div class="searchBar">Search</div>
 				</div>
-			</div>
+			</div> <!-- end profiles_list-head -->
 
 			<div class="profiles_list-body">
-				<!--  See if this should be an ion-pane for the scrolling feature. -->
-				<ion-list class="list">
-						<ion-radio
-							name="name"
-							ng-model="data.currentProfileUUID"
-							ng-repeat="profile in data.profiles track by profile.uuid"
-							ng-value="profile.uuid"
-							ng-change="updateCurrentProfile(profile)">
-								{{ (profile.name === undefined) ? 'New Profile' : profile.name }}
-						</ion-radio>
-					</ion-list> <!-- </ion-list> -->
+
+				<ion-scroll direction="y">
+					<ion-list class="list">
+							<ion-radio
+								name="name"
+								ng-model="data.currentProfileUUID"
+								ng-repeat="profile in data.profiles track by profile.uuid"
+								ng-value="profile.uuid"
+								ng-change="updateCurrentProfile(profile)">
+									{{ (profile.name === undefined) ? 'New Profile' : profile.name }}
+							</ion-radio>
+						</ion-list> <!-- </ion-list> -->
+				</ion-scroll>
+
 			</div> <!-- .profiles_list-body -->
 
 			<div class="profiles_list-foot">
-				register new
-				<div class="">
-					<div class="">
-						<div class="">
-							<button
-								class="button button-calm column-div"
-								ng-click="createProfile()"
-								ng-disabled="isEditing"
-								ng-hide="isEditing">
-								<i class="icon ion-person-add"></i>
-								New
-							</button>
-						</div>
-						<div class="">
-							<button
-								class="button button-stable column-div"
-								ng-click="deleteAllProfiles()"
-								ng-disabled="isEditing"
-								ng-hide="isEditing || !data.currentProfile">
-								<i class="icon ion-trash-b"></i>
-								Delete All
-							</button>
-						</div>
-					</div>
+				<button
+					class="button button-calm"
+					ng-click="createProfile()"
+					ng-disabled="isEditing"
+					ng-hide="isEditing">
+					<i class="icon ion-person-add"></i>
+					New
+				</button>
+				<button
+					class="button button-stable"
+					ng-click="deleteAllProfiles()"
+					ng-disabled="isEditing"
+					ng-hide="isEditing || !data.currentProfile">
+					<i class="icon ion-trash-b"></i>
+					Delete All
+				</button>
 			</div> <!-- profiles_list-foot -->
 
 		</div>
 		<!-- end .profiles-layout_drawer-left -->
 
 
-			<!-- content goes here -->
-			<div class="profiles-layout_content-container">
+		<!-- content goes here -->
+		<div class="profiles-layout_content-container">
 
-				<div class="profiles-card">
+			<!-- if NO currentUser, msg -->
+			<!-- if currentUser, card -->
 
-					<div class="card-head">
+			<div class="profiles-card">
 
-						<div class="card-headBox">
-							<h1>{{data.currentProfile.name}}</h1>
+				<div class="card-head">
+
+					<div class="card-headBox">
+						<h1>{{data.currentProfile.name}}</h1>
+					</div>
+
+					<div class="card-navBox">
+						<div ng-click="setCardState('recordings')"
+							class="pro_navitem" 
+							ng-class="{'pro_navitem--active': cardState === 'recordings' }">
+							recordings
 						</div>
 
-						<div class="card-navBox">
-							<div class="pro_navitem"
-							ng-click="setCardState('recordings')">
-								recordings
-							</div>
-							<div class="pro_navitem"
-							ng-click="setCardState('progress')">
-								progress
-							</div>
-							<div class="pro_navitem"
-							ng-click="setCardState('profile')">
-								profile
-							</div>
-							<div class="pro_navitem"
-							ng-click="setCardState('settings')">
-								settings
-							</div>
-
+						<div ng-click="setCardState('progress')"
+							class="pro_navitem" 
+							ng-class="{'pro_navitem--active': cardState === 'progress' }">
+							progress
+						</div>
+						<div ng-click="setCardState('profile')"
+							class="pro_navitem"
+							ng-class="{'pro_navitem--active': cardState === 'profile' }">
+							profile
 						</div>
 
-					</div> <!-- card-head -->
+						<div ng-click="setCardState('settings')"
+							class="pro_navitem"
+							ng-class="{'pro_navitem--active': cardState === 'settings' }">
+							settings
+						</div>
 
-					<div class="card-body">
-						<h1>{{cardState}}</h1>
-					</div> <!-- card-body -->
+					</div>
 
-					<div class="card-foot">
-					</div> <!-- card-foot -->
+				</div> <!-- card-head -->
 
-				</div>
+
+				<!-- CARD BODY STARTS HERE --> 
+				<div class="card-switchParent" ng-switch on="cardState">
+
+					<div class="card-switchBox" ng-switch-when="recordings" >
+						<div ng-include=" './states/root/profiles/card-templates/card-recordings.html'"></div>
+					</div>	<!-- END Recordings card-switchBox -->
+
+					<div class="card-switchBox" ng-switch-when="progress">
+						<div ng-include=" './states/root/profiles/card-templates/card-progress.html'"></div>
+					</div> <!-- END Progress card-switchBox -->
+
+					<div class="card-switchBox" ng-switch-when="profile">
+						<div ng-include=" './states/root/profiles/card-templates/card-profile.html'"></div>
+					</div> <!-- END Progress card-switchBox -->
+
+					<div class="card-switchBox" ng-switch-when="settings">
+						<div ng-include=" './states/root/profiles/card-templates/card-settings.html'"></div>
+					</div> <!-- END Progress card-switchBox -->
+
+				</div> <!-- card-switchParent -->
+
+			</div> <!-- profiles-card -->
+
 		</div>
 		<!-- end .profiles-layout_content-container -->
 
-	</div> <!-- end profiles-contentBox-->
+	</div> 
+	<!-- end profiles-contentBox-->
 
 </ion-view>

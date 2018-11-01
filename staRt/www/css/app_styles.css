@@ -594,6 +594,25 @@ input, textarea {
     height: 100%;
     background-color: #c2f2f2;
     z-index: 1; }
+  .profiles-layout_view-container .profiles-layout_toolbar-container .slpInfoBox {
+    position: absolute;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 75vw;
+    margin-top: 3em;
+    width: 20.83333vw;
+    font-size: 0.8em;
+    line-height: 1.5;
+    font-weight: 600;
+    text-align: right;
+    color: #7ab5b8;
+    z-index: 99; }
+    .profiles-layout_view-container .profiles-layout_toolbar-container .slpInfoBox button {
+      margin-left: 1em;
+      height: 48px;
+      width: auto; }
   .profiles-layout_view-container .profiles-layout_drawer-left {
     position: absolute;
     display: flex;
@@ -602,8 +621,12 @@ input, textarea {
     left: 0;
     width: 41.66667vw;
     height: 100%;
-    z-index: 90;
-    border: 1px solid violet; }
+    background-color: #0fabc1;
+    background-image: url("../img/profiles/sky-75alpha.png");
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    z-index: 90; }
   .profiles-layout_view-container .profiles-layout_content-container {
     position: absolute;
     display: flex;
@@ -612,24 +635,35 @@ input, textarea {
     margin-left: 50vw;
     height: 83.33333vh;
     width: 45.83333vw;
-    z-index: 10;
-    border: 1px solid red; }
+    z-index: 10; }
 
 .profiles_list-head {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-end;
-  height: 20.83333vh;
-  width: 100%;
-  background-color: pink;
-  border: 1px solid red; }
+  height: 24.16667vh;
+  width: 100%; }
   .profiles_list-head .header-img {
     position: absolute;
     width: 100%;
     height: 100%; }
   .profiles_list-head .closeBox {
-    position: absolute; }
+    position: absolute;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1em;
+    top: 0;
+    left: 33.33333vw;
+    height: 8.33333vh;
+    width: 8.33333vw;
+    color: #c2f2f2;
+    font-size: 2em;
+    font-weight: 600;
+    border-left: 1px solid red;
+    border-bottom: 1px solid red; }
   .profiles_list-head .head-content {
     position: relative;
     display: flex;
@@ -637,43 +671,76 @@ input, textarea {
     .profiles_list-head .head-content .title {
       position: relative;
       display: flex;
+      flex-flow: column nowrap;
+      justify-content: flex-end;
       width: 100%;
-      height: 4.16667vh;
+      height: 8.33333vh;
       padding-left: 16.66667vw;
-      border: 1px solid red; }
-    .profiles_list-head .head-content .searchBar {
+      color: #3D6D84;
+      font-size: 1.15em;
+      font-weight: 600;
+      text-align: left; }
+    .profiles_list-head .head-content .searchBox {
       position: relative;
       display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
       width: 100%;
-      height: 4.16667vh;
-      padding-left: 16.66667vw;
-      border: 1px solid red; }
+      height: 7.5vh; }
+      .profiles_list-head .head-content .searchBox .banner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #467c91;
+        z-index: 90; }
+        .profiles_list-head .head-content .searchBox .banner .banner-hl {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 50%;
+          background-color: #49889b;
+          z-index: 91; }
+      .profiles_list-head .head-content .searchBox .searchBar {
+        position: relative;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        margin-left: 15.41667vw;
+        width: 23.33333vw;
+        height: 65%;
+        padding: 1em;
+        background-color: rgba(62, 109, 124, 0.75);
+        color: white;
+        font-weight: 500;
+        border-radius: 24px;
+        z-index: 92;
+        border: 1px solid red; }
 
 .profiles_list-body {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
-  height: 50vh;
+  background-color: white;
+  height: 59.16667vh;
   width: 100%;
-  background-color: lightGreen; }
+  padding-left: 16.66667vw;
+  text-align: left; }
 
 .profiles_list-foot {
   position: relative;
   display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
   height: 16.66667vh;
   width: 100%;
-  background-color: lightBlue;
-  border: 1px solid blue; }
-
-.profiles__list {
-  height: 100%;
-  width: 100%;
-  background-color: lightgray;
-  border: 1px solid red; }
-
-.profiles-flex {
-  flex-flow: column;
-  display: flex; }
+  padding-left: 10.41667vw; }
+  .profiles_list-foot button {
+    height: 64px;
+    width: 12.5vw; }
 
 .profiles-card {
   display: flex;
@@ -681,12 +748,26 @@ input, textarea {
   background-color: #ffffff;
   width: 100%;
   height: 75vh;
-  padding: 2em 0;
-  border-radius: 10px; }
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); }
 
-.card-head .card-headBox {
+.card-head {
+  position: relative;
   display: flex;
-  flex-direction: row nowrap; }
+  flex-flow: column nowrap;
+  width: 100%;
+  height: 16.66667vh; }
+  .card-head .card-headBox {
+    display: flex;
+    padding: 2em 2.5em;
+    padding-bottom: 0.25em;
+    color: #3D6D84;
+    flex-direction: row nowrap;
+    align-items: center; }
+  .card-head h1 {
+    font-size: 2em;
+    color: #3D6D84;
+    font-weight: 400; }
 
 .card-navBox {
   display: flex;
@@ -697,10 +778,44 @@ input, textarea {
   border-top: 2px solid #ace2e5;
   border-bottom: 2px solid #ace2e5; }
   .card-navBox .pro_navitem {
-    padding: 0.5em 0;
+    padding: 0.5em 1em;
     color: #3D6D84;
     font-size: 0.9em;
-    font-weight: 400; }
+    font-weight: 400;
+    border-top: 2px solid white;
+    border-bottom: 2px solid white; }
+    .card-navBox .pro_navitem.pro_navitem--active {
+      font-weight: 700;
+      border-top: 2px solid #3D6D84;
+      border-bottom: 2px solid #3D6D84; }
+
+.card-bodyBox {
+  position: relative;
+  display: flex; }
+
+.card-content {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  height: 60.83333vh;
+  width: 45.83333vw;
+  text-align: left; }
+  .card-content .card-body {
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    height: auto;
+    width: 100%;
+    padding: 2.5em; }
+  .card-content .card-foot {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    width: 100%;
+    height: 8.33333vh;
+    border-top: 1px solid red; }
 
 p.display-name {
   margin-bottom: 0px;

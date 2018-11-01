@@ -49,7 +49,7 @@ function compareRecordings(ra, rb) {
 			$scope.displayName = FirebaseService.userName();
 
 			// use: to change display state of card
-			//values: recordings || progress || profile || settings
+			//values: recordings || progress || profile || settings || ""
 			$scope.cardState = "recordings";
 
 			$scope.data = {};
@@ -110,6 +110,17 @@ function compareRecordings(ra, rb) {
 			});
 		}
 
+
+		// ===========================================================
+	  // PROFILE DRAWER
+	  // ===========================================================
+
+		/* updateCurrentProfile() Notes
+		 	updates $scope.data.currentProfile & $scope.data.currentProfileUUID
+			trigger: selecting a new profile from the list in .profiles-layout_drawer-left
+			input ele: radio-ion,
+			ng-model: data.currentProfileUUID
+		*/
 		$scope.updateCurrentProfile = function(profile)
 		{
 			ProfileService.setCurrentProfileUUID(profile.uuid).then(function() {
@@ -121,17 +132,30 @@ function compareRecordings(ra, rb) {
 			});
 		};
 
-
+		/* updateCurrentProfile() Notes
+			updates $scope.data.currentProfile & $scope.data.currentProfileUUID
+			trigger: selecting a new profile from the list in .profiles-layout_drawer-left
+			input ele: radio-ion,
+			ng-model: data.currentProfileUUID
+		*/
+		$scope.createProfile = function()
+		{
+			$scope.data.currentProfile = ProfileService.createProfile();
+			$scope.setIsEditing(true);
+			$scope.setCardState('profile');
+		};
 
 
 		// ===========================================================
 		// CARD STATE
+		// vals: 'recordings' || 'progress' || 'profile' || 'settings'
 		// ===========================================================
 		$scope.setCardState = function(navState) {
 			//let state = navState;
 			console.log(navState);
 			$scope.cardState = navState;
 		}
+
 
 
 
@@ -258,12 +282,6 @@ function compareRecordings(ra, rb) {
 		// if
 		// $scope.isEditing = false;
 
-		$scope.createProfile = function()
-		{
-			$scope.data.currentProfile = ProfileService.createProfile();
-			$scope.setIsEditing(true);
-		};
-
 		$scope.setIsEditing = function(isEditing) {
 			$scope.isEditing = isEditing;
 			$scope.editing = isEditing ? "editing" : "";
@@ -355,14 +373,6 @@ function compareRecordings(ra, rb) {
 
 
 
-
-
-
-
-
-
-
-
 		$scope.deleteAllProfiles = function()
 		{
 			function doDelete()
@@ -406,9 +416,6 @@ function compareRecordings(ra, rb) {
 		var selected = [];
 
 
-
-
-
     $scope.startSession = function() {
       AutoService.startSession();
     };
@@ -424,8 +431,6 @@ function compareRecordings(ra, rb) {
 		//$scope.data.currentProfile
 		//console.log($scope.data);
 		//---------------
-
-
 
 		init();
 

@@ -1,0 +1,30 @@
+.card-content {
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	height: $row-h * 3.65;
+	width: $col-w * 5.5;
+	text-align: left;
+	//border: 1px solid blue;
+
+	.card-body {
+		position: relative;
+		display: flex;
+		flex-flow: column nowrap;
+		height: auto;
+		width: 100%;
+		padding: 2.5em;
+		//padding-top: 2em;
+		//border: 1px solid red;
+	}
+	.card-foot {
+		position: relative;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		width: 100%;
+		height: $row-h * 0.5;
+		border-top: 1px solid red;
+	} // .card-foot
+} //.card-body
