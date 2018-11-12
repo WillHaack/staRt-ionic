@@ -605,14 +605,14 @@ input, textarea {
     width: 20.83333vw;
     font-size: 0.8em;
     line-height: 1.5;
-    font-weight: 600;
     text-align: right;
     color: #7ab5b8;
     z-index: 99; }
-    .profiles-layout_view-container .profiles-layout_toolbar-container .slpInfoBox button {
-      margin-left: 1em;
-      height: 48px;
-      width: auto; }
+    .profiles-layout_view-container .profiles-layout_toolbar-container .slpInfoBox .slp-nameBox {
+      margin-right: 1.25em;
+      text-align: right;
+      font-size: 1.2em;
+      line-height: 1.5; }
   .profiles-layout_view-container .profiles-layout_drawer-left {
     position: absolute;
     display: flex;
@@ -646,8 +646,14 @@ input, textarea {
   width: 100%; }
   .profiles_list-head .header-img {
     position: absolute;
-    width: 100%;
-    height: 100%; }
+    top: 0;
+    margin-left: 12.5vw;
+    width: 70%;
+    height: 16.66667vh;
+    background-image: url("../img/profiles/birdsInClouds.svg");
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: contain; }
   .profiles_list-head .closeBox {
     position: absolute;
     display: flex;
@@ -664,46 +670,54 @@ input, textarea {
     font-weight: 600;
     border-left: 1px solid red;
     border-bottom: 1px solid red; }
+  .profiles_list-head .title {
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+    width: 100%;
+    height: 8.33333vh;
+    padding-left: 16.66667vw;
+    color: #3D6D84;
+    font-size: 1.15em;
+    font-weight: 600;
+    text-align: left; }
   .profiles_list-head .head-content {
     position: relative;
     display: flex;
     flex-flow: column nowrap; }
-    .profiles_list-head .head-content .title {
-      position: relative;
-      display: flex;
-      flex-flow: column nowrap;
-      justify-content: flex-end;
-      width: 100%;
-      height: 8.33333vh;
-      padding-left: 16.66667vw;
-      color: #3D6D84;
-      font-size: 1.15em;
-      font-weight: 600;
-      text-align: left; }
-    .profiles_list-head .head-content .searchBox {
+    .profiles_list-head .head-content .bannerBox {
       position: relative;
       display: flex;
       flex-flow: row nowrap;
       align-items: center;
       width: 100%;
-      height: 7.5vh; }
-      .profiles_list-head .head-content .searchBox .banner {
+      height: 7.5vh;
+      z-index: 90; }
+      .profiles_list-head .head-content .bannerBox .banner {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: #467c91;
-        z-index: 90; }
-        .profiles_list-head .head-content .searchBox .banner .banner-hl {
+        background-color: #467c91; }
+        .profiles_list-head .head-content .bannerBox .banner .banner-hl {
           position: absolute;
           top: 0;
           left: 0;
           width: 100%;
           height: 50%;
-          background-color: #49889b;
-          z-index: 91; }
-      .profiles_list-head .head-content .searchBox .searchBar {
+          background-color: #49889b; }
+      .profiles_list-head .head-content .bannerBox .banner-text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        width: 100%;
+        text-align: center;
+        color: white;
+        z-index: 93; }
+      .profiles_list-head .head-content .bannerBox .searchBar {
         position: relative;
         display: flex;
         flex-flow: row nowrap;
@@ -723,24 +737,83 @@ input, textarea {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
-  background-color: white;
-  height: 59.16667vh;
+  justify-content: space-between;
+  height: 55vh;
   width: 100%;
   padding-left: 16.66667vw;
-  text-align: left; }
+  text-align: left;
+  border: 1px solid lime; }
+
+.item, .item-content {
+  background-color: transparent !important; }
+
+.item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
+
+.name-item {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center; }
+  .name-item .initials {
+    margin-right: 1em; }
+
+.testerIcon {
+  position: relative;
+  height: 32px;
+  width: 32px;
+  margin-left: 1em;
+  background-image: url("../img/profiles/ico_star-line.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; }
+
+.testerNote {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: left;
+  align-items: center;
+  margin-top: 1em;
+  padding: 1em 0;
+  color: #3D6D84;
+  font-size: 0.9em; }
 
 .profiles_list-foot {
   position: relative;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   justify-content: space-around;
   align-items: center;
-  height: 16.66667vh;
+  background-color: #edf9f8;
+  height: 22.16667vh;
   width: 100%;
-  padding-left: 10.41667vw; }
-  .profiles_list-foot button {
-    height: 64px;
-    width: 12.5vw; }
+  padding-left: 12.5vw;
+  padding-bottom: 2.5vh; }
+  .profiles_list-foot .footRow {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    height: 50%;
+    width: 100%;
+    color: #3D6D84; }
+    .profiles_list-foot .footRow button {
+      background-color: #93c9c7; }
+
+.newUserBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 64px;
+  margin: 0 0.5em;
+  padding: 0 2em;
+  min-width: 250px;
+  color: white;
+  background-color: #4ec8d8;
+  font-weight: 600;
+  border-radius: 32px; }
 
 .profiles-card {
   display: flex;
@@ -824,75 +897,35 @@ input, textarea {
     height: 8.33333vh;
     border-top: 1px solid red; }
 
-p.display-name {
-  margin-bottom: 0px;
-  padding: 10px;
-  display: table-cell;
-  vertical-align: middle; }
-
-.flex-align-right {
+.r-btn {
   display: flex;
-  flex-direction: row-reverse; }
-
-.profiles__recordings .item-radio {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: black; }
-
-.profiles__recordings ion-item.selected {
-  background-color: lightgray; }
-
-.profiles__recordings ion-item.activated {
-  background-color: white; }
-
-.item-radio.not_uploaded {
-  border-left-style: solid;
-  border-left-width: 5px;
-  border-left-color: red; }
-
-.upload_badge.uploaded {
-  color: green;
-  font-weight: bold; }
-
-.upload_badge.not_uploaded {
-  color: red;
-  font-weight: bold; }
-
-.profiles button {
-  font-size: 12px;
-  min-width: 100px; }
-
-.profiles h2 {
-  font-size: 22px; }
-
-.profiles__recordings ion-scroll {
-  height: 340px; }
-
-.profiles__info {
-  flex: 3 0 0%;
-  margin-right: 10px; }
-
-.profiles__recordings {
-  flex: 3 0 0%; }
-
-.button-row {
   flex-flow: row nowrap;
-  display: flex;
-  width: 100%; }
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  width: auto;
+  margin: 0 1em;
+  margin-right: 1em;
+  padding: 0.5em 1.35em;
+  border-radius: 10px;
+  background-color: #ACE2E5;
+  border-bottom: 1px solid #A1D3D3;
+  border-right: 1px solid #A1D3D3;
+  cursor: pointer; }
 
-.column-div {
-  flex: 1 0 0%; }
+.r-btn:active {
+  background-color: #D7F4F3; }
 
-.profiles-contentBox .radio-content .item-content {
-  padding-right: 0px;
-  text-overflow: initial; }
+.r-btn .btn-text {
+  font-size: 1em;
+  line-height: 1.5;
+  font-weight: 600;
+  color: #7ab5b8;
+  text-decoration: none;
+  margin-right: 1em; }
 
-.profiles-contentBox .radio-content span {
-  margin-right: 64px; }
-
-.upload_badge {
-  color: #00bb00;
-  font-weight: bold; }
+.r-btn i {
+  font-size: 2.5em; }
 
 .tutorial-layout_view-container {
   position: relative;

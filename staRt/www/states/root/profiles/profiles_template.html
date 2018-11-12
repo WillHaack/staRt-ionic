@@ -10,14 +10,16 @@
 			<div class="profiles-layout_toolbar-container">
 
 				<div class="slpInfoBox">
-					<p>Clinician: {{displayName}}</p>
 
-					<button class="button button-calm" 
-						ng-click="logOut()" 
+					<div class="slp-nameBox">
+						{{displayName}}
+					</div>
+					<div class="r-btn"
+						ng-click="logOut()"
 						ng-disabled="isEditing">
-						Log out
-					</button>
-
+						<span class="btn-text">Log<br />Out </span>
+						<i class="icon ion-log-in"></i>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -26,55 +28,77 @@
 
 			<div class="profiles_list-head">
 				<div class="header-img"></div>
-				<div class="closeBox">X</div>
+				<!-- <div class="closeBox">X</div> -->
+				<div class="title">REGISTERED PARTICIPANTS</div>
 
 				<div class="head-content">
-
-					<div class="title">REGISTERED PARTICIPANTS</div>
-
-					<div class="searchBox">
+					<div class="bannerBox">
 						<div class="banner">
 							<div class="banner-hl"></div>
 						</div>
-						<div class="searchBar">Search Bar Placholder</div>
-					</div>
-				</div>
+						<!-- <div class="searchBar">Search Bar Placholder</div> -->
+					</div> <!-- end bannerBox -->
+				</div> <!-- end head-content -->
 			</div> <!-- end profiles_list-head -->
 
 			<div class="profiles_list-body">
 
 				<ion-scroll direction="y">
 					<ion-list class="list">
-							<ion-radio
-								name="name"
-								ng-model="data.currentProfileUUID"
-								ng-repeat="profile in data.profiles track by profile.uuid"
-								ng-value="profile.uuid"
-								ng-change="updateCurrentProfile(profile)">
-									{{ (profile.name === undefined) ? 'New Profile' : profile.name }}
-							</ion-radio>
-						</ion-list> <!-- </ion-list> -->
+						<ion-radio
+							name="name"
+							ng-model="data.currentProfileUUID"
+							ng-repeat="profile in data.profiles track by profile.uuid"
+							ng-value="profile.uuid"
+							ng-change="updateCurrentProfile(profile)">
+								<div class="name-item">
+									<!-- <div class="initials">WW</div> -->
+									<div class="name-text">
+										{{profile.name}}
+									</div>
+									<div class="testerIcon"
+									ng-if="profile.formalTester">
+									</div>
+								</div>
+						</ion-radio>
+					</ion-list> <!-- </ion-list> -->
 				</ion-scroll>
 
+				<div class="testerNote">
+					<span class="testerIcon"></span> 
+					&nbsp; denotes formal testers
+				</div>
 			</div> <!-- .profiles_list-body -->
 
 			<div class="profiles_list-foot">
-				<button
-					class="button button-calm"
+
+				<div class="newUserBox footRow">
+					<div class="newUserBtn"
 					ng-click="createProfile()"
 					ng-disabled="isEditing"
 					ng-hide="isEditing">
-					<i class="icon ion-person-add"></i>
-					New
-				</button>
-				<button
-					class="button button-stable"
-					ng-click="deleteAllProfiles()"
-					ng-disabled="isEditing"
-					ng-hide="isEditing || !data.currentProfile">
-					<i class="icon ion-trash-b"></i>
-					Delete All
-				</button>
+						Create New User
+					</div>
+				</div>
+
+
+				<div class="footRow">
+					<button class="button button-calm">
+						Dummy Button
+					</button>
+
+					<button
+						class="button"
+						ng-click="deleteAllProfiles()"
+						ng-disabled="isEditing"
+						ng-hide="isEditing || !data.currentProfile">
+						<i class="icon ion-trash-b"></i>
+						Delete All
+					</button>
+				</div>
+
+
+
 			</div> <!-- profiles_list-foot -->
 
 		</div>
@@ -83,12 +107,12 @@
 
 		<!-- content goes here -->
 		<div class="profiles-layout_content-container">
-
+			
+			<!-- if NO profiles, msg -->
 			<!-- if NO currentUser, msg -->
 			<!-- if currentUser, card -->
 
 			<div class="profiles-card">
-
 				<div class="card-head">
 
 					<div class="card-headBox">

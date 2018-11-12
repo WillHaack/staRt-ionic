@@ -1,6 +1,7 @@
 // ================================================
 // PROFILES LIST
 //.profiles-layout_drawer-left 
+// z-index: 90;
 // ================================================
 
 .profiles_list-head {
@@ -14,8 +15,14 @@
 
 	.header-img {
 		position: absolute;
-		width: 100%;
-		height: 100%;
+		top: 0;
+		margin-left: $col-w * 1.5;
+		width: 70%;
+		height: $row-h;
+		background-image: url('../img/profiles/birdsInClouds.svg');
+		background-repeat: no-repeat;
+		background-position: center bottom;
+    	background-size: contain;
 	}
 
 	.closeBox {
@@ -36,37 +43,39 @@
 		border-bottom: 1px solid red;
 	}
 
+	.title {
+		position: relative;
+		display: flex;
+		flex-flow: column nowrap;
+
+		justify-content: flex-end;
+		width: 100%;
+		height: $row-h * 0.5;
+		padding-left: $col-w * 2;
+		color: $c-text-main; //white; //
+		font-size: 1.15em;
+		font-weight: 600;
+		text-align: left;
+		//z-index: 92;
+		//border-top: 1px solid red;
+	}
+
+
 	.head-content {
 		position: relative;
 		display: flex;
 		flex-flow: column nowrap;
 		// justify-content: flex-end;
 
-		.title {
-			position: relative;
-			display: flex;
-			flex-flow: column nowrap;
-
-			justify-content: flex-end;
-			width: 100%;
-			height: $row-h * 0.5;
-			padding-left: $col-w * 2;
-			color: $c-text-main;
-			font-size: 1.15em;
-			font-weight: 600;
-			text-align: left;
-			//border-top: 1px solid red;
-		}
-
-
 		// ----------------------------------
-		.searchBox {
+		.bannerBox {
 			position: relative;
 			display: flex;
 			flex-flow: row nowrap;
 			align-items: center;
 			width: 100%;
 			height: $row-h * 0.45;
+			z-index: 90;
 
 			.banner {
 				position: absolute;
@@ -75,7 +84,7 @@
 				width: 100%;
 				height: 100%;
 				background-color: #467c91;
-				z-index: 90;
+				//z-index: 90;
 
 				.banner-hl {
 					position: absolute;
@@ -84,11 +93,24 @@
 					width: 100%;
 					height: 50%;
 					background-color: #49889b;
-					z-index: 91;
+					//z-index: 91;
 				}
+
 			} // .banner
 
-			.searchBar {
+			.banner-text {
+				display: flex;
+				justify-content:center;
+				align-items: center;
+				height: auto;
+				width: 100%;
+				text-align: center;
+				color: white;
+				// border: 2px solid red;
+				z-index: 93;
+			}
+
+			.searchBar { // not in use
 				position: relative;
 				display: flex;
 				flex-flow: row nowrap;
@@ -108,32 +130,113 @@
 	} // .head-content
 } // .profiles_list-head
 
+
+
+// ======================================
 .profiles_list-body {
 	position: relative;
 	display: flex;
 	flex-flow: column nowrap;
-	//justify-content: flex-end;
-	background-color: white;
-	height: $row-h * 3.55;
+	justify-content: space-between;
+	height: $row-h * 3.3;
 	width: 100%;
 	padding-left: $col-w * 2;
 	text-align: left;
-	//border: 1px solid lime;
+	border: 1px solid lime;
 }
 
-.profiles_list-foot {
+.item, .item-content { // ionic class overwrite
+	background-color: transparent !important;
+}
+.item { // ionic class overwrite
+	border-bottom: 1px solid rgba(255,255,255, 0.5);
+}
+
+.name-item {
 	position: relative;
 	display: flex;
 	flex-flow: row nowrap;
-	justify-content: space-around;
 	align-items: center;
-	height: $row-h * 1;
-	width: 100%;
-	padding-left: $col-w * 1.25;
-	//border: 1px solid red;
+	// border: 1px solid red;
 
-	button {
-		height: 64px;
-		width: $col-w * 1.5;
+	.initials {
+		margin-right: 1em;
 	}
 }
+
+.testerIcon {
+	position: relative;
+	height: 32px;
+	width: 32px;
+	margin-left: 1em;
+	background-image: url('../img/profiles/ico_star-line.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	// border: 1px solid white;
+}
+
+.testerNote {
+	position: relative;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: left;
+	align-items: center;
+	margin-top: 1em;
+	padding: 1em 0;
+	color: $c-text-main;
+	//font-weight: 600;
+	font-size: 0.9em;
+	// border-top: 1px solid $c-text-subtle;
+}
+
+// -------------------------------------------------
+.profiles_list-foot {
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-around;
+	align-items: center;
+	background-color: #edf9f8;
+	height: $row-h * 1.33;
+	width: 100%;
+	padding-left: $col-w * 1.5;
+	padding-bottom: $row-h * 0.15;
+
+	.footRow {
+		position: relative;
+		display: flex;
+		flex-flow: row nowrap;
+		//justify-content: center;
+		justify-content: space-around;
+		align-items: center;
+		height: 50%;
+		width: 100%;
+		color: $c-text-main;
+		
+		//border: 1px solid pink;
+	
+		button {
+			background-color: #93c9c7;
+			// padding: 1em;
+		}
+	}
+}
+
+.newUserBtn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 64px;
+	margin: 0 0.5em;
+	// margin-top: 1.5em;
+	padding: 0 2em;
+	min-width: 250px;
+	color: white;
+	background-color: #4ec8d8;
+	font-weight: 600;
+	border-radius: 32px;
+	//border: 1px solid red;
+}
+
+
