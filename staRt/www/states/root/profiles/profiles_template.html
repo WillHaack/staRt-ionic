@@ -4,113 +4,21 @@
 
 		<ion-nav-bar class="ion-nav-bar"></ion-nav-bar>
 
-		<div class="profiles-layout_bg-container">
-			<!-- full-width eles go here -->
-
+		<div class="profiles-layout_absPos-container">
+			<!-- full-width eles (bgs) and absPos eles go here -->
 			<div class="profiles-layout_toolbar-container">
-
-				<div class="slpInfoBox">
-
-					<div class="slp-nameBox">
-						{{displayName}}
-					</div>
-					<div class="r-btn"
-						ng-click="logOut()"
-						ng-disabled="isEditing">
-						<span class="btn-text">Log<br />Out </span>
-						<i class="icon ion-log-in"></i>
-					</div>
-				</div>
 			</div>
 		</div>
 
-		<div class="profiles-layout_drawer-left">
+		<div class="profiles-layout_drawer-left"
+		ng-include=" './states/root/profiles/drawer-template/profiles-drawer.html' ">
 
-			<div class="profiles_list-head">
-				<div class="header-img"></div>
-				<!-- <div class="closeBox">X</div> -->
-				<div class="title">REGISTERED PARTICIPANTS</div>
-
-				<div class="head-content">
-					<div class="bannerBox">
-						<div class="banner">
-							<div class="banner-hl"></div>
-						</div>
-						<!-- placeholder-icon-->
-						<div class="searchBar">
-							<label class="searchBar-label">
-								<i class="icon ion-search "></i>
-								<input class="nameSearch" ng-model="nameSearch" type="text" placeholder="Search">
-							</label>
-						</div> <!-- end SearchBar -->
-					</div> <!-- end bannerBox -->
-				</div> <!-- end head-content -->
-			</div> <!-- end profiles_list-head -->
-
-			<div class="profiles_list-body">
-				<ion-scroll direction="y">
-					<ion-list class="list">
-						<ion-radio
-							name="name"
-							ng-model="data.currentProfileUUID"
-							ng-repeat="profile in data.profiles | filter:nameSearch track by profile.uuid"
-							ng-value="profile.uuid"
-							ng-change="updateCurrentProfile(profile)">
-								<div class="name-item">
-								<!-- <div class="initials">WW</div> -->
-									<div class="name-text">
-										{{profile.name}}
-									</div>
-									<div class="testerIcon"
-									ng-if="profile.formalTester">
-									</div>
-								</div>
-						</ion-radio>
-					</ion-list> <!-- </ion-list> -->
-				</ion-scroll>
-
-				<div class="testerNote">
-					<span class="testerIcon"></span> 
-					&nbsp; denotes formal testers
-				</div>
-			</div> <!-- .profiles_list-body -->
-
-			<div class="profiles_list-foot">
-
-				<div class="newUserBox footRow">
-					<div class="newUserBtn"
-					ng-click="createProfile()"
-					ng-disabled="isEditing"
-					ng-hide="isEditing">
-						Create New User
-					</div>
-				</div>
+			<!-- PROFILES DRAWER (PARTICPANT LIST) IS INSERTED HERE -->
+		
+		</div> <!-- end .profiles-layout_drawer-left -->
 
 
-				<div class="footRow">
-					<button class="button button-calm">
-						Dummy Button
-					</button>
-
-					<button
-						class="button"
-						ng-click="deleteAllProfiles()"
-						ng-disabled="isEditing"
-						ng-hide="isEditing || !data.currentProfile">
-						<i class="icon ion-trash-b"></i>
-						Delete All
-					</button>
-				</div>
-
-
-
-			</div> <!-- profiles_list-foot -->
-
-		</div>
-		<!-- end .profiles-layout_drawer-left -->
-
-
-		<!-- content goes here -->
+		
 		<div class="profiles-layout_content-container">
 			
 			<!-- if NO profiles, msg -->
@@ -125,6 +33,13 @@
 					</div>
 
 					<div class="card-navBox">
+
+						<div ng-click="setCardState('profile')"
+							class="pro_navitem"
+							ng-class="{'pro_navitem--active': cardState === 'profile' }">
+							profile
+						</div>
+
 						<div ng-click="setCardState('recordings')"
 							class="pro_navitem" 
 							ng-class="{'pro_navitem--active': cardState === 'recordings' }">
@@ -136,11 +51,7 @@
 							ng-class="{'pro_navitem--active': cardState === 'progress' }">
 							progress
 						</div>
-						<div ng-click="setCardState('profile')"
-							class="pro_navitem"
-							ng-class="{'pro_navitem--active': cardState === 'profile' }">
-							profile
-						</div>
+
 
 						<div ng-click="setCardState('settings')"
 							class="pro_navitem"

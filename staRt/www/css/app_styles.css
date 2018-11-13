@@ -586,7 +586,7 @@ input, textarea {
   display: flex;
   width: 100vw;
   height: 100vh; }
-  .profiles-layout_view-container .profiles-layout_bg-container {
+  .profiles-layout_view-container .profiles-layout_absPos-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -594,29 +594,11 @@ input, textarea {
     height: 100%;
     background-color: #c2f2f2;
     z-index: 1; }
-  .profiles-layout_view-container .profiles-layout_toolbar-container .slpInfoBox {
-    position: absolute;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-end;
-    align-items: center;
-    margin-left: 75vw;
-    margin-top: 3em;
-    width: 20.83333vw;
-    font-size: 0.8em;
-    line-height: 1.5;
-    text-align: right;
-    color: #7ab5b8;
-    z-index: 99; }
-    .profiles-layout_view-container .profiles-layout_toolbar-container .slpInfoBox .slp-nameBox {
-      margin-right: 1.25em;
-      text-align: right;
-      font-size: 1.2em;
-      line-height: 1.5; }
   .profiles-layout_view-container .profiles-layout_drawer-left {
     position: absolute;
     display: flex;
     flex-flow: column nowrap;
+    justify-content: space-between;
     top: 0;
     left: 0;
     width: 41.66667vw;
@@ -637,136 +619,157 @@ input, textarea {
     width: 45.83333vw;
     z-index: 10; }
 
-.profiles_list-head {
+.layout_head-body {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start; }
+
+.layout_foot {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-end;
-  height: 24.16667vh;
+  align-items: center;
+  background-color: transparent;
+  height: 33.33333vh;
+  width: 100%; }
+
+.red {
+  border: 1px solid red; }
+
+.temp {
+  width: 100%;
+  min-height: 2em; }
+
+.profiles_list-head {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  height: 25vh;
   width: 100%; }
   .profiles_list-head .header-img {
     position: absolute;
-    top: 0;
     margin-left: 12.5vw;
+    top: 0;
+    left: 0;
     width: 70%;
     height: 16.66667vh;
     background-image: url("../img/profiles/birdsInClouds.svg");
     background-repeat: no-repeat;
     background-position: center bottom;
-    background-size: contain; }
-  .profiles_list-head .closeBox {
-    position: absolute;
+    background-size: contain;
+    z-index: 90; }
+  .profiles_list-head .closeBtn-row {
+    position: relative;
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-end;
     align-items: center;
-    padding: 1em;
-    top: 0;
-    left: 33.33333vw;
     height: 8.33333vh;
-    width: 8.33333vw;
-    color: #c2f2f2;
-    font-size: 2em;
-    font-weight: 600;
-    border-left: 1px solid red;
-    border-bottom: 1px solid red; }
-  .profiles_list-head .title {
-    position: relative;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-end;
-    width: 100%;
-    height: 8.33333vh;
-    padding-left: 16.66667vw;
-    color: #3D6D84;
-    font-size: 1.15em;
-    font-weight: 600;
-    text-align: left; }
-  .profiles_list-head .head-content {
-    position: relative;
-    display: flex;
-    flex-flow: column nowrap; }
-    .profiles_list-head .head-content .bannerBox {
+    z-index: 95; }
+    .profiles_list-head .closeBtn-row .closeBtn {
       position: relative;
       display: flex;
-      flex-flow: row nowrap;
+      justify-content: center;
       align-items: center;
-      width: 100%;
-      height: 7.5vh;
-      z-index: 90; }
-      .profiles_list-head .head-content .bannerBox .banner {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #467c91; }
-        .profiles_list-head .head-content .bannerBox .banner .banner-hl {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 50%;
-          background-color: #49889b; }
-      .profiles_list-head .head-content .bannerBox .banner-text {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: auto;
-        width: 100%;
-        text-align: center;
-        color: white;
-        z-index: 93; }
-
-.searchBar {
-  position: relative;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-start;
-  align-items: center;
-  margin-left: 15.41667vw;
-  width: 23.33333vw;
-  height: 65%;
-  padding: 1em;
-  background-color: rgba(62, 109, 124, 0.75);
-  color: white;
-  font-weight: 500;
-  border-radius: 24px;
-  z-index: 92; }
-  .searchBar .searchBar-label {
+      height: 100%;
+      width: 8.33333vh;
+      color: #c2f2f2;
+      font-size: 2em;
+      font-weight: 600;
+      border-left: 1px solid red;
+      border-bottom: 1px solid red;
+      z-index: 95; }
+  .profiles_list-head .title-row {
     position: relative;
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
-    align-items: center; }
-    .searchBar .searchBar-label i {
-      font-size: 1.25em !important;
-      font-weight: 400 !important;
-      color: #c2f2f2;
-      margin-right: 0.5em; }
-    .searchBar .searchBar-label input[type="text"].nameSearch {
+    align-items: flex-end;
+    height: 8.33333vh;
+    width: 100%;
+    z-index: 90; }
+    .profiles_list-head .title-row .title {
+      position: relative;
+      display: flex;
       width: auto;
-      font-size: 1.2em !important;
-      font-weight: 600 !important;
-      color: white !important;
-      background-color: transparent !important;
-      border-radius: 10px; }
+      height: auto;
+      padding-left: 16.66667vw;
+      color: #3D6D84;
+      font-size: 1em;
+      font-weight: 600;
+      text-align: left; }
+  .profiles_list-head .seachBar-row {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    height: 8.33333vh;
+    width: 100%; }
+    .profiles_list-head .seachBar-row .searchBar {
+      position: relative;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      margin-left: 15.41667vw;
+      width: 23.33333vw;
+      height: 65%;
+      padding: 1em;
+      background-color: rgba(62, 109, 124, 0.75);
+      color: white;
+      font-weight: 500;
+      border-radius: 24px;
+      z-index: 92; }
+      .profiles_list-head .seachBar-row .searchBar .searchBar-label {
+        position: relative;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center; }
+        .profiles_list-head .seachBar-row .searchBar .searchBar-label i {
+          font-size: 1.25em !important;
+          font-weight: 400 !important;
+          color: #c2f2f2;
+          margin-right: 0.5em; }
+        .profiles_list-head .seachBar-row .searchBar .searchBar-label input[type="text"].nameSearch {
+          width: auto;
+          font-size: 1.2em !important;
+          font-weight: 600 !important;
+          color: white !important;
+          background-color: transparent !important;
+          border-radius: 10px; }
+
+.banner-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #467c91; }
+  .banner-bg .banner-hl {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background-color: #49889b; }
 
 .profiles_list-body {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
-  height: 55vh;
+  height: 41.66667vh;
   width: 100%;
   padding-left: 16.66667vw;
   text-align: left; }
-
-.item, .item-content {
-  background-color: transparent !important; }
-
-.item {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
+  .profiles_list-body .item, .profiles_list-body .item-content {
+    background-color: transparent !important; }
+  .profiles_list-body .item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
 
 .name-item {
   position: relative;
@@ -786,52 +789,105 @@ input, textarea {
   background-position: center;
   background-size: contain; }
 
-.testerNote {
+.footRow {
   position: relative;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
-  margin-top: 1em;
-  padding: 1em 0;
-  color: #3D6D84;
-  font-size: 0.9em; }
+  padding-left: 12.5vw;
+  width: 100%;
+  color: #3D6D84; }
 
-.profiles_list-foot {
+.profiles_list-foot .userInfo-container {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #edf9f8;
-  height: 22.16667vh;
+  justify-content: flex-end;
+  height: 14.16667vh;
   width: 100%;
-  padding-left: 12.5vw;
-  padding-bottom: 2.5vh; }
-  .profiles_list-foot .footRow {
+  border-top: 4px solid #c2f2f2; }
+  .profiles_list-foot .userInfo-container .testerNote-row {
     position: relative;
     display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-around;
-    align-items: center;
-    height: 50%;
-    width: 100%;
-    color: #3D6D84; }
-    .profiles_list-foot .footRow button {
-      background-color: #93c9c7; }
+    align-items: flex-start;
+    height: 64px; }
+    .profiles_list-foot .userInfo-container .testerNote-row .testerNote {
+      position: relative;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      height: 100%;
+      color: #3D6D84;
+      font-weight: 600;
+      font-size: 0.8em; }
+  .profiles_list-foot .userInfo-container .newUserBtn-row {
+    height: 64px; }
+    .profiles_list-foot .userInfo-container .newUserBtn-row .newUserBtn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      margin: 0 0.5em;
+      padding: 0 2em;
+      min-width: 250px;
+      color: #3D6D84;
+      background-color: #4ec8d8;
+      background-color: white;
+      font-weight: 600;
+      border-radius: 32px; }
 
-.newUserBtn {
+.profiles_list-foot .slpInfo-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 64px;
-  margin: 0 0.5em;
-  padding: 0 2em;
-  min-width: 250px;
-  color: white;
-  background-color: #4ec8d8;
-  font-weight: 600;
-  border-radius: 32px; }
+  flex-flow: column nowrap;
+  height: 16.66667vh;
+  width: 100%; }
+  .profiles_list-foot .slpInfo-container .slpNameLabel-row {
+    background-color: #467c91;
+    height: 5vh;
+    margin-top: 1em;
+    padding: 0.5em 0;
+    padding-left: 12.5vw;
+    border-bottom: 1px solid #d0efeb; }
+    .profiles_list-foot .slpInfo-container .slpNameLabel-row .banner-hl {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background-color: #49889b; }
+    .profiles_list-foot .slpInfo-container .slpNameLabel-row .slpNameLabel {
+      position: relative;
+      color: #edf9f8;
+      font-weight: 700;
+      z-index: 93; }
+  .profiles_list-foot .slpInfo-container .slpBtn-row {
+    background-color: #edf9f8;
+    height: 11.66667vh; }
+    .profiles_list-foot .slpInfo-container .slpBtn-row .profiles-list-btn {
+      flex: 1 1 auto;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      background-color: #edf9f8;
+      color: #7ab5b8;
+      height: 100%;
+      width: 50%;
+      line-height: 1.5em;
+      padding: 0.5em 1em;
+      border: 0px; }
+      .profiles_list-foot .slpInfo-container .slpBtn-row .profiles-list-btn div, .profiles_list-foot .slpInfo-container .slpBtn-row .profiles-list-btn i {
+        text-align: left;
+        width: auto;
+        padding: 0; }
+      .profiles_list-foot .slpInfo-container .slpBtn-row .profiles-list-btn div {
+        padding-right: 0.75em; }
+      .profiles_list-foot .slpInfo-container .slpBtn-row .profiles-list-btn i {
+        font-size: 2.5em !important; }
+    .profiles_list-foot .slpInfo-container .slpBtn-row .profiles-list-btn:first-child {
+      border-right: 1px solid #7ab5b8; }
 
 .profiles-card {
   display: flex;
@@ -847,7 +903,8 @@ input, textarea {
   display: flex;
   flex-flow: column nowrap;
   width: 100%;
-  height: 16.66667vh; }
+  height: 16.66667vh;
+  max-height: 16.66667vh; }
   .card-head .card-headBox {
     display: flex;
     height: 12.5vh;
@@ -879,25 +936,21 @@ input, textarea {
     color: #3D6D84;
     font-size: 0.9em;
     font-weight: 400;
-    border-top: 2px solid white;
-    border-bottom: 2px solid white; }
+    border-top: 2px solid #ace2e5;
+    border-bottom: 2px solid #ace2e5; }
     .card-navBox .pro_navitem.pro_navitem--active {
       height: 4.16667vh;
       font-weight: 700;
       border-top: 2px solid #3D6D84;
       border-bottom: 2px solid #3D6D84; }
 
-.card-bodyBox {
-  position: relative;
-  display: flex; }
-
 .card-content {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
-  height: 60.83333vh;
-  width: 45.83333vw;
+  height: 58.33333vh;
+  width: 100%;
   text-align: left; }
   .card-content .card-body {
     position: relative;
@@ -912,8 +965,9 @@ input, textarea {
     flex-flow: row nowrap;
     justify-content: center;
     width: 100%;
-    height: 8.33333vh;
-    border-top: 1px solid red; }
+    height: 8.33333vh; }
+  .card-content ion-radio {
+    border: 1px solid red; }
 
 .r-btn {
   display: flex;
@@ -944,6 +998,20 @@ input, textarea {
 
 .r-btn i {
   font-size: 2.5em; }
+
+.sexBtn-row {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; }
+  .sexBtn-row span {
+    font-size: 1.2em; }
+
+.sexBtn {
+  border-radius: 64px;
+  border: 1px solid #E8E8E8; }
 
 .tutorial-layout_view-container {
   position: relative;

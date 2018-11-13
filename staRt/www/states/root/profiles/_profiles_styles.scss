@@ -9,7 +9,7 @@
 	//background-color: $c-bg; //#2018
 
 	// re-name to abs-container
-	.profiles-layout_bg-container {
+	.profiles-layout_absPos-container {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -19,40 +19,15 @@
 		z-index: 1;
 	}
 
-	.profiles-layout_toolbar-container {
-
-		.slpInfoBox {
-			position: absolute;
-			display: flex;
-			flex-flow: row nowrap;
-			justify-content: flex-end;
-			align-items: center;
-			margin-left: $col-w * 9;
-			margin-top: 3em;
-			width: $col-w * 2.5;
-			font-size: 0.8em;
-			line-height: 1.5;
-			//font-weight: 600;
-			text-align: right;
-			color: $c-text-subtle; //$c-text-main;
-			z-index: 99;
-			// border: 1px solid red;
-
-			.slp-nameBox {
-				margin-right: 1.25em;
-				text-align: right;
-				font-size: 1.2em;
-				// font-weight: 600;
-				line-height: 1.5;
-			}
-		}
-	}
+	.profiles-layout_toolbar-container {}
 
 
 	.profiles-layout_drawer-left {
 		position: absolute;
 		display: flex;
 		flex-flow: column nowrap;
+		justify-content: space-between;
+		//justify-content: flex-start;
 		top: 0;
 		left: 0;
 		width: $col-w * 5;
@@ -94,7 +69,7 @@
 //.profiles-layout_drawer-left 
 // ================================================
 
-.profiles-card {
+.profiles-card { // height: $row-h * 4.5;
 	display: flex;
 	flex-flow: column nowrap;
 	background-color: $white;
@@ -105,12 +80,13 @@
 	box-shadow:2px 2px 4px rgba(0,0,0,0.25);
 }
 
-.card-head {
+.card-head { // height: $row-h;
 	position: relative;
 	display: flex;
 	flex-flow: column nowrap;
 	width: 100%;
 	height: $row-h;
+	max-height: $row-h;
 	//border: 1px solid red;
 
 	.card-headBox {
@@ -150,8 +126,8 @@
 		color: $c-text-main;
 		font-size: 0.9em;
 		font-weight: 400;
-		border-top: 2px solid white;
-		border-bottom: 2px solid white;
+		border-top: 2px solid $c-lightBlue;
+		border-bottom: 2px solid $c-lightBlue;
 
 		&.pro_navitem--active {
 			height: $row-h * 0.25;
@@ -162,15 +138,6 @@
 	}
 
 }
-
-.card-bodyBox {
-	position: relative;
-	display: flex;
-	// height: $row-h * 3.75;
-	// width: $col-w * 5.5;
-	// border: 1px solid blue;
-} // .card-bodyBox
-
 
 // -------------------------------------------
 // wrappers, not presentational, 
@@ -222,6 +189,35 @@
 .r-btn i {
 	font-size: 2.5em;
 }
+
+.sexBtn-row {
+	position: relative;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	//border: 1px solid #c2c2c2;
+
+	span {
+		font-size: 1.2em;
+	}
+}
+.sexBtn {
+	border-radius: 64px;
+	// border-left: 1px solid #F0F0F0;
+	// border-right: 1px solid #F0F0F0;
+	border: 1px solid #E8E8E8; //whiteSmoke;
+}
+
+// .profiles-contentBox .radio-content .item-content {
+// 	padding-right: 0px;
+// 	text-overflow: initial;
+// }
+
+// .profiles-contentBox .radio-content span {
+// 	margin-right: 64px;
+// }
 
 
 
@@ -288,8 +284,6 @@
 // 	height: 340px;
 // }
 
-
-
 // .profiles__info
 // {
 // 	flex: 3 0 0%;
@@ -309,15 +303,6 @@
 
 // .column-div {
 // 	flex: 1 0 0%;
-// }
-
-// .profiles-contentBox .radio-content .item-content {
-// 	padding-right: 0px;
-// 	text-overflow: initial;
-// }
-
-// .profiles-contentBox .radio-content span {
-// 	margin-right: 64px;
 // }
 
 // .upload_badge {

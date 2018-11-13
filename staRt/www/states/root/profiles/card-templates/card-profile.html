@@ -63,62 +63,29 @@
 			</label>
 
 			<label class="input item-input">
-<!-- 				<div class="input-label">
-					Sex
-				</div> -->
-				<ion-radio
-					name="sex"
-					ng-model="data.currentProfile.gender"
-					ng-value="'Female'"
-					ng-class="editing"
-					ng-disabled="!isEditing">
-					Female
-				</ion-radio>
-				<ion-radio
-					name="sex"
-					ng-model="data.currentProfile.gender"
-					ng-value="'Male'"
-					ng-class="editing"
-					ng-disabled="!isEditing">
-					Male
-				</ion-radio>
-			</label>
-
-			<div class="button-row">
-				<div class="column-div">
-					<button
-						type="button"
-						class="button button-royal column-div"
-						ng-click="optInFormalTesting()"
-						ng-hide="isEditing || !data.currentProfile || data.currentProfile.formalTester"
-						ng-disabled="!data.currentProfile">
-						Formal Testing
-					</button>
-					<button
-						type="button"
-						class="button button-royal column-div"
-						ng-click="startSession()"
-						ng-hide="isEditing || !data.currentProfile || !data.currentProfile.formalTester || data.sessionIsActive || data.currentProfile.nFormalTreatmentComplete"
-						ng-disabled="!data.currentProfile">
-						Start Session
-					</button>
-					<button
-						type="button"
-						class="button button-royal column-div"
-						ng-click="stopSession()"
-						ng-hide="isEditing || !data.currentProfile || !data.currentProfile.formalTester || !data.sessionIsActive || data.currentProfile.nFormalTreatmentComplete"
-						ng-disabled="!data.currentProfile">
-						Stop Session
-  					</button>
-  					<button
-						type="button"
-						class="button button-royal column-div"
-						ng-hide="!data.currentProfile.nFormalTreatmentComplete"
-						ng-disabled="true">
-						Formal Testing Completed
-					</button>
+				<div class="sexBtn-row">
+					<span>Sex</span>			
+					<ion-radio
+						class="sexBtn"
+						name="sex"
+						ng-model="data.currentProfile.gender"
+						ng-value="'Female'"
+						ng-class="editing"
+						ng-disabled="!isEditing">
+						Female
+					</ion-radio>
+					<!-- ng-class="editing" -->
+					<ion-radio
+						class="sexBtn"
+						name="sex"
+						ng-model="data.currentProfile.gender"
+						ng-value="'Male'"
+						ng-class="editing"
+						ng-disabled="!isEditing">
+						Male
+					</ion-radio>
 				</div>
-			</div>
+			</label>
 		</div>
 
 	</div> <!-- card-body -->
@@ -126,6 +93,37 @@
 
 	<div class="card-foot">
 		<div class="">
+			<button
+				type="button"
+				class="button button-royal column-div"
+				ng-click="optInFormalTesting()"
+				ng-hide="isEditing || !data.currentProfile || data.currentProfile.formalTester"
+				ng-disabled="!data.currentProfile">
+				Formal Testing
+			</button>
+			<button
+				type="button"
+				class="button button-royal column-div"
+				ng-click="startSession()"
+				ng-hide="isEditing || !data.currentProfile || !data.currentProfile.formalTester || data.sessionIsActive || data.currentProfile.nFormalTreatmentComplete"
+				ng-disabled="!data.currentProfile">
+				Start Session
+			</button>
+			<button
+				type="button"
+				class="button button-royal column-div"
+				ng-click="stopSession()"
+				ng-hide="isEditing || !data.currentProfile || !data.currentProfile.formalTester || !data.sessionIsActive || data.currentProfile.nFormalTreatmentComplete"
+				ng-disabled="!data.currentProfile">
+				Stop Session
+				</button>
+				<button
+				type="button"
+				class="button button-royal column-div"
+				ng-hide="!data.currentProfile.nFormalTreatmentComplete"
+				ng-disabled="true">
+				Formal Testing Completed
+			</button>
 			<button
 				type="button"
 				class="button button-balanced column-div"

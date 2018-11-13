@@ -3,8 +3,9 @@
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: space-between;
-	height: $row-h * 3.65;
-	width: $col-w * 5.5;
+	height: $row-h * 3.5;
+	width: 100%;
+	//width: $col-w * 5.5;
 	text-align: left;
 	//border: 1px solid blue;
 
@@ -25,6 +26,12 @@
 		justify-content: center;
 		width: 100%;
 		height: $row-h * 0.5;
-		border-top: 1px solid red;
+		//border-top: 1px solid lightGray;
 	} // .card-foot
+
+
+	ion-radio {
+		border: 1px solid red;
+	}
+
 } //.card-body
