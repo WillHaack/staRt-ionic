@@ -36,23 +36,28 @@
 						<div class="banner">
 							<div class="banner-hl"></div>
 						</div>
-						<!-- <div class="searchBar">Search Bar Placholder</div> -->
+						<!-- placeholder-icon-->
+						<div class="searchBar">
+							<label class="searchBar-label">
+								<i class="icon ion-search "></i>
+								<input class="nameSearch" ng-model="nameSearch" type="text" placeholder="Search">
+							</label>
+						</div> <!-- end SearchBar -->
 					</div> <!-- end bannerBox -->
 				</div> <!-- end head-content -->
 			</div> <!-- end profiles_list-head -->
 
 			<div class="profiles_list-body">
-
 				<ion-scroll direction="y">
 					<ion-list class="list">
 						<ion-radio
 							name="name"
 							ng-model="data.currentProfileUUID"
-							ng-repeat="profile in data.profiles track by profile.uuid"
+							ng-repeat="profile in data.profiles | filter:nameSearch track by profile.uuid"
 							ng-value="profile.uuid"
 							ng-change="updateCurrentProfile(profile)">
 								<div class="name-item">
-									<!-- <div class="initials">WW</div> -->
+								<!-- <div class="initials">WW</div> -->
 									<div class="name-text">
 										{{profile.name}}
 									</div>

@@ -110,25 +110,57 @@
 				z-index: 93;
 			}
 
-			.searchBar { // not in use
-				position: relative;
-				display: flex;
-				flex-flow: row nowrap;
-				align-items: center;
-				margin-left: $col-w * 1.85;
-				width: $col-w * 2.8;
-				height: 65%;
-				padding: 1em;
-				background-color:rgba(62,109,124,0.75);
-				color: white;
-				font-weight: 500;
-				border-radius: 24px;
-				z-index: 92;
-				border: 1px solid red;
-			}
-		} // .searchBox
+
+		} // .bannerBox
 	} // .head-content
 } // .profiles_list-head
+
+
+.searchBar { 
+	position: relative;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	margin-left: $col-w * 1.85;
+	width: $col-w * 2.8;
+	height: 65%;
+	padding: 1em;
+	background-color:rgba(62,109,124,0.75);
+	color: white;
+	font-weight: 500;
+	border-radius: 24px;
+	z-index: 92;
+	//border: 1px solid red;
+
+	.searchBar-label {
+		position: relative;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: flex-start;
+		align-items: center;
+	
+		i {
+			font-size: 1.25em !important;
+			font-weight: 400 !important;
+			color: $c-bg;
+			//color: red !important;
+			margin-right: 0.5em;
+			// border: 1px solid red;
+		}
+
+		input[type="text"].nameSearch {
+			width: auto;
+			font-size: 1.2em !important;
+			font-weight: 600 !important;
+			color: white !important;
+			background-color: transparent !important;
+			border-radius: 10px;
+		}
+	} // end searchBar-label
+}
+
+
 
 
 
@@ -142,7 +174,7 @@
 	width: 100%;
 	padding-left: $col-w * 2;
 	text-align: left;
-	border: 1px solid lime;
+	//border: 1px solid lime;
 }
 
 .item, .item-content { // ionic class overwrite
