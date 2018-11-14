@@ -198,7 +198,6 @@
 
 		"input": {
 			"txt":"Next",
-			"stepDone": " 'step5' ",
 			"next": "root.tutorial.p05s5"
 		}
 	},

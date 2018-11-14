@@ -197,7 +197,7 @@ var SessionAuto = function (profile, currentStates, onShow) {
     dialog: (function (profile, currentStates, changeList) {
       var text = this.biofeedback === "BF" ?
         "Please complete this session with biofeedback." :
-        "Please complete this session using traditional (no-biofeedback) practice).";
+        "Please complete this session using traditional (no-biofeedback) practice.";
       return {
         text: text,
         title: "Biofeedback",
@@ -272,13 +272,15 @@ var SessionAuto = function (profile, currentStates, onShow) {
     dialog: function (profile, currentStates) {
       var text;
       if (profile.nQuestsCompleted === 8) {
-        text = "Congratulations, you finished your eight quests! Your total accuracy was approximately " + profile.percentTrialsCorrect +
+        var percentCorrectStr = profile.percentTrialsCorrect.toString().split(".")[0];
+        text = "Congratulations, you finished your eight quests! Your total accuracy was approximately " + percentCorrectStr +
           "% correct. Your accuracy in your final session was approximatedly " + currentStates.thisQuestPercentTrialsCorrect + "% correct." +
           " To complete your tasks as a formal pilot tester, please schedule one more visit to complete the Word Quiz and the Syllable Quiz " +
           "at the post-treatment time point.";
       } else {
+        var percentCorrectStr = currentStates.thisQuestPercentTrialsCorrect.toString().split(".")[0];
         text = "Congratulations, you have completed this quest! You scored approximately " +
-          currentStates.thisQuestPercentTrialsCorrect + "% correct. " +
+        percentCorrectStr + "% correct. " +
           "Please come back soon to complete your next session.";
       }
       return {
