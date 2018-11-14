@@ -197,7 +197,7 @@ var SessionAuto = function (profile, currentStates, onShow) {
     dialog: (function (profile, currentStates, changeList) {
       var text = this.biofeedback === "BF" ?
         "Please complete this session with biofeedback." :
-        "Please complete this session using traditional (no-biofeedback) practice).";
+        "Please complete this session using traditional (no-biofeedback) practice.";
       return {
         text: text,
         title: "Biofeedback",
