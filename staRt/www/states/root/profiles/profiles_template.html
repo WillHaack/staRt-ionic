@@ -6,15 +6,12 @@
 
 		<div class="profiles-layout_absPos-container">
 			<!-- full-width eles (bgs) and absPos eles go here -->
-			<div class="profiles-layout_toolbar-container">
-			</div>
+			<div class="profiles-layout_toolbar-container"></div>
 		</div>
 
 		<div class="profiles-layout_drawer-left"
 		ng-include=" './states/root/profiles/drawer-template/profiles-drawer.html' ">
-
 			<!-- PROFILES DRAWER (PARTICPANT LIST) IS INSERTED HERE -->
-		
 		</div> <!-- end .profiles-layout_drawer-left -->
 
 
@@ -53,15 +50,35 @@
 
 			</div> <!-- profiles-noCard -->
 
+
 			<!-- ng-hide="!data.currentProfile" -->
-			<div class="profiles-card" ng-hide="!data.currentProfile">
+			<div class="profiles-card" 
+				 ng-hide="!data.currentProfile">
 
 				<div class="card-head">
 
-					<div class="card-headBox">
-						<h1 ng-if="!slpView">{{data.currentProfile.name}}</h1>
-						<h1 ng-if="slpView">{{displayName}}</h1>
+					<div ng-if="!slpView" class="card-headBox">
+						<div class="card-closeRow"></div>
+
+						<div class="card-titleRow">
+							<h1 >{{data.currentProfile.name}}</h1>
+						</div>
+					</div> <!-- .card-headBox !slpView -->
+
+					<div ng-if="slpView" class="card-headBox">
+						<div class="card-closeRow">
+							<button class="button"
+							ng-click="closeSlpView()">
+								<i class="icon ion-close"></i>
+							</button>
+						</div>
+						
+						<div class="card-titleRow">
+							<h1 >{{displayName}}</h1>
+						</div>
 					</div>
+
+					<!-- === -->
 
 					<div ng-if="!slpView" class="card-navBox">
 
@@ -92,8 +109,7 @@
 
 					</div> <!-- card-navBox !slpView" -->
 
-					<div ng-if="slpView" class="card-navBox">
-
+					<div ng-if="slpView" class="card-navBox card-navBox--slp">
 					</div> <!-- card-navBox slpView" -->
 
 				</div> <!-- card-head -->
@@ -103,36 +119,31 @@
 				<div class="card-switchParent" ng-switch on="cardState">
 
 					<div class="card-switchBox" ng-switch-when="recordings" >
-						<div ng-include=" './states/root/profiles/card-templates/card-recordings.html'"></div>
+						<div ng-include=" './states/root/profiles/card-templates/recordings/card-recordings.html'"></div>
 					</div>	<!-- END Recordings card-switchBox -->
 
 					<div class="card-switchBox" ng-switch-when="progress">
-						<div ng-include=" './states/root/profiles/card-templates/card-progress.html'"></div>
+						<div ng-include=" './states/root/profiles/card-templates/progress/card-progress.html'"></div>
 					</div> <!-- END Progress card-switchBox -->
 
 					<div class="card-switchBox" ng-switch-when="profile">
-						<div ng-include=" './states/root/profiles/card-templates/card-profile.html'"></div>
+						<div ng-include=" './states/root/profiles/card-templates/profile/card-profile.html'"></div>
 					</div> <!-- END Progress card-switchBox -->
 
 					<div class="card-switchBox" ng-switch-when="settings">
-						<div ng-include=" './states/root/profiles/card-templates/card-settings.html'"></div>
+						<div ng-include=" './states/root/profiles/card-templates/settings/card-settings.html'"></div>
 					</div> <!-- END Progress card-switchBox -->
 
 					<div class="card-switchBox" ng-switch-when="slp">
-						<div ng-include=" './states/root/profiles/card-templates/card-slp.html'"></div>
+						<div ng-include=" './states/root/profiles/card-templates/slp/card-slp.html'"></div>
 					</div> <!-- END slp card-switchBox -->
-				</div>
-				<!-- card-switchParent -->
 
-			</div>
-			<!-- profiles-card -->
+				</div> <!-- card-switchParent -->
 
+			</div> <!-- profiles-card -->
 
+		</div> <!-- end .profiles-layout_content-container -->
 
-		</div>
-		<!-- end .profiles-layout_content-container -->
-
-	</div> 
-	<!-- end profiles-contentBox-->
+	</div> <!-- end profiles-contentBox-->
 
 </ion-view>

@@ -62,11 +62,9 @@
 					ng-disabled="!isEditing">
 			</label>
 
-			<label class="input item-input">
-				<div class="sexBtn-row">
+			<label class="input item-input sexBtn-row" radio-group>
 					<span>Sex</span>			
 					<ion-radio
-						class="sexBtn"
 						name="sex"
 						ng-model="data.currentProfile.gender"
 						ng-value="'Female'"
@@ -74,9 +72,8 @@
 						ng-disabled="!isEditing">
 						Female
 					</ion-radio>
-					<!-- ng-class="editing" -->
+
 					<ion-radio
-						class="sexBtn"
 						name="sex"
 						ng-model="data.currentProfile.gender"
 						ng-value="'Male'"
@@ -84,7 +81,6 @@
 						ng-disabled="!isEditing">
 						Male
 					</ion-radio>
-				</div>
 			</label>
 		</div>
 
