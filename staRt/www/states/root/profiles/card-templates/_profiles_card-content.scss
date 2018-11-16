@@ -13,7 +13,7 @@
 		position: relative;
 		display: flex;
 		flex-flow: column nowrap;
-		height: auto;
+		height: $row-h * 3;
 		width: 100%;
 		padding: 2.5em;
 		//padding-top: 2em;
@@ -35,3 +35,25 @@
 	}
 
 } //.card-body
+
+
+.card-body.slpCard {
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+
+	button {
+		position: relative;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-between;
+		align-items: center;
+		padding: 1em 2em;
+		width: 75%;
+	}
+}
+
+
+
+

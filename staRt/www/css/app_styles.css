@@ -498,7 +498,9 @@ input, textarea {
 .navTab {
   display: -webkit-flex;
   -webkit-flex: 1;
-  background-color: #53c8e9;
+  background-color: #3d6d84;
+  background-image-size: 100% 100%;
+  background-repeat: no-repeat;
   text-align: center;
   border-radius: 4px;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
@@ -510,7 +512,7 @@ input, textarea {
   transition: width 0.5s ease-in-out; }
   .navTab.active {
     color: #53C8E9;
-    background-color: #F0F9FC;
+    background-color: #4ea1af;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
     z-index: 25;
     width: 11vw; }
@@ -609,15 +611,16 @@ input, textarea {
     background-repeat: no-repeat;
     background-size: auto 100%;
     z-index: 90; }
-  .profiles-layout_view-container .profiles-layout_content-container {
-    position: absolute;
-    display: flex;
-    flex-flow: column nowrap;
-    margin-top: 16.66667vh;
-    margin-left: 50vw;
-    height: 83.33333vh;
-    width: 45.83333vw;
-    z-index: 10; }
+
+.profiles-layout_content-container {
+  position: absolute;
+  display: flex;
+  flex-flow: column nowrap;
+  margin-top: 16.66667vh;
+  margin-left: 50vw;
+  height: 83.33333vh;
+  width: 45.83333vw;
+  z-index: 10; }
 
 .layout_head-body {
   position: relative;
@@ -625,29 +628,12 @@ input, textarea {
   flex-flow: column nowrap;
   justify-content: flex-start; }
 
-.layout_foot {
-  position: relative;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: flex-end;
-  align-items: center;
-  background-color: transparent;
-  height: 33.33333vh;
-  width: 100%; }
-
-.red {
-  border: 1px solid red; }
-
-.temp {
-  width: 100%;
-  min-height: 2em; }
-
 .profiles_list-head {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
-  height: 25vh;
+  height: 22.16667vh;
   width: 100%; }
   .profiles_list-head .header-img {
     position: absolute;
@@ -701,68 +687,61 @@ input, textarea {
       font-size: 1em;
       font-weight: 600;
       text-align: left; }
-  .profiles_list-head .seachBar-row {
+
+.profiles_list-head .seachBar-row {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  height: 5.5vh;
+  width: 100%;
+  background-image: url("../img/ui/ribbon.svg");
+  background-image-size: 100% 100%;
+  background-repeat: no-repeat; }
+  .profiles_list-head .seachBar-row .searchBar {
     position: relative;
     display: flex;
     flex-flow: row nowrap;
+    justify-content: space-between;
     align-items: center;
-    height: 8.33333vh;
-    width: 100%; }
-    .profiles_list-head .seachBar-row .searchBar {
+    margin-left: 15.41667vw;
+    width: 23.33333vw;
+    height: 65%;
+    padding: 1em;
+    background-color: rgba(62, 109, 124, 0.75);
+    color: white;
+    font-weight: 500;
+    border-radius: 24px;
+    z-index: 92;
+    border: 1px solid red; }
+    .profiles_list-head .seachBar-row .searchBar .searchBar-label {
       position: relative;
       display: flex;
       flex-flow: row nowrap;
       justify-content: flex-start;
       align-items: center;
-      margin-left: 15.41667vw;
-      width: 23.33333vw;
-      height: 65%;
-      padding: 1em;
-      background-color: rgba(62, 109, 124, 0.75);
-      color: white;
-      font-weight: 500;
-      border-radius: 24px;
-      z-index: 92; }
-      .profiles_list-head .seachBar-row .searchBar .searchBar-label {
-        position: relative;
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: flex-start;
-        align-items: center; }
-        .profiles_list-head .seachBar-row .searchBar .searchBar-label i {
-          font-size: 1.25em !important;
-          font-weight: 400 !important;
-          color: #c2f2f2;
-          margin-right: 0.5em; }
-        .profiles_list-head .seachBar-row .searchBar .searchBar-label input[type="text"].nameSearch {
-          width: auto;
-          font-size: 1.2em !important;
-          font-weight: 600 !important;
-          color: white !important;
-          background-color: transparent !important;
-          border-radius: 10px; }
-
-.banner-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #467c91; }
-  .banner-bg .banner-hl {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    background-color: #49889b; }
+      border: 1px solid red; }
+      .profiles_list-head .seachBar-row .searchBar .searchBar-label input[type="text"].nameSearch {
+        width: auto;
+        font-size: 1.2em !important;
+        font-weight: 600 !important;
+        color: white !important;
+        background-color: transparent !important;
+        border-radius: 10px; }
+    .profiles_list-head .seachBar-row .searchBar i {
+      font-size: 1.25em !important;
+      font-weight: 400 !important;
+      color: #c2f2f2;
+      margin-right: 0.5em;
+      border: 1px solid red; }
 
 .profiles_list-body {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
-  height: 41.66667vh;
+  height: 61vh;
   width: 100%;
   padding-left: 16.66667vw;
   text-align: left; }
@@ -789,105 +768,85 @@ input, textarea {
   background-position: center;
   background-size: contain; }
 
-.footRow {
-  position: relative;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-  padding-left: 12.5vw;
-  width: 100%;
-  color: #3D6D84; }
-
-.profiles_list-foot .userInfo-container {
+.profiles_list-foot {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-end;
-  height: 14.16667vh;
-  width: 100%;
-  border-top: 4px solid #c2f2f2; }
-  .profiles_list-foot .userInfo-container .testerNote-row {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    height: 64px; }
-    .profiles_list-foot .userInfo-container .testerNote-row .testerNote {
-      position: relative;
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: flex-start;
-      align-items: center;
-      height: 100%;
-      color: #3D6D84;
-      font-weight: 600;
-      font-size: 0.8em; }
-  .profiles_list-foot .userInfo-container .newUserBtn-row {
-    height: 64px; }
-    .profiles_list-foot .userInfo-container .newUserBtn-row .newUserBtn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      margin: 0 0.5em;
-      padding: 0 2em;
-      min-width: 250px;
-      color: #3D6D84;
-      background-color: #4ec8d8;
-      background-color: white;
-      font-weight: 600;
-      border-radius: 32px; }
-
-.profiles_list-foot .slpInfo-container {
-  display: flex;
-  flex-flow: column nowrap;
+  align-items: center;
+  background-color: transparent;
   height: 16.66667vh;
   width: 100%; }
-  .profiles_list-foot .slpInfo-container .slpNameLabel-row {
-    background-color: #467c91;
-    height: 5vh;
-    margin-top: 1em;
-    padding: 0.5em 0;
-    padding-left: 12.5vw;
-    border-bottom: 1px solid #d0efeb; }
-    .profiles_list-foot .slpInfo-container .slpNameLabel-row .banner-hl {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 50%;
-      background-color: #49889b; }
-    .profiles_list-foot .slpInfo-container .slpNameLabel-row .slpNameLabel {
-      position: relative;
-      color: #edf9f8;
-      font-weight: 700;
-      z-index: 93; }
-  .profiles_list-foot .slpInfo-container .slpBtn-row {
-    background-color: #edf9f8;
-    height: 11.66667vh; }
-    .profiles_list-foot .slpInfo-container .slpBtn-row .profiles-list-btn {
-      flex: 1 1 auto;
+  .profiles_list-foot .footRow {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    padding-left: 16.66667vw;
+    height: 50%;
+    width: 100%;
+    color: #3D6D84; }
+    .profiles_list-foot .footRow .footBtn {
       display: flex;
       flex-flow: row nowrap;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      background-color: #edf9f8;
-      color: #7ab5b8;
-      height: 100%;
-      width: 50%;
-      line-height: 1.5em;
-      padding: 0.5em 1em;
-      border: 0px; }
-      .profiles_list-foot .slpInfo-container .slpBtn-row .profiles-list-btn div, .profiles_list-foot .slpInfo-container .slpBtn-row .profiles-list-btn i {
-        text-align: left;
-        width: auto;
-        padding: 0; }
-      .profiles_list-foot .slpInfo-container .slpBtn-row .profiles-list-btn div {
-        padding-right: 0.75em; }
-      .profiles_list-foot .slpInfo-container .slpBtn-row .profiles-list-btn i {
-        font-size: 2.5em !important; }
-    .profiles_list-foot .slpInfo-container .slpBtn-row .profiles-list-btn:first-child {
-      border-right: 1px solid #7ab5b8; }
+      color: white;
+      font-weight: 600;
+      width: 95%; }
+      .profiles_list-foot .footRow .footBtn i {
+        font-size: 1.5em; }
+
+.c-navy {
+  background-color: #467d91; }
+
+.c-navy-hl {
+  background-color: #49889b; }
+
+.c-navy-dark {
+  background-color: #3d6d84; }
+
+.profiles-noCard {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  text-align: left;
+  width: 37.5vw;
+  height: 75vh;
+  margin-left: 4.16667vw;
+  padding-top: 4.16667vh;
+  color: #3D6D84;
+  border: 1px solid rgba(255, 255, 255, 0.75); }
+  .profiles-noCard h1, .profiles-noCard h2, .profiles-noCard h3 {
+    color: #3D6D84;
+    padding-left: 0.5em; }
+  .profiles-noCard .divider {
+    position: absolute;
+    top: 10vh;
+    right: -1%;
+    width: 120%;
+    height: 14.16667vh;
+    background-image: url("../img/ui/divider-whiteRope.svg");
+    background-repeat: no-repeat;
+    background-size: 100%; }
+  .profiles-noCard .profiles-msg-body {
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
+    padding-top: 4.16667vh;
+    padding-left: 1em;
+    font-size: 1.2em;
+    border: 1px solid pink; }
+
+.deco_top-line {
+  border-top: 1px solid white;
+  padding-top: 0.5em; }
 
 .profiles-card {
   display: flex;
@@ -956,7 +915,7 @@ input, textarea {
     position: relative;
     display: flex;
     flex-flow: column nowrap;
-    height: auto;
+    height: 50vh;
     width: 100%;
     padding: 2.5em; }
   .card-content .card-foot {
@@ -968,6 +927,20 @@ input, textarea {
     height: 8.33333vh; }
   .card-content ion-radio {
     border: 1px solid red; }
+
+.card-body.slpCard {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between; }
+  .card-body.slpCard button {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 2em;
+    width: 75%; }
 
 .r-btn {
   display: flex;

@@ -8,7 +8,6 @@
 	height: 100vh;
 	//background-color: $c-bg; //#2018
 
-	// re-name to abs-container
 	.profiles-layout_absPos-container {
 		position: absolute;
 		top: 0;
@@ -42,20 +41,20 @@
 		z-index: 90;
 		//border: 1px solid violet;
 	}
-
-	.profiles-layout_content-container {
-		position: absolute;
-		display: flex;
-		flex-flow: column nowrap;
-		margin-top: $row-h;
-		margin-left: $col-w * 6;
-		height: $row-h * 5;
-		width: $col-w * 5.5;
-		z-index: 10;
-		//border: 1px solid red;
-	}
 }
 
+.profiles-layout_content-container {
+	position: absolute;
+	display: flex;
+	flex-flow: column nowrap;
+	margin-top: $row-h;
+	margin-left: $col-w * 6;
+	height: $row-h * 5;
+	width: $col-w * 5.5;
+	z-index: 10;
+	//border: 1px solid red;
+	//color: red;
+}
 
 // ================================================
 // PROFILES LIST  .profiles-layout_drawer-left 
@@ -68,6 +67,63 @@
 // PROFILES CARD
 //.profiles-layout_drawer-left 
 // ================================================
+
+.profiles-noCard { // height: $row-h * 4.5;
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	align-items: flex-start;
+	text-align: left;
+	width: $col-w * 4.5;
+	height: $row-h * 4.5;
+	margin-left: $col-w * 0.5;
+	padding-top: $row-h * 0.25;
+	color: $c-text-main;
+	border: 1px solid rgba(255,255,255,0.75);
+
+	h1, h2, h3 {
+		color: $c-text-main;
+		padding-left: 0.5em;
+	}
+
+	.divider {
+		position: absolute;
+		top: $row-h * 0.6;
+		//left: -10%;
+		right: -1%;
+		width: 120%;
+		height: $row-h * 0.85;
+		background-image: url('../img/ui/divider-whiteRope.svg');
+		background-repeat: no-repeat;
+		background-size: 100%;
+	}
+
+	.profiles-msg-body {
+		position: relative;
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: space-between;
+		align-items: flex-start;
+		height: 100%;
+		width: 100%;
+		padding-top: $row-h * 0.25;
+		padding-left: 1em;
+		font-size: 1.2em;
+		border: 1px solid pink;
+	
+		&.msg-selectProfile {}
+		&.msg-createProfile {}
+	
+	} //.profiles-msg-body
+} // .profiles-noCard 
+
+.deco_top-line {
+	border-top: 1px solid white;
+	padding-top: 0.5em;
+}
+
+
 
 .profiles-card { // height: $row-h * 4.5;
 	display: flex;
@@ -106,6 +162,8 @@
 		font-weight: 400;
 	}
 } // end card-head
+
+.message-bold {}
 
 .card-navBox {
 	display: flex;

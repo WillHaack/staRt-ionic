@@ -12,15 +12,17 @@
 		</div>
 
 		<div class="seachBar-row">
-			<div class="banner-bg">
-				<div class="banner-hl"></div>
-			</div>
+			<!-- TODO -->
 			<div class="searchBar">
 				<label class="searchBar-label">
-					<i class="icon ion-search "></i>
 					<input class="nameSearch" ng-model="nameSearch" type="text" placeholder="Search">
 				</label>
-			</div> <!-- end searchBar -->
+				<!-- 				
+				<i class="icon ion-search"></i>
+				<i class="icon ion-close "></i> 
+				-->
+			</div> 
+			<!-- end searchBar -->
 		</div> <!-- end searchBar-row -->
 
 	</div> <!-- end profiles_list-head -->
@@ -29,12 +31,13 @@
 
 	<div class="profiles_list-body">
 		<ion-scroll direction="y">
-			<ion-list class="list">
+			<ion-list class="list" ng-hide="isEditing">
 				<ion-radio
 					name="name"
 					ng-model="data.currentProfileUUID"
 					ng-repeat="profile in data.profiles | filter:nameSearch track by profile.uuid"
 					ng-value="profile.uuid"
+
 					ng-change="updateCurrentProfile(profile)">
 						<div class="name-item">
 						<!-- <div class="initials">WW</div> -->
@@ -42,7 +45,7 @@
 								{{profile.name}}
 							</div>
 							<div class="testerIcon"
-							ng-if="profile.formalTester">
+							ng-if="!profile.formalTester">
 							</div>
 						</div>
 				</ion-radio>
@@ -57,50 +60,25 @@
 
 <div class="layout_foot profiles_list-foot">
 
-	<div class="userInfo-container">
-
-		<div class="footRow testerNote-row">
-			<div class="testerNote">
-				formal testers denoted by
-				<span class="testerIcon"></span>
-			</div>
+	<div class="footRow c-navy-hl">
+		<div class="footBtn"
+		ng-click="createProfile()"
+		ng-disabled="isEditing"
+		ng-hide="isEditing">
+			<span>Add New Particpant</span>
+			<i class="icon ion-person-add "></i>
 		</div>
-
-		<div class="footRow newUserBtn-row">
-			<div class="newUserBtn"
-			ng-click="createProfile()"
-			ng-disabled="isEditing"
-			ng-hide="isEditing">
-				Add New Particpant
-			</div>
-		</div>
-
 	</div>
 
-	<div class="slpInfo-container">
-
-		<div class="footRow slpNameLabel-row">
-			<div class="banner-hl"></div>
-			<div class="slpNameLabel">Clinician: {{displayName}}</div>
+	<!-- ng-hide="isEditing" -->
+	<div class="footRow c-navy">
+		<div class="footBtn"
+		ng-click="openSlpView()"
+		ng-disabled="isEditing"
+		ng-hide="isEditing">
+			Clinician's Card
+			<i class="icon ion-home "></i>
 		</div>
-
-		<div class="footRow slpBtn-row">
-			<button class="profiles-list-btn"
-				ng-click="deleteAllProfiles()" 
-				ng-disabled="isEditing"
-				ng-hide="isEditing || !data.currentProfile">
-				<div>Delete All <br/>Particpants</div>
-				<i class="icon ion-trash-b"></i>
-			</button>
-
-			<button class="profiles-list-btn"
-				ng-click="logOut()"
-				ng-disabled="isEditing">
-				<div>Clinician <br/>Logout</div>
-				<i class="ion-log-in"></i>
-			</button>
-		</div>
-
-	</div> <!-- .slpNameInfo-row -->
+	</div>
 
 </div> <!-- profiles_list-foot -->

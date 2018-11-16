@@ -1,0 +1,31 @@
+<div class="card-content">
+
+	<div class="card-body slpCard">
+		<h3>Clinician Options</h3>
+
+		<button class="button profiles-list-btn"
+			ng-click="deleteAllProfiles()" 
+			ng-disabled="isEditing"
+			ng-hide="isEditing || !data.currentProfile">
+			<div>Delete All Particpants</div>
+			<i class="icon ion-trash-b"></i>
+		</button>
+
+		<button class="button profiles-list-btn"
+			ng-click="logOut()"
+			ng-disabled="isEditing">
+			<div>Clinician Logout</div>
+			<i class="ion-log-in"></i>
+		</button>
+
+		<button class="button" ng-click="closeSlpView()">Close SLP Card</button>
+	</div> <!-- end .card-body -->
+
+	<!-- 	
+	<div class="card-foot">
+	 USER INPUT BTNS GO HERE
+	</div> 
+	-->
+	<!-- card-foot -->
+
+</div>

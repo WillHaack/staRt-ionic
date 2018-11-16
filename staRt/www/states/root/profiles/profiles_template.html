@@ -21,20 +21,49 @@
 		
 		<div class="profiles-layout_content-container">
 			
-			<!-- if NO profiles, msg -->
-			<!-- if NO currentUser, msg -->
+			<!-- if NO profiles, msg >> clinician home screen -->
+			<!-- if NO currentUser, msg >> clinician home screen -->
+
 			<!-- if currentUser, card -->
 
-			<div class="profiles-card"
-			ng-hide="!data.currentProfile">
+			<!-- ng-hide="data.currentProfile"-->
+ 			<div class="profiles-noCard" 
+ 				ng-hide="data.currentProfile">
+
+				<h1>Welcome {{displayName}},</h1>
+				<div class="divider"></div>
+				
+				<div class="profiles-msg-body msg-createProfile">
+				</div>
+
+				<div class="profiles-msg-body msg-selectProfile">
+					<div class="">
+						<p>Members of your flock are listed in the column on the left.</p> 
+
+						<p> Participants enrolled in our clinical research program have a [] symbol by their name.</p> 
+
+						<h3>&lt;&lt; Select a particpant profile to begin!</h3>
+					</div>
+
+					<div class="deco_top-line">
+						<p>If you would like to learn more about our research program, [link to website, open email msg w/ header, go to google form, etc ... #ask TM]
+						</p>
+					</div>
+				</div> <!-- .msg-selectProfile -->
+
+			</div> <!-- profiles-noCard -->
+
+			<!-- ng-hide="!data.currentProfile" -->
+			<div class="profiles-card" ng-hide="!data.currentProfile">
 
 				<div class="card-head">
 
 					<div class="card-headBox">
-						<h1>{{data.currentProfile.name}}</h1>
+						<h1 ng-if="!slpView">{{data.currentProfile.name}}</h1>
+						<h1 ng-if="slpView">{{displayName}}</h1>
 					</div>
 
-					<div class="card-navBox">
+					<div ng-if="!slpView" class="card-navBox">
 
 						<div ng-click="setCardState('profile')"
 							class="pro_navitem"
@@ -61,7 +90,11 @@
 							settings
 						</div>
 
-					</div>
+					</div> <!-- card-navBox !slpView" -->
+
+					<div ng-if="slpView" class="card-navBox">
+
+					</div> <!-- card-navBox slpView" -->
 
 				</div> <!-- card-head -->
 
@@ -85,9 +118,16 @@
 						<div ng-include=" './states/root/profiles/card-templates/card-settings.html'"></div>
 					</div> <!-- END Progress card-switchBox -->
 
-				</div> <!-- card-switchParent -->
+					<div class="card-switchBox" ng-switch-when="slp">
+						<div ng-include=" './states/root/profiles/card-templates/card-slp.html'"></div>
+					</div> <!-- END slp card-switchBox -->
+				</div>
+				<!-- card-switchParent -->
 
-			</div> <!-- profiles-card -->
+			</div>
+			<!-- profiles-card -->
+
+
 
 		</div>
 		<!-- end .profiles-layout_content-container -->

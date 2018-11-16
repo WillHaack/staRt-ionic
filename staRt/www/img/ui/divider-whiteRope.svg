@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 710.5 95">
+  <title>Artboard 2</title>
+  <g id="rope2">
+    <g id="rod">
+      <line x1="103.5" y1="5" x2="704" y2="4.5" style="fill: none;stroke: #93c9c7;stroke-miterlimit: 10;stroke-width: 2px"/>
+      <circle cx="706" cy="4.75" r="4" style="fill: #81c1c1"/>
+      <circle cx="705.4" cy="3.9" r="3" style="fill: #8bc9c7"/>
+      <circle cx="705" cy="4" r="2" style="fill: #8fd1ce"/>
+    </g>
+    <g id="rope">
+      <g id="tail">
+        <path d="M11,44.5c3.94-8.21,10.63-18.46,22-23,7.78-3.11,14.11-2.09,21-2,11.14.15,27-2.07,47-13-1.64,14.11-6.09,23.72-10,30-4.41,7.08-8,9.82-11,17-4,9.72-3.29,19.28-2,26" style="fill: none;stroke: #e6e6e6;stroke-miterlimit: 10;stroke-width: 2px"/>
+        <path d="M10,44.5c3.94-8.21,10.63-18.46,22-23,7.78-3.11,14.11-2.09,21-2,11.14.15,27-2.07,47-13-1.64,14.11-6.09,23.72-10,30-4.41,7.08-8,9.82-11,17-4,9.72-3.29,19.28-2,26" style="fill: none;stroke: #fff;stroke-miterlimit: 10;stroke-width: 2px"/>
+      </g>
+      <path d="M104.5,6a185.27,185.27,0,0,0,58,12s20.74.88,53.5-5.5a73.28,73.28,0,0,0,11-3,69.63,69.63,0,0,0,9-4c1.57,1,4,2.44,7,4,9.51,4.9,18.61,7.52,40.17,11.33,12.74,2.26,19.11,3.39,26.33,4.17,7.95.86,37.71,3.62,112-11,8.5-1.67,21.33-4.31,37-8,14.54,7.68,42.75,20,79,20a171.5,171.5,0,0,0,54-9A169.83,169.83,0,0,0,616,6.5,71,71,0,0,0,658.5,20a70.93,70.93,0,0,0,41-14" style="fill: none;stroke: #e6e6e6;stroke-miterlimit: 10;stroke-width: 2px"/>
+      <path d="M103.5,5a185.27,185.27,0,0,0,58,12s20.74.88,53.5-5.5a73.28,73.28,0,0,0,11-3,69.63,69.63,0,0,0,9-4c1.57,1,4,2.44,7,4,9.51,4.9,18.61,7.52,40.17,11.33,12.74,2.26,19.11,3.39,26.33,4.17,7.95.86,37.71,3.62,112-11,8.5-1.67,21.33-4.31,37-8,14.54,7.68,42.75,20,79,20a171.5,171.5,0,0,0,54-9A169.83,169.83,0,0,0,615,5.5,71,71,0,0,0,657.5,19a70.93,70.93,0,0,0,41-14" style="fill: none;stroke: #fff;stroke-miterlimit: 10;stroke-width: 2px"/>
+      <g>
+        <ellipse cx="615.5" cy="5.5" rx="2" ry="4.5" transform="translate(271.57 515.98) rotate(-56.54)" style="fill: #e6e6e6"/>
+        <ellipse cx="616.5" cy="5.5" rx="2" ry="4.5" transform="translate(18.09 153.86) rotate(-14.44)" style="fill: #fff"/>
+      </g>
+      <g>
+        <ellipse cx="697.72" cy="4.6" rx="2.22" ry="4.5" transform="translate(33.18 217.24) rotate(-18.12)" style="fill: #e6e6e6"/>
+        <ellipse cx="696.72" cy="5.6" rx="2.22" ry="4.5" transform="translate(343.51 606.17) rotate(-60)" style="fill: #fff"/>
+      </g>
+      <g>
+        <ellipse cx="458.06" cy="5.36" rx="2.07" ry="4.5" transform="translate(310.99 439.2) rotate(-71.95)" style="fill: #e6e6e6"/>
+        <ellipse cx="460.06" cy="4.36" rx="2.07" ry="4.5" transform="translate(156.44 350.03) rotate(-49.25)" style="fill: #fff"/>
+      </g>
+      <g>
+        <ellipse cx="234.5" cy="5" rx="4.5" ry="1.5" style="fill: #e6e6e6"/>
+        <ellipse cx="233.5" cy="4" rx="4.5" ry="1.5" transform="translate(14.61 85.39) rotate(-21.38)" style="fill: #fff"/>
+      </g>
+      <g>
+        <ellipse cx="102.04" cy="5.65" rx="3.66" ry="2.06" transform="translate(15.62 60.21) rotate(-35.43)" style="fill: #e6e6e6"/>
+        <ellipse cx="101" cy="4" rx="3.5" ry="2" transform="translate(58.31 95.62) rotate(-67.29)" style="fill: #fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

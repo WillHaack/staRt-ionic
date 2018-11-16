@@ -164,7 +164,11 @@ $navW: $nav-btnW + $col-pad; // OLD nav
 .navTab {
   display: -webkit-flex;
   -webkit-flex: 1;
-  background-color: $blue-main;
+  //background-color: $blue-main;
+  background-color: #3d6d84;
+  //background-image: url('../img/nav/new/navTab-off.svg');
+  background-image-size: 100% 100%;
+  background-repeat: no-repeat; 
   text-align: center;
   border-radius: $roundBorder;
   box-shadow: $itemShadow;
@@ -177,7 +181,8 @@ $navW: $nav-btnW + $col-pad; // OLD nav
 
   &.active {
     color: #53C8E9;
-    background-color: $blue-white;
+    //background-color: $blue-white;
+    background-color: #4ea1af;
     box-shadow: $itemShadow-select;
     z-index: 25;
     width: $nav-btnW + 1;

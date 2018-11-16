@@ -6,18 +6,7 @@
 	//border: 1px solid red;
 }
 
-.layout_foot {
-	position: relative;
-	display: flex;
-	flex-flow: column nowrap;
-	//justify-content: space-between;
-	justify-content: flex-end;
-	align-items: center;
-	background-color: transparent;
-	height: $row-h * 2;
-	width: 100%;
-	//border: 1px solid blue;
-} 
+.layout_foot {} 
 
 
 // ================================================
@@ -25,19 +14,19 @@
 //.profiles-layout_drawer-left 
 // z-index: 90;
 // ================================================
-.red { border: 1px solid red; }
+// .red { border: 1px solid red; } //#dev
 
-.temp {
-	width: 100%;
-	min-height: 2em;
-}
+// .temp { //#dev
+// 	width: 100%;
+// 	min-height: 2em;
+// }
 
-.profiles_list-head { // height: $row-h * 1.5;
+.profiles_list-head { // height: $row-h * 1.33;
 	position: relative;
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: flex-start;
-	height: $row-h * 1.5;
+	height: $row-h * 1.33;
 	width: 100%;
 	//border: 1px solid lime;
 
@@ -104,84 +93,68 @@
 			//z-index: 92;
 			//border: 1px solid red;
 		}
-
 	}
+} // .profiles_list-head
 
-	.seachBar-row {
+
+.profiles_list-head 
+.seachBar-row { //height: $row-h * 0.33;
+	position: relative;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	height: $row-h * 0.33;
+	width: 100%;
+	background-image: url('../img/ui/ribbon.svg');
+	background-image-size: 100% 100%;
+	background-repeat: no-repeat; 
+
+	.searchBar { 
 		position: relative;
 		display: flex;
 		flex-flow: row nowrap;
-		//justify-content: 
+		justify-content: space-between;
 		align-items: center;
-		height: $row-h * 0.5;
-		width: 100%;
-	
-		.searchBar { 
+		margin-left: $col-w * 1.85;
+		width: $col-w * 2.8;
+		height: 65%;
+		padding: 1em;
+		background-color:rgba(62,109,124,0.75);
+		color: white;
+		font-weight: 500;
+		border-radius: 24px;
+		z-index: 92;
+		border: 1px solid red;
+
+		.searchBar-label {
 			position: relative;
 			display: flex;
 			flex-flow: row nowrap;
 			justify-content: flex-start;
 			align-items: center;
-			margin-left: $col-w * 1.85;
-			width: $col-w * 2.8;
-			height: 65%;
-			padding: 1em;
-			background-color:rgba(62,109,124,0.75);
-			color: white;
-			font-weight: 500;
-			border-radius: 24px;
-			z-index: 92;
-			//border: 1px solid red;
+			border: 1px solid red;
 
-			.searchBar-label {
-				position: relative;
-				display: flex;
-				flex-flow: row nowrap;
-				justify-content: flex-start;
-				align-items: center;
-			
-				i {
-					font-size: 1.25em !important;
-					font-weight: 400 !important;
-					color: $c-bg;
-					margin-right: 0.5em;
-					// border: 1px solid red;
-				}
+			input[type="text"].nameSearch {
+				width: auto;
+				font-size: 1.2em !important;
+				font-weight: 600 !important;
+				color: white !important;
+				background-color: transparent !important;
+				border-radius: 10px;
+			}
+		} // end searchBar-label
 
-				input[type="text"].nameSearch {
-					width: auto;
-					font-size: 1.2em !important;
-					font-weight: 600 !important;
-					color: white !important;
-					background-color: transparent !important;
-					border-radius: 10px;
-				}
-			} // end searchBar-label
-		} // searchBar
-	} // searchBar-row
+		i {
+			font-size: 1.25em !important;
+			font-weight: 400 !important;
+			color: $c-bg;
+			margin-right: 0.5em;
+			border: 1px solid red;
+		}
+	} // searchBar
+} // searchBar-row
 
-} // .profiles_list-head
-
-
-.banner-bg {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: #467c91;
-	//z-index: 90;
-
-	.banner-hl {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 50%;
-		background-color: #49889b;
-		//z-index: 91;
-	}
-} // .banner
 
 // ================================================
 // PROFILES BODY
@@ -189,12 +162,12 @@
 // z-index: 90;
 // ================================================
 
-.profiles_list-body {
+.profiles_list-body { // height: $row-h * 2.66;
 	position: relative;
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: space-between;
-	height: $row-h * 2.5;
+	height: $row-h * 3.66;
 	width: 100%;
 	padding-left: $col-w * 2;
 	text-align: left;
@@ -216,7 +189,7 @@
 	align-items: center;
 	// border: 1px solid red;
 
-	.initials {
+	.initials { // not in use
 		margin-right: 1em;
 	}
 }
@@ -235,7 +208,6 @@
 
 
 
-
 // ================================================
 // PROFILES FOOT
 //.profiles-layout_drawer-left 
@@ -243,173 +215,58 @@
 // ================================================
 
 .profiles_list-foot { // content parent class
-	// position: relative;
-	// display: flex;
-	// flex-flow: column nowrap;
-	// //justify-content: space-between;
-	// justify-content: flex-end;
-	// align-items: center;
-	// background-color: transparent;
-	// height: $row-h * 2;
-	// width: 100%;
-	// border: 1px solid blue;
-}
-
-.footRow { // main layout class
-	position: relative;
-	display: flex;
-	flex-flow: row nowrap;
-	justify-content: center;
-	//justify-content: space-around;
-	align-items: center;
-	padding-left: $col-w * 1.5;
-	width: 100%;
-	color: $c-text-main;
-	//border: 1px solid pink;
-}
-
-
-
-.profiles_list-foot 
-.userInfo-container { // height: $row-h * 0.75;
 	position: relative;
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: flex-end;
-	height: $row-h * 0.85;
-	width: 100%;
-	border-top: 4px solid $c-bg; //$c-text-main;
-	//border: 1px solid pink;
-
-	.testerNote-row {
-		position: relative;
-		display: flex;
-		// flex-flow: row nowrap;
-		align-items: flex-start;
-		height: 64px;
-		//justify-content: center;
-		//padding-left: $col-w * 1.5;
-		//border: 1px solid pink;
-
-		.testerNote {
-			position: relative;
-			display: flex;
-			flex-flow: row nowrap;
-			justify-content: flex-start;
-			align-items: center;
-			height: 100%;
-			color: $c-text-main;
-			font-weight: 600;
-			font-size: 0.8em;
-			//border-top: 1px solid $c-text-subtle;
-		}
-	}
-
-	.newUserBtn-row {
-		height: 64px;
-		//border: 1px solid pink;
-
-		.newUserBtn {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 100%;
-			margin: 0 0.5em;
-			// margin-top: 1.5em;
-			padding: 0 2em;
-			min-width: 250px;
-			color: $c-text-main;
-			background-color: #4ec8d8;
-			background-color: white; //#edf9f8;
-			font-weight: 600;
-			border-radius: 32px;
-			//border: 1px solid red;
-		}
-	}
-
-}
-
-
-.profiles_list-foot 
-.slpInfo-container { // height: $row-h * 0.8;
-	display: flex;
-	flex-flow: column nowrap;
+	align-items: center;
+	background-color: transparent;
 	height: $row-h * 1;
 	width: 100%;
-	//border: 1px solid red;
+	//border: 1px solid blue;
 
-	.slpNameLabel-row {
-		//background-color: rgba(226, 247,246, 0.65); 
-		background-color: #467c91;
-		//#e2f7f7; //#dff4f1;//#ACE2E5;
-		height: $row-h * 0.3;
-		margin-top: 1em;
-
-		padding: 0.5em 0;
-		padding-left: $col-w * 1.5;
-		//border-top: 2px solid #edf9f8; //#d0efeb;
-		border-bottom: 1px solid #d0efeb;
-
-		.banner-hl {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 50%;
-			background-color: #49889b;
-			//z-index: 91;
-		}
-
-		.slpNameLabel {
-			position: relative;
-			color: #edf9f8; //$c-text-subtle; //$c-text-main; //
-			font-weight: 700;
-			z-index: 93;
-			//border: 1px solid red;
-		}
-	}
-
-	.slpBtn-row {
-		background-color: #edf9f8;
-		height: $row-h * 0.7;
-
-		.profiles-list-btn {
-			flex: 1 1 auto;
+	.footRow { // main layout class
+		position: relative;
+		display: flex;
+		flex-flow: row nowrap;
+		//justify-content: center;
+		align-items: center;
+		padding-left: $col-w * 2;
+		height: 50%;
+		width: 100%;
+		color: $c-text-main;
+		//border: 1px solid red;
+	
+		.footBtn {
 			display: flex;
 			flex-flow: row nowrap;
-			justify-content: center;
+			justify-content: space-between;
 			align-items: center;
-			background-color: #edf9f8; //#93c9c7;
-			color: $c-text-subtle; //white;
-			height: 100%;
-			width: 50%;
-			line-height: 1.5em;
-			padding: 0.5em 1em;
-			//border-radius: 6px;
-			border: 0px;
-			//border-left: 1px solid $c-text-subtle;
-			
-			
-			div, i {
-				text-align: left;
-				width: auto;
-				padding: 0;
-			}
-			div {
-				padding-right: 0.75em;
-			}
+			color: white;
+			font-weight: 600;
+			// height: 65%;
+			width: 95%;
+			// border-radius: 4px;
+			//border: 1px solid white;
 
 			i {
-				font-size: 2.5em !important;
+				font-size: 1.5em;
 			}
-		}
-		.profiles-list-btn:first-child {
-			border-right: 1px solid $c-text-subtle;
-		}
-
-	}
+		} // .footBtn
+	} //.footRow
 }
 
+.c-navy {
+	background-color: rgba(70,125,145, 1); //navy
+}
+
+.c-navy-hl {
+	background-color: rgba(73,136,155, 1); //navy hl
+}
+
+.c-navy-dark {
+	background-color: #3d6d84;
+}
 
 
 

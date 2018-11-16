@@ -49,11 +49,12 @@ function compareRecordings(ra, rb) {
 			$scope.displayName = FirebaseService.userName();
 
 			// use: to change display state of card
-			//values: recordings || progress || profile || settings || ""
+			//values: recordings || progress || profile || settings || home
 			$scope.cardState = "profile";
-
+			$scope.slpView = false;
 			$scope.data = {};
 			$scope.data.uploadMessage = "";
+
       $scope.data.selectedProfileRecordings = [];
       $scope.data.sessionIsActive = AutoService.isSessionActive();
 
@@ -112,38 +113,32 @@ function compareRecordings(ra, rb) {
 
 
 		// ===========================================================
-	  // PROFILE DRAWER
-	  // ===========================================================
-
-		/* updateCurrentProfile() Notes
-		 	updates $scope.data.currentProfile & $scope.data.currentProfileUUID
-			trigger: selecting a new profile from the list in .profiles-layout_drawer-left
-			input ele: radio-ion,
-			ng-model: data.currentProfileUUID
-		*/
-		$scope.updateCurrentProfile = function(profile)
-		{
-			ProfileService.setCurrentProfileUUID(profile.uuid).then(function() {
-				ProfileService.getCurrentProfile().then(function(res) {
-					if (res) {
-						$scope.data.currentProfile = res;
-					}
+	  	// PROFILE DRAWER
+	  	// ===========================================================
+			/* updateCurrentProfile() Notes
+			 	updates $scope.data.currentProfile & $scope.data.currentProfileUUID
+				trigger: selecting a new profile from the list in .profiles-layout_drawer-left
+				input ele: radio-ion,
+				ng-model: data.currentProfileUUID
+			*/
+			$scope.updateCurrentProfile = function(profile)
+			{
+				ProfileService.setCurrentProfileUUID(profile.uuid).then(function() {
+					ProfileService.getCurrentProfile().then(function(res) {
+						if (res) {
+							$scope.data.currentProfile = res;
+						}
+					});
 				});
-			});
-		};
+			};
 
-		/* updateCurrentProfile() Notes
-			updates $scope.data.currentProfile & $scope.data.currentProfileUUID
-			trigger: selecting a new profile from the list in .profiles-layout_drawer-left
-			input ele: radio-ion,
-			ng-model: data.currentProfileUUID
-		*/
-		$scope.createProfile = function()
-		{
-			$scope.data.currentProfile = ProfileService.createProfile();
-			$scope.setIsEditing(true);
-			$scope.setCardState('profile');
-		};
+			$scope.createProfile = function()
+			{
+				$scope.data.currentProfile = ProfileService.createProfile();
+				$scope.setIsEditing(true);
+				$scope.slpView = false;
+				$scope.setCardState('profile');
+			};
 
 
 		// ===========================================================
@@ -154,6 +149,18 @@ function compareRecordings(ra, rb) {
 			//let state = navState;
 			console.log(navState);
 			$scope.cardState = navState;
+		}
+		$scope.openSlpView = function() {
+			//let state = navState;
+			//console.log(navState);
+			$scope.slpView = true;
+			$scope.cardState = "slp";
+		}
+		$scope.closeSlpView = function() {
+			//let state = navState;
+			//console.log(navState);
+			$scope.slpView = false;
+			$scope.cardState = "profile";
 		}
 
 
