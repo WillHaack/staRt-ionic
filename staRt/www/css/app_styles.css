@@ -777,15 +777,20 @@ input, textarea {
     height: 50%;
     width: 100%;
     color: #3D6D84; }
-    .p-drawer_layout_foot .footRow .footBtn {
+    .p-drawer_layout_foot .footRow button.footBtn {
       display: flex;
       flex-flow: row nowrap;
       justify-content: space-between;
       align-items: center;
+      height: 100%;
+      width: 100%;
+      padding-right: 1em;
       color: #3D6D84;
       font-weight: 600;
-      width: 95%; }
-      .p-drawer_layout_foot .footRow .footBtn i {
+      border: 0;
+      box-shadow: none;
+      background-color: transparent; }
+      .p-drawer_layout_foot .footRow button.footBtn i {
         font-size: 1.5em; }
 
 .c-navy {
