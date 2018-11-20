@@ -30,14 +30,14 @@
 
 	<div class="profiles_list-body">
 		<ion-scroll direction="y">
-			<ion-list class="list" ng-hide="isEditing">
+			<ion-list class="list">
 				<ion-radio
 					name="name"
 					ng-model="data.currentProfileUUID"
 					ng-repeat="profile in data.profiles | filter:nameSearch track by profile.uuid"
 					ng-value="profile.uuid"
-
-					ng-change="updateCurrentProfile(profile)">
+					ng-change="updateCurrentProfile(profile)"
+					ng-disabled="isEditing">
 						<div class="name-item">
 						<!-- <div class="initials">WW</div> -->
 							<div class="name-text">
@@ -56,27 +56,25 @@
 
 
 <!-- ===================================== -->
-
+<!--  ng-hide="isEditing" -->
 <div class="p-drawer_layout_foot">
 
 	<div class="footRow c-whiteBlue_400">
-		<div class="footBtn"
+		<button class="footBtn"
 		ng-click="createProfile()"
-		ng-disabled="isEditing"
-		ng-hide="isEditing">
+		ng-disabled="isEditing">
 			<span>Add New Particpant</span>
 			<i class="icon ion-person-add "></i>
-		</div>
+		</button>
 	</div>
 
 	<div class="footRow c-whiteBlue_500">
-		<div class="footBtn"
+		<button class="footBtn"
 		ng-click="openSlpView()"
-		ng-disabled="isEditing"
-		ng-hide="isEditing">
+		ng-disabled="isEditing">
 			Clinician's Card
 			<i class="icon ion-filing"></i>
-		</div>
+		</button>
 	</div>
 
 </div> <!-- p-drawer_layout_foot -->

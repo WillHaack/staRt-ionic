@@ -22,8 +22,6 @@
 //.profiles-layout_drawer-left 
 // z-index: 90;
 // ================================================
-
-
 .p-drawer_list-head { // height: $row-h * 1.33;
 	position: relative;
 	display: flex;
@@ -230,16 +228,19 @@
 		color: $c-text-main;
 		//border: 1px solid red;
 	
-		.footBtn {
+		button.footBtn {
 			display: flex;
 			flex-flow: row nowrap;
 			justify-content: space-between;
 			align-items: center;
+			height: 100%;
+			width: 100%;
+			padding-right: 1em;
 			color: $c-text-main;
 			font-weight: 600;
-			// height: 65%;
-			width: 95%;
-			//border: 1px solid white;
+			border: 0;
+			box-shadow: none;
+			background-color: transparent;
 
 			i { font-size: 1.5em; }
 
