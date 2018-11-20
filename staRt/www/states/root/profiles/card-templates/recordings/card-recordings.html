@@ -1,0 +1,47 @@
+<div class="card-content">
+
+	<div class="card-body">
+
+		<h3>RECORDINGS</h3>
+
+		<ion-scroll>
+			<ion-list
+				ng-repeat="recording in data.currentProfileRecordings track by recording.Metadata"
+				ng-class="{uploaded:recording.uploaded, not_uploaded:!recording.uploaded}"
+			>
+				<ion-item ng-click="recordingClicked(recording)" ng-class="{ selected: recording.selected }">
+					<div>{{ recording.date }} </div>
+					<div>{{ recording.userString }} </div>
+					<div>{{ recording.totalTimeString }} </div>
+					<div ng-if=recording.uploaded class="upload_badge uploaded">Uploaded</div>
+					<div ng-if=!recording.uploaded class="upload_badge not_uploaded">Not Uploaded</div>
+				</ion-item>
+			</ion-list>
+		</ion-scroll>
+
+		<p>{{ data.uploadMessage }}</p>
+
+	</div>
+
+<div class="card-foot">
+	<!-- <div class="column-div"> -->
+		<button
+			class="button button-calm column-div"
+			ng-click="uploadSelectedRecordings()"
+			ng-disabled="!data.selectedProfileRecordings.length || uploadCount > 0" >
+			Upload
+		</button>
+	<!-- </div> -->
+	<!-- <div class="column-div"> -->
+		<button
+			class="button button-stable column-div"
+			ng-click="deleteSelectedRecordings()"
+			ng-disabled="!data.selectedProfileRecordings.length || uploadCount > 0" >
+			<i class="icon ion-trash-b"></i>
+			Delete
+		</button>
+	<!-- </div> -->
+</div>
+
+
+</div> <!-- end  .card-content -->

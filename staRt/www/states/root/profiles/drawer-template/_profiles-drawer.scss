@@ -1,0 +1,267 @@
+// ================================================
+// PROFILES LIST 
+//.profiles-layout_drawer-left 
+// z-index: 90;
+// ================================================
+// .red { border: 1px solid red; } //#dev
+
+
+.p-drawer_layout_head-body {
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+	//border: 1px solid red;
+}
+
+//.p-drawer_layout_foot {} see below
+
+
+// ================================================
+// PROFILES HEAD
+//.profiles-layout_drawer-left 
+// z-index: 90;
+// ================================================
+
+
+.p-drawer_list-head { // height: $row-h * 1.33;
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+	height: $row-h * 1.33;
+	width: 100%;
+	//border: 1px solid lime;
+
+	.header-img {
+		position: absolute;
+		margin-left: $col-w * 1.5;
+		top: 0;
+		left: 0;
+		width: 70%;
+		height: $row-h;
+		background-image: url('../img/profiles/birdsInClouds.svg');
+		background-repeat: no-repeat;
+		background-position: center bottom;
+    	background-size: contain;
+    	z-index: 90;
+	}
+
+	.closeBtn-row {
+		position: relative;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: flex-end;
+		align-items: center;
+		height: $row-h * 0.5;
+		z-index: 95;
+	
+		.closeBtn {
+			position: relative;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+			width: $row-h * 0.5;
+
+			color: $c-bg;
+			font-size: 2em;
+			font-weight: 600;
+			border-left: 1px solid red;
+			border-bottom: 1px solid red;
+			z-index: 95;
+		}	
+	}
+
+	.title-row {
+		position: relative;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: flex-start;
+		align-items: flex-end;
+		height: $row-h * 0.5;
+		width: 100%;
+		z-index: 90;
+	
+		.title {
+			position: relative;
+			display: flex;
+			width: auto;
+			height: auto;
+			padding-left: $col-w * 2;
+			color: $c-text-main; //white; //
+			font-size: 1em;
+			font-weight: 600;
+			text-align: left;
+			//z-index: 92;
+			//border: 1px solid red;
+		}
+	}
+} // .p-drawer_list-head
+
+
+.p-drawer_list-head
+.seachBar-row { //height: $row-h * 0.33;
+	position: relative;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	height: $row-h * 0.33;
+	width: 100%;
+	background-image: url('../img/ui/ribbon.svg');
+	background-image-size: 100% 100%;
+	background-repeat: no-repeat; 
+
+	.searchBar { 
+		position: relative;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-between;
+		align-items: center;
+		margin-left: $col-w * 1.85;
+		width: $col-w * 2.8;
+		height: $row-h * 0.23;
+		padding-left: 1em;
+		padding-right: 1em;
+		background-color:rgba(62,109,124,0.75);
+		color: white;
+		font-weight: 500;
+		border-radius: 24px;
+		z-index: 92;
+		//border: 1px solid red;
+
+		.searchBar-label {
+			position: relative;
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: flex-start;
+			align-items: center;
+			//border: 1px solid red;
+
+			input[type="text"].nameSearch {
+				width: auto;
+				font-size: 1.2em !important;
+				font-weight: 600 !important;
+				color: white !important;
+				background-color: transparent !important;
+				border-radius: 10px;
+			}
+		} // end searchBar-label
+
+		i {
+			font-size: 1.25em !important;
+			font-weight: 400 !important;
+			color: $c-bg;
+			margin-right: 0.5em;
+			//border: 1px solid red;
+		}
+	} // searchBar
+} // searchBar-row
+
+
+// ================================================
+// PROFILES BODY
+//.profiles-layout_drawer-left 
+// z-index: 90;
+// ================================================
+
+.profiles_list-body { // height: $row-h * 2.66;
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	height: $row-h * 3.66;
+	width: 100%;
+	padding-left: $col-w * 2;
+	text-align: left;
+	//border: 1px solid lime;
+
+	.item, .item-content { // ionic class overwrite
+	background-color: transparent !important;
+	}
+	.item { // ionic class overwrite
+		border-bottom: 1px solid rgba(255,255,255, 0.5);
+	}
+}
+
+
+.name-item {
+	position: relative;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	// border: 1px solid red;
+
+	.initials { // not in use
+		margin-right: 1em;
+	}
+	.name-text {
+		margin-right: 1em;
+	}
+}
+
+// ================================================
+// PROFILES FOOT
+//.profiles-layout_drawer-left 
+// z-index: 90;
+// ================================================
+
+.p-drawer_layout_foot { // content parent class
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-end;
+	align-items: center;
+	background-color: transparent;
+	height: $row-h * 1;
+	width: 100%;
+	//border: 1px solid blue;
+
+	.footRow { 
+		position: relative;
+		display: flex;
+		flex-flow: row nowrap;
+		//justify-content: center;
+		align-items: center;
+		padding-left: $col-w * 2;
+		height: 50%;
+		width: 100%;
+		color: $c-text-main;
+		//border: 1px solid red;
+	
+		.footBtn {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: space-between;
+			align-items: center;
+			color: $c-text-main;
+			font-weight: 600;
+			// height: 65%;
+			width: 95%;
+			//border: 1px solid white;
+
+			i { font-size: 1.5em; }
+
+		} // .footBtn
+	} //.footRow
+}
+
+
+// #hc review this
+.c-navy { background-color: rgba(70,125,145, 1); }
+.c-navy-hl { background-color: rgba(73,136,155, 1); }
+.c-navy-dark { background-color: #3d6d84; }
+
+.c-whiteBlue_500 { background-color: #e2f7f7; }
+.c-whiteBlue_400 { background-color: #edf9f8; }
+
+
+
+
+
+
+
+
+
+

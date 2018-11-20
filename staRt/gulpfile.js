@@ -75,6 +75,9 @@ gulp.task('watch', function() {
 	gulp.watch( [ __dirname + '/www/**/*.scss', __dirname + '/www/states/root/**/*.scss'], ['sass']);
 });
 
+gulp.task("ionic:watch:before", ["sass","watch"]); //needed for ionic CLIv3.x builds
+
+
 gulp.task('install', ['git-check'], function() {
 	return bower.commands.install()
 		.on('log', function(data) {

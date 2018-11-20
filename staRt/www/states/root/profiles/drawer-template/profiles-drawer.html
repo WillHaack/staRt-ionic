@@ -1,0 +1,82 @@
+<div class="p-drawer_layout_head-body">
+
+	<div class="p-drawer_list-head">
+		<div class="header-img"></div>
+
+		<div class="closeBtn-row">
+			<!-- <div class="closeBtn">X</div> -->
+		</div>
+
+		<div class="title-row">
+			<div class="title">REGISTERED PARTICIPANTS</div>
+		</div>
+
+		<div class="seachBar-row">
+			<div class="searchBar">
+				<label class="searchBar-label">
+					<input class="nameSearch" ng-model="nameSearch" type="text" placeholder="Search">
+				</label>
+				<!-- 				
+				<i class="icon ion-search"></i>
+				<i class="icon ion-close "></i> 
+				-->
+			</div> 
+			<!-- end searchBar -->
+		</div> <!-- end searchBar-row -->
+
+	</div> <!-- end profiles_list-head -->
+
+	<!-- ===================================== -->
+
+	<div class="profiles_list-body">
+		<ion-scroll direction="y">
+			<ion-list class="list" ng-hide="isEditing">
+				<ion-radio
+					name="name"
+					ng-model="data.currentProfileUUID"
+					ng-repeat="profile in data.profiles | filter:nameSearch track by profile.uuid"
+					ng-value="profile.uuid"
+
+					ng-change="updateCurrentProfile(profile)">
+						<div class="name-item">
+						<!-- <div class="initials">WW</div> -->
+							<div class="name-text">
+								{{profile.name}}
+							</div>
+							<div class="testerIcon"
+							ng-if="!profile.formalTester">
+							</div>
+						</div>
+				</ion-radio>
+			</ion-list> <!-- </ion-list> -->
+		</ion-scroll>
+	</div> <!-- .profiles_list-body -->
+
+</div> <!-- layout_head-body -->
+
+
+<!-- ===================================== -->
+
+<div class="p-drawer_layout_foot">
+
+	<div class="footRow c-whiteBlue_400">
+		<div class="footBtn"
+		ng-click="createProfile()"
+		ng-disabled="isEditing"
+		ng-hide="isEditing">
+			<span>Add New Particpant</span>
+			<i class="icon ion-person-add "></i>
+		</div>
+	</div>
+
+	<div class="footRow c-whiteBlue_500">
+		<div class="footBtn"
+		ng-click="openSlpView()"
+		ng-disabled="isEditing"
+		ng-hide="isEditing">
+			Clinician's Card
+			<i class="icon ion-filing"></i>
+		</div>
+	</div>
+
+</div> <!-- p-drawer_layout_foot -->

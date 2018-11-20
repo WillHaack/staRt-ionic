@@ -164,20 +164,21 @@ $navW: $nav-btnW + $col-pad; // OLD nav
 .navTab {
   display: -webkit-flex;
   -webkit-flex: 1;
-  background-color: $blue-main;
+  background-image: url('../img/nav/new/navTab-off.svg');
+  background-image-size: 100% 100%;
+  background-size: cover;
+  background-repeat: no-repeat; 
   text-align: center;
-  border-radius: $roundBorder;
+  border-radius: 10px;
   box-shadow: $itemShadow;
   width: $nav-btnW;
-  padding-top: 10%;
-  padding-bottom: 5%;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   transition: width 0.5s ease-in-out;
 
   &.active {
-    color: #53C8E9;
-    background-color: $blue-white;
+    color: white;
+    background-image: url('../img/nav/new/navTab-on.svg');
     box-shadow: $itemShadow-select;
     z-index: 25;
     width: $nav-btnW + 1;
@@ -186,6 +187,9 @@ $navW: $nav-btnW + $col-pad; // OLD nav
 
 .navTabText {
   margin: auto;
+  padding-top: 10%;
+  padding-bottom: 5%;
+  //border: 1px solid red;
 }
 
 .nav-svg {
