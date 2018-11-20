@@ -1,9 +1,6 @@
 <div class="card-content">
 
-	<div class="card-body">
-
-		<h3>RECORDINGS</h3>
-
+	<div class="card-body card-recordings">
 		<ion-scroll>
 			<ion-list
 				ng-repeat="recording in data.currentProfileRecordings track by recording.Metadata"
@@ -17,6 +14,7 @@
 					<div ng-if=!recording.uploaded class="upload_badge not_uploaded">Not Uploaded</div>
 				</ion-item>
 			</ion-list>
+			
 		</ion-scroll>
 
 		<p>{{ data.uploadMessage }}</p>
