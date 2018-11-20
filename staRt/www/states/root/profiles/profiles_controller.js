@@ -49,7 +49,7 @@ function compareRecordings(ra, rb) {
 			$scope.displayName = FirebaseService.userName();
 
 			// use: to change display state of card
-			//values: recordings || progress || profile || settings || home
+			//values: recordings || progress || profile || settings || home || slp
 			$scope.cardState = "profile";
 			$scope.slpView = false;
 			$scope.data = {};
@@ -78,7 +78,6 @@ function compareRecordings(ra, rb) {
 			ProfileService.getAllProfiles().then( function(res) {
 				console.log(res);
 				$scope.data.profiles = res;
-				console.log('note: ' + $scope.data.profiles.length);
 			});
 
 			ProfileService.getCurrentProfile().then(function(res)

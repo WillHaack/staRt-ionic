@@ -18,8 +18,10 @@
 		
 		<div class="profiles-layout_content-container">
 
+			<!-- WELCOME MESSAGES ==================================== -->
  			<div class="profiles-noCard" 
- 				ng-hide="data.currentProfile">
+ 				ng-hide="data.currentProfile || slpView"
+ 				ng-show="!data.currentProfile && !slpView">
 
 				<h1>Welcome {{displayName}},</h1>
 				<div class="divider"></div>
@@ -60,21 +62,11 @@
 			</div> <!-- profiles-noCard -->
 
 
-
-			<!-- ng-hide="!data.currentProfile" -->
+			<!-- CLINICIAN'S CARD ==================================== -->
 			<div class="p-card" 
-				 ng-hide="!data.currentProfile">
+				ng-hide="!slpView" ng-show="slpView">
 
 				<div class="p-card_head">
-
-					<div ng-if="!slpView" class="card-headBox">
-						<div class="card-closeRow"></div>
-
-						<div class="card-titleRow">
-							<h1 >{{data.currentProfile.name}}</h1>
-						</div>
-					</div> <!-- .card-headBox !slpView -->
-
 					<div ng-if="slpView" class="card-headBox">
 						<div class="card-closeRow">
 							<button class="button"
@@ -88,9 +80,33 @@
 						</div>
 					</div>
 
-					<!-- === -->
+					<div class="p-card_navBox p-card_navBox--slp">
+					</div> <!-- card-navBox slpView" -->
+				</div> <!-- p-card_head -->
 
-					<div ng-if="!slpView" class="p-card_navBox">
+				<div class="">
+					<div ng-include=" './states/root/profiles/card-templates/slp/card-slp.html'"></div>
+				</div>
+			</div> <!-- p-card -->
+
+
+
+			<!-- STUDENT CARDS ======================================= -->
+			<div class="p-card" 
+				 ng-hide="!data.currentProfile || slpView"
+				 ng-show="data.currentProfile && !slpView">
+
+				<div class="p-card_head">
+
+					<div class="card-headBox">
+						<div class="card-closeRow"></div>
+
+						<div class="card-titleRow">
+							<h1 >{{data.currentProfile.name}}</h1>
+						</div>
+					</div> <!-- .card-headBox-->
+
+					<div class="p-card_navBox">
 
 						<div ng-click="setCardState('profile')"
 							class="pro_navitem"
@@ -119,11 +135,7 @@
 
 					</div> <!-- card-navBox !slpView" -->
 
-					<div ng-if="slpView" class="p-card_navBox p-card_navBox--slp">
-					</div> <!-- card-navBox slpView" -->
-
 				</div> <!-- p-card_head -->
-
 
 				<!-- CARD BODY STARTS HERE --> 
 				<div class="card-switchParent" ng-switch on="cardState">
@@ -143,10 +155,6 @@
 					<div class="card-switchBox" ng-switch-when="settings">
 						<div ng-include=" './states/root/profiles/card-templates/settings/card-settings.html'"></div>
 					</div> <!-- END Progress card-switchBox -->
-
-					<div class="card-switchBox" ng-switch-when="slp">
-						<div ng-include=" './states/root/profiles/card-templates/slp/card-slp.html'"></div>
-					</div> <!-- END slp card-switchBox -->
 
 				</div> <!-- card-switchParent -->
 
