@@ -623,20 +623,20 @@ input, textarea {
   width: 45.83333vw;
   z-index: 10; }
 
-.layout_head-body {
+.p-drawer_layout_head-body {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start; }
 
-.profiles_list-head {
+.p-drawer_list-head {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   height: 22.16667vh;
   width: 100%; }
-  .profiles_list-head .header-img {
+  .p-drawer_list-head .header-img {
     position: absolute;
     margin-left: 12.5vw;
     top: 0;
@@ -648,7 +648,7 @@ input, textarea {
     background-position: center bottom;
     background-size: contain;
     z-index: 90; }
-  .profiles_list-head .closeBtn-row {
+  .p-drawer_list-head .closeBtn-row {
     position: relative;
     display: flex;
     flex-flow: row nowrap;
@@ -656,7 +656,7 @@ input, textarea {
     align-items: center;
     height: 8.33333vh;
     z-index: 95; }
-    .profiles_list-head .closeBtn-row .closeBtn {
+    .p-drawer_list-head .closeBtn-row .closeBtn {
       position: relative;
       display: flex;
       justify-content: center;
@@ -669,7 +669,7 @@ input, textarea {
       border-left: 1px solid red;
       border-bottom: 1px solid red;
       z-index: 95; }
-  .profiles_list-head .title-row {
+  .p-drawer_list-head .title-row {
     position: relative;
     display: flex;
     flex-flow: row nowrap;
@@ -678,7 +678,7 @@ input, textarea {
     height: 8.33333vh;
     width: 100%;
     z-index: 90; }
-    .profiles_list-head .title-row .title {
+    .p-drawer_list-head .title-row .title {
       position: relative;
       display: flex;
       width: auto;
@@ -689,7 +689,7 @@ input, textarea {
       font-weight: 600;
       text-align: left; }
 
-.profiles_list-head .seachBar-row {
+.p-drawer_list-head .seachBar-row {
   position: relative;
   display: flex;
   flex-flow: row nowrap;
@@ -700,7 +700,7 @@ input, textarea {
   background-image: url("../img/ui/ribbon.svg");
   background-image-size: 100% 100%;
   background-repeat: no-repeat; }
-  .profiles_list-head .seachBar-row .searchBar {
+  .p-drawer_list-head .seachBar-row .searchBar {
     position: relative;
     display: flex;
     flex-flow: row nowrap;
@@ -708,34 +708,32 @@ input, textarea {
     align-items: center;
     margin-left: 15.41667vw;
     width: 23.33333vw;
-    height: 65%;
-    padding: 1em;
+    height: 3.83333vh;
+    padding-left: 1em;
+    padding-right: 1em;
     background-color: rgba(62, 109, 124, 0.75);
     color: white;
     font-weight: 500;
     border-radius: 24px;
-    z-index: 92;
-    border: 1px solid red; }
-    .profiles_list-head .seachBar-row .searchBar .searchBar-label {
+    z-index: 92; }
+    .p-drawer_list-head .seachBar-row .searchBar .searchBar-label {
       position: relative;
       display: flex;
       flex-flow: row nowrap;
       justify-content: flex-start;
-      align-items: center;
-      border: 1px solid red; }
-      .profiles_list-head .seachBar-row .searchBar .searchBar-label input[type="text"].nameSearch {
+      align-items: center; }
+      .p-drawer_list-head .seachBar-row .searchBar .searchBar-label input[type="text"].nameSearch {
         width: auto;
         font-size: 1.2em !important;
         font-weight: 600 !important;
         color: white !important;
         background-color: transparent !important;
         border-radius: 10px; }
-    .profiles_list-head .seachBar-row .searchBar i {
+    .p-drawer_list-head .seachBar-row .searchBar i {
       font-size: 1.25em !important;
       font-weight: 400 !important;
       color: #c2f2f2;
-      margin-right: 0.5em;
-      border: 1px solid red; }
+      margin-right: 0.5em; }
 
 .profiles_list-body {
   position: relative;
@@ -758,18 +756,10 @@ input, textarea {
   align-items: center; }
   .name-item .initials {
     margin-right: 1em; }
+  .name-item .name-text {
+    margin-right: 1em; }
 
-.testerIcon {
-  position: relative;
-  height: 32px;
-  width: 32px;
-  margin-left: 1em;
-  background-image: url("../img/profiles/ico_star-line.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain; }
-
-.profiles_list-foot {
+.p-drawer_layout_foot {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
@@ -778,7 +768,7 @@ input, textarea {
   background-color: transparent;
   height: 16.66667vh;
   width: 100%; }
-  .profiles_list-foot .footRow {
+  .p-drawer_layout_foot .footRow {
     position: relative;
     display: flex;
     flex-flow: row nowrap;
@@ -787,15 +777,15 @@ input, textarea {
     height: 50%;
     width: 100%;
     color: #3D6D84; }
-    .profiles_list-foot .footRow .footBtn {
+    .p-drawer_layout_foot .footRow .footBtn {
       display: flex;
       flex-flow: row nowrap;
       justify-content: space-between;
       align-items: center;
-      color: white;
+      color: #3D6D84;
       font-weight: 600;
       width: 95%; }
-      .profiles_list-foot .footRow .footBtn i {
+      .p-drawer_layout_foot .footRow .footBtn i {
         font-size: 1.5em; }
 
 .c-navy {
@@ -806,6 +796,12 @@ input, textarea {
 
 .c-navy-dark {
   background-color: #3d6d84; }
+
+.c-whiteBlue_500 {
+  background-color: #e2f7f7; }
+
+.c-whiteBlue_400 {
+  background-color: #edf9f8; }
 
 .profiles-noCard {
   position: relative;
@@ -818,8 +814,7 @@ input, textarea {
   height: 75vh;
   margin-left: 4.16667vw;
   padding-top: 4.16667vh;
-  color: #3D6D84;
-  border: 1px solid rgba(255, 255, 255, 0.75); }
+  color: #3D6D84; }
   .profiles-noCard h1, .profiles-noCard h2, .profiles-noCard h3 {
     color: #3D6D84;
     padding-left: 0.5em; }
@@ -832,24 +827,38 @@ input, textarea {
     background-image: url("../img/ui/divider-whiteRope.svg");
     background-repeat: no-repeat;
     background-size: 100%; }
-  .profiles-noCard .profiles-msg-body {
+  .profiles-noCard .profiles-welcome {
     position: relative;
     display: flex;
     flex-flow: column nowrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     height: 100%;
     width: 100%;
     padding-top: 4.16667vh;
     padding-left: 1em;
-    font-size: 1.2em;
-    border: 1px solid pink; }
+    font-size: 1em; }
+    .profiles-noCard .profiles-welcome.welcome_shouldCreateProfile button {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      color: #3D6D84;
+      margin: 2em 0;
+      padding: 1em 2em;
+      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15); }
+    .profiles-noCard .profiles-welcome div {
+      padding-top: 0.5em;
+      margin-bottom: 0.5em; }
+    .profiles-noCard .profiles-welcome p {
+      margin-bottom: 0.5em; }
 
 .deco_top-line {
   border-top: 1px solid white;
-  padding-top: 0.5em; }
+  padding-top: 2em; }
 
-.profiles-card {
+.p-card {
   display: flex;
   flex-flow: column nowrap;
   background-color: #ffffff;
@@ -858,14 +867,14 @@ input, textarea {
   border-radius: 10px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); }
 
-.card-head {
+.p-card_head {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
   width: 100%;
   height: 16.66667vh;
   max-height: 16.66667vh; }
-  .card-head .card-headBox {
+  .p-card_head .card-headBox {
     position: relative;
     display: flex;
     flex-flow: column nowrap;
@@ -876,7 +885,7 @@ input, textarea {
     color: #3D6D84;
     flex-direction: row nowrap;
     align-items: center; }
-    .card-head .card-headBox .card-closeRow {
+    .p-card_head .card-headBox .card-closeRow {
       position: relative;
       display: flex;
       flex-flow: row nowrap;
@@ -885,10 +894,13 @@ input, textarea {
       height: 33%;
       width: 100%;
       z-index: 20; }
-      .card-head .card-headBox .card-closeRow button {
+      .p-card_head .card-headBox .card-closeRow button {
         padding: 16px 32px;
-        border-radius: 10px; }
-    .card-head .card-headBox .card-titleRow {
+        border-radius: 10px;
+        font-size: 2em;
+        font-weight: 600;
+        color: #3D6D84; }
+    .p-card_head .card-headBox .card-titleRow {
       position: relative;
       display: flex;
       flex-flow: row nowrap;
@@ -897,12 +909,12 @@ input, textarea {
       height: 66%;
       width: 100%;
       padding: 0 2.5em; }
-      .card-head .card-headBox .card-titleRow h1 {
+      .p-card_head .card-headBox .card-titleRow h1 {
         font-size: 1.5em;
         color: #3D6D84;
         font-weight: 400; }
 
-.card-head .card-navBox {
+.p-card_head .p-card_navBox {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-around;
@@ -911,7 +923,7 @@ input, textarea {
   width: 100%;
   border-top: 2px solid #ace2e5;
   border-bottom: 2px solid #ace2e5; }
-  .card-head .card-navBox .pro_navitem {
+  .p-card_head .p-card_navBox .pro_navitem {
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
@@ -922,15 +934,14 @@ input, textarea {
     font-weight: 400;
     border-top: 2px solid #ace2e5;
     border-bottom: 2px solid #ace2e5; }
-    .card-head .card-navBox .pro_navitem.pro_navitem--active {
+    .p-card_head .p-card_navBox .pro_navitem.pro_navitem--active {
       height: 4.16667vh;
       font-weight: 700;
       border-top: 2px solid #3D6D84;
       border-bottom: 2px solid #3D6D84; }
-
-.card-head .card-navBox--slp {
-  border-top: 2px solid #efbd88;
-  border-bottom: 2px solid #efbd88; }
+  .p-card_head .p-card_navBox.p-card_navBox--slp {
+    border-top: 2px solid #efbd88;
+    border-bottom: 2px solid #efbd88; }
 
 .card-content {
   position: relative;
@@ -939,14 +950,19 @@ input, textarea {
   justify-content: space-between;
   height: 58.33333vh;
   width: 100%;
-  text-align: left; }
+  text-align: left;
+  color: #3D6D84; }
   .card-content .card-body {
     position: relative;
     display: flex;
     flex-flow: column nowrap;
     height: 50vh;
     width: 100%;
-    padding: 2.5em; }
+    padding: 2.5em;
+    color: #3D6D84; }
+    .card-content .card-body h3 {
+      font-size: 1em;
+      color: #3D6D84; }
   .card-content .card-foot {
     position: relative;
     display: flex;
@@ -961,7 +977,9 @@ input, textarea {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: space-between; }
+  justify-content: flex-start; }
+  .card-body.slpCard h3 {
+    margin-bottom: 1.5em; }
   .card-body.slpCard button {
     position: relative;
     display: flex;
@@ -969,7 +987,11 @@ input, textarea {
     justify-content: space-between;
     align-items: center;
     padding: 1em 2em;
-    width: 75%; }
+    margin-bottom: 1em;
+    width: 100%;
+    color: #3D6D84; }
+    .card-body.slpCard button i {
+      color: #3D6D84; }
 
 .sexBtn-row {
   position: relative;
@@ -981,6 +1003,16 @@ input, textarea {
   margin-top: 1em; }
   .sexBtn-row span {
     font-size: 1.3em; }
+
+.testerIcon {
+  position: relative;
+  display: inline-block;
+  height: 28px;
+  width: 28px;
+  background-image: url("../img/profiles/ico_star-line.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; }
 
 .tutorial-layout_view-container {
   position: relative;

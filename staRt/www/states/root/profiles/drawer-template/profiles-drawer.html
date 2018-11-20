@@ -1,6 +1,6 @@
-<div class="layout_head-body">
+<div class="p-drawer_layout_head-body">
 
-	<div class="profiles_list-head">
+	<div class="p-drawer_list-head">
 		<div class="header-img"></div>
 
 		<div class="closeBtn-row">
@@ -12,7 +12,6 @@
 		</div>
 
 		<div class="seachBar-row">
-			<!-- TODO -->
 			<div class="searchBar">
 				<label class="searchBar-label">
 					<input class="nameSearch" ng-model="nameSearch" type="text" placeholder="Search">
@@ -58,9 +57,9 @@
 
 <!-- ===================================== -->
 
-<div class="layout_foot profiles_list-foot">
+<div class="p-drawer_layout_foot">
 
-	<div class="footRow c-navy-hl">
+	<div class="footRow c-whiteBlue_400">
 		<div class="footBtn"
 		ng-click="createProfile()"
 		ng-disabled="isEditing"
@@ -70,14 +69,14 @@
 		</div>
 	</div>
 
-	<div class="footRow c-navy">
+	<div class="footRow c-whiteBlue_500">
 		<div class="footBtn"
 		ng-click="openSlpView()"
 		ng-disabled="isEditing"
 		ng-hide="isEditing">
 			Clinician's Card
-			<i class="icon ion-home "></i>
+			<i class="icon ion-filing"></i>
 		</div>
 	</div>
 
-</div> <!-- profiles_list-foot -->
+</div> <!-- p-drawer_layout_foot -->

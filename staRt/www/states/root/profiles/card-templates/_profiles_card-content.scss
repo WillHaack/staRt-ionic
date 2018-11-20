@@ -7,6 +7,7 @@
 	width: 100%;
 	//width: $col-w * 5.5;
 	text-align: left;
+	color: $c-text-main;
 	//border: 1px solid blue;
 
 	.card-body {
@@ -16,8 +17,15 @@
 		height: $row-h * 3;
 		width: 100%;
 		padding: 2.5em;
+		color: $c-text-main;
 		//padding-top: 2em;
 		//border: 1px solid red;
+		
+		h3 {
+			font-size: 1em;
+			color: $c-text-main;
+		}
+
 	}
 	.card-foot {
 		position: relative;
@@ -37,11 +45,19 @@
 } //.card-body
 
 
+// SLP CARD =================================
+
 .card-body.slpCard {
 	position: relative;
 	display: flex;
 	flex-flow: column nowrap;
-	justify-content: space-between;
+	//justify-content: space-between;
+	justify-content: flex-start;
+
+	h3 {
+
+		margin-bottom: 1.5em;
+	}
 
 	button {
 		position: relative;
@@ -50,7 +66,13 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: 1em 2em;
-		width: 75%;
+		margin-bottom: 1em;
+		width: 100%;
+		color: $c-text-main;
+	
+		i {
+			color: $c-text-main;
+		}
 	}
 }
 

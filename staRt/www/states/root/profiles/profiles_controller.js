@@ -78,6 +78,7 @@ function compareRecordings(ra, rb) {
 			ProfileService.getAllProfiles().then( function(res) {
 				console.log(res);
 				$scope.data.profiles = res;
+				console.log('note: ' + $scope.data.profiles.length);
 			});
 
 			ProfileService.getCurrentProfile().then(function(res)
@@ -115,12 +116,6 @@ function compareRecordings(ra, rb) {
 		// ===========================================================
 	  	// PROFILE DRAWER
 	  	// ===========================================================
-			/* updateCurrentProfile() Notes
-			 	updates $scope.data.currentProfile & $scope.data.currentProfileUUID
-				trigger: selecting a new profile from the list in .profiles-layout_drawer-left
-				input ele: radio-ion,
-				ng-model: data.currentProfileUUID
-			*/
 			$scope.updateCurrentProfile = function(profile)
 			{
 				ProfileService.setCurrentProfileUUID(profile.uuid).then(function() {
@@ -143,22 +138,17 @@ function compareRecordings(ra, rb) {
 
 		// ===========================================================
 		// CARD STATE
-		// vals: 'recordings' || 'progress' || 'profile' || 'settings'
+		// vals: 'recordings' || 'progress' || 'profile' || 'settings' || 'slp'
 		// ===========================================================
 		$scope.setCardState = function(navState) {
-			//let state = navState;
-			console.log(navState);
+			//console.log(navState);
 			$scope.cardState = navState;
 		}
 		$scope.openSlpView = function() {
-			//let state = navState;
-			//console.log(navState);
 			$scope.slpView = true;
 			$scope.cardState = "slp";
 		}
 		$scope.closeSlpView = function() {
-			//let state = navState;
-			//console.log(navState);
 			$scope.slpView = false;
 			$scope.cardState = "profile";
 		}
@@ -377,8 +367,9 @@ function compareRecordings(ra, rb) {
 
 
 
-
-
+		// ===========================================================
+		// CARD: SLP Functions
+		// ===========================================================
 
 		$scope.deleteAllProfiles = function()
 		{
@@ -414,13 +405,18 @@ function compareRecordings(ra, rb) {
 			});
 		}
 
-		$scope.optInFormalTesting = function() {
-			ProfileService.getCurrentProfile().then(function (profile) {
-				if (profile) AutoService.promptForFormalParticipation(profile);
-			});
-		}
 
-		var selected = [];
+
+	// -----------------------------------------------------------
+	// not sure what the Formal Testing and Session stuff is about
+
+	$scope.optInFormalTesting = function() {
+		ProfileService.getCurrentProfile().then(function (profile) {
+			if (profile) AutoService.promptForFormalParticipation(profile);
+		});
+	}
+
+	var selected = [];
 
 
     $scope.startSession = function() {
@@ -430,14 +426,6 @@ function compareRecordings(ra, rb) {
     $scope.stopSession = function() {
       AutoService.stopSession();
     };
-
-		// ----------------
-
-		//$scope.displayName = FirebaseService.userName();
-		//$scope.data = {};
-		//$scope.data.currentProfile
-		//console.log($scope.data);
-		//---------------
 
 		init();
 

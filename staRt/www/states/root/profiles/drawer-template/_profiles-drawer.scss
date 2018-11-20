@@ -1,4 +1,12 @@
-.layout_head-body {
+// ================================================
+// PROFILES LIST 
+//.profiles-layout_drawer-left 
+// z-index: 90;
+// ================================================
+// .red { border: 1px solid red; } //#dev
+
+
+.p-drawer_layout_head-body {
 	position: relative;
 	display: flex;
 	flex-flow: column nowrap;
@@ -6,22 +14,17 @@
 	//border: 1px solid red;
 }
 
-.layout_foot {} 
+//.p-drawer_layout_foot {} see below
 
 
 // ================================================
-// PROFILES LIST
+// PROFILES HEAD
 //.profiles-layout_drawer-left 
 // z-index: 90;
 // ================================================
-// .red { border: 1px solid red; } //#dev
 
-// .temp { //#dev
-// 	width: 100%;
-// 	min-height: 2em;
-// }
 
-.profiles_list-head { // height: $row-h * 1.33;
+.p-drawer_list-head { // height: $row-h * 1.33;
 	position: relative;
 	display: flex;
 	flex-flow: column nowrap;
@@ -94,10 +97,10 @@
 			//border: 1px solid red;
 		}
 	}
-} // .profiles_list-head
+} // .p-drawer_list-head
 
 
-.profiles_list-head 
+.p-drawer_list-head
 .seachBar-row { //height: $row-h * 0.33;
 	position: relative;
 	display: flex;
@@ -118,14 +121,15 @@
 		align-items: center;
 		margin-left: $col-w * 1.85;
 		width: $col-w * 2.8;
-		height: 65%;
-		padding: 1em;
+		height: $row-h * 0.23;
+		padding-left: 1em;
+		padding-right: 1em;
 		background-color:rgba(62,109,124,0.75);
 		color: white;
 		font-weight: 500;
 		border-radius: 24px;
 		z-index: 92;
-		border: 1px solid red;
+		//border: 1px solid red;
 
 		.searchBar-label {
 			position: relative;
@@ -133,7 +137,7 @@
 			flex-flow: row nowrap;
 			justify-content: flex-start;
 			align-items: center;
-			border: 1px solid red;
+			//border: 1px solid red;
 
 			input[type="text"].nameSearch {
 				width: auto;
@@ -150,7 +154,7 @@
 			font-weight: 400 !important;
 			color: $c-bg;
 			margin-right: 0.5em;
-			border: 1px solid red;
+			//border: 1px solid red;
 		}
 	} // searchBar
 } // searchBar-row
@@ -192,21 +196,10 @@
 	.initials { // not in use
 		margin-right: 1em;
 	}
+	.name-text {
+		margin-right: 1em;
+	}
 }
-
-.testerIcon {
-	position: relative;
-	height: 32px;
-	width: 32px;
-	margin-left: 1em;
-	background-image: url('../img/profiles/ico_star-line.svg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: contain;
-	// border: 1px solid white;
-}
-
-
 
 // ================================================
 // PROFILES FOOT
@@ -214,7 +207,7 @@
 // z-index: 90;
 // ================================================
 
-.profiles_list-foot { // content parent class
+.p-drawer_layout_foot { // content parent class
 	position: relative;
 	display: flex;
 	flex-flow: column nowrap;
@@ -225,7 +218,7 @@
 	width: 100%;
 	//border: 1px solid blue;
 
-	.footRow { // main layout class
+	.footRow { 
 		position: relative;
 		display: flex;
 		flex-flow: row nowrap;
@@ -242,31 +235,27 @@
 			flex-flow: row nowrap;
 			justify-content: space-between;
 			align-items: center;
-			color: white;
+			color: $c-text-main;
 			font-weight: 600;
 			// height: 65%;
 			width: 95%;
-			// border-radius: 4px;
 			//border: 1px solid white;
 
-			i {
-				font-size: 1.5em;
-			}
+			i { font-size: 1.5em; }
+
 		} // .footBtn
 	} //.footRow
 }
 
-.c-navy {
-	background-color: rgba(70,125,145, 1); //navy
-}
 
-.c-navy-hl {
-	background-color: rgba(73,136,155, 1); //navy hl
-}
+// #hc review this
+.c-navy { background-color: rgba(70,125,145, 1); }
+.c-navy-hl { background-color: rgba(73,136,155, 1); }
+.c-navy-dark { background-color: #3d6d84; }
 
-.c-navy-dark {
-	background-color: #3d6d84;
-}
+.c-whiteBlue_500 { background-color: #e2f7f7; }
+.c-whiteBlue_400 { background-color: #edf9f8; }
+
 
 
 

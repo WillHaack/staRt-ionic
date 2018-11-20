@@ -17,45 +17,55 @@
 
 		
 		<div class="profiles-layout_content-container">
-			
-			<!-- if NO profiles, msg >> clinician home screen -->
-			<!-- if NO currentUser, msg >> clinician home screen -->
 
-			<!-- if currentUser, card -->
-
-			<!-- ng-hide="data.currentProfile"-->
  			<div class="profiles-noCard" 
  				ng-hide="data.currentProfile">
 
 				<h1>Welcome {{displayName}},</h1>
 				<div class="divider"></div>
 				
-				<div class="profiles-msg-body msg-createProfile">
+				<div class="profiles-welcome welcome_shouldCreateProfile"
+				ng-if="data.profiles.length === 0">
+
+					<p>Please create a separate profile for each client who will be using the app.</p>
+
+					<button class="button"
+					ng-click="createProfile()">
+						<span>Add New Particpant</span>
+						<i class="icon ion-person-add "></i>
+					</button>
+
+					<p>It is important to provide accurate information about the client (e.g. age, height, gender). This information is used by the app to make an educated guess about the best acoustic settings for the user.</p>
 				</div>
 
-				<div class="profiles-msg-body msg-selectProfile">
+
+				<div class="profiles-welcome welcome_shouldSelectProfile"
+				ng-if="data.profiles.length > 0">
 					<div class="">
-						<p>Members of your flock are listed in the column on the left.</p> 
+						<p><span class="txtBold">Select a participant profile to begin!</span><br/>
+							Members of your flock are listed in the column on the left. 
+						</p> 
 
-						<p> Participants enrolled in our clinical research program have a [] symbol by their name.</p> 
-
-						<h3>&lt;&lt; Select a particpant profile to begin!</h3>
+						<p> Participants enrolled in our clinical research program have a <span class="testerIcon"></span> symbol by their name.</p> 
 					</div>
 
-					<div class="deco_top-line">
-						<p>If you would like to learn more about our research program, [link to website, open email msg w/ header, go to google form, etc ... #ask TM]
+					<div>
+						<p><span class="txtBold">To learn more about our research program,</span><br/>
+							[link to website, open email msg w/ header, go to google form, etc ... #ask TM]
 						</p>
 					</div>
-				</div> <!-- .msg-selectProfile -->
+				</div> 
+				<!-- .msg-selectProfile -->
 
 			</div> <!-- profiles-noCard -->
 
 
+
 			<!-- ng-hide="!data.currentProfile" -->
-			<div class="profiles-card" 
+			<div class="p-card" 
 				 ng-hide="!data.currentProfile">
 
-				<div class="card-head">
+				<div class="p-card_head">
 
 					<div ng-if="!slpView" class="card-headBox">
 						<div class="card-closeRow"></div>
@@ -69,7 +79,7 @@
 						<div class="card-closeRow">
 							<button class="button"
 							ng-click="closeSlpView()">
-								<i class="icon ion-close"></i>
+								x
 							</button>
 						</div>
 						
@@ -80,7 +90,7 @@
 
 					<!-- === -->
 
-					<div ng-if="!slpView" class="card-navBox">
+					<div ng-if="!slpView" class="p-card_navBox">
 
 						<div ng-click="setCardState('profile')"
 							class="pro_navitem"
@@ -109,10 +119,10 @@
 
 					</div> <!-- card-navBox !slpView" -->
 
-					<div ng-if="slpView" class="card-navBox card-navBox--slp">
+					<div ng-if="slpView" class="p-card_navBox p-card_navBox--slp">
 					</div> <!-- card-navBox slpView" -->
 
-				</div> <!-- card-head -->
+				</div> <!-- p-card_head -->
 
 
 				<!-- CARD BODY STARTS HERE --> 
