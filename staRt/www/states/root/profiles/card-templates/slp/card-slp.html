@@ -5,15 +5,13 @@
 
 		<button class="button profiles-list-btn"
 			ng-click="deleteAllProfiles()" 
-			ng-disabled="isEditing"
-			ng-hide="isEditing || !data.currentProfile">
+			ng-hide="data.profiles.length === 0">
 			<div>Delete All Particpants</div>
 			<i class="icon ion-trash-b"></i>
 		</button>
 
 		<button class="button profiles-list-btn"
-			ng-click="logOut()"
-			ng-disabled="isEditing">
+			ng-click="logOut()">
 			<div>Clinician Logout</div>
 			<i class="ion-log-in"></i>
 		</button>
