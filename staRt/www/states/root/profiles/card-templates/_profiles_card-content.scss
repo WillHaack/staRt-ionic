@@ -45,8 +45,11 @@
 } //.card-body
 
 
-// SLP CARD =================================
+// RECORDINGS CARD =================================
+@import 'recordings/card-recordings';
 
+
+// SLP CARD =================================
 .card-body.slpCard {
 	position: relative;
 	display: flex;

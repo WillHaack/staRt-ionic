@@ -978,6 +978,52 @@ input, textarea {
   .card-content ion-radio {
     border: 1px solid red; }
 
+.card-recordings ion-item {
+  border-bottom: 1px solid lightgray; }
+
+.card-recordings ion-item.selected {
+  background-color: lightgray; }
+
+.card-recordings ion-item.activated {
+  background-color: white; }
+
+.item-radio.uploaded {
+  border-left-style: solid;
+  border-left-width: 5px;
+  border-left-color: green; }
+
+.item-radio.not_uploaded {
+  border-left-style: solid;
+  border-left-width: 5px;
+  border-left-color: red; }
+
+.upload_badge.uploaded {
+  color: green;
+  font-weight: bold; }
+
+.upload_badge.not_uploaded {
+  color: red;
+  font-weight: bold; }
+
+.profiles__info {
+  flex: 3 0 0%;
+  margin-right: 10px; }
+
+.profiles__recordings {
+  flex: 3 0 0%; }
+
+.button-row {
+  flex-flow: row nowrap;
+  display: flex;
+  width: 100%; }
+
+.column-div {
+  flex: 1 0 0%; }
+
+.upload_badge {
+  color: #00bb00;
+  font-weight: bold; }
+
 .card-body.slpCard {
   position: relative;
   display: flex;

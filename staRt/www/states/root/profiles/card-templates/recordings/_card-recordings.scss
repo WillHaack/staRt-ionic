@@ -1,0 +1,71 @@
+.card-recordings { // parent ele
+	ion-scroll {
+		//border: 1px solid pink;
+	}
+	ion-item {
+		border-bottom: 1px solid lightgray;
+	}
+
+	ion-item.selected {
+	background-color: lightgray;
+	}
+
+	ion-item.activated {
+		background-color: white;
+	}
+
+}
+
+
+// OLD STYLES -------
+.item-radio.uploaded {
+	border-left-style: solid;
+	border-left-width: 5px;
+	border-left-color: green;
+}
+
+.item-radio.not_uploaded {
+	border-left-style: solid;
+	border-left-width: 5px;
+	border-left-color: red;
+}
+
+.upload_badge.uploaded {
+	color: green;
+	font-weight: bold;
+}
+
+.upload_badge.not_uploaded {
+	color: red;
+	font-weight: bold;
+}
+
+// .profiles__recordings ion-scroll {
+// 	height: 340px;
+// }
+
+.profiles__info
+{
+	flex: 3 0 0%;
+	margin-right: 10px;
+}
+
+.profiles__recordings {
+	flex: 3 0 0%;
+}
+
+.button-row {
+	flex-flow: row nowrap;
+	display: flex;
+	//margin-top: 20px;
+	width: 100%;
+}
+
+.column-div {
+	flex: 1 0 0%;
+}
+
+.upload_badge {
+	color: #00bb00;
+	font-weight: bold;
+}
