@@ -52,11 +52,13 @@ function compareRecordings(ra, rb) {
 			//values: recordings || progress || profile || settings || home || slp
 			$scope.cardState = "profile";
 			$scope.slpView = false;
+			$scope.lpcOrder = 35; // Card-Settings: Sets init val for adjust-lpc slider.
+
 			$scope.data = {};
 			$scope.data.uploadMessage = "";
-
       $scope.data.selectedProfileRecordings = [];
       $scope.data.sessionIsActive = AutoService.isSessionActive();
+
 
       NotifyingService.subscribe("session-did-begin", $scope, function() {
         $scope.data.sessionIsActive = true;
@@ -76,13 +78,13 @@ function compareRecordings(ra, rb) {
       });
 
 			ProfileService.getAllProfiles().then( function(res) {
-				console.log(res);
+				//console.log(res);
 				$scope.data.profiles = res;
 			});
 
 			ProfileService.getCurrentProfile().then(function(res)
 			{
-				console.log(res);
+				//console.log(res);
 				if (res)
 				{
 					$scope.data.currentProfile = res;
@@ -153,13 +155,99 @@ function compareRecordings(ra, rb) {
 		}
 
 
+		// ===========================================================
+		// CARD: PROFILES
+		// ===========================================================
+
+		$scope.setIsEditing = function(isEditing) {
+			$scope.isEditing = isEditing;
+			$scope.editing = isEditing ? "editing" : "";
+		};
+
+		$scope.cancelEdit = function()
+		{
+			ProfileService.getCurrentProfile().then( function(res) {
+				$scope.data.currentProfile = res;
+			});
+			$scope.setIsEditing(false);
+		};
+
+		$scope.saveProfile = function()
+		{
+			if ($scope.data.currentProfile.name !== undefined &&
+				$scope.data.currentProfile.age !== undefined &&
+				$scope.data.currentProfile.heightFeet !== undefined &&
+				$scope.data.currentProfile.heightInches !== undefined &&
+				$scope.data.currentProfile.gender !== undefined)
+			{
+				ProfileService.saveProfile($scope.data.currentProfile).then(function()
+				{
+					ProfileService.getAllProfiles().then(function(res)
+					{
+						$scope.data.profiles = res;
+						$scope.setIsEditing(false);
+						ProfileService.setCurrentProfileUUID($scope.data.currentProfile.uuid);
+					});
+				});
+			} else {
+				alert("Profile is missing some data");
+			}
+		};
+
+		function clamp(x, lo, hi)
+		{
+			return (x < lo ? lo : (x > hi ? hi : x));
+		}
+
+		$scope.deleteProfile = function(profile)
+		{
+			function doDelete()
+			{
+				var profileIdx = $scope.data.profiles.indexOf(profile);
+				profileIdx = clamp(profileIdx, 0, $scope.data.profiles.length - 2);
+				ProfileService.deleteProfile(profile).then(function()
+				{
+					ProfileService.getAllProfiles().then(function(res)
+					{
+						$scope.data.profiles = res;
+						if(!res.length)
+						{
+							$scope.data.currentProfile = null;
+							$scope.updateCurrentProfile(null);
+						}
+						else
+						{
+							$scope.data.currentProfile = $scope.data.profiles[profileIdx];
+							$scope.updateCurrentProfile($scope.data.currentProfile);
+						}
+					});
+				});
+			}
+
+			// Check if we're in the browser or in iOS
+			if(navigator.notification)
+			{
+				navigator.notification.confirm("Are you sure you want to delete " + profile.name + "?" , function(i)
+				{
+					if(i == 1)
+					{
+						doDelete();
+					}
+				}, "Delete All", ["OK", "Cancel"]);
+			}
+			else
+			{
+				doDelete();
+			}
+		}
 
 
 		// ===========================================================
 		// CARD: RECORDINGS
 		// ===========================================================
 
-		$scope.updateRecordingsList = function() {
+		$scope.updateRecordingsList = function()
+		{
 			$scope.data.selectedProfileRecordings = [];
 			ProfileService.getRecordingsForProfile($scope.data.currentProfile, function(recordings) {
 				var statusesToFetch = [];
@@ -266,99 +354,14 @@ function compareRecordings(ra, rb) {
 			});
 		};
 
+
 		// ===========================================================
 		// CARD: PROGRESS
 		// ===========================================================
 
 
 
-		// ===========================================================
-		// CARD: PROFILES
-		// ===========================================================
-		// if
-		// $scope.isEditing = false;
 
-		$scope.setIsEditing = function(isEditing) {
-			$scope.isEditing = isEditing;
-			$scope.editing = isEditing ? "editing" : "";
-		};
-
-		$scope.cancelEdit = function()
-		{
-			ProfileService.getCurrentProfile().then( function(res) {
-				$scope.data.currentProfile = res;
-			});
-			$scope.setIsEditing(false);
-		};
-
-		$scope.saveProfile = function()
-		{
-			if ($scope.data.currentProfile.name !== undefined &&
-				$scope.data.currentProfile.age !== undefined &&
-				$scope.data.currentProfile.heightFeet !== undefined &&
-				$scope.data.currentProfile.heightInches !== undefined &&
-				$scope.data.currentProfile.gender !== undefined)
-			{
-				ProfileService.saveProfile($scope.data.currentProfile).then(function()
-				{
-					ProfileService.getAllProfiles().then(function(res)
-					{
-						$scope.data.profiles = res;
-						$scope.setIsEditing(false);
-						ProfileService.setCurrentProfileUUID($scope.data.currentProfile.uuid);
-					});
-				});
-			} else {
-				alert("Profile is missing some data");
-			}
-		};
-
-		function clamp(x, lo, hi)
-		{
-			return (x < lo ? lo : (x > hi ? hi : x));
-		}
-
-		$scope.deleteProfile = function(profile)
-		{
-			function doDelete()
-			{
-				var profileIdx = $scope.data.profiles.indexOf(profile);
-				profileIdx = clamp(profileIdx, 0, $scope.data.profiles.length - 2);
-				ProfileService.deleteProfile(profile).then(function()
-				{
-					ProfileService.getAllProfiles().then(function(res)
-					{
-						$scope.data.profiles = res;
-						if(!res.length)
-						{
-							$scope.data.currentProfile = null;
-							$scope.updateCurrentProfile(null);
-						}
-						else
-						{
-							$scope.data.currentProfile = $scope.data.profiles[profileIdx];
-							$scope.updateCurrentProfile($scope.data.currentProfile);
-						}
-					});
-				});
-			}
-
-			// Check if we're in the browser or in iOS
-			if(navigator.notification)
-			{
-				navigator.notification.confirm("Are you sure you want to delete " + profile.name + "?" , function(i)
-				{
-					if(i == 1)
-					{
-						doDelete();
-					}
-				}, "Delete All", ["OK", "Cancel"]);
-			}
-			else
-			{
-				doDelete();
-			}
-		}
 
 		// ===========================================================
 		// CARD: SETTINGS
