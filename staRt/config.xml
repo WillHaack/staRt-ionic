@@ -68,6 +68,7 @@
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
+    <allow-intent href="https://www.youtube.com/watch*" />
     <allow-intent href="https://www.dropbox.com/sh/*" />
     <allow-intent href="https://docs.google.com/forms/*" />
     <allow-intent href="https://wp.nyu.edu/*" />
