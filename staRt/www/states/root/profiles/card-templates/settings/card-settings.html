@@ -1,42 +1,34 @@
 <div class="card-content">
 
 	<div class="card-body card-body-settings">
-		<p>Use the slider to manually adjust the LPC filter order.</p>
-		<p>In general, the filter order should be between 35 and 45.</p>
-
-
-		<div class="range-container">
-
-			<div class="range-label">
-				min. 25
-			</div>
-
-			<input type="range" min="25" max="45" ng-model="data.lpcOrder" ng-change="updatePluginLPCOrder()" />
-
-			<div class="range-label">
-				max. 45
-			</div>
-
-			<button name="reset" ng-click="resetPluginLPCOrder()" class="reset-button big-button">Reset</button>
-
-		</div>
-
-		<p>
-			The filter order is now <em>{{data.lpcOrder}}</em>
+		<p>Use the slider to manually adjust the LPC filter order. <br/>
+			In general, the filter order should be between 35 and 45.
 		</p>
 
-
-		<div ng-if="data.configuring" class="res-lpcBox">
-			<lpc-directive
+		<div class="pro_lpcBox">
+			<!-- <lpc-directive
 				sand="false"
 				slider="false"
 				transparent="transparent">
-			</lpc-directive>
+			</lpc-directive> -->
 		</div>
+
+		<div class="pro_range-container">
+
+			<div class="range-label">min. 25</div>
+
+			<input type="range" min="25" max="45" ng-model="data.lpcOrder" ng-change="updatePluginLPCOrder()" />
+
+			<div class="range-label">max. 45</div>
+		</div> <!-- end .pro_range-container -->
+
+		<p>The filter order is now <em>{{data.lpcOrder}}</em></p>
 
 	</div> <!-- end .card-body -->
 
 	<div class="card-foot">
-	</div> <!-- card-foot -->
+		<button name="reset" ng-click="resetPluginLPCOrder()" class="reset-button big-button">Reset</button>
+	</div>
+	<!-- card-foot -->
 
 </div>

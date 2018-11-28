@@ -52,12 +52,12 @@ function compareRecordings(ra, rb) {
 			//values: recordings || progress || profile || settings || home || slp
 			$scope.cardState = "profile";
 			$scope.slpView = false;
-			$scope.lpcOrder = 35; // Card-Settings: Sets init val for adjust-lpc slider.
 
 			$scope.data = {};
 			$scope.data.uploadMessage = "";
       $scope.data.selectedProfileRecordings = [];
       $scope.data.sessionIsActive = AutoService.isSessionActive();
+			$scope.data.lpcOrder = 35; //Card-Settings: Sets init val for adjust-lpc slider. Will be overwritten once currentProfile lpcOrder data arrives.  #sjt
 
 
       NotifyingService.subscribe("session-did-begin", $scope, function() {
@@ -84,14 +84,26 @@ function compareRecordings(ra, rb) {
 
 			ProfileService.getCurrentProfile().then(function(res)
 			{
-				//console.log(res);
+				console.log(res);
 				if (res)
 				{
 					$scope.data.currentProfile = res;
 					$scope.data.currentProfileUUID = res.uuid;
+					// #sjt
+					/*
+						if (res && res.lpcOrder) {
+							$scope.currentProfileName = res.name;
+							$scope.data.lpcOrder = res.lpcOrder;
+							AudioPlugin.setLPCOrder($scope.data.lpcOrder, $scope.logPluginLPCOrder);
+						} else {
+							$scope.resetPluginLPCOrder();
+						}
+					*/
 				}
 			});
 
+
+			// what is this trigger, do we need to update anything else (i.e the controller's $scope.lpcOrder) here
 			$scope.$watchCollection('data.currentProfile', function(data)
 			{
 				if (data)
@@ -108,8 +120,11 @@ function compareRecordings(ra, rb) {
 				}
 			});
 
+
+
 			$scope.$on( "$ionicView.enter", function( scopes, states ) {
 				$scope.updateRecordingsList();
+
 			});
 		}
 
@@ -366,6 +381,34 @@ function compareRecordings(ra, rb) {
 		// ===========================================================
 		// CARD: SETTINGS
 		// ===========================================================
+		$scope.logPluginLPCOrder = function(order) {
+			console.log("Plugin LPC order is now: " + order);
+		};
+
+		$scope.resetPluginLPCOrder = function() {
+			ProfileService.getCurrentProfile().then(function(res) {
+				if (res) {
+					$scope.data.lpcOrder = ProfileService.lookupDefaultFilterOrder(res);
+				} else {
+					$scope.data.lpcOrder = 35;
+				}
+				$scope.updatePluginLPCOrder();
+			});
+		};
+
+		$scope.setLPCOrder = function(order) {
+			$scope.data.lpcOrder = order;
+		};
+
+		$scope.updatePluginLPCOrder = function() {
+			if (window.AudioPlugin !== undefined) {
+				ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+					AudioPlugin.setLPCOrder($scope.data.lpcOrder, $scope.logPluginLPCOrder);
+					t.update(handle, {lpcOrder: $scope.data.lpcOrder});
+				});
+			}
+		};
+
 
 
 

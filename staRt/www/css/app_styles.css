@@ -974,7 +974,8 @@ input, textarea {
     flex-flow: row nowrap;
     justify-content: center;
     width: 100%;
-    height: 8.33333vh; }
+    height: 8.33333vh;
+    border-top: 1px solid lightGray; }
   .card-content ion-radio {
     border: 1px solid red; }
 
@@ -1024,7 +1025,7 @@ input, textarea {
   color: #00bb00;
   font-weight: bold; }
 
-.range-container {
+.card-body-settings .pro_range-container {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -1040,6 +1041,18 @@ input, textarea {
   font-size: 0.9rem; }
   .range-label:first-child {
     padding-left: 0; }
+
+.pro_lpcBox {
+  width: 100%;
+  height: 16.66667vh;
+  margin-top: 1em;
+  margin-bottom: 2em;
+  border: 1px solid lime; }
+
+#lpc-canvas-parentSize {
+  width: 100%;
+  height: 16.66667vh;
+  border: 1px solid red; }
 
 .card-body-slp {
   position: relative;
