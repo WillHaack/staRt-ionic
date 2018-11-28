@@ -1024,14 +1024,31 @@ input, textarea {
   color: #00bb00;
   font-weight: bold; }
 
-.card-body.slpCard {
+.range-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: flex-end;
+  border: 1px solid pink; }
+
+.range-label {
+  line-height: 100%;
+  font-weight: bold;
+  width: 40px;
+  white-space: pre-line;
+  padding: 1em 0;
+  font-size: 0.9rem; }
+  .range-label:first-child {
+    padding-left: 0; }
+
+.card-body-slp {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start; }
-  .card-body.slpCard h3 {
+  .card-body-slp h3 {
     margin-bottom: 1.5em; }
-  .card-body.slpCard button {
+  .card-body-slp button {
     position: relative;
     display: flex;
     flex-flow: row nowrap;
@@ -1041,7 +1058,7 @@ input, textarea {
     margin-bottom: 1em;
     width: 100%;
     color: #3D6D84; }
-    .card-body.slpCard button i {
+    .card-body-slp button i {
       color: #3D6D84; }
 
 .sexBtn-row {

@@ -55,15 +55,15 @@
 }
 
 // ================================================
-// PROFILES LIST  .profiles-layout_drawer-left 
+// PROFILES LIST  .profiles-layout_drawer-left
 // ================================================
-// imports sliding drawer styles for profiles list 
+// imports sliding drawer styles for profiles list
 	@import 'drawer-template/profiles-drawer';
 
 
 // ================================================
 // PROFILES CARD
-//.profiles-layout_drawer-left 
+//.profiles-layout_drawer-left
 // ================================================
 
 .profiles-noCard { // height: $row-h * 4.5;
@@ -109,7 +109,7 @@
 		padding-left: 1em;
 		font-size: 1em;
 		//border: 1px solid pink;
-	
+
 		&.welcome_shouldSelectProfile {}
 		&.welcome_shouldCreateProfile {
 			button {
@@ -125,7 +125,7 @@
 				box-shadow: $itemShadow;
 			}
 		}
-		
+
 		div {
 			padding-top: 0.5em;
 			margin-bottom: 0.5em;
@@ -136,7 +136,7 @@
 		}
 
 	} //.profiles-msg-body
-} // .profiles-noCard 
+} // .profiles-noCard
 
 .deco_top-line { // not in use
 	border-top: 1px solid white;
@@ -165,7 +165,7 @@
 	max-height: $row-h;
 	//border: 1px solid red;
 
-	.card-headBox { 
+	.card-headBox {
 		position: relative;
 		display: flex;
 		flex-flow: column nowrap;
@@ -208,14 +208,14 @@
 			width: 100%;
 			padding: 0 2.5em;
 			//border: 1px solid lightBlue;
-			
+
 			h1 {
 				font-size: 1.5em;
 				color: $c-text-main;
 				font-weight: 400;
 			}
 		}
-	} // .card-headBox 	
+	} // .card-headBox
 } // end card-head
 
 .p-card_head .p-card_navBox {
@@ -244,7 +244,7 @@
 			height: $row-h * 0.25;
 			font-weight: 700;
 			border-top: 2px solid $c-text-main;
-			border-bottom: 2px solid $c-text-main;	
+			border-bottom: 2px solid $c-text-main;
 		}
 	}
 
@@ -257,14 +257,14 @@
 
 
 // -------------------------------------------
-// wrappers, not presentational, 
+// wrappers, not presentational,
 // in profiles_template.html
-.card-switchParent{} 
-.card-switchBox{} 	
+.card-switchParent{}
+.card-switchBox{}
 
 
 // -------------------------------------------
-// presentational styles for card content	
+// presentational styles for card content
 @import 'card-templates/profiles_card-content';
 
 
