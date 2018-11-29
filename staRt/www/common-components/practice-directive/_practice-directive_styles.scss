@@ -4,6 +4,7 @@
 
 .practice-directive-container {
   height: 100%;
+  //border: 1px solid lime;
 }
 
  .promptBox-layout {
@@ -53,10 +54,10 @@
 .coin-row-layout {
   position: absolute;
   top: $row-h * 5;
-  left: $col-w * 3;
+  left: $col-w * 2;
   width: $col-w * 7;
   height: $row-h * 0.8;
-  //border: 1px solid red;
+  border: 1px solid red;
 }
  .coinBox-layout {
   text-align: left;
