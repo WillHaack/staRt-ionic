@@ -62,8 +62,7 @@
 
 
 // ================================================
-// PROFILES CARD
-//.profiles-layout_drawer-left
+// PROFILES CARD .profiles-layout_drawer-left
 // ================================================
 
 .profiles-noCard { // height: $row-h * 4.5;
@@ -269,6 +268,10 @@
 // presentational styles for card content
 @import 'card-templates/profiles_card-content';
 
+
+/* DEV SPACE -------------------------------------------
+If you are just trying out some new styles, protoype here. If a set looks goods and belongs in a specific card's stylesheet, pls move the block to the appropriate '/card-template/' file.
+*/
 
 
 .sexBtn-row {
