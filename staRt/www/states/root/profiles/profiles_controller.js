@@ -57,7 +57,7 @@ function compareRecordings(ra, rb) {
 			$scope.data.uploadMessage = "";
       $scope.data.selectedProfileRecordings = [];
       $scope.data.sessionIsActive = AutoService.isSessionActive();
-			$scope.data.lpcOrder = 35; //Card-Settings: Sets init val for adjust-lpc slider. Will be overwritten once currentProfile lpcOrder data arrives.  #sjt
+			$scope.data.lpcOrder = 0; //Card-Settings: Sets init val for adjust-lpc slider. Will be overwritten once currentProfile lpcOrder data arrives.
 
 
       NotifyingService.subscribe("session-did-begin", $scope, function() {
@@ -82,49 +82,60 @@ function compareRecordings(ra, rb) {
 				$scope.data.profiles = res;
 			});
 
-			ProfileService.getCurrentProfile().then(function(res)
-			{
-				console.log(res);
-				if (res)
-				{
+			ProfileService.getCurrentProfile().then(function(res) {
+
+				if (res) {
 					$scope.data.currentProfile = res;
 					$scope.data.currentProfileUUID = res.uuid;
-					// #sjt
-					/*
-						if (res && res.lpcOrder) {
-							$scope.currentProfileName = res.name;
-							$scope.data.lpcOrder = res.lpcOrder;
-							AudioPlugin.setLPCOrder($scope.data.lpcOrder, $scope.logPluginLPCOrder);
-						} else {
-							$scope.resetPluginLPCOrder();
-						}
-					*/
-				}
+
+					if (res.lpcOrder) {
+						$scope.data.lpcOrder = res.lpcOrder;
+					} else {
+						// #stj Default just 35? Call the lookup fx?
+						$scope.data.lpcOrder = 0;
+					}
+
+					// #sjt: I'm always getting undefined at this point,
+					// so I moved the Plugin fx to the $watchCollection
+					if (window.AudioPlugin !== undefined) {
+						console.log('hey AudioPlugin');
+					} // if window.AudioPlugin
+				} // if (res)
 			});
 
 
-			// what is this trigger, do we need to update anything else (i.e the controller's $scope.lpcOrder) here
+
+			//triggered when user selects a different profile from the drawer
+			// #sjt
 			$scope.$watchCollection('data.currentProfile', function(data)
 			{
 				if (data)
 				{
 					$scope.data.currentProfileUUID = $scope.data.currentProfile.uuid;
-					if (window.AudioPlugin !== undefined)
-					{
-						if ($scope.data.currentProfile.lpcOrder) {
-							AudioPlugin.setLPCOrder($scope.data.currentProfile.lpcOrder, null);
-						}
-					};
+
+					if ($scope.data.currentProfile.lpcOrder) {
+						$scope.data.lpcOrder = $scope.data.currentProfile.lpcOrder;
+
+						if (window.AudioPlugin !== undefined) {
+								console.log('watchCollection calls AudioPlugin with:' + $scope.data.lpcOrder);
+								AudioPlugin.setLPCOrder($scope.data.currentProfile.lpcOrder, $scope.logPluginLPCOrder);
+							} else {
+								console.log('dude no audio');
+							}
+
+					} else {
+						// audioPlugin does whatever it wants... idk
+							// todo: default to 35? reset/lookup fx?
+						$scope.data.lpcOrder = 0; // updates display
+					}
 
 					$scope.updateRecordingsList();
 				}
 			});
 
 
-
 			$scope.$on( "$ionicView.enter", function( scopes, states ) {
 				$scope.updateRecordingsList();
-
 			});
 		}
 
@@ -381,6 +392,8 @@ function compareRecordings(ra, rb) {
 		// ===========================================================
 		// CARD: SETTINGS
 		// ===========================================================
+		// #sjt: fx copied & pasted from Resources controller
+
 		$scope.logPluginLPCOrder = function(order) {
 			console.log("Plugin LPC order is now: " + order);
 		};
@@ -453,7 +466,8 @@ function compareRecordings(ra, rb) {
 
 
 	// -----------------------------------------------------------
-	// not sure what the Formal Testing and Session stuff is about
+	// not sure what this stuff is about
+	// need to ask #sjt where it goes
 
 	$scope.optInFormalTesting = function() {
 		ProfileService.getCurrentProfile().then(function (profile) {

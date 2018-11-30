@@ -32,6 +32,9 @@
 button {
   font-weight: bold; }
 
+.range {
+  padding: 1em; }
+
 input[type=range] {
   -webkit-appearance: none;
   height: 25px;
@@ -969,8 +972,6 @@ input, textarea {
     justify-content: center;
     width: 100%;
     height: 8.33333vh; }
-  .card-content ion-radio {
-    border: 1px solid red; }
 
 .card-recordings ion-item {
   border-bottom: 1px solid lightgray; }
@@ -1109,6 +1110,9 @@ input, textarea {
     .card-body-slp button i {
       color: #3D6D84; }
 
+/* DEV SPACE -------------------------------------------
+If you are just trying out some new styles, protoype here. If a set looks goods and belongs in a specific card's stylesheet, pls move the block to the appropriate '/card-template/' file.
+*/
 .sexBtn-row {
   position: relative;
   display: flex;
