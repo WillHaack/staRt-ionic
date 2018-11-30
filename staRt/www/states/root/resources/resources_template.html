@@ -2,8 +2,7 @@
 
 	<div class="resources-layout_view-container">
 
-		<!-- ion-nav-bar -->
-		<ion-nav-bar ng-class="!data.configuring ? 'ion-nav-bar' : 'ion-nav-bar--old'">
+		<ion-nav-bar class="ion-nav-bar">
 			<ion-nav-title>{{data.navTitle}}</ion-nav-title>
 		</ion-nav-bar>
 
@@ -15,7 +14,7 @@
 			</div>
 
 			<div class="version-display">
-				<p> <span class="res-important">staRt app version {{data.version}}</span>
+				<p><span class="res-important">staRt app version {{data.version}}</span>
 					<br/>
 					platform: {{data.platform}}
 				</p>
@@ -30,7 +29,7 @@
 		<div class="resources-layout_content-container">
 
 			<!-- //////// Resourses Main Page //////// -->
-			<div ng-if="!data.configuring" class="res-page-index">
+			<div class="res-page-index">
 
 				<div class="res-sect">
 					<div class="head">
