@@ -188,38 +188,15 @@
 
 
 
-// QUEST ---------------------------------------------
-// The ui for the Quests (praciting && !configuring) are handled by the practice-directive & lpc-directive
+// QUEST PAGES ------------------------------------------------
+// The ui for the Quests (praciting && !configuring) are
+// primarily handled by the lpc-directive & the practice-directive
+// -----------------------------------------------------------
 
+// holds the practice-directive, which contains the promptBox, wave, & rateBtns
 .quest-practice-page {
-	//display: flex;
 	position: relative;
 	height: 100%;
 	width: 100%;
 	//border: 1px solid lime;
 }
-
-.quest-lpcDir-layout { // holds wave and rateBtns
-	position: absolute;
-	display: block;
-	height: 100%; //$row-h * 3;
-	width: 100%; //$col-w * 7;
-	//border: 1px solid blue;
-
-	lpc-directive { //styled in lpc-directive
-		div.lpc-contentBox { // styled in lpc-directive
-			// contains both wave and rateBtns
-
-			div#lpc-canvas-parentSize {
-			// LOCAL STYLES GO HERE
-				position: relative;
-				top: $row-h * 2.5;
-				left: $col-w * 2;
-				height: $row-h * 2.5;
-				width: $col-w * 7;
-				border: 1px solid blue;
-			} // #lpc-canvas-parentSize
-
-		} // .lpc-contentBox
-	} // lpc-directive
-} // .quest-lpcDir-layout

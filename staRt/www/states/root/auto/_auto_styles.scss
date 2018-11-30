@@ -95,9 +95,18 @@
 	}
 }
 
-// QUIZ PAGES ---------------------------------------------
-// The ui styles for the Quiz pages (practicing) are handled by the practice-directive & lpc-directive.
+
+
+// QUIZ PAGES -----------------------------------------------
+// The ui for the Quizzes (praciting && !configuring) are
+// primarily handled by the lpc-directive & the practice-directive
+// -----------------------------------------------------------
+
+// holds the practice-directive, which contains both
+// the promptBox & rateBtns
 .quiz-practice-page {
+	position: relative;
 	height: 100%;
-	//border: 1px solid red;
+	width: 100%;
+	//border: 1px solid lime;
 }
