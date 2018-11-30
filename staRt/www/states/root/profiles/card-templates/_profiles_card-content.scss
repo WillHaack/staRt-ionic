@@ -1,25 +1,24 @@
 // LAYOUT ================================================
-.card-content {
+.card-content { // height: $row-h * 3.5;
 	position: relative;
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: space-between;
 	height: $row-h * 3.5;
 	width: 100%;
-	//width: $col-w * 5.5;
 	text-align: left;
 	color: $c-text-main;
 	//border: 1px solid blue;
 
-	.card-body {
+	.card-body { // height: $row-h * 3;
 		position: relative;
 		display: flex;
 		flex-flow: column nowrap;
 		height: $row-h * 3;
 		width: 100%;
-		padding: 2.5em;
+		padding: 2em 2.5em;
 		color: $c-text-main;
-		//border: 1px solid red;
+		//border: 1px solid pink;
 
 		h3 {
 			font-size: 1em;
@@ -27,14 +26,14 @@
 		}
 
 	}
-	.card-foot {
+	.card-foot { // height: $row-h * 0.5;
 		position: relative;
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: center;
 		width: 100%;
 		height: $row-h * 0.5;
-		border-top: 1px solid lightGray;
+		//border-top: 1px solid pink;
 	} // .card-foot
 
 

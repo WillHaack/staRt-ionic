@@ -32,9 +32,6 @@
 button {
   font-weight: bold; }
 
-.range {
-  padding: 1em; }
-
 input[type=range] {
   -webkit-appearance: none;
   height: 25px;
@@ -876,48 +873,46 @@ input, textarea {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
   width: 100%;
   height: 16.66667vh;
+  min-height: 16.66667vh;
   max-height: 16.66667vh; }
-  .p-card_head .card-headBox {
+  .p-card_head .card-headerBox {
     position: relative;
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: flex-end;
     height: 12.5vh;
+    width: 100%;
+    padding-left: 2.5em;
     padding-bottom: 0.25em;
-    color: #3D6D84;
-    flex-direction: row nowrap;
-    align-items: center; }
-    .p-card_head .card-headBox .card-closeRow {
-      position: relative;
+    color: #3D6D84; }
+    .p-card_head .card-headerBox .card-titleBox {
       display: flex;
-      flex-flow: row nowrap;
+      flex-flow: column nowrap;
       justify-content: flex-end;
-      align-items: flex-start;
-      height: 33%;
-      width: 100%;
-      z-index: 20; }
-      .p-card_head .card-headBox .card-closeRow button {
-        padding: 16px 32px;
-        border-radius: 10px;
-        font-size: 2em;
-        font-weight: 600;
-        color: #3D6D84; }
-    .p-card_head .card-headBox .card-titleRow {
-      position: relative;
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: flex-start;
-      align-items: center;
-      height: 66%;
-      width: 100%;
-      padding: 0 2.5em; }
-      .p-card_head .card-headBox .card-titleRow h1 {
+      height: 100%;
+      flex-grow: 6; }
+      .p-card_head .card-headerBox .card-titleBox h1 {
+        text-align: left;
         font-size: 1.5em;
+        width: 100%;
         color: #3D6D84;
         font-weight: 400; }
+    .p-card_head .card-headerBox .card-closeBox {
+      display: flex;
+      height: 100%;
+      width: 64px; }
+      .p-card_head .card-headerBox .card-closeBox button {
+        height: 100%;
+        width: 8.33333vh;
+        border-radius: 10px;
+        font-size: 2.5em;
+        font-weight: 600;
+        color: #3D6D84; }
 
 .p-card_head .p-card_navBox {
   display: flex;
@@ -925,6 +920,7 @@ input, textarea {
   justify-content: space-around;
   align-items: center;
   height: 4.16667vh;
+  min-height: 4.16667vh;
   width: 100%;
   border-top: 2px solid #ace2e5;
   border-bottom: 2px solid #ace2e5; }
@@ -932,15 +928,13 @@ input, textarea {
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
-    height: 4.16667vh;
+    height: 100%;
     padding: 0em 1em;
     color: #3D6D84;
     font-size: 0.9em;
-    font-weight: 400;
-    border-top: 2px solid #ace2e5;
-    border-bottom: 2px solid #ace2e5; }
+    font-weight: 400; }
     .p-card_head .p-card_navBox .pro_navitem.pro_navitem--active {
-      height: 4.16667vh;
+      height: 100%;
       font-weight: 700;
       border-top: 2px solid #3D6D84;
       border-bottom: 2px solid #3D6D84; }
@@ -963,7 +957,7 @@ input, textarea {
     flex-flow: column nowrap;
     height: 50vh;
     width: 100%;
-    padding: 2.5em;
+    padding: 2em 2.5em;
     color: #3D6D84; }
     .card-content .card-body h3 {
       font-size: 1em;
@@ -974,8 +968,7 @@ input, textarea {
     flex-flow: row nowrap;
     justify-content: center;
     width: 100%;
-    height: 8.33333vh;
-    border-top: 1px solid lightGray; }
+    height: 8.33333vh; }
   .card-content ion-radio {
     border: 1px solid red; }
 
@@ -1025,33 +1018,76 @@ input, textarea {
   color: #00bb00;
   font-weight: bold; }
 
-.card-body-settings .pro_range-container {
+.card-body-settings {
+  position: relative;
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: flex-end;
-  border: 1px solid pink; }
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  height: 100%;
+  width: 100%; }
+  .card-body-settings .cardBod-settings-row {
+    position: relative;
+    display: flex;
+    min-height: 1em;
+    width: 100%; }
+  .card-body-settings p {
+    font-size: 0.9em;
+    font-weight: 600; }
 
-.range-label {
-  line-height: 100%;
-  font-weight: bold;
-  width: 40px;
-  white-space: pre-line;
-  padding: 1em 0;
-  font-size: 0.9rem; }
-  .range-label:first-child {
-    padding-left: 0; }
-
-.pro_lpcBox {
+.pro_lpc-row {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
   width: 100%;
-  height: 16.66667vh;
+  min-height: 16.66667vh;
   margin-top: 1em;
   margin-bottom: 2em;
-  border-radius: 2px;
+  border-radius: 4px;
   background-color: rgba(194, 242, 242, 0.5); }
-  .pro_lpcBox #lpc-canvas-parentSize {
+  .pro_lpc-row .fiterOrder-label-row {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    width: 100%; }
+    .pro_lpc-row .fiterOrder-label-row .fiterOrder-label {
+      position: relative;
+      padding: 0 1em;
+      top: 0.5em;
+      font-weight: 500;
+      font-size: 2.5em;
+      line-height: 1.5; }
+  .pro_lpc-row #lpc-canvas-parentSize {
     width: 100%;
-    height: 100%; }
+    height: 12.5vh; }
+
+.pro_range-row {
+  display: flex;
+  flex-flow: column nowrap;
+  max-height: 16.66667vh;
+  width: 100%; }
+
+.pro_range-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 100%; }
+  .pro_range-container .range-label {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    font-weight: bold;
+    text-align: center; }
+  .pro_range-container input[type=range].pro_range-input {
+    -webkit-appearance: none;
+    height: 25px;
+    border-radius: 25px;
+    background-color: rgba(194, 242, 242, 0.5);
+    box-shadow: inset 2px 2px 2px rgba(77, 77, 77, 0.25);
+    width: 100%;
+    margin: 1.5em 0; }
 
 .card-body-slp {
   position: relative;
@@ -1485,7 +1521,9 @@ div.needleBox {
       padding: 0; }
 
 .quiz-practice-page {
-  height: 100%; }
+  position: relative;
+  height: 100%;
+  width: 100%; }
 
 .free-layout_view-container {
   position: relative;
@@ -1524,9 +1562,10 @@ div.needleBox {
   .free-lpcFrame .free-lpcBox {
     width: 100%;
     height: 405px;
+    padding-top: 35px;
     background-color: #c5f3ff; }
     .free-lpcFrame .free-lpcBox .reset-button {
-      margin-top: -15vh;
+      margin-top: -6.66667vh;
       border-radius: 4px;
       background-color: white;
       box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
@@ -1671,19 +1710,6 @@ div.needleBox {
   position: relative;
   height: 100%;
   width: 100%; }
-
-.quest-lpcDir-layout {
-  position: absolute;
-  display: block;
-  height: 100%;
-  width: 100%; }
-  .quest-lpcDir-layout lpc-directive div.lpc-contentBox div#lpc-canvas-parentSize {
-    position: relative;
-    top: 41.66667vh;
-    left: 16.66667vw;
-    height: 41.66667vh;
-    width: 58.33333vw;
-    border: 1px solid blue; }
 
 .resources-layout_view-container {
   position: relative;
@@ -1855,12 +1881,10 @@ lpc-directive {
   flex-flow: row;
   width: 100%;
   height: 100%;
-  justify-content: space-around;
-  border: 2px solid red; }
-
-.lpc-contentBox {
-  width: 100%;
-  height: 100%; }
+  justify-content: space-around; }
+  lpc-directive .lpc-contentBox {
+    width: 100%;
+    height: 100%; }
 
 #lpc-canvas-parentSize {
   z-index: 10;
@@ -1868,27 +1892,8 @@ lpc-directive {
   height: 100%;
   display: flex;
   align-items: center; }
-  #lpc-canvas-parentSize.buttons_visible.beachpost-aligned {
-    height: 100%;
-    width: 100%; }
 
-.lpc-container {
-  /* This is the light blue box*/ }
-  .lpc-container.transparent-background {
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    top: 41.66667vh;
-    left: 16.66667vw;
-    width: 58.33333vw;
-    height: 41.66667vh; }
-
-.lpc-buttons {
-  display: inline-block;
-  position: absolute;
-  width: 12%;
-  right: 0; }
-
+/* This is the light blue box*/
 .reset-button {
   margin-top: 0px;
   margin-right: 0px; }
@@ -1900,8 +1905,7 @@ lpc-directive {
   flex-flow: column nowrap;
   justify-content: space-between;
   align-items: flex-end;
-  width: 16.66667vw;
-  border: 1px solid red; }
+  width: 16.66667vw; }
   .button-side-container.rateBtn-container {
     top: 12.5vh;
     height: 33.33333vh; }
@@ -2065,13 +2069,24 @@ lpc-directive {
   display: inline-block;
   vertical-align: middle; }
 
+.lpcDir-layout_quiz-quest {
+  position: absolute;
+  display: block;
+  height: 100%;
+  width: 100%; }
+  .lpcDir-layout_quiz-quest lpc-directive div.lpc-contentBox div#lpc-canvas-parentSize {
+    position: relative;
+    top: 41.66667vh;
+    left: 16.66667vw;
+    height: 41.66667vh;
+    width: 58.33333vw; }
+
 .coin-row-layout {
   position: absolute;
   top: 83.33333vh;
   left: 16.66667vw;
   width: 58.33333vw;
-  height: 13.33333vh;
-  border: 1px solid red; }
+  height: 13.33333vh; }
 
 .coinBox-layout {
   text-align: left;

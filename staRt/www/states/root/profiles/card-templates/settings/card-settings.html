@@ -1,28 +1,35 @@
 <div class="card-content">
 
 	<div class="card-body card-body-settings">
-		<p>Use the slider to manually adjust the LPC filter order. <br/>
-			In general, the filter order should be between 35 and 45.
-		</p>
 
-		<!-- transparent="transparent" -->
-		<div class="pro_lpcBox">
+		<div class="cardBod-settings-row pro_lpc-row">
+			<div class="fiterOrder-label-row">
+				<span class="fiterOrder-label">{{data.lpcOrder}}</span>
+			</div>
+
 			<lpc-directive
 				sand="false"
 				slider="false">
 			</lpc-directive>
+
 		</div>
 
-		<div class="pro_range-container">
 
-			<div class="range-label">min. 25</div>
+		<div class="cardBod-settings-row pro_range-row">
 
-			<input type="range" min="25" max="45" ng-model="data.lpcOrder" ng-change="updatePluginLPCOrder()" />
+			<p>Use the slider to manually adjust the LPC filter order.
+			<br/>In general, the filter order should be between 35 and 45.
+			</p>
 
-			<div class="range-label">max. 45</div>
-		</div> <!-- end .pro_range-container -->
+			<div class="pro_range-container">
+				<!-- <div class="range-label">min. 25</div> -->
 
-		<p>The filter order is now <em>{{data.lpcOrder}}</em></p>
+				<input class="pro_range-input" type="range" min="25" max="45" ng-model="data.lpcOrder" ng-change="updatePluginLPCOrder()" />
+
+				<!-- <div class="range-label">max. 45</div> -->
+			</div> <!-- end .pro_range-container -->
+
+		</div>
 
 	</div> <!-- end .card-body -->
 
