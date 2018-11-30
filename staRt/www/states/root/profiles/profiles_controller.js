@@ -50,7 +50,7 @@ function compareRecordings(ra, rb) {
 
 			// use: to change display state of card
 			//values: recordings || progress || profile || settings || home || slp
-			$scope.cardState = "settings";
+			$scope.cardState = "profile";
 			$scope.slpView = false;
 
 			$scope.data = {};
@@ -168,7 +168,6 @@ function compareRecordings(ra, rb) {
 		// vals: 'recordings' || 'progress' || 'profile' || 'settings' || 'slp'
 		// ===========================================================
 		$scope.setCardState = function(navState) {
-			//console.log(navState);
 			$scope.cardState = navState;
 		}
 		$scope.openSlpView = function() {
@@ -267,6 +266,19 @@ function compareRecordings(ra, rb) {
 			}
 		}
 
+		$scope.optInFormalTesting = function() {
+			ProfileService.getCurrentProfile().then(function (profile) {
+				if (profile) AutoService.promptForFormalParticipation(profile);
+			});
+		}
+
+		$scope.startSession = function() {
+			AutoService.startSession();
+		};
+
+		$scope.stopSession = function() {
+			AutoService.stopSession();
+		};
 
 		// ===========================================================
 		// CARD: RECORDINGS
@@ -466,25 +478,12 @@ function compareRecordings(ra, rb) {
 
 
 	// -----------------------------------------------------------
-	// not sure what this stuff is about
-	// need to ask #sjt where it goes
+	// qs for #sjt
 
-	$scope.optInFormalTesting = function() {
-		ProfileService.getCurrentProfile().then(function (profile) {
-			if (profile) AutoService.promptForFormalParticipation(profile);
-		});
-	}
-
-	var selected = [];
+		var selected = [];  // #sjt  I don't know which block this belongs to... any ideas?  SORRY!
 
 
-    $scope.startSession = function() {
-      AutoService.startSession();
-    };
 
-    $scope.stopSession = function() {
-      AutoService.stopSession();
-    };
 
 		init();
 
