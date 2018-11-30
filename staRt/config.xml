@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.start925154" version="1.0.30" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ionicframework.start925154" version="1.0.31" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>staRt</name>
     <description>
         An Ionic Framework and Cordova project.
@@ -68,6 +68,7 @@
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
+    <allow-intent href="https://www.youtube.com/watch*" />
     <allow-intent href="https://www.dropbox.com/sh/*" />
     <allow-intent href="https://docs.google.com/forms/*" />
     <allow-intent href="https://wp.nyu.edu/*" />

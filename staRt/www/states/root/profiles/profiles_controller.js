@@ -50,7 +50,7 @@ function compareRecordings(ra, rb) {
 
 			// use: to change display state of card
 			//values: recordings || progress || profile || settings || home || slp
-			$scope.cardState = "settings";
+			$scope.cardState = "profile";
 			$scope.slpView = false;
 
 			$scope.data = {};
