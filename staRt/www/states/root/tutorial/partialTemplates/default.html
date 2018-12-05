@@ -1,30 +1,30 @@
 <div class="pageView">
 
 	<!-- dev ele used to check styles styling -->
-	<img 
-	ng-if="currStep.bgImg.status != 'done'" 
-	ng-src="{{currStep.bgImg.url}}" 
-	class="tut-bgImg" 
+	<img
+	ng-if="currStep.bgImg.status != 'done'"
+	ng-src="{{currStep.bgImg.url}}"
+	class="tut-bgImg"
 	ng-class="{'tut-bgImg--dim': currStep.bgImg.status === 'dim'}">
 
-	
+
 	<!-- Tutorial Panel Header -->
-	 <div 
-	 class="tutPg-header" 
+	 <div
+	 class="tutPg-header"
 	 ng-if="currStep.header.txt">
 
 	 	<span ng-bind-html="currStep.header.txt"></span>
-	
+
 	</div>
-	
+
 	<!-- Panel Content -->
 	<div class="tutWave-content">
 
 		<!-- ==================
 			LEFT BOX -->
 		<div class="leftBox">
-			
-			<!-- - - - - - - - - - - - - 
+
+			<!-- - - - - - - - - - - - -
 			 ROW/WAVE 1 -->
 			<div id="LRow1">
 
@@ -32,23 +32,23 @@
 				<div id="waveBox1"
 				ng-if="currStep.LRow1.wave"
 				class="leftRow">
-					<!-- light blue border on wave eles 
+					<!-- light blue border on wave eles
 						(not applied on currStep.LRow1.items) -->
 					<div class="waveFrame"
 					ng-if="currStep.LRow1.wave">
 
 						<!-- holds live wave or wave img -->
 						<div class="lpcBox" >
-							<div 
-							class="soundImgBox" 
-							ng-if="currStep.LRow1.wave.lpcImg" 
+							<div
+							class="soundImgBox"
+							ng-if="currStep.LRow1.wave.lpcImg"
 							style="background-image: url('{{currStep.LRow1.wave.lpcImg}}')">
 							</div>
-							
-							<div class="lpc-canvas-area" 
+
+							<div class="lpc-canvas-area"
 							ng-if="currStep.LRow1.wave.lpcLive">
-								<lpc-directive 
-									slider="false" 
+								<lpc-directive
+									slider="false"
 									sand="false"
 									tutorial="true">
 								</lpc-directive>
@@ -56,14 +56,14 @@
 						</div> <!-- end lpcBox -->
 
 						<div class="waveFrame-label">
-							
-							<div class="waveFrame-label--title" 
+
+							<div class="waveFrame-label--title"
 							ng-if="currStep.LRow1.wave.labelTitle">
 								<span ng-bind-html="currStep.LRow1.wave.labelTitle">
 								</span>
 							</div>
 
-							<div class="waveFrame-label--txt" 
+							<div class="waveFrame-label--txt"
 							ng-if="currStep.LRow1.wave.labelTxt">
 								<span ng-bind-html="currStep.LRow1.wave.labelTxt"></span>
 							</div>
@@ -85,7 +85,7 @@
 				</div> <!-- end itemsBox1 -->
 			</div> <!-- end LRow1 -->
 
-			<!-- - - - - - - - - - - - - 
+			<!-- - - - - - - - - - - - -
 			 ROW/WAVE 2 -->
 
 			 <div id="LRow2">
@@ -94,52 +94,47 @@
 				<div id="waveBox2"
 				ng-if="currStep.LRow2.wave"
 				class="leftRow">
-					<!-- light blue border on wave eles 
+					<!-- light blue border on wave eles
 						(not applied on currStep.LRow1.items) -->
 					<div class="waveFrame"
 					ng-if="currStep.LRow2.wave">
 
 						<!-- holds live wave or wave img -->
 						<div class="lpcBox" >
-							<div 
-							class="soundImgBox" 
-							ng-if="currStep.LRow2.wave.lpcImg" 
+							<div
+							class="soundImgBox"
+							ng-if="currStep.LRow2.wave.lpcImg"
 							style="background-image: url('{{currStep.LRow2.wave.lpcImg}}')">
 							</div>
-							
+
 							<div class="lpc-canvas-area"
 							ng-if="currStep.LRow2.wave.lpcLive">
-								<lpc-directive 
-									slider="false" 
+								<lpc-directive
+									slider="false"
 									sand="false"
 									tutorial="true">
 								</lpc-directive>
 							</div> <!-- end #lpcCanvas -->
 
-							<!-- ng-if="currStep.LRow2.wave.needle"  
-								style="background-image: url('{{currStep.LRow2.wave.needle.img}}')"
-
-								class="needleBox" 
-							-->
 							<div class="needleBox">
-								<img 
-									ng-src="{{currStep.LRow2.wave.needle.img}}" 
-									style="height:{{currStep.LRow2.wave.needle.h}}; 
-										width:{{currStep.LRow2.wave.needle.w}}; 
-										top:{{currStep.LRow2.wave.needle.top}}; 
+								<img
+									ng-src="{{currStep.LRow2.wave.needle.img}}"
+									style="height:{{currStep.LRow2.wave.needle.h}};
+										width:{{currStep.LRow2.wave.needle.w}};
+										top:{{currStep.LRow2.wave.needle.top}};
 										left:{{currStep.LRow2.wave.needle.left}};">
 							</div>
 						</div> <!-- end lpcBox -->
 
 						<div class="waveFrame-label">
-							
-							<div class="waveFrame-label--title" 
+
+							<div class="waveFrame-label--title"
 							ng-if="currStep.LRow2.wave.labelTitle">
 								<span ng-bind-html="currStep.LRow2.wave.labelTitle">
 								</span>
 							</div>
 
-							<div class="waveFrame-label--txt" 
+							<div class="waveFrame-label--txt"
 							ng-if="currStep.LRow2.wave.labelTxt">
 								<span ng-bind-html="currStep.LRow2.wave.labelTxt"></span>
 							</div>
@@ -173,28 +168,27 @@
 
 		<!-- ==================
 		RIGHT BOX -->
-		<div 
+		<div
 		class="rightBox"
 		ng-class="{'txt-squish': currStep.RRow1.txtSquish, 'rightBox--short': currStep.header}">
 
-			<div 
-			class="rightRow1" 
-			ng-if="currStep.RRow1.items" 
+			<div
+			class="rightRow1"
+			ng-if="currStep.RRow1.items"
 			ng-repeat="item in currStep.RRow1.items"
 			ng-bind-html="item">
 				{{item}}
 			</div>
 			<!-- -->
 			<div class="starBox" ng-if="currStep.pic">
-				<img 
-				ng-src="{{currStep.pic.img}}" 
-				class="relImg" 
-				style="height:{{currStep.pic.h}}; 
-					width:{{currStep.pic.w}}; 
-					top:{{currStep.pic.top}}; 
+				<img
+				ng-src="{{currStep.pic.img}}"
+				class="relImg"
+				style="height:{{currStep.pic.h}};
+					width:{{currStep.pic.w}};
+					top:{{currStep.pic.top}};
 					left:{{currStep.pic.left}};">
 		</div> <!-- end rightBox -->
-		
+
 	</div> <!-- end tutPgView-content -->
 </div> <!-- end .pageView -->
-
