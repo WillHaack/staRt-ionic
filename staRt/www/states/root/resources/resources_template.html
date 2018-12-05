@@ -25,10 +25,8 @@
 
 		<!-- ===================================== -->
 		<!-- page content goes here -->
-
 		<div class="resources-layout_content-container">
 
-			<!-- //////// Resourses Main Page //////// -->
 			<div class="res-page-index">
 
 				<div class="res-sect">
@@ -58,63 +56,9 @@
 					</div>
 				</div>
 
-				<div class="res-sect">
-				<!--
-					<div class="head">
-						<div class="resTitle">SETTINGS</div>
-						<div class="resDesc">adjust wave settings for the active user's profile</div>
-					</div>
-					<div class="body">
-						<div class="btn" ng-click="configureLPC()">
-							Adjust LPC Filter Order
-						</div>
-					</div>
-					-->
-				</div>
+				<div class="res-sect"></div> <!-- spacer -->
 
 			</div> <!-- end res-index-page -->
-
-
-			<!-- //////// Adjust Filter Order Page //////// -->
-			<!--
-			<div class="resources text-and-lpc__text" ng-if="data.configuring">
-
-				<div class="back-btn" ng-click="data.configuring = false">Back</div>
-
-				<p>
-					Use the slider to manually adjust the LPC filter order.
-					<strong>In general, the filter order should be between 35 and 45.</strong>
-				</p>
-
-				<div class="range-container">
-					<div class="range-label">
-						min. 25
-					</div>
-
-					<input type="range" min="25" max="45" ng-model="data.lpcOrder" ng-change="updatePluginLPCOrder()" />
-
-					<div class="range-label">
-						max. 45
-					</div>
-
-					<button name="reset" ng-click="resetPluginLPCOrder()" class="reset-button big-button">Reset</button>
-				</div>
-
-				<p>
-					The filter order is now <em>{{data.lpcOrder}}</em>
-				</p>
-
-				<div ng-if="data.configuring" class="res-lpcBox">
-					<lpc-directive
-						sand="false"
-						slider="false"
-						transparent="transparent">
-					</lpc-directive>
-				</div>
-
-			</div>
-			-->
-
 		</div> <!-- end resources-layout_content-container-->
 	</div> <!-- end resources-layout_view-container-->
 </ion-view>
