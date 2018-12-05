@@ -188,9 +188,15 @@
 
 
 
-// QUEST ---------------------------------------------
-// The ui for the Quests (praciting && !configuring) are handled by the practice-directive & lpc-directive
+// QUEST PAGES -----------------------------------------------
+// The ui for the Quests (praciting && !configuring) are
+// primarily handled by the lpc-directive & the practice-directive
+// -----------------------------------------------------------
 
+// holds the practice-directive, which contains the promptBox, wave, & rateBtns
 .quest-practice-page {
+	position: relative;
 	height: 100%;
+	width: 100%;
+	//border: 1px solid lime;
 }

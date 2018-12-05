@@ -2,8 +2,10 @@
 		//border: 1px solid lime;
 }
 
+// PRACTICE-DIRECTIVE ------------------------------------
 .practice-directive-container {
   height: 100%;
+  //border: 1px solid lime;
 }
 
  .promptBox-layout {
@@ -49,11 +51,38 @@
 	//border: 1px solid red;
 }
 
-// ------------------------------------
+
+// WAVE AND SIDE BUTTONS ------------------------------------
+.lpcDir-layout_quiz-quest {
+  position: absolute;
+  display: block;
+  height: 100%;
+  width: 100%;
+  //border: 1px solid blue;
+
+  lpc-directive { //styled in lpc-directive
+    div.lpc-contentBox { // styled in lpc-directive
+      // contains both wave and rateBtns only
+
+      div#lpc-canvas-parentSize {
+        position: relative;
+        top: $row-h * 2.5;
+        left: $col-w * 2;
+        height: $row-h * 2.5;
+        width: $col-w * 7;
+        //border: 1px solid blue;
+      } // #lpc-canvas-parentSize
+
+    } // .lpc-contentBox
+  } // lpc-directive
+} // .lpcDir-layout_quiz-quest
+
+
+// COIN ROW ------------------------------------
 .coin-row-layout {
   position: absolute;
   top: $row-h * 5;
-  left: $col-w * 3;
+  left: $col-w * 2;
   width: $col-w * 7;
   height: $row-h * 0.8;
   //border: 1px solid red;

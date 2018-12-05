@@ -52,11 +52,13 @@ function compareRecordings(ra, rb) {
 			//values: recordings || progress || profile || settings || home || slp
 			$scope.cardState = "profile";
 			$scope.slpView = false;
+
 			$scope.data = {};
 			$scope.data.uploadMessage = "";
-
       $scope.data.selectedProfileRecordings = [];
       $scope.data.sessionIsActive = AutoService.isSessionActive();
+			$scope.data.lpcOrder = 0; //Card-Settings: Sets init val for adjust-lpc slider. Will be overwritten once currentProfile lpcOrder data arrives.
+
 
       NotifyingService.subscribe("session-did-begin", $scope, function() {
         $scope.data.sessionIsActive = true;
@@ -76,35 +78,61 @@ function compareRecordings(ra, rb) {
       });
 
 			ProfileService.getAllProfiles().then( function(res) {
-				console.log(res);
+				//console.log(res);
 				$scope.data.profiles = res;
 			});
 
-			ProfileService.getCurrentProfile().then(function(res)
-			{
-				console.log(res);
-				if (res)
-				{
+			ProfileService.getCurrentProfile().then(function(res) {
+
+				if (res) {
 					$scope.data.currentProfile = res;
 					$scope.data.currentProfileUUID = res.uuid;
-				}
+
+					if (res.lpcOrder) {
+						$scope.data.lpcOrder = res.lpcOrder;
+					} else {
+						// #stj Default just 35? Call the lookup fx?
+						$scope.data.lpcOrder = 0;
+					}
+
+					// #sjt: I'm always getting undefined at this point,
+					// so I moved the Plugin fx to the $watchCollection
+					if (window.AudioPlugin !== undefined) {
+						console.log('hey AudioPlugin');
+					} // if window.AudioPlugin
+				} // if (res)
 			});
 
+
+
+			//triggered when user selects a different profile from the drawer
+			// #sjt
 			$scope.$watchCollection('data.currentProfile', function(data)
 			{
 				if (data)
 				{
 					$scope.data.currentProfileUUID = $scope.data.currentProfile.uuid;
-					if (window.AudioPlugin !== undefined)
-					{
-						if ($scope.data.currentProfile.lpcOrder) {
-							AudioPlugin.setLPCOrder($scope.data.currentProfile.lpcOrder, null);
-						}
-					};
+
+					if ($scope.data.currentProfile.lpcOrder) {
+						$scope.data.lpcOrder = $scope.data.currentProfile.lpcOrder;
+
+						if (window.AudioPlugin !== undefined) {
+								console.log('watchCollection calls AudioPlugin with:' + $scope.data.lpcOrder);
+								AudioPlugin.setLPCOrder($scope.data.currentProfile.lpcOrder, $scope.logPluginLPCOrder);
+							} else {
+								console.log('dude no audio');
+							}
+
+					} else {
+						// audioPlugin does whatever it wants... idk
+							// todo: default to 35? reset/lookup fx?
+						$scope.data.lpcOrder = 0; // updates display
+					}
 
 					$scope.updateRecordingsList();
 				}
 			});
+
 
 			$scope.$on( "$ionicView.enter", function( scopes, states ) {
 				$scope.updateRecordingsList();
@@ -140,7 +168,6 @@ function compareRecordings(ra, rb) {
 		// vals: 'recordings' || 'progress' || 'profile' || 'settings' || 'slp'
 		// ===========================================================
 		$scope.setCardState = function(navState) {
-			//console.log(navState);
 			$scope.cardState = navState;
 		}
 		$scope.openSlpView = function() {
@@ -153,13 +180,112 @@ function compareRecordings(ra, rb) {
 		}
 
 
+		// ===========================================================
+		// CARD: PROFILES
+		// ===========================================================
 
+		$scope.setIsEditing = function(isEditing) {
+			$scope.isEditing = isEditing;
+			$scope.editing = isEditing ? "editing" : "";
+		};
+
+		$scope.cancelEdit = function()
+		{
+			ProfileService.getCurrentProfile().then( function(res) {
+				$scope.data.currentProfile = res;
+			});
+			$scope.setIsEditing(false);
+		};
+
+		$scope.saveProfile = function()
+		{
+			if ($scope.data.currentProfile.name !== undefined &&
+				$scope.data.currentProfile.age !== undefined &&
+				$scope.data.currentProfile.heightFeet !== undefined &&
+				$scope.data.currentProfile.heightInches !== undefined &&
+				$scope.data.currentProfile.gender !== undefined)
+			{
+				ProfileService.saveProfile($scope.data.currentProfile).then(function()
+				{
+					ProfileService.getAllProfiles().then(function(res)
+					{
+						$scope.data.profiles = res;
+						$scope.setIsEditing(false);
+						ProfileService.setCurrentProfileUUID($scope.data.currentProfile.uuid);
+					});
+				});
+			} else {
+				alert("Profile is missing some data");
+			}
+		};
+
+		function clamp(x, lo, hi)
+		{
+			return (x < lo ? lo : (x > hi ? hi : x));
+		}
+
+		$scope.deleteProfile = function(profile)
+		{
+			function doDelete()
+			{
+				var profileIdx = $scope.data.profiles.indexOf(profile);
+				profileIdx = clamp(profileIdx, 0, $scope.data.profiles.length - 2);
+				ProfileService.deleteProfile(profile).then(function()
+				{
+					ProfileService.getAllProfiles().then(function(res)
+					{
+						$scope.data.profiles = res;
+						if(!res.length)
+						{
+							$scope.data.currentProfile = null;
+							$scope.updateCurrentProfile(null);
+						}
+						else
+						{
+							$scope.data.currentProfile = $scope.data.profiles[profileIdx];
+							$scope.updateCurrentProfile($scope.data.currentProfile);
+						}
+					});
+				});
+			}
+
+			// Check if we're in the browser or in iOS
+			if(navigator.notification)
+			{
+				navigator.notification.confirm("Are you sure you want to delete " + profile.name + "?" , function(i)
+				{
+					if(i == 1)
+					{
+						doDelete();
+					}
+				}, "Delete All", ["OK", "Cancel"]);
+			}
+			else
+			{
+				doDelete();
+			}
+		}
+
+		$scope.optInFormalTesting = function() {
+			ProfileService.getCurrentProfile().then(function (profile) {
+				if (profile) AutoService.promptForFormalParticipation(profile);
+			});
+		}
+
+		$scope.startSession = function() {
+			AutoService.startSession();
+		};
+
+		$scope.stopSession = function() {
+			AutoService.stopSession();
+		};
 
 		// ===========================================================
 		// CARD: RECORDINGS
 		// ===========================================================
 
-		$scope.updateRecordingsList = function() {
+		$scope.updateRecordingsList = function()
+		{
 			$scope.data.selectedProfileRecordings = [];
 			ProfileService.getRecordingsForProfile($scope.data.currentProfile, function(recordings) {
 				var statusesToFetch = [];
@@ -266,103 +392,48 @@ function compareRecordings(ra, rb) {
 			});
 		};
 
+
 		// ===========================================================
 		// CARD: PROGRESS
 		// ===========================================================
 
 
 
-		// ===========================================================
-		// CARD: PROFILES
-		// ===========================================================
-		// if
-		// $scope.isEditing = false;
 
-		$scope.setIsEditing = function(isEditing) {
-			$scope.isEditing = isEditing;
-			$scope.editing = isEditing ? "editing" : "";
-		};
-
-		$scope.cancelEdit = function()
-		{
-			ProfileService.getCurrentProfile().then( function(res) {
-				$scope.data.currentProfile = res;
-			});
-			$scope.setIsEditing(false);
-		};
-
-		$scope.saveProfile = function()
-		{
-			if ($scope.data.currentProfile.name !== undefined &&
-				$scope.data.currentProfile.age !== undefined &&
-				$scope.data.currentProfile.heightFeet !== undefined &&
-				$scope.data.currentProfile.heightInches !== undefined &&
-				$scope.data.currentProfile.gender !== undefined)
-			{
-				ProfileService.saveProfile($scope.data.currentProfile).then(function()
-				{
-					ProfileService.getAllProfiles().then(function(res)
-					{
-						$scope.data.profiles = res;
-						$scope.setIsEditing(false);
-						ProfileService.setCurrentProfileUUID($scope.data.currentProfile.uuid);
-					});
-				});
-			} else {
-				alert("Profile is missing some data");
-			}
-		};
-
-		function clamp(x, lo, hi)
-		{
-			return (x < lo ? lo : (x > hi ? hi : x));
-		}
-
-		$scope.deleteProfile = function(profile)
-		{
-			function doDelete()
-			{
-				var profileIdx = $scope.data.profiles.indexOf(profile);
-				profileIdx = clamp(profileIdx, 0, $scope.data.profiles.length - 2);
-				ProfileService.deleteProfile(profile).then(function()
-				{
-					ProfileService.getAllProfiles().then(function(res)
-					{
-						$scope.data.profiles = res;
-						if(!res.length)
-						{
-							$scope.data.currentProfile = null;
-							$scope.updateCurrentProfile(null);
-						}
-						else
-						{
-							$scope.data.currentProfile = $scope.data.profiles[profileIdx];
-							$scope.updateCurrentProfile($scope.data.currentProfile);
-						}
-					});
-				});
-			}
-
-			// Check if we're in the browser or in iOS
-			if(navigator.notification)
-			{
-				navigator.notification.confirm("Are you sure you want to delete " + profile.name + "?" , function(i)
-				{
-					if(i == 1)
-					{
-						doDelete();
-					}
-				}, "Delete All", ["OK", "Cancel"]);
-			}
-			else
-			{
-				doDelete();
-			}
-		}
 
 		// ===========================================================
 		// CARD: SETTINGS
 		// ===========================================================
+		// #sjt: fx copied & pasted from Resources controller
+
+		$scope.logPluginLPCOrder = function(order) {
+			console.log("Plugin LPC order is now: " + order);
+		};
+
+		$scope.resetPluginLPCOrder = function() {
+			ProfileService.getCurrentProfile().then(function(res) {
+				if (res) {
+					$scope.data.lpcOrder = ProfileService.lookupDefaultFilterOrder(res);
+				} else {
+					$scope.data.lpcOrder = 35;
+				}
+				$scope.updatePluginLPCOrder();
+			});
+		};
+
+		$scope.setLPCOrder = function(order) {
+			$scope.data.lpcOrder = order;
+		};
+
+		$scope.updatePluginLPCOrder = function() {
+			if (window.AudioPlugin !== undefined) {
+				ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+					AudioPlugin.setLPCOrder($scope.data.lpcOrder, $scope.logPluginLPCOrder);
+					t.update(handle, {lpcOrder: $scope.data.lpcOrder});
+				});
+			}
+		};
+
 
 
 
@@ -407,24 +478,12 @@ function compareRecordings(ra, rb) {
 
 
 	// -----------------------------------------------------------
-	// not sure what the Formal Testing and Session stuff is about
+	// qs for #sjt
 
-	$scope.optInFormalTesting = function() {
-		ProfileService.getCurrentProfile().then(function (profile) {
-			if (profile) AutoService.promptForFormalParticipation(profile);
-		});
-	}
-
-	var selected = [];
+		var selected = [];  // #sjt  I don't know which block this belongs to... any ideas?  SORRY!
 
 
-    $scope.startSession = function() {
-      AutoService.startSession();
-    };
 
-    $scope.stopSession = function() {
-      AutoService.stopSession();
-    };
 
 		init();
 

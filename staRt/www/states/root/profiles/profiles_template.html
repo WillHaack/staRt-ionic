@@ -15,17 +15,17 @@
 		</div> <!-- end .profiles-layout_drawer-left -->
 
 
-		
+
 		<div class="profiles-layout_content-container">
 
 			<!-- WELCOME MESSAGES ==================================== -->
- 			<div class="profiles-noCard" 
+ 			<div class="profiles-noCard"
  				ng-hide="data.currentProfile || slpView"
  				ng-show="!data.currentProfile && !slpView">
 
 				<h1>Welcome {{displayName}},</h1>
 				<div class="divider"></div>
-				
+
 				<div class="profiles-welcome welcome_shouldCreateProfile"
 				ng-if="data.profiles.length === 0">
 
@@ -45,10 +45,10 @@
 				ng-if="data.profiles.length > 0">
 					<div class="">
 						<p><span class="txtBold">Select a participant profile to begin!</span><br/>
-							Members of your flock are listed in the column on the left. 
-						</p> 
+							Members of your flock are listed in the column on the left.
+						</p>
 
-						<p> Participants enrolled in our clinical research program have a <span class="testerIcon"></span> symbol by their name.</p> 
+						<p> Participants enrolled in our clinical research program have a <span class="testerIcon"></span> symbol by their name.</p>
 					</div>
 
 					<div>
@@ -56,28 +56,30 @@
 							[link to website, open email msg w/ header, go to google form, etc ... #ask TM]
 						</p>
 					</div>
-				</div> 
+				</div>
 				<!-- .msg-selectProfile -->
 
 			</div> <!-- profiles-noCard -->
 
 
 			<!-- CLINICIAN'S CARD ==================================== -->
-			<div class="p-card" 
+			<div class="p-card"
 				ng-hide="!slpView" ng-show="slpView">
 
 				<div class="p-card_head">
-					<div ng-if="slpView" class="card-headBox">
-						<div class="card-closeRow">
+					<div ng-if="slpView" class="card-headerBox">
+
+						<div class="card-titleBox">
+							<h1 >{{displayName}}</h1>
+						</div>
+
+						<div class="card-closeBox">
 							<button class="button"
 							ng-click="closeSlpView()">
 								x
 							</button>
 						</div>
-						
-						<div class="card-titleRow">
-							<h1 >{{displayName}}</h1>
-						</div>
+
 					</div>
 
 					<div class="p-card_navBox p-card_navBox--slp">
@@ -92,18 +94,24 @@
 
 
 			<!-- STUDENT CARDS ======================================= -->
-			<div class="p-card" 
+			<div class="p-card"
 				 ng-hide="!data.currentProfile || slpView"
 				 ng-show="data.currentProfile && !slpView">
 
 				<div class="p-card_head">
 
-					<div class="card-headBox">
-						<div class="card-closeRow"></div>
+					<div class="card-headerBox">
 
-						<div class="card-titleRow">
+						<div class="card-titleBox">
 							<h1 >{{data.currentProfile.name}}</h1>
 						</div>
+
+						<div class="card-closeBox">
+							<!-- <button class="button" ng-click="">
+								x
+							</button> -->
+						</div>
+
 					</div> <!-- .card-headBox-->
 
 					<div class="p-card_navBox">
@@ -115,13 +123,13 @@
 						</div>
 
 						<div ng-click="setCardState('recordings')"
-							class="pro_navitem" 
+							class="pro_navitem"
 							ng-class="{'pro_navitem--active': cardState === 'recordings' }">
 							recordings
 						</div>
 
 						<div ng-click="setCardState('progress')"
-							class="pro_navitem" 
+							class="pro_navitem"
 							ng-class="{'pro_navitem--active': cardState === 'progress' }">
 							progress
 						</div>
@@ -137,7 +145,7 @@
 
 				</div> <!-- p-card_head -->
 
-				<!-- CARD BODY STARTS HERE --> 
+				<!-- CARD BODY STARTS HERE -->
 				<div class="card-switchParent" ng-switch on="cardState">
 
 					<div class="card-switchBox" ng-switch-when="recordings" >

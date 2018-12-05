@@ -5,7 +5,6 @@ $rowHalf: $rowH/2;
 .tutorial-layout_view-container { // parent ele for tut content
 	// needs to be a flex
 	position: relative;
-	//margin-top: $rowH * 1.5;
 	top: $rowH * 1.5;
 	height: $rowH * 5;
 	margin: 0;
@@ -101,7 +100,6 @@ $rowHalf: $rowH/2;
 		.leftBox {
 			display: flex;
 			flex-direction: column;
-			//max-height: $rowH * 3;
 			width: 65%;
 			//border: 1px solid lightBlue;
 
@@ -121,7 +119,6 @@ $rowHalf: $rowH/2;
 				left: 0;
 				height: 170px;
 				width: 500px;
-				//padding: 10px;
 				background-color: $blue-white;
 				border: 10px solid $blue-white;
 				border-radius: 10px;
@@ -148,14 +145,6 @@ $rowHalf: $rowH/2;
 			position: relative;
 			height: 150px;
 			width: 480px;
-			// margin: 0;
-			// padding: 0;
-			// border-radius: 4px;
-			// display: block;
-			// background-color: #F0F9FC;
-			// border: 15px solid #F0F9FC;
-			// border-bottom: 25px solid #F0F9FC;
-			// box-shadow: 1px 1px 1px rgba(0,0,0,0.15);
 		}
 
 			// this is used in the tutorial template files and should be the parent ele of the lpc directive
