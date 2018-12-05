@@ -30,7 +30,6 @@ lpcDirective.directive( 'lpcDirective', function()
 		scope:
 		{
       active: "=",
-      beachpost: "=",
 			probe: '=',
 			sand: '=',
 			slider: '=',
@@ -38,7 +37,6 @@ lpcDirective.directive( 'lpcDirective', function()
 			rate: '=',
 			hideBtn: '=',
       waveHidden: "=",
-      transparent: "=",
 			tutorial: "="
 		},
 		templateUrl: 'common-components/lpc-directive/lpc-directive_template.html'

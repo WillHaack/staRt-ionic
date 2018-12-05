@@ -12,31 +12,20 @@
     </div>
   </div>
 
-  <!-- .lpc-container is the light blue containing box-->
-  <!-- <div ng-class="{
-    'lpc-container': !tutorial,
-    'lpc-container-tutorial': tutorial,
-    'transparent-background': transparent }"
-  > -->
-
-  <!-- this holds the lpc renderer -->
   <div
     id="lpc-canvas-parentSize"
     ng-class="{
       'slider-and-canvas': !tutorial,
-      'beachpost-aligned': beachpost,
-      buttons_visible: rate,
-      'full-width': !rate && !reset && !tutorial}"
+      buttons_visible: rate }"
     >
     <!-- Renderer will be inserted here -->
     <canvas
       id="lpc-canvas"
       ng-hide="lpcHidden || probe || waveHidden || $root.rootWaveHidden" >
     </canvas>
-
   </div>
 
-  <!-- </div> -->
+
 
   <div class="button-side-container ctlBtn-container">
     <button
