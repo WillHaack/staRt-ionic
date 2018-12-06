@@ -48,34 +48,34 @@ function compareRecordings(ra, rb) {
 			$scope.uploadCount = 0;
 			$scope.displayName = FirebaseService.userName();
 
-			// use: to change display state of card
+			// use: to change display state of the card
 			//values: recordings || progress || profile || settings || home || slp
 			$scope.cardState = "profile";
 			$scope.slpView = false;
 
 			$scope.data = {};
 			$scope.data.uploadMessage = "";
-      $scope.data.selectedProfileRecordings = [];
-      $scope.data.sessionIsActive = AutoService.isSessionActive();
+      		$scope.data.selectedProfileRecordings = [];
+			$scope.data.sessionIsActive = AutoService.isSessionActive();
 			$scope.data.lpcOrder = 0; //Card-Settings: Sets init val for adjust-lpc slider. Will be overwritten once currentProfile lpcOrder data arrives.
 
 
-      NotifyingService.subscribe("session-did-begin", $scope, function() {
-        $scope.data.sessionIsActive = true;
-      });
+		  NotifyingService.subscribe("session-did-begin", $scope, function() {
+			$scope.data.sessionIsActive = true;
+		  });
 
-      NotifyingService.subscribe("session-did-end", $scope, function() {
-        $scope.data.sessionIsActive = false;
-      });
+		  NotifyingService.subscribe("session-did-end", $scope, function() {
+			$scope.data.sessionIsActive = false;
+		  });
 
-      NotifyingService.subscribe("profile-stats-updated", $scope, function(msg, updateData) {
-        let profile = updateData[0];
-        let currentProfileStats = updateData[1];
-        let updateKeys = updateData[2];
-        updateKeys.forEach(function(key) {
-          $scope.data.currentProfile[key] = profile[key];
-        });
-      });
+		  NotifyingService.subscribe("profile-stats-updated", $scope, function(msg, updateData) {
+			let profile = updateData[0];
+			let currentProfileStats = updateData[1];
+			let updateKeys = updateData[2];
+			updateKeys.forEach(function(key) {
+			  $scope.data.currentProfile[key] = profile[key];
+			});
+		  });
 
 			ProfileService.getAllProfiles().then( function(res) {
 				//console.log(res);
@@ -83,21 +83,22 @@ function compareRecordings(ra, rb) {
 			});
 
 			ProfileService.getCurrentProfile().then(function(res) {
-
 				if (res) {
 					$scope.data.currentProfile = res;
 					$scope.data.currentProfileUUID = res.uuid;
 
 					if (res.lpcOrder) {
 						$scope.data.lpcOrder = res.lpcOrder;
+						// #sjt: this will update the display.
+						// Does the Audio Plugin need this info?
 					} else {
-						// #stj Default just 35? Call the lookup fx?
+						// #sjt Default to 35? Call the lookup fx?
 						$scope.data.lpcOrder = 0;
 					}
 
-					// #sjt: I'm always getting undefined at this point,
-					// so I moved the Plugin fx to the $watchCollection
 					if (window.AudioPlugin !== undefined) {
+						// At this point, I think its gonna be undefined.
+						// Oddly, I wasn't able to log anything w/ this either way, so I'm not gonna to do any setup here.
 						console.log('hey AudioPlugin');
 					} // if window.AudioPlugin
 				} // if (res)
@@ -109,6 +110,7 @@ function compareRecordings(ra, rb) {
 			// #sjt
 			$scope.$watchCollection('data.currentProfile', function(data)
 			{
+				//console.log('watch Collection sez: ' + data);
 				if (data)
 				{
 					$scope.data.currentProfileUUID = $scope.data.currentProfile.uuid;
@@ -118,15 +120,14 @@ function compareRecordings(ra, rb) {
 
 						if (window.AudioPlugin !== undefined) {
 								console.log('watchCollection calls AudioPlugin with:' + $scope.data.lpcOrder);
-								AudioPlugin.setLPCOrder($scope.data.currentProfile.lpcOrder, $scope.logPluginLPCOrder);
+								AudioPlugin.setLPCOrder($scope.data.lpcOrder, $scope.logPluginLPCOrder);
 							} else {
 								console.log('dude no audio');
 							}
 
 					} else {
-						// audioPlugin does whatever it wants... idk
-							// todo: default to 35? reset/lookup fx?
-						$scope.data.lpcOrder = 0; // updates display
+						// sjt: default to 35? reset/lookup fx?
+						$scope.data.lpcOrder = 0; // temp: if no saved lpcOrder, slider goes to 0
 					}
 
 					$scope.updateRecordingsList();
@@ -406,11 +407,11 @@ function compareRecordings(ra, rb) {
 		// ===========================================================
 		// #sjt: fx copied & pasted from Resources controller
 
-		$scope.logPluginLPCOrder = function(order) {
+		$scope.logPluginLPCOrder = function(order) { //use: primarily a cb for AudioPlugin fx, i think
 			console.log("Plugin LPC order is now: " + order);
 		};
 
-		$scope.resetPluginLPCOrder = function() {
+		$scope.resetPluginLPCOrder = function() { //use: called from template only (reset btn)
 			ProfileService.getCurrentProfile().then(function(res) {
 				if (res) {
 					$scope.data.lpcOrder = ProfileService.lookupDefaultFilterOrder(res);
@@ -421,11 +422,20 @@ function compareRecordings(ra, rb) {
 			});
 		};
 
-		$scope.setLPCOrder = function(order) {
-			$scope.data.lpcOrder = order;
+		$scope.setLPCOrder = function(order) { //use: sounds important, but not sure how this is used.
+			$scope.data.lpcOrder = order; // this would def update the display. Is setLPCOrder() called by the AudioPlugin?? #sjt
 		};
 
 		$scope.updatePluginLPCOrder = function() {
+			//use: called from template range slider w/ ng-change, AND called by resetPluginLPCOrder()
+			
+			/* #sjt: maybe we need to use the ng equivalent of onmouseup or touchend instead ???
+				angular says:
+				'The ng-change expression is evaluated immediately, unlike the JavaScript onchange event which only triggers at the end of a change (usually, when the user leaves the form element or presses the return key).'
+				https://code.angularjs.org/1.4.14/docs/api/ng/directive/ngChange
+			*/
+			console.log('slider update fx says:' + $scope.data.lpcOrder);
+			
 			if (window.AudioPlugin !== undefined) {
 				ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
 					AudioPlugin.setLPCOrder($scope.data.lpcOrder, $scope.logPluginLPCOrder);
