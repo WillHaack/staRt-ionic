@@ -1,6 +1,6 @@
 // ================================================
-// PROFILES LIST 
-//.profiles-layout_drawer-left 
+// PROFILES LIST
+//.profiles-layout_drawer-left
 // z-index: 90;
 // ================================================
 // .red { border: 1px solid red; } //#dev
@@ -19,7 +19,7 @@
 
 // ================================================
 // PROFILES HEAD
-//.profiles-layout_drawer-left 
+//.profiles-layout_drawer-left
 // z-index: 90;
 // ================================================
 .p-drawer_list-head { // height: $row-h * 1.33;
@@ -53,7 +53,7 @@
 		align-items: center;
 		height: $row-h * 0.5;
 		z-index: 95;
-	
+
 		.closeBtn {
 			position: relative;
 			display: flex;
@@ -68,7 +68,7 @@
 			border-left: 1px solid red;
 			border-bottom: 1px solid red;
 			z-index: 95;
-		}	
+		}
 	}
 
 	.title-row {
@@ -80,7 +80,7 @@
 		height: $row-h * 0.5;
 		width: 100%;
 		z-index: 90;
-	
+
 		.title {
 			position: relative;
 			display: flex;
@@ -109,9 +109,9 @@
 	width: 100%;
 	background-image: url('../img/ui/ribbon.svg');
 	background-image-size: 100% 100%;
-	background-repeat: no-repeat; 
+	background-repeat: no-repeat;
 
-	.searchBar { 
+	.searchBar {
 		position: relative;
 		display: flex;
 		flex-flow: row nowrap;
@@ -160,7 +160,7 @@
 
 // ================================================
 // PROFILES BODY
-//.profiles-layout_drawer-left 
+//.profiles-layout_drawer-left
 // z-index: 90;
 // ================================================
 
@@ -201,7 +201,7 @@
 
 // ================================================
 // PROFILES FOOT
-//.profiles-layout_drawer-left 
+//.profiles-layout_drawer-left
 // z-index: 90;
 // ================================================
 
@@ -216,7 +216,7 @@
 	width: 100%;
 	//border: 1px solid blue;
 
-	.footRow { 
+	.footRow {
 		position: relative;
 		display: flex;
 		flex-flow: row nowrap;
@@ -227,8 +227,9 @@
 		width: 100%;
 		color: $c-text-main;
 		//border: 1px solid red;
-	
+
 		button.footBtn {
+			position: relative;
 			display: flex;
 			flex-flow: row nowrap;
 			justify-content: space-between;
@@ -242,7 +243,18 @@
 			box-shadow: none;
 			background-color: transparent;
 
-			i { font-size: 1.5em; }
+			.btnTitle {
+				height: 100%;
+				width: 85%;
+				text-align: left;
+				//border: 1px solid red;
+			}
+
+			i {
+				height: 100%;
+				width: auto;
+				font-size: 2.5em !important;
+			}
 
 		} // .footBtn
 	} //.footRow
@@ -256,13 +268,3 @@
 
 .c-whiteBlue_500 { background-color: #e2f7f7; }
 .c-whiteBlue_400 { background-color: #edf9f8; }
-
-
-
-
-
-
-
-
-
-

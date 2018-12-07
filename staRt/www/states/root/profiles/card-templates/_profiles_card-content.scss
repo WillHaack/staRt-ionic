@@ -17,15 +17,17 @@
 		height: $row-h * 3;
 		width: 100%;
 		padding: 2em 2.5em;
+		padding-bottom: 0;
 		color: $c-text-main;
-		//border: 1px solid pink;
+		//border: 1px solid red;
 
 		h3 {
 			font-size: 1em;
 			color: $c-text-main;
 		}
+	} // .card-body
 
-	}
+
 	.card-foot { // height: $row-h * 0.5;
 		position: relative;
 		display: flex;
@@ -45,6 +47,23 @@
 
 
 // SHARED UI ELEMENTS  =================================
+// btn w/ a big icon, no text
+.iconBtn { // overwrites defaults
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #edf4f3; //#e7f2f1; //#edf9f8;
+	border: none;
+	border-radius: 10px;
+
+	i.r-icon {
+		color: $c-text-main;
+		height: 100%;
+		width: 100%;
+		//border: 1px solid lightblue;
+	}
+}
 
 
 // INDIVIDUAL CARD STYLES ==========================

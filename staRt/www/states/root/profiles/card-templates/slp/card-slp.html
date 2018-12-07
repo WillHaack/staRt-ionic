@@ -1,28 +1,62 @@
 <div class="card-content">
 
 	<div class="card-body card-body-slp">
-		<h3>Clinician Options</h3>
 
-		<button class="button profiles-list-btn"
-			ng-click="deleteAllProfiles()"
-			ng-hide="data.profiles.length === 0">
-			<div>Delete All Particpants</div>
-			<i class="icon ion-trash-b"></i>
-		</button>
+		<div class="card-body-row">
+			<button class="button iconBtn slp-iconBtn"
+				ng-click="deleteAllProfiles()"
+				ng-hide="data.profiles.length === 0">
+				<i class="r-icon ion-ios-trash-outline"></i>
+			</button>
 
-		<button class="button profiles-list-btn"
-			ng-click="logOut()">
-			<div>Clinician Logout</div>
-			<i class="ion-log-in"></i>
-		</button>
+			<div class="slpCard-desc">
+				<h3>Delete All Particpants</h3>
+				<p>Deletes records of all participants registered to your Clinician account.</p>
+			</div>
+		</div>
+
+		<!--
+		<div class="card-body-row">
+			<button class="button iconBtn disabled slp-iconBtn">
+				<i class="r-icon ion-ios-cog-outline"></i>
+			</button>
+
+			<div class="slpCard-desc disabled-font">
+				<h3 class="disabled-font">Template: Title of Batch Fx</h3>
+				<p class="disabled-font">TBD: Batch functions allow you to perform an action on multiple records simultaneously.</p>
+			</div>
+		</div>
+
+		<div class="card-body-row">
+			<button class="button iconBtn disabled slp-iconBtn">
+				<i class="r-icon ion-ios-cog-outline"></i>
+			</button>
+
+			<div class="slpCard-desc">
+				<h3 class="disabled-font">Template: Title of Batch Fx</h3>
+				<p class="disabled-font">TBD: Batch functions allow you to perform an action on multiple records simultaneously.</p>
+			</div>
+		</div>
+		-->
+
+
+		<div class="card-body-row">
+			<button class="button iconBtn slp-iconBtn"
+				ng-click="logOut()">
+				<i class="r-icon ion-log-out"></i>
+			</button>
+
+			<div class="slpCard-desc">
+				<h3 class="">Clinician Logout</h3>
+				<p class="">Your participant records are saved, but they are only accessible when you are logged in.</p>
+			</div>
+		</div>
 
 	</div> <!-- end .card-body -->
 
-	<!--
-	<div class="card-foot">
-	 USER INPUT BTNS GO HERE
-	</div>
-	-->
+
+	<!-- <div class="card-foot slpCard-foot">
+	</div> -->
 	<!-- card-foot -->
 
 </div>

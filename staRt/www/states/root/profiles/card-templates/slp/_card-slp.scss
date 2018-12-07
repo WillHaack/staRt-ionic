@@ -3,26 +3,78 @@
 	display: flex;
 	flex-flow: column nowrap;
 	//justify-content: space-between;
+	//justify-content: space-around;
 	justify-content: flex-start;
+	width: 100%;
 
-	h3 {
+	//border: 1px solid pink;
 
-		margin-bottom: 1.5em;
-	}
-
-	button {
+	.card-body-row {
 		position: relative;
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: space-between;
-		align-items: center;
-		padding: 1em 2em;
-		margin-bottom: 1em;
+		justify-content: flex-start;
 		width: 100%;
-		color: $c-text-main;
+		margin-bottom: 2em;
+		//border: 1px solid lightblue;
 
-		i {
-			color: $c-text-main;
+		&:last-child {
+			margin-bottom: 0;
 		}
+	} // .card-body-row
+} // .card-body-slp
+
+.slp-iconBtn {
+	position: relative;
+	display: flex;
+	margin-right: 1em;
+	min-height: 64px;
+	min-width: 64px;
+	height: 100%;
+	width: 20%; //100%; 128px;//
+	//border: 1px solid lightblue;
+
+	i.r-icon {
+		color: $c-text-main;
+		font-size: 2.5em !important;
+		height: 100%;
+		width: 100%;
+		// //border: 1px solid lightblue;
+	}
+}
+
+.slpCard-desc {
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: flex-start;
+	margin-left: 1em;
+	width: 72%;
+	color: $c-text-main;
+	//border: 1px solid lightblue;
+
+	h3 {
+		display: block;
+		font-weight: $bold;
+		font-size: 1.25em;
+		margin: 0;
+		margin-bottom: 0.25em;
+		padding: 0;
+		width: 100%;
+	}
+
+	p {
+		display: block;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		font-size: 0.9em;
+		line-height: 1.2em;
+	}
+
+	.disabled-font {
+		color: lightgray !important; //#b3b3b3
 	}
 }
