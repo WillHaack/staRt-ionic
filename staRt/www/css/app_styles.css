@@ -778,6 +778,7 @@ input, textarea {
     width: 100%;
     color: #3D6D84; }
     .p-drawer_layout_foot .footRow button.footBtn {
+      position: relative;
       display: flex;
       flex-flow: row nowrap;
       justify-content: space-between;
@@ -790,8 +791,14 @@ input, textarea {
       border: 0;
       box-shadow: none;
       background-color: transparent; }
+      .p-drawer_layout_foot .footRow button.footBtn .btnTitle {
+        height: 100%;
+        width: 85%;
+        text-align: left; }
       .p-drawer_layout_foot .footRow button.footBtn i {
-        font-size: 1.5em; }
+        height: 100%;
+        width: auto;
+        font-size: 2.5em !important; }
 
 .c-navy {
   background-color: #467d91; }
@@ -908,14 +915,16 @@ input, textarea {
     .p-card_head .card-headerBox .card-closeBox {
       display: flex;
       height: 100%;
-      width: 64px; }
+      width: 64px;
+      background-color: transparent; }
       .p-card_head .card-headerBox .card-closeBox button {
         height: 100%;
         width: 8.33333vh;
         border-radius: 10px;
         font-size: 2.5em;
         font-weight: 600;
-        color: #3D6D84; }
+        background-color: transparent;
+        color: #efbd88; }
 
 .p-card_head .p-card_navBox {
   display: flex;
@@ -961,6 +970,7 @@ input, textarea {
     height: 50vh;
     width: 100%;
     padding: 2em 2.5em;
+    padding-bottom: 0;
     color: #3D6D84; }
     .card-content .card-body h3 {
       font-size: 1em;
@@ -972,6 +982,19 @@ input, textarea {
     justify-content: center;
     width: 100%;
     height: 8.33333vh; }
+
+.iconBtn {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #edf4f3;
+  border: none;
+  border-radius: 10px; }
+  .iconBtn i.r-icon {
+    color: #3D6D84;
+    height: 100%;
+    width: 100%; }
 
 .card-recordings ion-item {
   border-bottom: 1px solid lightgray; }
@@ -1094,21 +1117,59 @@ input, textarea {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: flex-start; }
-  .card-body-slp h3 {
-    margin-bottom: 1.5em; }
-  .card-body-slp button {
+  justify-content: flex-start;
+  width: 100%; }
+  .card-body-slp .card-body-row {
     position: relative;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    align-items: center;
-    padding: 1em 2em;
-    margin-bottom: 1em;
+    justify-content: flex-start;
     width: 100%;
-    color: #3D6D84; }
-    .card-body-slp button i {
-      color: #3D6D84; }
+    margin-bottom: 2em; }
+    .card-body-slp .card-body-row:last-child {
+      margin-bottom: 0; }
+
+.slp-iconBtn {
+  position: relative;
+  display: flex;
+  margin-right: 1em;
+  min-height: 64px;
+  min-width: 64px;
+  height: 100%;
+  width: 20%; }
+  .slp-iconBtn i.r-icon {
+    color: #3D6D84;
+    font-size: 2.5em !important;
+    height: 100%;
+    width: 100%; }
+
+.slpCard-desc {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 1em;
+  width: 72%;
+  color: #3D6D84; }
+  .slpCard-desc h3 {
+    display: block;
+    font-weight: 700;
+    font-size: 1.25em;
+    margin: 0;
+    margin-bottom: 0.25em;
+    padding: 0;
+    width: 100%; }
+  .slpCard-desc p {
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-size: 0.9em;
+    line-height: 1.2em; }
+  .slpCard-desc .disabled-font {
+    color: lightgray !important; }
 
 /* DEV SPACE -------------------------------------------
 If you are just trying out some new styles, protoype here. If a set looks goods and belongs in a specific card's stylesheet, pls move the block to the appropriate '/card-template/' file.

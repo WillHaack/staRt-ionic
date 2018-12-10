@@ -16,11 +16,11 @@
 				<label class="searchBar-label">
 					<input class="nameSearch" ng-model="nameSearch" type="text" placeholder="Search">
 				</label>
-				<!-- 				
+				<!--
 				<i class="icon ion-search"></i>
-				<i class="icon ion-close "></i> 
+				<i class="icon ion-close "></i>
 				-->
-			</div> 
+			</div>
 			<!-- end searchBar -->
 		</div> <!-- end searchBar-row -->
 
@@ -63,8 +63,9 @@
 		<button class="footBtn"
 		ng-click="createProfile()"
 		ng-disabled="isEditing">
-			<span>Add New Particpant</span>
-			<i class="icon ion-person-add "></i>
+			<span class="btnTitle">Add New Particpant</span>
+			<i class="icon ion-ios-personadd-outline"></i>
+			<!-- <i class="icon ion-ios-plus-outline"></i> -->
 		</button>
 	</div>
 
@@ -72,8 +73,9 @@
 		<button class="footBtn"
 		ng-click="openSlpView()"
 		ng-disabled="isEditing">
-			Clinician's Card
-			<i class="icon ion-filing"></i>
+			<span class="btnTitle">Clinician's Card</span>
+			<!-- <i class="icon ion-ios-briefcase-outline"></i> -->
+			<i class="icon ion-ios-people-outline"></i>
 		</button>
 	</div>
 
