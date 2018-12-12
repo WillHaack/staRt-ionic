@@ -764,26 +764,37 @@ input, textarea {
   flex-flow: column nowrap;
   justify-content: center;
   height: 64px;
-  width: 100%; }
-  .profiles-drawer-item .r-item-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 64px;
-    width: 100%;
-    z-index: 90;
-    background-image: none;
-    border-top-left-radius: 32px;
-    border-bottom-left-radius: 32px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-    border-left: 0; }
-    .profiles-drawer-item .r-item-bg.selected-bg {
-      border: 1px solid white;
-      border-right: 0;
-      border-top-left-radius: 32px;
-      border-bottom-left-radius: 32px;
-      font-weight: 700;
-      z-index: 90; }
+  width: 100%;
+  /* Not currently in use.
+	 // Container to hold bg-image for selected drawer-item.
+	.r-item-bg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 64px;
+		width: 100%;
+		z-index: 90;
+		background-image: none;
+		border-top-left-radius: 32px;
+		border-bottom-left-radius: 32px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+		border-left: 0;
+		//border: 1px solid pink;
+
+		&.selected-bg {
+			// background-image: url('../img/profiles/selected-alpha.png');
+			// background-size: 100% 100%;
+			// background-repeat: no-repeat;
+			border: 1px solid white; //$c-text-subtle;
+			border-right: 0;
+			border-top-left-radius: 32px;
+			border-bottom-left-radius: 32px;
+			font-weight: 700;
+			//opacity: 0.4;
+			z-index: 90;
+		}
+	} // .r-item-bg
+	*/ }
   .profiles-drawer-item .r-item-content {
     position: relative;
     display: flex;

@@ -28,28 +28,6 @@
 
 	<!-- ===================================== -->
 
-<!--
-<ion-item>
-	<ion-label>Cord</ion-label>
-	<ion-radio value="cord"></ion-radio>
-</ion-item>
-
-<form ng-controller="ExampleController">
-	<h2>Which is your favorite?</h2>
-		<label ng-repeat="name in names" for="{{name}}">
-			{{name}}
-			<input type="radio"
-						 ng-model="my.favorite"
-						 ng-value="name"
-						 id="{{name}}"
-						 name="favorite">
-		</label>
-	<div>You chose {{my.favorite}}</div>
-</form>
-
-		<ion-nav-bar class="{{ (practicing) ? 'ion-nav-bar' : 'ion-nav-bar--old' }}">
--->
-
 	<div class="profiles_list-body">
 		<ion-scroll direction="y">
 			<ion-list class="list">
@@ -65,7 +43,6 @@
 
 						<div class="profiles-drawer-item">
 
-							<!-- class="r-item-content" -->
 							<div ng-class="(profile.uuid === data.currentProfileUUID) ? 'r-item-content r-item-selected' : 'r-item-content' ">
 
 								<div class="r-item-roundEnd"></div>
@@ -73,22 +50,14 @@
 								<div class="r-item-nameRow">
 									<!-- <div class="drawer-initials">WW</div> -->
 
-									<div class="name-text">
-										{{profile.name}}
-									</div>
-
+									<div class="name-text">{{profile.name}}</div>
 
 									<div class="r-item-iconBox">
-										<!--  ng-if="profile.formalTester" -->
-										<div class="testerIcon"
-										></div>
+										<div ng-if="profile.formalTester" class="testerIcon"></div>
 									</div>
 
-								</div>
-							</div>
-
-							<!-- <div ></div> -->
-
+								</div> <!-- r-item-nameRow -->
+							</div> <!-- .r-item-content -->
 						</div> <!-- .profiles-drawer-item -->
 				</ion-radio>
 			</ion-list>
@@ -99,7 +68,6 @@
 
 
 <!-- ===================================== -->
-<!--  ng-hide="isEditing" -->
 <div class="p-drawer_layout_foot">
 
 	<div class="footRow c-whiteBlue_400">
@@ -108,7 +76,6 @@
 		ng-disabled="isEditing">
 			<span class="btnTitle">Add New Particpant</span>
 			<i class="icon ion-ios-personadd-outline"></i>
-			<!-- <i class="icon ion-ios-plus-outline"></i> -->
 		</button>
 	</div>
 
@@ -117,7 +84,6 @@
 		ng-click="openSlpView()"
 		ng-disabled="isEditing">
 			<span class="btnTitle">Clinician's Card</span>
-			<!-- <i class="icon ion-ios-briefcase-outline"></i> -->
 			<i class="icon ion-ios-people-outline"></i>
 		</button>
 	</div>
