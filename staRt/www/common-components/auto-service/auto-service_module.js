@@ -271,7 +271,7 @@ var SessionAuto = function (profile, currentStates, onShow) {
   steps.allDone = {
     dialog: function (profile, currentStates) {
       var text;
-      if (profile.nQuestsCompleted === 8) {
+      if (sessionIndex === 7) {
         var percentCorrectStr = profile.percentTrialsCorrect.toString().split(".")[0];
         text = "Congratulations, you finished your eight quests! Your total accuracy was approximately " + percentCorrectStr +
           "% correct. Your accuracy in your final session was approximatedly " + currentStates.thisQuestPercentTrialsCorrect + "% correct." +
