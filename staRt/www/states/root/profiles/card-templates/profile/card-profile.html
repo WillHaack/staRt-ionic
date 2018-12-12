@@ -1,8 +1,76 @@
 <div class="card-content">
 
-	<div class="card-body">
+	<div class="card-body card-body-profile">
 
-		<div class="profiles__info" ng-hide="!data.currentProfile">
+		<!-- DISPLAY STATE =============================  -->
+		<div class="profileCard-display-state"
+			ng-hide="!data.currentProfile || isEditing">
+
+			<div class="userInfo-layout">
+
+				<div class="userInfo-row">
+					<span class="fieldLabel">username: </span>
+					<span class="fieldData">{{data.currentProfile.name}}</span>
+				</div>
+
+				<div class="userInfo-row">
+					<span class="fieldLabel">age: </span>
+					<span class="fieldData">{{data.currentProfile.age}} years old</span>
+				</div>
+				<div class="userInfo-row">
+					<span class="fieldLabel">height: </span>
+					<span class="fieldData">{{data.currentProfile.heightFeet}}&#146;{{data.currentProfile.heightInches}}&#148; tall</span>
+				</div>
+
+				<div class="userInfo-row">
+					<span class="fieldLabel">gender: </span>
+					<span class="fieldData">{{data.currentProfile.gender}}</span>
+				</div>
+			</div> <!-- .userInfo-layout -->
+
+			<div class="btn-row-layout">
+				<button
+					type="button"
+					class="button button-royal column-div"
+					ng-click="optInFormalTesting()"
+					ng-hide="isEditing || !data.currentProfile || data.currentProfile.formalTester"
+					ng-disabled="!data.currentProfile">
+					Formal Testing
+				</button>
+
+				<button
+					type="button"
+					class="button button-royal column-div"
+					ng-click="startSession()"
+					ng-hide="isEditing || !data.currentProfile || !data.currentProfile.formalTester || data.sessionIsActive || data.currentProfile.nFormalTreatmentComplete"
+					ng-disabled="!data.currentProfile">
+					Start Session
+				</button>
+
+				<button
+					type="button"
+					class="button button-royal column-div"
+					ng-click="stopSession()"
+					ng-hide="isEditing || !data.currentProfile || !data.currentProfile.formalTester || !data.sessionIsActive || data.currentProfile.nFormalTreatmentComplete"
+					ng-disabled="!data.currentProfile">
+					Stop Session
+					</button>
+
+					<button
+					type="button"
+					class="button button-royal column-div"
+					ng-hide="!data.currentProfile.nFormalTreatmentComplete"
+					ng-disabled="true">
+					Formal Testing Completed
+				</button>
+			</div>
+
+		</div>
+
+
+		<!-- EDITING STATE =============================  -->
+		<!-- || !isEditing -->
+		<div class="profiles__info profileCard-editing-state" ng-hide="!data.currentProfile || !isEditing">
 
 			<label class="item item-input">
 				<span class="input-label">Name</span>
@@ -15,6 +83,7 @@
 					ng-class="editing"
 					ng-disabled="!isEditing">
 			</label>
+
 			<label class="item item-input">
 				<span class="input-label">
 					Age
@@ -30,6 +99,7 @@
 					ng-class="editing"
 					ng-disabled="!isEditing">
 			</label>
+
 			<label class="item item-input">
 				<span class="input-label">
 					Height (Feet)
@@ -45,6 +115,7 @@
 					ng-class="editing"
 					ng-disabled="!isEditing">
 			</label>
+
 			<label class="item item-input">
 				<span class="input-label">
 					Inches
@@ -62,7 +133,7 @@
 			</label>
 
 			<label class="input item-input sexBtn-row" radio-group>
-				<span>Sex</span>			
+				<span>Gender</span>
 				<ion-radio
 					name="sex"
 					ng-model="data.currentProfile.gender"
@@ -90,45 +161,15 @@
 		<div class="">
 			<button
 				type="button"
-				class="button button-royal column-div"
-				ng-click="optInFormalTesting()"
-				ng-hide="isEditing || !data.currentProfile || data.currentProfile.formalTester"
-				ng-disabled="!data.currentProfile">
-				Formal Testing
-			</button>
-			<button
-				type="button"
-				class="button button-royal column-div"
-				ng-click="startSession()"
-				ng-hide="isEditing || !data.currentProfile || !data.currentProfile.formalTester || data.sessionIsActive || data.currentProfile.nFormalTreatmentComplete"
-				ng-disabled="!data.currentProfile">
-				Start Session
-			</button>
-			<button
-				type="button"
-				class="button button-royal column-div"
-				ng-click="stopSession()"
-				ng-hide="isEditing || !data.currentProfile || !data.currentProfile.formalTester || !data.sessionIsActive || data.currentProfile.nFormalTreatmentComplete"
-				ng-disabled="!data.currentProfile">
-				Stop Session
-				</button>
-				<button
-				type="button"
-				class="button button-royal column-div"
-				ng-hide="!data.currentProfile.nFormalTreatmentComplete"
-				ng-disabled="true">
-				Formal Testing Completed
-			</button>
-			<button
-				type="button"
 				class="button button-balanced column-div"
 				ng-click="setIsEditing(true)"
 				ng-hide="isEditing"
 				ng-disabled="!data.currentProfile"
 				ng-hide="!data.currentProfile">
 				<i class="icon ion-edit"></i>
-				Edit
+				Edit User Profile
 			</button>
+
 			<button
 				type="button"
 				class="button button-positive column-div"
@@ -136,6 +177,7 @@
 				ng-hide="!isEditing">
 				Save
 			</button>
+
 			<button
 				type="button"
 				class="button button-calm column-div"
@@ -143,6 +185,7 @@
 				ng-hide="!isEditing">
 				Cancel
 			</button>
+
 			<button
 				type="button"
 				class="button button-assertive column-div"
@@ -150,7 +193,7 @@
 				ng-show="!isEditing"
 				ng-disabled="!data.currentProfile">
 				<i class="icon ion-trash-b"></i>
-				Discard
+				Delete User Profile
 			</button>
 
 		</div>
