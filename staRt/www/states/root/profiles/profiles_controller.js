@@ -183,10 +183,9 @@ function compareRecordings(ra, rb) {
 		// ===========================================================
 		// CARD: PROFILES
 		// ===========================================================
-
 		$scope.setIsEditing = function(isEditing) {
-			$scope.isEditing = isEditing;
-			$scope.editing = isEditing ? "editing" : "";
+			$scope.isEditing = isEditing; // bool. state var.
+			$scope.editing = isEditing ? "editing" : ""; // ng-class var
 		};
 
 		$scope.cancelEdit = function()
