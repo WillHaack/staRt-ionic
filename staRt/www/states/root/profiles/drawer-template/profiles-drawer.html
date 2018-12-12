@@ -28,27 +28,70 @@
 
 	<!-- ===================================== -->
 
+<!--
+<ion-item>
+	<ion-label>Cord</ion-label>
+	<ion-radio value="cord"></ion-radio>
+</ion-item>
+
+<form ng-controller="ExampleController">
+	<h2>Which is your favorite?</h2>
+		<label ng-repeat="name in names" for="{{name}}">
+			{{name}}
+			<input type="radio"
+						 ng-model="my.favorite"
+						 ng-value="name"
+						 id="{{name}}"
+						 name="favorite">
+		</label>
+	<div>You chose {{my.favorite}}</div>
+</form>
+
+		<ion-nav-bar class="{{ (practicing) ? 'ion-nav-bar' : 'ion-nav-bar--old' }}">
+-->
+
 	<div class="profiles_list-body">
 		<ion-scroll direction="y">
 			<ion-list class="list">
+
 				<ion-radio
 					name="name"
 					ng-model="data.currentProfileUUID"
 					ng-repeat="profile in data.profiles | filter:nameSearch track by profile.uuid"
 					ng-value="profile.uuid"
 					ng-change="updateCurrentProfile(profile)"
-					ng-disabled="isEditing">
-						<div class="name-item">
-						<!-- <div class="initials">WW</div> -->
-							<div class="name-text">
-								{{profile.name}}
+					ng-disabled="isEditing"
+					icon="none">
+
+						<div class="profiles-drawer-item">
+
+							<!-- class="r-item-content" -->
+							<div ng-class="(profile.uuid === data.currentProfileUUID) ? 'r-item-content r-item-selected' : 'r-item-content' ">
+
+								<div class="r-item-roundEnd"></div>
+
+								<div class="r-item-nameRow">
+									<!-- <div class="drawer-initials">WW</div> -->
+
+									<div class="name-text">
+										{{profile.name}}
+									</div>
+
+
+									<div class="r-item-iconBox">
+										<!--  ng-if="profile.formalTester" -->
+										<div class="testerIcon"
+										></div>
+									</div>
+
+								</div>
 							</div>
-							<div class="testerIcon"
-							ng-if="profile.formalTester">
-							</div>
-						</div>
+
+							<!-- <div ></div> -->
+
+						</div> <!-- .profiles-drawer-item -->
 				</ion-radio>
-			</ion-list> <!-- </ion-list> -->
+			</ion-list>
 		</ion-scroll>
 	</div> <!-- .profiles_list-body -->
 
