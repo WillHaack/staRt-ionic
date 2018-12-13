@@ -430,8 +430,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	};
 
 	$scope.nextWord = function() {
-	    if ($scope.isPracticing)
-		advanceWord();
+	    if ($scope.isPracticing) advanceWord();
 	};
 
 	$scope.parseWordList = function(wordListData) {
@@ -445,15 +444,16 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	    $scope.wordOrder = [];
 	    $scope.hasValidWordList = $scope.wordList.length > 0;
 	    for (var i=0; i<$scope.wordList.length; ++i) {
-		$scope.wordOrder.push(i);
-	    }
+        $scope.wordOrder.push(i);
+      }
+      scrambleArray($scope.wordOrder);
 	}
 
 	$scope.reloadCSVData = function() {
-	    if($scope.type == 'Word'
+	    if($scope.type === 'Word'
 		// hackzorz: we know that we're doing a Word Quiz and not a Quest
 		// if requested CSV is data/Word_Probe
-	       && $scope.csvs[0] != "data/Word_Probe.csv"){
+	       && $scope.csvs[0] !== "data/Word_Probe.csv"){
 		let tempWordList = [];
 
 		// map csvs to adaptive difficulty key names
@@ -474,12 +474,12 @@ practiceDirective.controller( 'PracticeDirectiveController',
 
 		$scope.wordList = tempWordList;
 
-		$scope.reorderWords();
+    $scope.reorderWords();
 		if ($scope.hasValidWordList && !$scope.isPracticing && $scope.beginOnLoad) {
 		    $scope.beginWordPractice();
 		}
 	    }
-	    if($scope.type == "Syllable"
+	    if($scope.type === "Syllable"
 	       || $scope.probe){
 		$scope.wordList = [];
 		var loadTasks = [];
