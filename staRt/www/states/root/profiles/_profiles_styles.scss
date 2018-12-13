@@ -275,7 +275,6 @@
 If you are just trying out some new styles, protoype here. If a set looks goods and belongs in a specific card's stylesheet, pls move the block to the appropriate '/card-template/' file.
 */
 
-
 .sexBtn-row {
 	position: relative;
 	display: flex;
@@ -289,17 +288,4 @@ If you are just trying out some new styles, protoype here. If a set looks goods 
 	span {
 		font-size: 1.3em;
 	}
-}
-
-.testerIcon {
-	position: relative;
-	display: inline-block;
-	height: 28px;
-	width: 28px;
-	// margin-left: 1em;
-	background-image: url('../img/profiles/ico_star-line.svg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: contain;
-	//border: 1px solid white;
 }

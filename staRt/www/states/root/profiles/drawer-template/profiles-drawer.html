@@ -31,24 +31,36 @@
 	<div class="profiles_list-body">
 		<ion-scroll direction="y">
 			<ion-list class="list">
+
 				<ion-radio
 					name="name"
 					ng-model="data.currentProfileUUID"
 					ng-repeat="profile in data.profiles | filter:nameSearch track by profile.uuid"
 					ng-value="profile.uuid"
 					ng-change="updateCurrentProfile(profile)"
-					ng-disabled="isEditing">
-						<div class="name-item">
-						<!-- <div class="initials">WW</div> -->
-							<div class="name-text">
-								{{profile.name}}
-							</div>
-							<div class="testerIcon"
-							ng-if="profile.formalTester">
-							</div>
-						</div>
+					ng-disabled="isEditing"
+					icon="none">
+
+						<div class="profiles-drawer-item">
+
+							<div ng-class="(profile.uuid === data.currentProfileUUID) ? 'r-item-content r-item-selected' : 'r-item-content' ">
+
+								<div class="r-item-roundEnd"></div>
+
+								<div class="r-item-nameRow">
+									<!-- <div class="drawer-initials">WW</div> -->
+
+									<div class="name-text">{{profile.name}}</div>
+
+									<div class="r-item-iconBox">
+										<div ng-if="profile.formalTester" class="testerIcon"></div>
+									</div>
+
+								</div> <!-- r-item-nameRow -->
+							</div> <!-- .r-item-content -->
+						</div> <!-- .profiles-drawer-item -->
 				</ion-radio>
-			</ion-list> <!-- </ion-list> -->
+			</ion-list>
 		</ion-scroll>
 	</div> <!-- .profiles_list-body -->
 
@@ -56,7 +68,6 @@
 
 
 <!-- ===================================== -->
-<!--  ng-hide="isEditing" -->
 <div class="p-drawer_layout_foot">
 
 	<div class="footRow c-whiteBlue_400">
@@ -65,7 +76,6 @@
 		ng-disabled="isEditing">
 			<span class="btnTitle">Add New Particpant</span>
 			<i class="icon ion-ios-personadd-outline"></i>
-			<!-- <i class="icon ion-ios-plus-outline"></i> -->
 		</button>
 	</div>
 
@@ -74,7 +84,6 @@
 		ng-click="openSlpView()"
 		ng-disabled="isEditing">
 			<span class="btnTitle">Clinician's Card</span>
-			<!-- <i class="icon ion-ios-briefcase-outline"></i> -->
 			<i class="icon ion-ios-people-outline"></i>
 		</button>
 	</div>
