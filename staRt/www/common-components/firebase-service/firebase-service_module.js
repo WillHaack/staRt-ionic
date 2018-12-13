@@ -33,6 +33,8 @@ firebaseService.factory('FirebaseService', function()
     });
 
     var db = firebaseApp.firestore();
+    const settings = {timestampsInSnapshots: true};
+    db.settings(settings);
 
     // Initialize the FirebaseUI Widget using Firebase.
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
