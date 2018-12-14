@@ -104,9 +104,11 @@
 		align-items: flex-start;
 		height: 100%;
 		width: 100%;
-		padding-top: $row-h * 0.25;
+		padding-top: 2em;
 		padding-left: 1em;
+		padding-right: 2em;
 		font-size: 1em;
+		line-height: 2em;
 		//border: 1px solid pink;
 
 		&.welcome_shouldSelectProfile {}
