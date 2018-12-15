@@ -106,27 +106,26 @@ function compareRecordings(ra, rb) {
 
 
 			//triggered when user selects a different profile from the drawer
-			// #sjt
 			$scope.$watchCollection('data.currentProfile', function(data)
 			{
 				if (data)
 				{
 					$scope.data.currentProfileUUID = $scope.data.currentProfile.uuid;
 
-					if ($scope.data.currentProfile.lpcOrder) {
+          if ($scope.data.currentProfile.lpcOrder &&
+            $scope.data.lpcOrder !== $scope.data.currentProfile.lpcOrder)
+          {
 						$scope.data.lpcOrder = $scope.data.currentProfile.lpcOrder;
 
 						if (window.AudioPlugin !== undefined) {
 								console.log('watchCollection calls AudioPlugin with:' + $scope.data.lpcOrder);
-								AudioPlugin.setLPCOrder($scope.data.currentProfile.lpcOrder, $scope.logPluginLPCOrder);
+								AudioPlugin.setLPCOrder("" + $scope.data.currentProfile.lpcOrder, $scope.logPluginLPCOrder);
 							} else {
 								console.log('dude no audio');
 							}
 
 					} else {
-						// audioPlugin does whatever it wants... idk
-							// todo: default to 35? reset/lookup fx?
-						$scope.data.lpcOrder = 0; // updates display
+						$scope.data.lpcOrder = 35; // updates display
 					}
 
 					$scope.updateRecordingsList();

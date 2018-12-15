@@ -23,7 +23,7 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 			heightFeet: undefined,
 			heightInches: undefined,
 			gender: undefined,
-			uuid: guid(),
+      uuid: guid(),
 
 			// Profile cumulative statistics
 			allSessionTime: 0, // Milliseconds logged in for this profile
@@ -174,7 +174,27 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 		return FirebaseService.db().collection("profiles")
 			.doc(profile.uuid)
 			.set(profile);
-	}
+  }
+
+  function _lookupDefaultFilterOrder(profile) {
+    if (profile.age !== undefined &&
+      profile.heightFeet !== undefined &&
+      profile.heightInches !== undefined &&
+      profile.age !== undefined) {
+      var gender = profile.gender;
+      gender = gender === 'Male' ? 'M' : 'F';
+      var ageBit = profile.age >= 15 ? '1' : '0';
+      var heightBit = profile.heightFeet * 12 + profile.heightInches >= 64 ? '1' : '0';
+
+      var filterRow = filterOrder.find(function (row) {
+        return row[0] === gender && row[1] === ageBit && row[2] === heightBit;
+      });
+      if (filterRow) return parseInt(filterRow[3]);
+      return 35;
+    } else {
+      return 35;
+    }
+  }
 
 	profilesInterfaceState = loadProfilesInterfaceState();
 
@@ -294,6 +314,9 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 
 		saveProfile: function(profile)
 		{
+      if (!profile.lpcOrder) {
+        profile.lpcOrder = _lookupDefaultFilterOrder(profile);
+      }
 			return _saveProfile(profile);
 		},
 
@@ -330,23 +353,7 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 		},
 
 		lookupDefaultFilterOrder: function(profile) {
-			if (profile.age !== undefined &&
-				profile.heightFeet !== undefined &&
-				profile.heightInches !== undefined &&
-				profile.age !== undefined) {
-				var gender = profile.gender;
-				gender = gender === 'Male' ? 'M' : 'F';
-				var ageBit = profile.age >= 15 ? '1' : '0';
-				var heightBit = profile.heightFeet * 12 + profile.heightInches >= 64 ? '1' : '0';
-
-				var filterRow = filterOrder.find(function (row) {
-					return row[0] === gender && row[1] === ageBit && row[2] === heightBit;
-				});
-				if (filterRow) return parseInt(filterRow[3]);
-				return 35;
-			} else {
-				return 35;
-			}
+			return _lookupDefaultFilterOrder(profile);
 		}
 	}
 
