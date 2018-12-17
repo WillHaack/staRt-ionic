@@ -16,7 +16,7 @@
     "ng-resize": "^1.2.0",
     "localforage-cordovasqlitedriver": "^1.6.0",
     "angular-localforage": "^1.3.7",
-    "firebase": "~4.13.0",
+    "firebase": "~5.7.0",
     "firebaseui": "~3.4.1"
   },
   "resolutions": {
