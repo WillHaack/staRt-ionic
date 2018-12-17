@@ -112,17 +112,18 @@ function compareRecordings(ra, rb) {
 				{
 					$scope.data.currentProfileUUID = $scope.data.currentProfile.uuid;
 
-          if ($scope.data.currentProfile.lpcOrder &&
-            $scope.data.lpcOrder !== $scope.data.currentProfile.lpcOrder)
+          if ($scope.data.currentProfile.lpcOrder)
           {
-						$scope.data.lpcOrder = $scope.data.currentProfile.lpcOrder;
+            if ($scope.data.lpcOrder !== $scope.data.currentProfile.lpcOrder) {
+              $scope.data.lpcOrder = $scope.data.currentProfile.lpcOrder;
 
-						if (window.AudioPlugin !== undefined) {
-								console.log('watchCollection calls AudioPlugin with:' + $scope.data.lpcOrder);
-								AudioPlugin.setLPCOrder("" + $scope.data.currentProfile.lpcOrder, $scope.logPluginLPCOrder);
-							} else {
-								console.log('dude no audio');
-							}
+              if (window.AudioPlugin !== undefined) {
+                console.log('watchCollection calls AudioPlugin with:' + $scope.data.lpcOrder);
+                AudioPlugin.setLPCOrder("" + $scope.data.currentProfile.lpcOrder, $scope.logPluginLPCOrder);
+              } else {
+                console.log('dude no audio');
+              }
+            }
 
 					} else {
 						$scope.data.lpcOrder = 35; // updates display
