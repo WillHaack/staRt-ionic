@@ -111,7 +111,11 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 			});
 		},
 
+    // sjt/restart-sessions Maybe this should only call the completeCallback
+    // or errorCallback when everything is done, or whene there's been an error
 		uploadPracticeSessionFiles: function(session, id, progressCallback, completeCallback, errorCallback) {
+      // sjt/restart-sessions Of course, we'll have to change this to handle
+      // the case where there can be multiple metadata or LPC or audio files.
 			var filesToUpload = [session.Ratings, session.Metadata, session.LPC, session.Audio];
 			var mimeTypes = ["application/json", "text/csv", "text/csv", "audio/mp4"];
 			var uploadTodos = [];
@@ -134,6 +138,9 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 
 			Promise.all(uploadTodos)
 				.then(function() {
+          // sjt/restart-sessions Okay, this is probably very bad, extracting
+          // the session ID from the filename of the metadata file. Instead,
+          // this should be attached to the session object.
 					saveUploadStatusForSessionKey(session.Metadata.split('/').pop(), {uploading: false, uploaded: true});
 					completeCallback();
 				})

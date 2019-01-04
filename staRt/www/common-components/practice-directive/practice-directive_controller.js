@@ -261,9 +261,15 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	  $scope.currentPracticeSession.count = $scope.count;
 	  $scope.currentPracticeSession.endTimestamp = Date.now();
 
-	  if ($scope.active && $scope.currentPracticeSession.ratings.length > 0) {
+    // sjt/restart-sessions Right now we prompt to upload no matter what, even if
+    // the session is incomplete. Here we could instead ask if the user wants
+    // to restart the session at a later time.
+    if ($scope.active && $scope.currentPracticeSession.ratings.length > 0) {
 	    saveJSON($scope.currentPracticeSession.ratings, jsonPath, function () {
-	      files.Ratings = jsonPath;
+        files.Ratings = jsonPath;
+
+        // sjt/restart-sessions files is just an array of files right now, but
+        // it should be structured to contain multiple files for a given recording
 	      $scope.currentPracticeSession.files = files;
 	      var practiceTypeStr = sessionDisplayString();
 	      var session = $scope.currentPracticeSession;
@@ -271,6 +277,14 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	        function (index) {
 	          NotifyingService.notify("recording-completed", session);
 	          if (index == 1) {
+
+              // sjt/restart-sessions This is an opportunity to fix a long
+              // outstanding issue here. Currently, we upload each file
+              // separately, and print a failure message if any upload fails.
+              // That means if all four uploads fail, the user gets 4 failure
+              // alerts. It's just going to get worse if we're uploading
+              // multiple files for recordings/LPC. Instead, we should use
+              // promises to handle failures (and successes) better.
 	            session.uploadProgress = [0, 0, 0, 0];
 	            session.uploadsComplete = [false, false, false, false];
 	            UploadService.uploadPracticeSessionFiles(
