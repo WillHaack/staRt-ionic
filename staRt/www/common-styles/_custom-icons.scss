@@ -1,0 +1,77 @@
+/* ICON ELEMENTS -------------------------------------
+
+FOR NOW:
+size it, color it, inject it
+
+--- example ---
+<div class="s-ico32 l-ico-cTextMain"
+  ng-include=" './img/icons/line/edit.svg' " >
+</div>
+
+
+LATER:
+Once we know what we need, we'll make either an icon font,
+or just pre-color the assets and use 'em as css bg-images.
+
+*/
+
+//-------------------------------------------------------
+// for sizing injected svg icons
+@mixin s-icoSizer($size) {
+  position: relative;
+  display: inline-block;
+  height: $size;
+  width: $size;
+}
+
+.s-icoFull { @include s-icoSizer(100%) }
+
+.s-ico64 { @include s-icoSizer(64px) }
+.s-ico56 { @include s-icoSizer(56px) }
+.s-ico48 { @include s-icoSizer(48px) }
+.s-ico40 { @include s-icoSizer(40px) }
+.s-ico32 { @include s-icoSizer(32px) }
+.s-ico24 { @include s-icoSizer(24px) }
+.s-ico16 { @include s-icoSizer(16px) }
+
+/* ========================================================
+  LINE ICONS
+  ======================================================== */
+@mixin l-icoColor($strokeColor) {
+  fill: none;
+  stroke: $strokeColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin:round;
+  stroke-miterlimit: 10;
+}
+
+.l-ico-cTextMain { @include l-icoColor($c-text-main) }
+.l-ico-cWhite { @include l-icoColor($white) }
+.l-ico-cRed { @include l-icoColor(#ff0000) }
+.l-ico-cBronze { @include l-icoColor( $c-bronze-500 ) }
+
+.ico-stroke2{ stroke-width: 2; }
+.ico-stroke1{ stroke-width: 1; }
+
+
+/* ========================================================
+  PATH-ONLY ICONS
+  ======================================================== */
+/* NOTE: The Nav Icons are PATH-ONLY svg.
+    They use the size and color mixins, and the rest of their styles (e.g. :active)
+    are in ./states/_root-styles
+*/
+
+// blend-mode: normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity
+
+@mixin pathColor($fillColor) {
+  fill: $fillColor;
+  opacity: 1;
+  stroke: none;
+  mix-blend-mode: normal;
+}
+.p-ico-cTextMain { @include pathColor($c-text-main) }
+.p-ico-cWhite { @include pathColor($white) }
+.p-ico-cRed { @include pathColor(#ff0000) }
+.p-ico-cBronze { @include pathColor( $c-bronze-500 ) }

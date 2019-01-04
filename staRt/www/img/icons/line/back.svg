@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	x="0px" y="0px"
+	viewBox="0 0 64 64">
+
+	<polygon class="" points="6,32 24.4,8 35.3,8 16.9,32 35.3,56 24.4,56 "/>
+	<polygon class="" points="45.2,8 56.1,8 37.7,32 56.1,56 45.2,56 26.8,32 "/>
+
+</svg>

@@ -6,7 +6,11 @@
 			<button class="button iconBtn slp-iconBtn"
 				ng-click="deleteAllProfiles()"
 				ng-hide="data.profiles.length === 0">
-				<i class="r-icon ion-ios-trash-outline"></i>
+
+				<div class="s-ico32 l-ico-cTextMain"
+				  ng-include=" './img/icons/line/delete.svg' " >
+				</div>
+
 			</button>
 
 			<div class="slpCard-desc">
@@ -17,8 +21,10 @@
 
 		<!--
 		<div class="card-body-row">
-			<button class="button iconBtn disabled slp-iconBtn">
-				<i class="r-icon ion-ios-cog-outline"></i>
+			<button class="button iconBtn slp-iconBtn">
+				<div class="s-ico32 l-ico-cTextMain"
+				  ng-include=" './img/icons/line/back.svg' " >
+				</div>
 			</button>
 
 			<div class="slpCard-desc disabled-font">
@@ -26,24 +32,28 @@
 				<p class="disabled-font">TBD: Batch functions allow you to perform an action on multiple records simultaneously.</p>
 			</div>
 		</div>
+		-->
 
-		<div class="card-body-row">
-			<button class="button iconBtn disabled slp-iconBtn">
-				<i class="r-icon ion-ios-cog-outline"></i>
+		<!-- <div class="card-body-row">
+			<button class="button iconBtn slp-iconBtn">
+				<div class="s-ico32 l-ico-cTextMain"
+					ng-include=" './img/icons/line/lifesaver.svg' " >
+				</div>
 			</button>
 
 			<div class="slpCard-desc">
 				<h3 class="disabled-font">Template: Title of Batch Fx</h3>
 				<p class="disabled-font">TBD: Batch functions allow you to perform an action on multiple records simultaneously.</p>
 			</div>
-		</div>
-		-->
+		</div> -->
 
 
 		<div class="card-body-row">
 			<button class="button iconBtn slp-iconBtn"
 				ng-click="logOut()">
-				<i class="r-icon ion-log-out"></i>
+				<div class="s-ico32 l-ico-cTextMain"
+					ng-include=" './img/icons/line/logout-rect.svg' " >
+				</div>
 			</button>
 
 			<div class="slpCard-desc">

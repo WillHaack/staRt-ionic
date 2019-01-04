@@ -20,25 +20,23 @@
         ui-sref="{{ 'root.' + tab.sref }}"
         ng-class="{ 'active': state.current.name.includes(tab.sref) }">
 
-        <div class="navTabText">
+        <div class="navTabContent">
+          <!-- injected svg icon -->
+          <ng-include
+            src=" 'img/icons/nav/' + tab.icon + '.svg ' "
+            class="s-ico56 navTabIcon "
+            ng-class="{ 'active': state.current.name.includes(tab.sref) }"
+          ></ng-include>
 
-          <!-- defines img inactive state -->
-          <img
-            ng-if="!state.current.name.includes(tab.sref)"
-            ng-src="{{ 'img/nav/old/' + tab.sref.split('.')[0] + '.svg' }}"
-            class="nav-svg"
-          >
-          <!-- defines img active state -->
-          <img
-            ng-if="state.current.name.includes(tab.sref)"
-            ng-src="{{ 'img/nav/old/' + tab.sref.split('.')[0] + '.svg' }}"
-            class="nav-svg animated {{ tab.ani }}"
-          >
-          {{tab.title}}
+          <div class="navTabText"
+            ng-class="{ 'active': state.current.name.includes(tab.sref) }">
+            {{tab.title}}
+          </div>
 
         </div>
-
       </item>
+
     </list>
   </div>
+
 </ion-view>
