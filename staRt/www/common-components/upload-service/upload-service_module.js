@@ -1,10 +1,17 @@
 var uploadService = angular.module('uploadService', []);
 
+// var uploadURLs = [
+// 	"https://byunlab.com/start/session/ratings",
+// 	"https://byunlab.com/start/session/metadata",
+// 	"https://byunlab.com/start/session/lpc",
+// 	"https://byunlab.com/start/session/audio"
+// ];
+
 var uploadURLs = [
-	"https://byunlab.com/start/session/ratings",
-	"https://byunlab.com/start/session/metadata",
-	"https://byunlab.com/start/session/lpc",
-	"https://byunlab.com/start/session/audio"
+	"https://non.sense/ratings",
+	"https://non.sense/metadata",
+	"https://non.sense/lpc",
+	"https://non.sense/audio"
 ];
 
 // var uploadURLs = [
@@ -43,22 +50,7 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 			}
 
 			var fail = function (error) {
-				if (error.code === 3) {
-					$cordovaDialogs.alert(
-						"Server Upload Failed. Please check your internet connection and try again.",
-						"Upload Error",
-						"Okay"
-					);
-				} else {
-					$cordovaDialogs.alert(
-						"An error has occurred: Code = " + error.code,
-						"Unexpected Error",
-						"Okay"
-					);
-					console.log("upload error source " + error.source);
-					console.log("upload error target " + error.target);
-				}
-				reject(r);
+        reject(error);
 			}
 
 			resolveLocalFileSystemURL("file://" + absolutePath, function(fileEntry) {
@@ -111,12 +103,19 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 			});
 		},
 
-		uploadPracticeSessionFiles: function(session, id, progressCallback, completeCallback, errorCallback) {
-			var filesToUpload = [session.Ratings, session.Metadata, session.LPC, session.Audio];
-			var mimeTypes = ["application/json", "text/csv", "text/csv", "audio/mp4"];
+		uploadPracticeSessionFiles: function(filesToUpload, id, progressCallback, completeCallback, errorCallback) {
+      var mimeTypes = filesToUpload.map(function(value) {
+        if (value.endsWith("csv")) return "text/csv";
+        if (value.endsWith("json")) return "application/json";
+        if (value.endsWith("mp4") || value.endsWith("m4a")) return "audio/mp4";
+        if (value.endsWith("mp3")) return "audio/mpeg";
+        if (value.endsWith("aif")) return "audio/x-aiff";
+        if (value.endsWith("ogg")) return "audio/ogg";
+        if (value.endsWith("wav")) return "audio/vnd.wav";
+      });
 			var uploadTodos = [];
 
-			saveUploadStatusForSessionKey(session.Metadata.split('/').pop(), {uploading: true});
+			saveUploadStatusForSessionKey(id, {uploading: true});
 
 			filesToUpload.forEach(function(file, idx) {
 				var progressCb = function(res) {
@@ -134,11 +133,11 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 
 			Promise.all(uploadTodos)
 				.then(function() {
-					saveUploadStatusForSessionKey(session.Metadata.split('/').pop(), {uploading: false, uploaded: true});
+					saveUploadStatusForSessionKey(id, {uploading: false, uploaded: true});
 					completeCallback();
 				})
 				.catch(function(err) {
-					if (errorCallback) errorCallback(err)
+					if (errorCallback) errorCallback(err);
 				});
 		}
 	};

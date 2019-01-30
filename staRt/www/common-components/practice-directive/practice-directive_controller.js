@@ -237,20 +237,40 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	}
 
 	function uploadCallbackForSession(session) {
-	    return function uploadProgressHandler(progressEvent, idx) {
-		session.uploadProgress[idx] = progressEvent.loaded / progressEvent.total;
-		$scope.uploadStatus.uploadProgress = session.uploadProgress.reduce(function(x,y){return x+y;})/4;
-	    }
+	  return function uploadProgressHandler(progressEvent, idx) {
+	    session.uploadProgress[idx] = progressEvent.loaded / progressEvent.total;
+	    $scope.uploadStatus.uploadProgress = session.uploadProgress.reduce(function (x, y) {
+	      return x + y;
+	    }) / 4;
+	  }
 	}
 
 	function completeCallback() {
-	    $scope.uploadStatus.isUploading = false;
-	    $cordovaDialogs.alert(
-		"Session uploaded successfully",
-		"Upload Complete",
-		"Okay"
-	    );
-	}
+	  $scope.uploadStatus.isUploading = false;
+	  $cordovaDialogs.alert(
+	    "Session uploaded successfully",
+	    "Upload Complete",
+	    "Okay"
+	  );
+  }
+
+  function errorCallback(error) {
+    if (error.code === 3) {
+      $cordovaDialogs.alert(
+        "Server Upload Failed. Please check your internet connection and try again.",
+        "Upload Error",
+        "Okay"
+      );
+    } else {
+      $cordovaDialogs.alert(
+        "An error has occurred: Code = " + error.code,
+        "Unexpected Error",
+        "Okay"
+      );
+      console.log("upload error source " + error.source);
+      console.log("upload error target " + error.target);
+    }
+  }
 
 	function recordingDidStop(files) {
 	  console.log("Finished recording");
@@ -271,13 +291,19 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	        function (index) {
 	          NotifyingService.notify("recording-completed", session);
 	          if (index == 1) {
+              const filesToUpload = [
+                files.Metadata,
+                files.LPC,
+                files.Audio,
+                files.Ratings
+              ];
 	            session.uploadProgress = [0, 0, 0, 0];
-	            session.uploadsComplete = [false, false, false, false];
 	            UploadService.uploadPracticeSessionFiles(
-	              session.files,
+	              filesToUpload,
 	              session.id,
 	              uploadCallbackForSession(session),
-	              completeCallback
+                completeCallback,
+                errorCallback
 	            );
 	            $scope.uploadStatus.isUploading = true;
 	          }
