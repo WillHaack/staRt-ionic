@@ -52,7 +52,8 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 			lastSessionTimestamp: null, // Unix timestamp of most recent trial
 			creationTimestamp: Date.now(), // Unix timestamp profile creation
       lastLoginTimestamp: Date.now(), // Unix time of last login
-      inProcessSession: null, // Session data, previously begun
+      inProcessRecordingSession: null, // Ratings etc. in the current recording
+      inProcessSessionState: null, // The state of the resumed session
 		};
 	};
 

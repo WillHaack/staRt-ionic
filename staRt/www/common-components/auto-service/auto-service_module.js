@@ -20,11 +20,12 @@ function _scramble(array) {
   }
 }
 
-var AutoState = function (profile, currentStates, onShow) {
+var AutoState = function (profile, currentStates, onShow, initialState) {
   this.onShow = onShow;
   this.currentStep = null;
   this.restrictions = {};
   this.contextString = "abstact";
+  this.state = Object.assign({}, initialState ? initialState : {});
 }
 AutoState.prototype = {
   currentMessage: function (profile, currentStates, changeList) {
@@ -37,6 +38,9 @@ AutoState.prototype = {
     }
 
     return null;
+  },
+  getState: function() {
+    return Object.assign({}, this.state);
   },
   processUpdate: function (profile, currentStates, changeList) {
 
@@ -57,8 +61,8 @@ AutoState.prototype = {
 };
 
 // Introductory auto guide, which helps the user get familiar with the app
-var IntroAuto = function (profile, currentStates, onShow) {
-  AutoState.call(this, profile, currentStates, onShow);
+var IntroAuto = function (profile, currentStates, onShow, initialState) {
+  AutoState.call(this, profile, currentStates, onShow, initialState);
 
   var steps = {};
   steps.welcome = {
@@ -121,14 +125,16 @@ IntroAuto.shouldBegin = function (profile) {
 }
 
 // One of the eight guided runs through the app
-var SessionAuto = function (profile, currentStates, onShow) {
-  AutoState.call(this, profile, currentStates, onShow);
+var SessionAuto = function (profile, currentStates, onShow, initialState) {
+  AutoState.call(this, profile, currentStates, onShow, initialState);
 
-  this.hasAcceptedSessionPrompt = false;
-  this.wantsToDoItLater = false;
-  this.hasAcceptedBiofeedbackPrompt = false;
-  this.hasAcceptedQuestPrompt = false;
-  this.didFinishSession = false;
+  this.state = Object.assign({
+    hasAcceptedSessionPrompt: false,
+    wantsToDoItLater: false,
+    hasAcceptedBiofeedbackPrompt: false,
+    hasAcceptedQuestPrompt: false,
+    didFinishSession: false,
+  }, this.state);
 
   var steps = {};
   var ordinals = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth"];
@@ -147,9 +153,9 @@ var SessionAuto = function (profile, currentStates, onShow) {
   }
   _scramble(biofeedback);
 
-  this.biofeedback = biofeedback.pop();
+  this.state.biofeedback = biofeedback.pop();
 
-  if (this.biofeedback === "BF") {
+  if (this.state.biofeedback === "BF") {
     this.restrictions.rootWaveForced = true;
     this.restrictions.rootWaveHidden = false;
   } else {
@@ -160,8 +166,8 @@ var SessionAuto = function (profile, currentStates, onShow) {
 
   steps.confirm = {
     next: (function () {
-      if (this.hasAcceptedSessionPrompt) return steps.biofeedbackPrompt;
-      if (this.wantsToDoItLater) return steps.laterPrompt;
+      if (this.state.hasAcceptedSessionPrompt) return steps.biofeedbackPrompt;
+      if (this.state.wantsToDoItLater) return steps.laterPrompt;
       return null;
     }).bind(this),
     dialog: (function (profile, currentStates, changeList) {
@@ -171,10 +177,10 @@ var SessionAuto = function (profile, currentStates, onShow) {
         buttons: ["Later", "Okay"],
         callback: (function (index) {
           if (index === 0 || index === 1) {
-            this.wantsToDoItLater = true;
+            this.state.wantsToDoItLater = true;
           }
           if (index === 2) {
-            this.hasAcceptedSessionPrompt = true;
+            this.state.hasAcceptedSessionPrompt = true;
           }
           this.processUpdate(profile, currentStates, []);
         }).bind(this)
@@ -191,7 +197,7 @@ var SessionAuto = function (profile, currentStates, onShow) {
 
   steps.biofeedbackPrompt = {
     next: (function () {
-      if (this.hasAcceptedBiofeedbackPrompt) return steps.freePlay;
+      if (this.state.hasAcceptedBiofeedbackPrompt) return steps.freePlay;
       return null;
     }).bind(this),
     dialog: (function (profile, currentStates, changeList) {
@@ -203,7 +209,7 @@ var SessionAuto = function (profile, currentStates, onShow) {
         title: "Biofeedback",
         button: "Okay",
         callback: (function () {
-          this.hasAcceptedBiofeedbackPrompt = true;
+          this.state.hasAcceptedBiofeedbackPrompt = true;
           this.processUpdate(profile, currentStates, []);
         }).bind(this)
       }
@@ -225,7 +231,7 @@ var SessionAuto = function (profile, currentStates, onShow) {
 
   steps.quest = {
     next: (function (profile, currentStates) {
-      if (this.hasAcceptedQuestPrompt && currentStates.thisCurrentView === "words") return steps.whichQuest;
+      if (this.state.hasAcceptedQuestPrompt && currentStates.thisCurrentView === "words") return steps.whichQuest;
       return null;
     }).bind(this),
     dialog: (function (profile, currentStates, changeList) {
@@ -233,7 +239,7 @@ var SessionAuto = function (profile, currentStates, onShow) {
         text: "You are ready to get started! Please navigate to Quest to begin.",
         title: "Quest Time",
         callback: (function () {
-          this.hasAcceptedQuestPrompt = true;
+          this.state.hasAcceptedQuestPrompt = true;
           this.processUpdate(profile, currentStates, []);
         }).bind(this)
       };
@@ -243,7 +249,7 @@ var SessionAuto = function (profile, currentStates, onShow) {
   steps.whichQuest = {
     next: (function (profile, currentStates) {
       if (currentStates.thisQuestTrialsCompleted >= 100) {
-        this.didFinishSession = true;
+        this.state.didFinishSession = true;
         return steps.allDone;
       }
       return null;
@@ -304,12 +310,14 @@ SessionAuto.shouldBegin = function (profile) {
 }
 
 // The concluding guided auto run, which measures syllable and word performance at the end of the series
-var ConclusionAuto = function (profile, currentStates, onShow) {
-  AutoState.call(this, profile, currentStates, onShow);
+var ConclusionAuto = function (profile, currentStates, onShow, initialState) {
+  AutoState.call(this, profile, currentStates, onShow, initialState);
 
-  this.hasAcceptedSessionPrompt = false;
-  this.wantsToDoItLater = false;
-  this.didFinishSession = false;
+  this.state = Object.assign({
+    hasAcceptedSessionPrompt: false,
+    wantsToDoItLater: false,
+    didFinishSession: false,
+  }, this.state);
 
   var initialWordQuizCount = profile.nWordQuizComplete;
   var initialSyllableQuizCount = profile.nSyllableQuizComplete;
@@ -318,8 +326,8 @@ var ConclusionAuto = function (profile, currentStates, onShow) {
 
   steps.confirm = {
     next: (function () {
-      if (this.hasAcceptedSessionPrompt) return steps.wordQuizPrompt;
-      if (this.wantsToDoItLater) return steps.laterPrompt;
+      if (this.state.hasAcceptedSessionPrompt) return steps.wordQuizPrompt;
+      if (this.state.wantsToDoItLater) return steps.laterPrompt;
       return null;
     }).bind(this),
     dialog: (function (profile, currentStates, changeList) {
@@ -362,7 +370,7 @@ var ConclusionAuto = function (profile, currentStates, onShow) {
   steps.syllableQuizPrompt = {
     next: (function (profile, currentStates) {
       if (initialSyllableQuizCount < profile.nSyllableQuizComplete) {
-        this.didFinishSession = true;
+        this.state.didFinishSession = true;
         return steps.conclusionPrompt;
       }
       return null;
@@ -435,7 +443,7 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
     }
   }
 
-  function _checkForAuto(profile, currentStates, changeList) {
+  function _checkForAuto(profile, currentStates, changeList, initialState) {
     if (!currentAuto) {
 
       // Intro session
@@ -446,7 +454,7 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
             NotifyingService.notify('intro-completed', profile);
             _setCurrentAuto(null);
           }
-        }));
+        }, initialState));
       }
 
       // Subsequent sessions
@@ -462,7 +470,7 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
             }
             _setCurrentAuto(null);
           }
-        }));
+        }, initialState));
       }
 
       // Conclusion session
@@ -477,7 +485,7 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
             }
             _setCurrentAuto(null);
           }
-        }));
+        }, initialState));
       }
 
       if (currentAuto) currentAuto.processUpdate(profile, currentStates, changeList);
@@ -566,22 +574,44 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
     });
   }
 
+  function _doPauseSession() {
+    ProfileService.getCurrentProfile().then(function (profile) {
+      if (profile) {
+        const state = currentAuto.getState();
+        ProfileService.runTransactionForCurrentProfile(function (handle, doc, t) {
+          t.update(handle, {
+            inProcessSessionState: state
+          });
+        });
+      }
+    });
+    _setCurrentAuto(null);
+  }
+
   function _doStartSession() {
     console.log("Starting session");
     ProfileService.getCurrentProfile().then(function (profile) {
       if (profile) {
         var currentStates = SessionStatsService.getCurrentProfileStats() || {};
         var changeList = ['resume'];
-
-        _checkForAuto(profile, currentStates, changeList);
+        _checkForAuto(profile, currentStates, changeList, profile.inProcessSessionState);
       }
     });
   }
 
   function _doStopSession() {
     console.log("Stopping session");
+    ProfileService.getCurrentProfile().then(function (profile) {
+      if (profile) {
+        const state = currentAuto.getState();
+        ProfileService.runTransactionForCurrentProfile(function (handle, doc, t) {
+          t.update(handle, {
+            inProcessSessionState: null
+          });
+        });
+      }
+    });
     _setCurrentAuto(null);
-    // todo
   }
 
   NotifyingService.subscribe('will-set-current-profile-uuid', $rootScope, function (msg, profileUUID) {
@@ -630,6 +660,10 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
 
     isSessionActive: function () {
       return currentAuto !== null;
+    },
+
+    pauseSession: function() {
+      if (this.isSessionActive) _doPauseSession();
     },
 
     promptForFormalParticipation: function (profile) {

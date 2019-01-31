@@ -94,7 +94,7 @@ function saveJSON(jsonObject, absolutePath, successCb)
 var practiceDirective = angular.module( 'practiceDirective' );
 
 practiceDirective.controller( 'PracticeDirectiveController',
-			      function($scope, $timeout, $localForage, NotifyingService, FirebaseService, ProfileService, SessionStatsService, StartUIState, UploadService, $rootScope, $state, $http, $cordovaDialogs)
+			      function($scope, $timeout, $localForage, AutoService, NotifyingService, FirebaseService, ProfileService, SessionStatsService, StartUIState, UploadService, $rootScope, $state, $http, $cordovaDialogs)
     {
 	// var uploadURLs = [
 	// 	"http://localhost:5000",
@@ -352,7 +352,6 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	  $scope.currentPracticeSession.count = $scope.count;
 	  $scope.currentPracticeSession.endTimestamp = Date.now();
 
-	  // here
 	  ProfileService.getCurrentProfile().then((profile) => {
       let doUpload = false;
       let doStoreSession = false;
@@ -360,7 +359,11 @@ practiceDirective.controller( 'PracticeDirectiveController',
       // to restore the practice session.
       if (profile.formalTester) {
         doUpload = ($scope.active && $scope.currentPracticeSession.ratings.length >= $scope.count);
-        doStoreSession = ($scope.active && $scope.currentPracticeSession.ratings.length > 0);
+        doStoreSession = (
+          $scope.active &&
+          $scope.currentPracticeSession.ratings.length > 0 &&
+          AutoService.isSessionActive()
+        );
       } else {
         doUpload = ($scope.active && $scope.currentPracticeSession.ratings.length > 0);
       }
