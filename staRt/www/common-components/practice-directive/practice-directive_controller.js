@@ -42,14 +42,15 @@ function scrambleArray(array) {
     }
 }
 
-function initialPracticeSession(startTimestamp, type, probe) {
+function initialPracticeSession(startTimestamp, type, probe, count) {
   return {
     id: guid(),
     ratings: [],
     probe: probe,
     type: type,
     startTimestamp: startTimestamp,
-    endTimestamp: null
+    endTimestamp: null,
+    count: count,
   };
 }
 
@@ -136,31 +137,101 @@ practiceDirective.controller( 'PracticeDirectiveController',
 
 	function calculate_difficulty_performance(total, count){
 	    return total / count;
-	};
+  };
 
-	function revise_difficulty(){
-	    if($scope.type == "Syllable"
-	       || $scope.probe){
-		// hackzorz
-		// don't modify carrier phrase if doing a Syllable Quest or Word Quiz
-		return;
-	    }
+  function handleRatingData($scope, data) {
+    // visual reinforcement
+    if (!$scope.probe) {
+      $scope.block_coins[$scope.block_coins.length - 1].push(visual_reinforcement_coin_color_map[data]);
+      $scope.session_coins[visual_reinforcement_coin_color_map[data]]++;
+      if (visual_reinforcement_coin_color_map[data] == "gold") {
+        $scope.consecutive_golds++;
+        let temp_golds_consecutive_gold_display = 0;
+        $scope.consecutive_golds_breakpoints.forEach((value) => {
+          if ($scope.consecutive_golds >= value) {
+            temp_golds_consecutive_gold_display = value;
+          }
+        })
+        $scope.consecutive_golds_display = temp_golds_consecutive_gold_display;
+      } else {
+        $scope.consecutive_golds = 0;
+      }
+    }
 
-	    switch($scope.difficulty){
-		case 1:
-		case 2:
-		case 3:
-		    carrier_phrases = carrier_phrases_bank[0];
-		    break;
-		case 4:
-		    carrier_phrases = carrier_phrases_bank[1];
-		    break;
-		case 5:
-		    carrier_phrases = carrier_phrases_bank[2];
-		    break;
-		default:
+    // adaptive difficulty
 
-	    }
+    $scope.block_score += remap_adaptive_difficulty_score[data];
+    $scope.session_score += remap_adaptive_difficulty_score[data];
+
+    if ($scope.currentWordIdx % 10 == 0 &&
+      $scope.currentWordIdx != 0) {
+      // todo: ratingChange emit error is preventing accurate calculation
+
+      // recalculate difficulty
+      let performance = calculate_difficulty_performance(
+        $scope.block_score,
+        10 // working in blocks of ten
+      );
+
+
+      if (!$scope.probe) {
+        // recalculate highscores
+        $scope.block_score_highscore = Math.max($scope.block_score_highscore, $scope.block_score);
+        $scope.block_golds_highscore = Math.max($scope.block_golds_highscore,
+          $scope.block_coins[$scope.block_coins.length - 1].filter(color => color == "gold").length);
+
+        // reset scores
+        $scope.block_score = 0;
+
+        // reset coins
+        $scope.block_coins.push([]);
+
+        // reset consecutive count
+        $scope.consecutive_golds = 0;
+        $scope.consecutive_golds_display = 0;
+      }
+
+      if (performance >= increase_difficulty_threshold &&
+        $scope.difficulty < 5) {
+        $scope.difficulty++;
+        revise_difficulty();
+        return $scope.reloadCSVData();
+      } else if (performance <= decrease_difficulty_threshold &&
+        $scope.difficulty > 1) {
+        $scope.difficulty--;
+        revise_difficulty();
+        return $scope.reloadCSVData();
+      }
+      // implied else
+      // keep difficulty the same
+    }
+
+    return Promise.resolve();
+  }
+
+	function revise_difficulty() {
+	  if ($scope.type == "Syllable" ||
+	    $scope.probe) {
+	    // hackzorz
+	    // don't modify carrier phrase if doing a Syllable Quest or Word Quiz
+	    return;
+	  }
+
+	  switch ($scope.difficulty) {
+	    case 1:
+	    case 2:
+	    case 3:
+	      carrier_phrases = carrier_phrases_bank[0];
+	      break;
+	    case 4:
+	      carrier_phrases = carrier_phrases_bank[1];
+	      break;
+	    case 5:
+	      carrier_phrases = carrier_phrases_bank[2];
+	      break;
+	    default:
+
+	  }
 	}
 
 
@@ -281,62 +352,121 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	  $scope.currentPracticeSession.count = $scope.count;
 	  $scope.currentPracticeSession.endTimestamp = Date.now();
 
-	  if ($scope.active && $scope.currentPracticeSession.ratings.length > 0) {
-	    saveJSON($scope.currentPracticeSession.ratings, jsonPath, function () {
-	      files.Ratings = jsonPath;
-	      $scope.currentPracticeSession.files = files;
-	      var practiceTypeStr = sessionDisplayString();
-	      var session = $scope.currentPracticeSession;
-	      navigator.notification.confirm("Would you like to upload this " + practiceTypeStr + " session?",
-	        function (index) {
-	          NotifyingService.notify("recording-completed", session);
-	          if (index == 1) {
-              const filesToUpload = [
-                files.Metadata,
-                files.LPC,
-                files.Audio,
-                files.Ratings
-              ];
-	            session.uploadProgress = [0, 0, 0, 0];
-	            UploadService.uploadPracticeSessionFiles(
-	              filesToUpload,
-	              session.id,
-	              uploadCallbackForSession(session),
-                completeCallback,
-                errorCallback
-	            );
-	            $scope.uploadStatus.isUploading = true;
-	          }
-	        }, "Upload",
-	        ["OK", "Later"]);
-	    });
-	  }
+	  // here
+	  ProfileService.getCurrentProfile().then((profile) => {
+      let doUpload = false;
+      let doStoreSession = false;
+	    // If the user is not done yet, we should save all the data that we need
+      // to restore the practice session.
+      if (profile.formalTester) {
+        doUpload = ($scope.active && $scope.currentPracticeSession.ratings.length >= $scope.count);
+        doStoreSession = ($scope.active && $scope.currentPracticeSession.ratings.length > 0);
+      } else {
+        doUpload = ($scope.active && $scope.currentPracticeSession.ratings.length > 0);
+      }
+
+	    if (doUpload) {
+	      saveJSON($scope.currentPracticeSession.ratings, jsonPath, function () {
+	        files.Ratings = jsonPath;
+	        $scope.currentPracticeSession.files = files;
+	        var practiceTypeStr = sessionDisplayString();
+	        var session = $scope.currentPracticeSession;
+	        navigator.notification.confirm("Would you like to upload this " + practiceTypeStr + " session?",
+	          function (index) {
+	            NotifyingService.notify("recording-completed", session);
+	            if (index == 1) {
+	              const filesToUpload = [
+	                files.Metadata,
+	                files.LPC,
+	                files.Audio,
+	                files.Ratings
+	              ];
+	              session.uploadProgress = [0, 0, 0, 0];
+	              UploadService.uploadPracticeSessionFiles(
+	                filesToUpload,
+	                session.id,
+	                uploadCallbackForSession(session),
+	                completeCallback,
+	                errorCallback
+	              );
+	              $scope.uploadStatus.isUploading = true;
+	            }
+	          }, "Upload",
+	          ["OK", "Later"]);
+        });
+        ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+          t.update(handle, { inProcessSession: null });
+        });
+	    } else if (doStoreSession) {
+        ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+          const res = t.update(handle, { inProcessSession: $scope.currentPracticeSession });
+          console.log(res);
+        });
+      }
+	  });
 
 	  $scope.isRecording = false;
-	}
+  }
 
-	function beginPracticeForUser(user) {
-	  /* --------------------------------
+  /**
+   *
+   * @param items An array of items.
+   * @param fn A function that accepts an item from the array and returns a promise.
+   * @returns {Promise}
+   */
+  function forEachPromise(items, fn) {
+    return items.reduce(function (promise, item) {
+      return promise.then(function () {
+        return fn(item);
+      });
+    }, Promise.resolve());
+  }
+
+  // So, this would be the place to load a previous session. Why don't we just
+  // store that session with the user?
+  function beginPracticeForUser(user) {
+    /* --------------------------------
 	    visual reinforcement
   	-------------------------------- */
-	  if (!$scope.probe) {
-	    if (user.highscores) {
-	      // if there is user data on highscores
-	      // load them here
-	      $scope.highscores = user.highscores;
-	    }
-	    // implied else
-	    // use default highscores
-	  }
+    if (!$scope.probe) {
+      if (user.highscores) {
+        // if there is user data on highscores
+        // load them here
+        $scope.highscores = user.highscores;
+      }
+      // implied else
+      // use default highscores
+    }
 
-	  if ($scope.isPracticing) return;
-	  $scope.isPracticing = true;
-	  $scope.currentPracticeSession = initialPracticeSession(Date.now(), $scope.type || "word", $scope.probe || "quest");
-	  if (window.AudioPlugin !== undefined) {
-	    AudioPlugin.startRecording(user, sessionDisplayString(), recordingDidStart, recordingDidFail);
-	  }
-	  advanceWord();
-	}
+    if (user.inProcessSession) {
+      $scope.currentPracticeSession = Object.assign({}, user.inProcessSession);
+      const previousRatings = $scope.currentPracticeSession.ratings;
+      $scope.currentWordIdx = 0;
+      forEachPromise(previousRatings, (rating) => {
+        $scope.currentWordIdx++;
+        return handleRatingData($scope, rating.rating);
+      }).then(() => {
+        $scope.currentWordIdx = $scope.currentPracticeSession.ratings.length - 1;
+        if (window.AudioPlugin !== undefined) {
+          AudioPlugin.startRecording(user, sessionDisplayString(), recordingDidStart, recordingDidFail);
+        }
+        advanceWord();
+      });
+    } else {
+      $scope.currentWordIdx = -1;
+      $scope.currentPracticeSession = initialPracticeSession(
+        Date.now(),
+        $scope.type || "word",
+        $scope.probe || "quest",
+        $scope.count
+      );
+
+      if (window.AudioPlugin !== undefined) {
+        AudioPlugin.startRecording(user, sessionDisplayString(), recordingDidStart, recordingDidFail);
+      }
+      advanceWord();
+    }
+  }
 
 	function advanceWord() {
 	  if ($scope.currentWord !== null) {
@@ -344,7 +474,11 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	      navigator.notification.alert("Rate pronunciation before advancing!", null, "No rating");
 	      return;
 	    }
-	    $scope.currentPracticeSession.ratings.push([$scope.currentWord, $scope.rating, Date.now()]);
+	    $scope.currentPracticeSession.ratings.push({
+        target: $scope.currentWord,
+        rating: $scope.rating,
+        time: Date.now(),
+      });
 	    $scope.rating = 0;
 	    $scope.$broadcast("resetRating");
 	  }
@@ -383,29 +517,32 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	  }
 	}
 
-	$scope.beginWordPractice = function() {
-	    $scope.currentWord = null;
-	    console.log("Beginning " + sessionDisplayString());
+	$scope.beginWordPractice = function () {
+    $scope.currentWord = null;
+    if ($scope.isPracticing) return;
+    $scope.isPracticing = true;
+	  console.log("Beginning " + sessionDisplayString());
 
-	    if (window.AudioPlugin === undefined) {
-		if (navigator.notification)
-		    navigator.notification.alert("Can't start " + sessionDisplayString() + ": no audio" , null, "Error");
+	  if (window.AudioPlugin === undefined) {
+	    if (navigator.notification)
+	      navigator.notification.alert("Can't start " + sessionDisplayString() + ": no audio", null, "Error");
+	  }
+
+	  ProfileService.getCurrentProfile().then(
+	    function (res) {
+	      if (res) {
+	        beginPracticeForUser(res);
+	        if ($scope.startPracticeCallback) $scope.startPracticeCallback();
+	      } else {
+	        if (navigator.notification)
+	          navigator.notification.alert("Can't start " + sessionDisplayString() + " -- create a profile first", null, "No profile");
+	      }
+	    },
+	    function (err) {
+	      if (navigator.notification)
+	        navigator.notification.alert("Can't start " + sessionDisplayString() + ": " + err, null, "Error");
 	    }
-
-	    ProfileService.getCurrentProfile().then(
-		function(res) {
-		    if (res) {
-			beginPracticeForUser(res);
-			if ($scope.startPracticeCallback) $scope.startPracticeCallback();
-		    } else {
-			if (navigator.notification)
-			    navigator.notification.alert("Can't start " + sessionDisplayString() + " -- create a profile first", null, "No profile");
-		    }
-		}, function (err) {
-		    if (navigator.notification)
-			navigator.notification.alert("Can't start " + sessionDisplayString() + ": " + err, null, "Error");
-		}
-	    );
+	  );
 	};
 
 	$scope.endWordPractice = function () {
@@ -475,153 +612,94 @@ practiceDirective.controller( 'PracticeDirectiveController',
       scrambleArray($scope.wordOrder);
 	}
 
-	$scope.reloadCSVData = function() {
-	    if($scope.type === 'Word'
-		// hackzorz: we know that we're doing a Word Quiz and not a Quest
-		// if requested CSV is data/Word_Probe
-	       && $scope.csvs[0] !== "data/Word_Probe.csv"){
-		let tempWordList = [];
+	$scope.reloadCSVData = function () {
+	  if ($scope.type === 'Word'
+	    // hackzorz: we know that we're doing a Word Quiz and not a Quest
+	    // if requested CSV is data/Word_Probe
+	    &&
+	    $scope.csvs[0] !== "data/Word_Probe.csv") {
+	    let tempWordList = [];
 
-		// map csvs to adaptive difficulty key names
-		// to cause as few side effects as possible
+	    // map csvs to adaptive difficulty key names
+	    // to cause as few side effects as possible
 
-		$scope.csvs.forEach((csv) => {
-		    let key = csv.replace('data/wp_', '').replace('.csv', '');
-		    if($scope.difficulty <= 3){
-			tempWordList = tempWordList.concat(words[key][$scope.difficulty]);
-		    }else{
-			// difficulty is 4 or 5
-			tempWordList = tempWordList
-			    .concat(words[key][1])
-			    .concat(words[key][2])
-			    .concat(words[key][3]);
-		    }
-		});
+	    $scope.csvs.forEach((csv) => {
+	      let key = csv.replace('data/wp_', '').replace('.csv', '');
+	      if ($scope.difficulty <= 3) {
+	        tempWordList = tempWordList.concat(words[key][$scope.difficulty]);
+	      } else {
+	        // difficulty is 4 or 5
+	        tempWordList = tempWordList
+	          .concat(words[key][1])
+	          .concat(words[key][2])
+	          .concat(words[key][3]);
+	      }
+	    });
 
-		$scope.wordList = tempWordList;
+	    $scope.wordList = tempWordList;
 
-    $scope.reorderWords();
-		if ($scope.hasValidWordList && !$scope.isPracticing && $scope.beginOnLoad) {
-		    $scope.beginWordPractice();
-		}
-	    }
-	    if($scope.type === "Syllable"
-	       || $scope.probe){
-		$scope.wordList = [];
-		var loadTasks = [];
-		$scope.csvs.forEach(function (csv) {
-		    loadTasks.push(
-			$http.get(csv, {
-			    headers: {
-				'Content-type': 'application/csv'
-			    }
-			}).then(function (res) {
-			    $scope.parseWordList(res.data);
-			    //console.log("Appending word list");
-			    //console.log($scope.wordList);
-			})
-		    );
-		});
-		Promise.all(loadTasks).then(function (res) {
-		    $scope.reorderWords();
-		    if ($scope.hasValidWordList && !$scope.isPracticing && $scope.beginOnLoad) {
-			$scope.beginWordPractice();
-		    }
-		});
-	    }
+      $scope.reorderWords();
+      return Promise.resolve();
+	  }
+	  if ($scope.type === "Syllable" ||
+	    $scope.probe) {
+	    $scope.wordList = [];
+	    var loadTasks = [];
+	    $scope.csvs.forEach(function (csv) {
+	      loadTasks.push(
+	        $http.get(csv, {
+	          headers: {
+	            'Content-type': 'application/csv'
+	          }
+	        }).then(function (res) {
+	          $scope.parseWordList(res.data);
+	          //console.log("Appending word list");
+	          //console.log($scope.wordList);
+	        })
+	      );
+	    });
+	    return Promise.all(loadTasks).then(function (res) {
+	      $scope.reorderWords();
+	    });
+	  }
 	}
 
-	$scope.$on('ratingChange', function(event, data)
-	    {
-		console.log('rating change! ' + data);
-		$scope.rating = data === undefined ? 0 : data;
-		if (!!$scope.rating) {
-		    $scope.nextWord();
-		}
-		// keep running average of ratings
-		if(data){
-		    // visual reinforcement
-		    if(!$scope.probe){
-			$scope.block_coins[$scope.block_coins.length - 1].push(visual_reinforcement_coin_color_map[data]);
-			$scope.session_coins[visual_reinforcement_coin_color_map[data]]++;
-			if(visual_reinforcement_coin_color_map[data] == "gold"){
-			    $scope.consecutive_golds++;
-			    let temp_golds_consecutive_gold_display = 0;
-			    $scope.consecutive_golds_breakpoints.forEach((value) => {
-				if($scope.consecutive_golds >= value){
-				    temp_golds_consecutive_gold_display = value;
-				}
-			    })
-			    $scope.consecutive_golds_display = temp_golds_consecutive_gold_display;
-			}else{
-			    $scope.consecutive_golds = 0;
-			}
-		    }
+	$scope.$on('ratingChange', function (event, data) {
+	  console.log('rating change! ' + data);
+	  $scope.rating = data === undefined ? 0 : data;
+	  if (!!$scope.rating) {
+	    $scope.nextWord();
+	  }
+	  // keep running average of ratings
+	  if (data) {
+      handleRatingData($scope, data);
+	  }
+	});
 
-		    // adaptive difficulty
-
-		    $scope.block_score += remap_adaptive_difficulty_score[data];
-		    $scope.session_score += remap_adaptive_difficulty_score[data];
-
-		    if($scope.currentWordIdx % 10 == 0
-		       && $scope.currentWordIdx != 0){
-			// todo: ratingChange emit error is preventing accurate calculation
-
-			// recalculate difficulty
-			let performance = calculate_difficulty_performance(
-			    $scope.block_score,
-			    10 // working in blocks of ten
-			);
-
-
-			if(!$scope.probe){
-			    // recalculate highscores
-			    $scope.block_score_highscore = Math.max($scope.block_score_highscore, $scope.block_score);
-			    $scope.block_golds_highscore = Math.max($scope.block_golds_highscore,
-								    $scope.block_coins[$scope.block_coins.length - 1].filter(color => color == "gold").length);
-
-			    // reset scores
-			    $scope.block_score = 0;
-
-			    // reset coins
-			    $scope.block_coins.push([]);
-
-			    // reset consecutive count
-			    $scope.consecutive_golds = 0;
-			    $scope.consecutive_golds_display = 0;
-			}
-
-			if(performance >= increase_difficulty_threshold
-			   && $scope.difficulty < 5){
-			    $scope.difficulty++;
-			    revise_difficulty();
-			    $scope.reloadCSVData();
-			}
-			if(performance <= decrease_difficulty_threshold
-			   && $scope.difficulty > 1){
-			    $scope.difficulty--;
-			    revise_difficulty();
-			    $scope.reloadCSVData();
-			}
-			// implied else
-			// keep difficulty the same
-		    }
-		}
-	    });
-
-	$scope.$on('stopPractice', function(event)
-	    {
-		if ($scope.isPracticing) {
-		    $scope.endWordPractice();
-		}
-	    });
+	$scope.$on('stopPractice', function (event) {
+	  if ($scope.isPracticing) {
+	    $scope.endWordPractice();
+	  }
+	});
 
 	$scope.$watch("csvs", function () {
 	    $scope.hasValidWordList = false;
-	    if ($scope.csvs) $scope.reloadCSVData();
+	    if ($scope.csvs) {
+        $scope.reloadCSVData().then(() => {
+          if ($scope.hasValidWordList && !$scope.isPracticing && $scope.beginOnLoad) {
+            $scope.beginWordPractice();
+          }
+        });
+      }
 	});
 
-	if ($scope.csvs) $scope.reloadCSVData();
+	if ($scope.csvs) {
+    $scope.reloadCSVData().then(() => {
+      if ($scope.hasValidWordList && !$scope.isPracticing && $scope.beginOnLoad) {
+        $scope.beginWordPractice();
+      }
+    });
+  }
 
 	$scope.myURL = $state.current.name;
 
