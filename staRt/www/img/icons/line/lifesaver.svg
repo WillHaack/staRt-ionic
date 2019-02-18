@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	x="0px" y="0px"
+	viewBox="0 0 64 64">
+
+	<path class="" d="M13,4h38c5,0,9,4,9,9v38c0,5-4,9-9,9H13c-5,0-9-4-9-9V13C4,8,8,4,13,4z"/>
+	<circle class="" cx="32" cy="32" r="25.5"/>
+	<circle class="" cx="32" cy="32" r="12.5"/>
+	<rect x="26" y="6.5" class="st0" width="12" height="13"/>
+	<rect x="26" y="44.5" class="st0" width="12" height="13"/>
+	<rect x="6.5" y="26" class="st0" width="13" height="12"/>
+	<rect x="44.5" y="26" class="st0" width="13" height="12"/>
+</svg>
