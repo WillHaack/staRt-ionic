@@ -128,7 +128,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	var decrease_difficulty_threshold = 0.5;
 
 	// remap data according to specs
-	const remap_adaptive_difficulty_score = {
+	var remap_adaptive_difficulty_score = {
 	    3: 1,
 	    2: .5,
 	    1: 0
@@ -212,7 +212,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	}
 
 	// need this outside for some reason
-	const visual_reinforcement_coin_color_map = {
+	var visual_reinforcement_coin_color_map = {
 	    3: "gold",
 	    2: "silver",
 	    1: "bronze"
@@ -347,7 +347,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	        // will not trigger if serving
 	        navigator.notification.confirm("Pausing for feedback",
 	          function () {
-	            $scope.$apply(() => {
+	            $scope.$apply(function () {
 	              $scope.isFeedbacking = false;
 	            });
 	          }, "",
@@ -388,7 +388,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
   	   -------------------------------- */
 	  if (!$scope.probe) {
 	    // check if new highscores
-	    let shouldUpdateHighscores = false;
+	    var shouldUpdateHighscores = false;
 	    if ($scope.block_score_highscore > $scope.highscores.block.score.total) {
 	      shouldUpdateHighscores = true;
 	      $scope.highscores.block.score.total = $scope.block_score_highscore;
@@ -454,13 +454,13 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		// hackzorz: we know that we're doing a Word Quiz and not a Quest
 		// if requested CSV is data/Word_Probe
 	       && $scope.csvs[0] !== "data/Word_Probe.csv"){
-		let tempWordList = [];
+		var tempWordList = [];
 
 		// map csvs to adaptive difficulty key names
 		// to cause as few side effects as possible
 
 		$scope.csvs.forEach((csv) => {
-		    let key = csv.replace('data/wp_', '').replace('.csv', '');
+		    var key = csv.replace('data/wp_', '').replace('.csv', '');
 		    if($scope.difficulty <= 3){
 			tempWordList = tempWordList.concat(words[key][$scope.difficulty]);
 		    }else{
@@ -520,7 +520,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			$scope.session_coins[visual_reinforcement_coin_color_map[data]]++;
 			if(visual_reinforcement_coin_color_map[data] == "gold"){
 			    $scope.consecutive_golds++;
-			    let temp_golds_consecutive_gold_display = 0;
+			    var temp_golds_consecutive_gold_display = 0;
 			    $scope.consecutive_golds_breakpoints.forEach((value) => {
 				if($scope.consecutive_golds >= value){
 				    temp_golds_consecutive_gold_display = value;
@@ -542,7 +542,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 			// todo: ratingChange emit error is preventing accurate calculation
 
 			// recalculate difficulty
-			let performance = calculate_difficulty_performance(
+			var performance = calculate_difficulty_performance(
 			    $scope.block_score,
 			    10 // working in blocks of ten
 			);
@@ -618,7 +618,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 
 
 // save here to avoid async loads
-const carrier_phrases_bank = [
+var carrier_phrases_bank = [
     ["___"],
     ["Say ___ to me"],
     [
@@ -645,7 +645,7 @@ const carrier_phrases_bank = [
 ];
 
 
-const words = {
+var words = {
     'consonantal_back': {
 	'1': [
 	    'rod',

@@ -43,7 +43,8 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
   // }
 
   function _handleSuccessfulChanges(changes) {
-    const { profileChanges, statsChanges } = changes;
+    var profileChanges = changes.profileChanges;
+    var statsChanges = changes.statsChanges;
     if (currentProfileStats) Object.assign(currentProfileStats, statsChanges);
     ProfileService.getCurrentProfile().then(function(profile) {
       _notifyChanges(profile, currentProfileStats, Object.assign({}, profileChanges, statsChanges));
@@ -51,7 +52,7 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
   }
 
   function _incrementProfileStat(profile, stat, increment, changes) {
-		const newValue = (profile[stat] ? profile[stat] : 0) + increment;
+		var newValue = (profile[stat] ? profile[stat] : 0) + increment;
 		_updateProfileStat(stat, newValue, changes);
   }
 
@@ -64,8 +65,8 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
     var duration = nextSessionChronoTime - lastSessionChronoTime;
 
     ProfileService.runTransactionForCurrentProfile(function(handle, profile, t) {
-      let changes = {};
-      let profileData = profile.data();
+      var changes = {};
+      var profileData = profile.data();
       _incrementProfileStat(profileData, "allSessionTime", duration, changes);
       if (currentProfileStats) _incrementProfileStat(profileData, "thisSessionTime", duration, changes);
       t.update(handle, changes);
@@ -94,10 +95,10 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 
 	function _updateProfileForRecording(msg, session) {
     ProfileService.runTransactionForCurrentProfile(function(handle, profileDoc, t) {
-      const profile = profileDoc.data();
-      let profileChanges = {};
-      let statsChanges = {};
-      let recordingTime = session.endTimestamp - session.startTimestamp;
+      var profile = profileDoc.data();
+      var profileChanges = {};
+      var statsChanges = {};
+      var recordingTime = session.endTimestamp - session.startTimestamp;
       if (profile.firstSessionTimestamp === null) {
         _updateProfileStat("firstSessionTimestamp", session.startTimestamp, profileChanges);
       }
@@ -153,9 +154,9 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 	NotifyingService.subscribe('recording-completed', $rootScope, _updateProfileForRecording);
 	NotifyingService.subscribe('freeplay-tick', $rootScope, function(msg, duration) {
     ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
-      const profileChanges = {};
-      const statsChanges = {};
-      const profile = doc.data();
+      var profileChanges = {};
+      var statsChanges = {};
+      var profile = doc.data();
       _incrementProfileStat(profile, "allFreeplayTime", duration, profileChanges);
       if (currentProfileStats) _incrementProfileStat(currentProfileStats, "thisFreeplayTime", duration, statsChanges);
       t.update(handle, profileChanges);
@@ -168,9 +169,9 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 	});
 	NotifyingService.subscribe('quest-start', $rootScope, function(msg) {
     ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
-      const profileChanges = {};
-      const statsChanges = {};
-      const profile = doc.data();
+      var profileChanges = {};
+      var statsChanges = {};
+      var profile = doc.data();
       _incrementProfileStat(profile, "nQuestsInitiated", 1, profileChanges);
       t.update(handle, profileChanges);
       return { profileChanges, statsChanges };
@@ -182,9 +183,9 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 	});
 	NotifyingService.subscribe('quest-tick', $rootScope, function(msg, duration) {
     ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
-      const profileChanges = {};
-      const statsChanges = {};
-      const profile = doc.data();
+      var profileChanges = {};
+      var statsChanges = {};
+      var profile = doc.data();
       _incrementProfileStat(profile, "allQuestTime", duration, profileChanges);
       if (currentProfileStats) _incrementProfileStat(currentProfileStats, "thisQuestTime", duration, statsChanges);
       t.update(handle, profileChanges);
@@ -197,9 +198,9 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 	});
 	NotifyingService.subscribe('intro-completed', $rootScope, function(msg) {
     ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
-      const profileChanges = {};
-      const statsChanges = {};
-      const profile = doc.data();
+      var profileChanges = {};
+      var statsChanges = {};
+      var profile = doc.data();
       _incrementProfileStat(profile, "nIntroComplete", 1, profileChanges);
       t.update(handle, profileChanges);
       return { profileChanges, statsChanges };
@@ -211,9 +212,9 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 	});
 	NotifyingService.subscribe('tutorial-completed', $rootScope, function(msg) {
     ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
-      const profileChanges = {};
-      const statsChanges = {};
-      const profile = doc.data();
+      var profileChanges = {};
+      var statsChanges = {};
+      var profile = doc.data();
       _incrementProfileStat(profile, "nTutorialComplete", 1, profileChanges);
       t.update(handle, profileChanges);
       return { profileChanges, statsChanges };
@@ -225,9 +226,9 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 	});
 	NotifyingService.subscribe('session-completed', $rootScope, function(msg, data) {
     ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
-      const profileChanges = {};
-      const statsChanges = {};
-      const profile = doc.data();
+      var profileChanges = {};
+      var statsChanges = {};
+      var profile = doc.data();
       if (data.practice === "BF") {
         _incrementProfileStat(profile, "nBiofeedbackSessionsCompleted", 1, profileChanges);
       } else {
@@ -243,9 +244,9 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 	});
 	NotifyingService.subscribe('conclusion-completed', $rootScope, function(msg) {
     ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
-      const profileChanges = {};
-      const statsChanges = {};
-      const profile = doc.data();
+      var profileChanges = {};
+      var statsChanges = {};
+      var profile = doc.data();
       _incrementProfileStat(profile, "nFormalTreatmentComplete", 1, profileChanges);
       t.update(handle, profileChanges);
       return { profileChanges, statsChanges };
@@ -257,9 +258,9 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 	});
 	NotifyingService.subscribe('formal-testing-validated', $rootScope, function(msg) {
     ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
-      const profileChanges = {};
-      const statsChanges = {};
-      const profile = doc.data();
+      var profileChanges = {};
+      var statsChanges = {};
+      var profile = doc.data();
       _updateProfileStat("formalTester", true, profileChanges);
       t.update(handle, profileChanges);
       return { profileChanges, statsChanges };
@@ -277,10 +278,10 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
             if (profileLongSessionTimerId) clearTimeout(profileLongSessionTimerId);
             profileLongSessionTimerId = null;
             profileLongSessionTimerId = setTimeout(function() {
-              const handle = ProfileService.getProfileTransactionHandle(profile);
+              var handle = ProfileService.getProfileTransactionHandle(profile);
               ProfileService.runTransaction(handle, function(handle, doc, t) {
-                const profileChanges = {};
-                const statsChanges = {};
+                var profileChanges = {};
+                var statsChanges = {};
                 _incrementProfileStat(doc.data(), "nLongSessionsCompleted", 1, profileChanges);
                 t.update(handle, profileChanges)
                 return { profileChanges, statsChanges };
@@ -292,10 +293,10 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
             }, LONG_SESSION_MILLIS);
 
             {
-              const handle = ProfileService.getProfileTransactionHandle(profile);
+              var handle = ProfileService.getProfileTransactionHandle(profile);
               ProfileService.runTransaction(handle, function(handle, doc, t) {
-                const profileChanges = {};
-                const statsChanges = {};
+                var profileChanges = {};
+                var statsChanges = {};
                 _updateProfileStat("lastLoginTime", Date.now(), profileChanges);
                 _resetProfileChrono();
                 t.update(handle, profileChanges)
@@ -308,10 +309,10 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
             }
 
             if (!!profile.brandNew) {
-              const handle = ProfileService.getProfileTransactionHandle(profile);
+              var handle = ProfileService.getProfileTransactionHandle(profile);
               ProfileService.runTransaction(handle, function(handle, doc, t) {
-                const profileChanges = {};
-                const statsChanges = {};
+                var profileChanges = {};
+                var statsChanges = {};
                 _updateProfileStat("brandNew", false, profileChanges);
                 t.update(handle, profileChanges)
                 return { profileChanges, statsChanges };
@@ -328,10 +329,10 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 	NotifyingService.subscribe('$stateChangeSuccess', $rootScope, function() {
 		ProfileService.getCurrentProfile().then(function (profile) {
 			if (profile) {
-				const profileChanges = {};
-        const statsChanges = {};
+				var profileChanges = {};
+        var statsChanges = {};
         if (currentProfileStats) _updateProfileStat('thisCurrentView', $state.current.url, statsChanges);
-        const changes = { profileChanges, statsChanges };
+        var changes = { profileChanges, statsChanges };
 				_handleSuccessfulChanges(changes);
 			}
 		});
