@@ -30,13 +30,9 @@
 		left: 0;
 		width: $col-w * 5;
 		height: 100%;
-		background-color: #0fabc1;
-		background-image:
-		url("../img/profiles/sky-75alpha.png");
-		//background-blend-mode:  screen;
-		background-position: top right;
-		background-repeat: no-repeat;
-		background-size: auto 100%;
+		background: linear-gradient(12deg, rgba(111,206,214,0.8) 0%,rgba(182,222,225,0.6) 100%);
+		//rgba(111,206,214,1)
+		//rgba(144,210,213,1)
 		z-index: 90;
 		//border: 1px solid violet;
 	}
@@ -202,18 +198,19 @@
 		.card-closeBox {
 			display: flex;
 			height: 100%;
-			width: 64px;
+			width: 96px;
 			background-color: transparent;
 			//border: 1px solid red;
 
 			button {
 				height: 100%;
-				width: $row-h * 0.5;
+				width: 100%;
 				border-radius: 10px;
 				font-size: 2.5em;
 				font-weight: 600;
 				background-color: transparent;
 				color: $c-bronze-500; //$c-text-main;
+				//border: 1px solid red;
 			}
 		} // .card-closeBox
 

@@ -14,43 +14,33 @@ startStateService.factory('StartUIState', function()
       {
         title: "Profiles",
         sref: "profiles",
-        ani: "tada"
+        icon: "profiles"
       },
       {
         title: "Tutorial",
         sref: "tutorial.p01s1",
-        ani: "rotateIn"
-      },
-      {
-        title: "Quiz",
-        sref: "auto",
-        ani: "flipInX"
+        icon: "tutorial",
       },
       {
         title: "Free Play",
         sref: "free-play",
-        ani: "bounce"
+        icon: "freePlay",
       },
       {
         title: "Quest",
         sref: "words",
-        ani: "bounceIn"
-
+        icon: "quest",
+      },
+      {
+        title: "Quiz",
+        sref: "auto",
+        icon: "quiz",
       },
       {
         title: "Resources",
         sref: "resources",
-        ani: "flipInY"
+        icon: "resources",
       }
-    ],
-    content: [
-      "A whole bunch of Profles",
-      "A great big tutorial",
-      "Auto, whatever that means",
-      "Play around for free I guess",
-      "Syl-la-bles",
-      "Different words and stuff",
-      "Gold, wood, stone"
     ]
   };
 });

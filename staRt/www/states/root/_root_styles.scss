@@ -42,6 +42,7 @@ input, textarea {
 $row-h: 100vh/6;
 $col-w: 100vw/12;
 
+// TO RM
 $nav-btnW: 10vw; // width of left nav, OLD nav
 $col-pad: 6.66vw; // OLD nav
 $navW: $nav-btnW + $col-pad; // OLD nav
@@ -144,62 +145,86 @@ $navW: $nav-btnW + $col-pad; // OLD nav
   position: absolute;
   display: -webkit-flex;
   -webkit-flex-direction: column;
-  width: $nav-btnW; //10vw
+  width: $col-w * 1.25;
   height: 100vh;
   z-index: 999;
-}
 
-.nav-container { z-index: 99; }
-
-.navTabs {
-  height: 100vh;
-  display: -webkit-flex;
-  -webkit-flex: 1;
-  -webkit-flex-direction: column;
-  color: $white;
-  text-transform: uppercase;
-  font-weight: bold;
-}
-
-.navTab {
-  display: -webkit-flex;
-  -webkit-flex: 1;
-  background-image: url('../img/nav/new/navTab-off.svg');
-  background-image-size: 100% 100%;
-  background-size: cover;
-  background-repeat: no-repeat; 
-  text-align: center;
-  border-radius: 10px;
-  box-shadow: $itemShadow;
-  width: $nav-btnW;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-  transition: width 0.5s ease-in-out;
-
-  &.active {
-    color: white;
-    background-image: url('../img/nav/new/navTab-on.svg');
-    box-shadow: $itemShadow-select;
-    z-index: 25;
-    width: $nav-btnW + 1;
+  list.navTabs {
+    height: 101%;
+    display: -webkit-flex;
+    -webkit-flex: 1;
+    -webkit-flex-direction: column;
+    color: $white;
+    text-transform: uppercase;
+    font-weight: bold;
   }
-}
 
-.navTabText {
-  margin: auto;
-  padding-top: 10%;
-  padding-bottom: 5%;
-  //border: 1px solid red;
-}
+  item.navTab {
+    display: -webkit-flex;
+    -webkit-flex: 1;
+    background-image: url('../img/ui/navTab-off.svg');
+    background-image-size: 100% 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: $itemShadow;
+    height: $row-h * 1.1;
+    width: $col-w * 1.12;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    transition: width 0.5s ease-in-out;
 
-.nav-svg {
-  height: 65px;
-  width: 65px;
-  display: block;
-  margin: 0 auto;
-  padding-bottom: 5px;
-  //border: 1px solid yellow;
-}
+
+    &.active {
+      color: white;
+      background-image: url('../img/ui/navTab-on.svg');
+      box-shadow: $itemShadow-select;
+      z-index: 25;
+      width: $col-w * 1.25;
+    }
+  } // item.navTab
+
+  .navTabContent {
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    height: 65%;
+    width: 75%;
+    margin: auto;
+    z-index: 35;
+    // border: 1px solid red;
+
+    .navTabIcon {
+      display: block;
+      margin: 0 auto;
+      padding-bottom: 10px;
+      //border: 1px solid yellow;
+
+      svg * {
+        fill: #ffffff;
+        opacity: 0.85;
+      }
+
+      &.active svg * {
+        opacity: 1;
+      }
+    }
+
+    .navTabText {
+      color: white;
+      font-size: 0.8em;
+      opacity: 0.75;
+      //border: 1px solid white;
+
+      &.active {
+        color: white;
+        opacity: 1;
+      }
+    }
+  } // .navTabContent
+} // end #nav-container
 
 
 // ===================================================
@@ -211,9 +236,9 @@ $navW: $nav-btnW + $col-pad; // OLD nav
 
   Each ion-view.state-contentBox is injected into the root_template's ion-nav-view#content-container, which is controlled by the router and handles pg transitions and other important stuff.
 
-  At this point, these are essentially just a css reset, which creates a full-width, full-height .state-contentBox.
+  At this point, these rules sets are just a css reset, which create a full-width, full-height .state-contentBox.
 
-  NOTE: Styles for everything below ion-view.state-contentBox are in the state's .scss file -- even theme-like elements, such as layout or the  header bar. Currently each state is self-contained thing, responsisble for implementing its own layout and styles.
+  NOTE: Styles for everything below ion-view.state-contentBox live in the individual state's .scss file. (With the exception of 'common-styles' classes, each state should be thought of as a self-contained thing, responsisble for implementing its own layout and custom styles.)
 */
     .state-contentBox {
       position: relative;
