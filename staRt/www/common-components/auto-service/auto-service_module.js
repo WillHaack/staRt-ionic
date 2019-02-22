@@ -128,6 +128,10 @@ IntroAuto.shouldBegin = function (profile) {
 var SessionAuto = function (profile, currentStates, onShow, initialState) {
   AutoState.call(this, profile, currentStates, onShow, initialState);
 
+  if (initialState && initialState.categoryRestrictions) {
+    this.restrictions.categoryRestrictions = Object.assign(initialState.categoryRestrictions);
+  }
+
   this.state = Object.assign({
     hasAcceptedSessionPrompt: false,
     wantsToDoItLater: false,
@@ -575,9 +579,9 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
   }
 
   function _doPauseSession() {
+    var state = currentAuto.getState();
     ProfileService.getCurrentProfile().then(function (profile) {
       if (profile) {
-        const state = currentAuto.getState();
         ProfileService.runTransactionForCurrentProfile(function (handle, doc, t) {
           t.update(handle, {
             inProcessSessionState: state
@@ -694,6 +698,21 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
 
     stopSession: function() {
       _doStopSession();
+    },
+
+    toggleCategoryRestriction: function (index, state) {
+      if (currentAuto) {
+        if (!currentAuto.state.categoryRestrictions) {
+          currentAuto.state.categoryRestrictions = [];
+        }
+      }
+
+      if (state && currentAuto.state.categoryRestrictions.indexOf(index) === -1) {
+        currentAuto.state.categoryRestrictions.push(index);
+      } else if (!state && currentAuto.state.categoryRestrictions.indexOf(index) !== -1) {
+        var pos = currentAuto.state.categoryRestrictions.indexOf(index);
+        currentAuto.state.categoryRestrictions.splice(pos, 1);
+      }
     },
   }
 });
