@@ -358,7 +358,6 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	    // If the user is not done yet, we should save all the data that we need
       // to restore the practice session.
       if (profile.formalTester) {
-        doUpload = ($scope.active && $scope.currentPracticeSession.ratings.length >= $scope.count);
         doStoreSession = (
           $scope.active &&
           $scope.currentPracticeSession.ratings.length > 0 &&
@@ -366,61 +365,64 @@ practiceDirective.controller( 'PracticeDirectiveController',
         );
       }
 
+      let storeTask = Promise.resolve();
       if (doStoreSession) {
-        navigator.notification.confirm(
+        storeTask = $cordovaDialogs.confirm(
           "Do you want to resume this recording session later?",
-          function(index) {
-            if (index === 1) {
-              AutoService.pauseSession();
-              ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
-                const res = t.update(handle, { inProcessSession: $scope.currentPracticeSession });
-                console.log(res);
-              });
-            } else {
-              ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
-                t.update(handle, { inProcessSession: null });
-              });
-            }
-          }, "Continue Later",
+          "Continue Later",
           ["Okay", "Not really"]
-        );
+        ).then(function(index) {
+          if (index === 1) {
+            AutoService.pauseSession();
+            ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+              const res = t.update(handle, { inProcessSession: $scope.currentPracticeSession });
+              console.log(res);
+            });
+          } else {
+            ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+              t.update(handle, { inProcessSession: null });
+            });
+          }
+        });
       } else {
         ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
           t.update(handle, { inProcessSession: null });
         });
       }
 
-	    if (doUpload) {
-	      saveJSON($scope.currentPracticeSession.ratings, jsonPath, function () {
-	        files.Ratings = jsonPath;
-	        $scope.currentPracticeSession.files = files;
-	        var practiceTypeStr = sessionDisplayString();
-	        var session = $scope.currentPracticeSession;
-	        navigator.notification.confirm("Would you like to upload this " + practiceTypeStr + " session?",
-	          function (index) {
-	            NotifyingService.notify("recording-completed", session);
-	            if (index === 1) {
-	              const filesToUpload = [
-	                files.Metadata,
-	                files.LPC,
-	                files.Audio,
-	                files.Ratings
-	              ];
-	              session.uploadProgress = [0, 0, 0, 0];
-	              UploadService.uploadPracticeSessionFiles(
-	                filesToUpload,
-	                session.id,
-	                uploadCallbackForSession(session),
-	                completeCallback,
-	                errorCallback
-	              );
-	              $scope.uploadStatus.isUploading = true;
-	            }
-	          }, "Upload",
-	          ["Okay", "Later"]);
-        });
+      storeTask.then(function() {
+        if (doUpload) {
+          saveJSON($scope.currentPracticeSession.ratings, jsonPath, function () {
+            files.Ratings = jsonPath;
+            $scope.currentPracticeSession.files = files;
+            var practiceTypeStr = sessionDisplayString();
+            var session = $scope.currentPracticeSession;
+            navigator.notification.confirm("Would you like to upload this " + practiceTypeStr + " session?",
+              function (index) {
+                NotifyingService.notify("recording-completed", session);
+                if (index === 1) {
+                  const filesToUpload = [
+                    files.Metadata,
+                    files.LPC,
+                    files.Audio,
+                    files.Ratings
+                  ];
+                  session.uploadProgress = [0, 0, 0, 0];
+                  UploadService.uploadPracticeSessionFiles(
+                    filesToUpload,
+                    session.id,
+                    uploadCallbackForSession(session),
+                    completeCallback,
+                    errorCallback
+                  );
+                  $scope.uploadStatus.isUploading = true;
+                }
+              }, "Upload",
+              ["Okay", "Later"]);
+          });
+        }
+      });
 
-	    }
 	  });
 
 	  $scope.isRecording = false;
