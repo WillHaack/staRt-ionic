@@ -353,7 +353,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	  $scope.currentPracticeSession.endTimestamp = Date.now();
 
 	  ProfileService.getCurrentProfile().then((profile) => {
-      let doUpload = false;
+      let doUpload = ($scope.active && $scope.currentPracticeSession.ratings.length > 0);
       let doStoreSession = false;
 	    // If the user is not done yet, we should save all the data that we need
       // to restore the practice session.
@@ -364,8 +364,30 @@ practiceDirective.controller( 'PracticeDirectiveController',
           $scope.currentPracticeSession.ratings.length > 0 &&
           AutoService.isSessionActive()
         );
+      }
+
+      if (doStoreSession) {
+        navigator.notification.confirm(
+          "Do you want to resume this recording session later?",
+          function(index) {
+            if (index === 1) {
+              AutoService.pauseSession();
+              ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+                const res = t.update(handle, { inProcessSession: $scope.currentPracticeSession });
+                console.log(res);
+              });
+            } else {
+              ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+                t.update(handle, { inProcessSession: null });
+              });
+            }
+          }, "Continue Later",
+          ["Okay", "Not really"]
+        );
       } else {
-        doUpload = ($scope.active && $scope.currentPracticeSession.ratings.length > 0);
+        ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
+          t.update(handle, { inProcessSession: null });
+        });
       }
 
 	    if (doUpload) {
@@ -377,7 +399,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	        navigator.notification.confirm("Would you like to upload this " + practiceTypeStr + " session?",
 	          function (index) {
 	            NotifyingService.notify("recording-completed", session);
-	            if (index == 1) {
+	            if (index === 1) {
 	              const filesToUpload = [
 	                files.Metadata,
 	                files.LPC,
@@ -395,17 +417,10 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	              $scope.uploadStatus.isUploading = true;
 	            }
 	          }, "Upload",
-	          ["OK", "Later"]);
+	          ["Okay", "Later"]);
         });
-        ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
-          t.update(handle, { inProcessSession: null });
-        });
-	    } else if (doStoreSession) {
-        ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
-          const res = t.update(handle, { inProcessSession: $scope.currentPracticeSession });
-          console.log(res);
-        });
-      }
+
+	    }
 	  });
 
 	  $scope.isRecording = false;
