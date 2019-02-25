@@ -596,6 +596,8 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
     console.log("Starting session");
     ProfileService.getCurrentProfile().then(function (profile) {
       if (profile) {
+        var currentStates = SessionStatsService.getCurrentProfileStats() || {};
+        var changeList = ['resume'];
         if (profile.inProcessSession) {
           $cordovaDialogs.confirm(
             "It looks like you were in the middle of a session. Would you like to pick up where you left off, or start over?",
@@ -603,19 +605,17 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
             ["Resume", "Start over"]
           ).then(function(index) {
             if (index === 1) {
-              var currentStates = SessionStatsService.getCurrentProfileStats() || {};
-              var changeList = ['resume'];
               _checkForAuto(profile, currentStates, changeList, profile.inProcessSessionState);
             } else {
-              var currentStates = SessionStatsService.getCurrentProfileStats() || {};
-              var changeList = ['resume'];
-              _checkForAuto(profile, currentStates, changeList, {});
+              ProfileService.clearInProgressSessionForCurrentProfile().then(function() {
+                _checkForAuto(profile, currentStates, changeList, {});
+              });
             }
           });
         } else {
-          var currentStates = SessionStatsService.getCurrentProfileStats() || {};
-          var changeList = ['resume'];
-          _checkForAuto(profile, currentStates, changeList, {});
+          ProfileService.clearInProgressSessionForCurrentProfile().then(function() {
+            _checkForAuto(profile, currentStates, changeList, {});
+          });
         }
       }
     });
