@@ -1,27 +1,42 @@
 var uploadService = angular.module('uploadService', []);
 
+var fileKeys = [
+  "Ratings", "Metadata", "LPC", "Audio"
+]
+
+var uploadURLs = {
+	Ratings: "https://byunlab.com/start/session/ratings",
+	Metadata: "https://byunlab.com/start/session/metadata",
+	LPC: "https://byunlab.com/start/session/lpc",
+	Audio: "https://byunlab.com/start/session/audio"
+};
+
 // var uploadURLs = [
-// 	"https://byunlab.com/start/session/ratings",
-// 	"https://byunlab.com/start/session/metadata",
-// 	"https://byunlab.com/start/session/lpc",
-// 	"https://byunlab.com/start/session/audio"
+// 	Ratings: "https://non.sense/ratings",
+// 	Metadata: "https://non.sense/metadata",
+// 	LPC: "https://non.sense/lpc",
+// 	Audio: "https://non.sense/audio"
 // ];
 
-var uploadURLs = [
-	"https://non.sense/ratings",
-	"https://non.sense/metadata",
-	"https://non.sense/lpc",
-	"https://non.sense/audio"
-];
-
 // var uploadURLs = [
-// 	"http://localhost:3000/session/ratings",
-// 	"http://localhost:3000/session/metadata",
-// 	"http://localhost:3000/session/lpc",
-// 	"http://localhost:3000/session/audio"
+// 	Ratings: "http://localhost:3000/session/ratings",
+// 	Metadata: "http://localhost:3000/session/metadata",
+// 	LPC: "http://localhost:3000/session/lpc",
+// 	Audio: "http://localhost:3000/session/audio"
 // ];
 
 var downloadStatusCache = {};
+
+function _mimeTypeForFile(value) {
+  if (value.endsWith("csv")) return "text/csv";
+  if (value.endsWith("json")) return "application/json";
+  if (value.endsWith("mp4") || value.endsWith("m4a")) return "audio/mp4";
+  if (value.endsWith("mp3")) return "audio/mpeg";
+  if (value.endsWith("aif")) return "audio/x-aiff";
+  if (value.endsWith("ogg")) return "audio/ogg";
+  if (value.endsWith("wav")) return "audio/vnd.wav";
+  return null;
+}
 
 uploadService.factory('UploadService', function($localForage, $http, $cordovaDialogs, StartServerService)
 {
@@ -60,7 +75,7 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 					options.mimeType = mimeType;
 					options.chunkedMode = true;
 
-					//call getCredentials and set http headers with username and password
+					// call getCredentials and set http headers with username and password
 					StartServerService.getCredentials(function(credentials) {
 						var headers = {
 							'filename':options.fileName,
@@ -104,32 +119,26 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 		},
 
 		uploadPracticeSessionFiles: function(filesToUpload, id, progressCallback, completeCallback, errorCallback) {
-      var mimeTypes = filesToUpload.map(function(value) {
-        if (value.endsWith("csv")) return "text/csv";
-        if (value.endsWith("json")) return "application/json";
-        if (value.endsWith("mp4") || value.endsWith("m4a")) return "audio/mp4";
-        if (value.endsWith("mp3")) return "audio/mpeg";
-        if (value.endsWith("aif")) return "audio/x-aiff";
-        if (value.endsWith("ogg")) return "audio/ogg";
-        if (value.endsWith("wav")) return "audio/vnd.wav";
-      });
 			var uploadTodos = [];
 
-			saveUploadStatusForSessionKey(id, {uploading: true});
+      saveUploadStatusForSessionKey(id, {uploading: true});
 
-			filesToUpload.forEach(function(file, idx) {
-				var progressCb = function(res) {
+      fileKeys.forEach(fileKey => {
+        var filename = filesToUpload[fileKey];
+        var mimeType = _mimeTypeForFile(filename);
+        uploadURL = uploadURLs[fileKey];
+        var progressCb = function(res) {
 					progressCallback(res, idx)
 				};
-				uploadTodos.push(uploadFile(filesToUpload[idx],
-					uploadURLs[idx],
-					mimeTypes[idx],
+				uploadTodos.push(uploadFile(filename,
+					uploadURL,
+					mimeType,
 					id,
 					progressCb,
 					$http,
 					$cordovaDialogs
 				));
-			});
+      });
 
 			Promise.all(uploadTodos)
 				.then(function() {

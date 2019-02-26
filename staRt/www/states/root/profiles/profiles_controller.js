@@ -376,11 +376,14 @@ function compareRecordings(ra, rb) {
 				if (window.AudioPlugin) {
 					if (recording) {
 						var session = {
-							files: [],
 							id: null
             };
-            session.files.push(recording.Metadata, recording.Audio, recording.LPC);
-            session.files.push(session.files.Metadata.replace('-meta.csv', '-ratings.json'));
+            session.files = {
+              Metadata: recording.Metadata,
+              Audio: recording.Audio,
+              LPC: recording.LPC,
+              Ratings: recording.Metadata.replace('-meta.csv', '-ratings.json')
+            };
 						session.id = session.files.Metadata.split('/').pop().substr(0, 36);
 						$scope.uploadCount += 1;
 						UploadService.uploadPracticeSessionFiles(session.files, session.id, progress, win, fail);

@@ -350,7 +350,14 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	  console.log("Audio: " + files.Audio);
 	  var jsonPath = files.Metadata.replace("-meta.csv", "-ratings.json");
 	  $scope.currentPracticeSession.count = $scope.count;
-	  $scope.currentPracticeSession.endTimestamp = Date.now();
+    $scope.currentPracticeSession.endTimestamp = Date.now();
+
+    // Ratings might contain files from previous uploads
+    $scope.currentPracticeSession.ratings.forEach(function (rating) {
+      if (!rating.audioFile) {
+        rating.audioFile = files.Audio.substr(files.Audio.lastIndexOf('/') + 1);
+      }
+    });
 
 	  ProfileService.getCurrentProfile().then((profile) => {
       let doUpload = ($scope.active && $scope.currentPracticeSession.ratings.length > 0);
@@ -401,15 +408,9 @@ practiceDirective.controller( 'PracticeDirectiveController',
               function (index) {
                 NotifyingService.notify("recording-completed", session);
                 if (index === 1) {
-                  const filesToUpload = [
-                    files.Metadata,
-                    files.LPC,
-                    files.Audio,
-                    files.Ratings
-                  ];
                   session.uploadProgress = [0, 0, 0, 0];
                   UploadService.uploadPracticeSessionFiles(
-                    filesToUpload,
+                    files,
                     session.id,
                     uploadCallbackForSession(session),
                     completeCallback,

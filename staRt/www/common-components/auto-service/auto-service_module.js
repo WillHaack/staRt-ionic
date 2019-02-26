@@ -144,20 +144,23 @@ var SessionAuto = function (profile, currentStates, onShow, initialState) {
   var ordinals = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth"];
   var sessionIndex = profile.nBiofeedbackSessionsCompleted + profile.nNonBiofeedbackSessionsCompleted;
 
-  var biofeedback = [];
-  for (var i = 0; i < 4; i++) {
-    if (i >= profile.nBiofeedbackSessionsCompleted) {
-      biofeedback.push("BF");
+  // Re-use the biofeedback constraint, if you have one saved
+  if (!this.state.biofeedback) {
+    var biofeedback = [];
+    for (var i = 0; i < 4; i++) {
+      if (i >= profile.nBiofeedbackSessionsCompleted) {
+        biofeedback.push("BF");
+      }
     }
-  }
-  for (var i = 0; i < 4; i++) {
-    if (i >= profile.nNonBiofeedbackSessionsCompleted) {
-      biofeedback.push("TRAD");
+    for (var i = 0; i < 4; i++) {
+      if (i >= profile.nNonBiofeedbackSessionsCompleted) {
+        biofeedback.push("TRAD");
+      }
     }
-  }
-  _scramble(biofeedback);
+    _scramble(biofeedback);
 
-  this.state.biofeedback = biofeedback.pop();
+    this.state.biofeedback = biofeedback.pop();
+  }
 
   if (this.state.biofeedback === "BF") {
     this.restrictions.rootWaveForced = true;
@@ -205,7 +208,7 @@ var SessionAuto = function (profile, currentStates, onShow, initialState) {
       return null;
     }).bind(this),
     dialog: (function (profile, currentStates, changeList) {
-      var text = this.biofeedback === "BF" ?
+      var text = this.state.biofeedback === "BF" ?
         "Please complete this session with biofeedback." :
         "Please complete this session using traditional (no-biofeedback) practice.";
       return {
