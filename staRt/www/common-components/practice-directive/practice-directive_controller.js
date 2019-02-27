@@ -360,13 +360,12 @@ practiceDirective.controller( 'PracticeDirectiveController',
     });
 
 	  ProfileService.getCurrentProfile().then((profile) => {
-      let doUpload = ($scope.active && $scope.currentPracticeSession.ratings.length > 0);
+      let doUpload = ($scope.currentPracticeSession.ratings.length > 0);
       let doStoreSession = false;
 	    // If the user is not done yet, we should save all the data that we need
       // to restore the practice session.
       if (profile.formalTester) {
         doStoreSession = (
-          $scope.active &&
           $scope.currentPracticeSession.ratings.length > 0 &&
           AutoService.isSessionActive()
         );
@@ -729,15 +728,15 @@ practiceDirective.controller( 'PracticeDirectiveController',
 
 	$scope.myURL = $state.current.name;
 
-	var unsubscribe = $rootScope.$on("$urlChangeStart", function(event, next) {
-	    if (next === $scope.myURL) {
-		$scope.active = true;
-	    } else {
-		$scope.active = false;
-		if ($scope.isRecording) {
-		    $scope.endWordPractice();
-		}
-	    }
+	var unsubscribe = $rootScope.$on("$urlChangeStart", function (event, next) {
+	  if (next === $scope.myURL) {
+	    $scope.active = true;
+	  } else {
+      if ($scope.isRecording) {
+        $scope.endWordPractice();
+      }
+      $scope.active = false;
+	  }
 	});
 
 	$scope.$on("$destroy", function() {
