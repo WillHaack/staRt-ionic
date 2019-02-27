@@ -459,19 +459,18 @@ practiceDirective.controller( 'PracticeDirectiveController',
       // use default highscores
     }
 
+    var sessionPrepTask = Promise.resolve();
+
     if (user.inProcessSession) {
       $scope.currentPracticeSession = Object.assign({}, user.inProcessSession);
-      const previousRatings = $scope.currentPracticeSession.ratings;
+
+      var previousRatings = $scope.currentPracticeSession.ratings;
       $scope.currentWordIdx = 0;
-      forEachPromise(previousRatings, (rating) => {
+      sessionPrepTask = forEachPromise(previousRatings, function (rating) {
         $scope.currentWordIdx++;
         return handleRatingData($scope, rating.rating);
       }).then(() => {
         $scope.currentWordIdx = $scope.currentPracticeSession.ratings.length - 1;
-        if (window.AudioPlugin !== undefined) {
-          AudioPlugin.startRecording(user, sessionDisplayString(), recordingDidStart, recordingDidFail);
-        }
-        advanceWord();
       });
     } else {
       $scope.currentWordIdx = -1;
@@ -481,12 +480,18 @@ practiceDirective.controller( 'PracticeDirectiveController',
         $scope.probe || "quest",
         $scope.count
       );
+    }
 
+    // Even if this is a continuation of a previous session, it still needs
+    // a unique recording ID
+    $scope.currentPracticeSession.id = guid();
+
+    sessionPrepTask.then(function () {
       if (window.AudioPlugin !== undefined) {
         AudioPlugin.startRecording(user, sessionDisplayString(), recordingDidStart, recordingDidFail);
       }
       advanceWord();
-    }
+    });
   }
 
 	function advanceWord() {
