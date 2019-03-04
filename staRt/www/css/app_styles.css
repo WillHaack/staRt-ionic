@@ -2151,8 +2151,7 @@ lpc-directive {
   flex-flow: row;
   width: 100%;
   height: 100%;
-  justify-content: space-around;
-  border: 1px solid violet; }
+  justify-content: space-around; }
   lpc-directive .lpc-contentBox {
     width: 100%;
     height: 100%; }
@@ -2167,8 +2166,7 @@ lpc-directive {
 
 canvas {
   width: 100%;
-  height: 100%;
-  border: 1px solid deeppink; }
+  height: 100%; }
 
 .button-side-container {
   position: absolute;

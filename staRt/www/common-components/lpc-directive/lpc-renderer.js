@@ -45,6 +45,7 @@ lpcDirective.factory('LPCRenderer', function (Drawing, Draw, Mesh, $http)
 
 	Object.defineProperty(LPCRenderer.prototype, 'sliderPosition', {
 		set: function sliderPosition(s) {
+			//0.25, 0.83
 			if (s > 1) s = 1;
 			if (s < 0) s = 0;
 			var sPad = 0.75;

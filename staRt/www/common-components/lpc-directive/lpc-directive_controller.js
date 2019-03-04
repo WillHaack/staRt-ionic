@@ -298,10 +298,10 @@ lpcDirective.controller( 'LpcDirectiveController',
 	////////////////////////////
 
 	function setInitialTarget() {
-		$scope.data.targetF3 = 2440;
-		$scope.updateTarget();
-		console.log('Fake initial target is ' + $scope.data.targetF3 );
-		/*
+		// $scope.data.targetF3 = 2440;
+		// $scope.updateTarget();
+		// console.log('Fake initial target is ' + $scope.data.targetF3 );
+
 		ProfileService.getCurrentProfile().then(function(res)
 		{
 			//console.log('currentProfile:', res)
@@ -324,7 +324,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 				$scope.updateTarget();
 			});
 		})
-		*/
+
 	}
 
 	$scope.pauseHandler = function( pauseState ) {
@@ -335,6 +335,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 	$scope.updateTarget = function() {
 
 		if ($scope.data.targetF3 === undefined) return;
+
 
 		var sliderPosition = linScale($scope.data.targetF3, 0, 4500, 0, 1);
 		$scope.lpcRenderer.sliderPosition = sliderPosition;
