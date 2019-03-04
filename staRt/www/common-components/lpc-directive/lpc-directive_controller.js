@@ -38,16 +38,23 @@ lpcDirective.controller( 'LpcDirectiveController',
 		$scope.$emit('ratingChange', $scope.data.rating);
 	});
 
-	// --------- #HC
 	var canvasElement = $element[0].querySelector('#lpc-canvas');
 	var parentElement = $element[0].querySelector('#lpc-canvas-parentSize');
-	//console.log('canvas ele: ', canvasElement);
 
 	$scope.lpcRenderer = new LPCRenderer(parentElement, canvasElement, 20);
 
 	$scope.lpcHidden = false;
-	$scope.lpcRenderer.doShowSand = $scope.sand;
-	$scope.lpcRenderer.doShowSlider = $scope.slider;
+	// $scope.lpcRenderer.doShowSand = $scope.sand;
+	//$scope.lpcRenderer.doShowSlider = $scope.slider;
+	$scope.lpcRenderer.doShowSlider = $scope.beach;
+
+	$scope.lpcRenderer.beachScene = $scope.beach;
+	var fzText; // displays $scope.data.targetF3
+	var pauseGroup; // holds pause icon from lpcRenderer
+	var playGroup; 	// holds play icon from lpcRenderer
+	if ($scope.beach) {
+		fzText = $element[0].querySelector('#fzText');
+	}
 	$scope.targetNeedsUpdate = false;
 	$scope.targetTextUpdateCount = 0;
 
@@ -101,7 +108,9 @@ lpcDirective.controller( 'LpcDirectiveController',
 					}
 				}
 			}
-			msg.freqScale = 2.2;
+			//msg.freqScale = 2.2;
+			//msg.freqScale = 0.5;
+			msg.freqScale = 1;
 			if (cb)
 				cb(msg);
 		}
@@ -116,19 +125,20 @@ lpcDirective.controller( 'LpcDirectiveController',
 			}
 		};
 
-		function positionForTouch(t) {
+		function positionForTouch(t)
+		{
 			if (t.layerX && t.layerY) {
 				var point = {
-					x: t.layerX - $scope.lpcRenderer.WIDTH / 2,
-					y: t.layerY - $scope.lpcRenderer.HEIGHT / 2
+					x: t.layerX - $scope.lpcRenderer.dim.W / 2,
+					y: t.layerY - $scope.lpcRenderer.dim.H / 2
 				};
 				return point;
 
 			} else {
 				var rect = $scope.lpcRenderer.canvas.getBoundingClientRect();
 				var point = {
-					x: t.pageX - rect.left - $scope.lpcRenderer.WIDTH / 2,
-					y: t.pageY - rect.top - $scope.lpcRenderer.HEIGHT / 2
+					x: t.pageX - rect.left - $scope.lpcRenderer.dim.W / 2,
+					y: t.pageY - rect.top - $scope.lpcRenderer.dim.H / 2
 				};
 				return point;
 			}
@@ -138,7 +148,8 @@ lpcDirective.controller( 'LpcDirectiveController',
 		{
 			if ($scope.active !== true) return;
 
-			if ($scope.lpcRenderer.doShowSlider === false) return;
+			if ($scope.lpcRenderer.beachScene === false) return;
+			//#hc change to beach
 
 			if ($scope.pointerDown === false) {
 				$scope.pointerDown = true;
@@ -150,18 +161,31 @@ lpcDirective.controller( 'LpcDirectiveController',
 				if (e.cancellable) e.preventDefault();
 
 				var point = positionForTouch((e.type === 'touchstart') ? e.changedTouches[0] : e);
-				var px = point.x + $scope.lpcRenderer.WIDTH / 2;
+				var px = point.x + $scope.lpcRenderer.dim.W / 2;
 
 				var intersects = $scope.lpcRenderer.hitTest(point);
-				if (intersects === 'pauseBtn' || intersects === 'targetBtn') {
-					handleButtonPress(intersects);
-				} else {
+				console.log('raycaster says: ' + intersects);
+
+				if (intersects === 'resetBtn') {
+					// handleButtonPress(intersects);
+					$scope.resetF3();
+					$scope.trackingTarget = false;
+
+				} else if(intersects === 'bubBtn'
+					|| intersects === 'playIcon'
+					|| intersects === 'pauseIcon') {
+					$scope.pauseHandler( $scope.lpcPaused );
+					$scope.trackingTarget = false;
+
+				} else if( intersects === 'star' ) {
 					$scope.trackingTarget = true;
-					$scope.data.targetF3 = linScale(px, 0, $scope.lpcRenderer.WIDTH, 0, 4500);
-					$scope.updateTarget();
+					$scope.data.targetF3 = linScale(px, $scope.lpcRenderer.dim.wave.edgeLeft, $scope.lpcRenderer.dim.wave.edgeRight, 0, 4500);
+					//$scope.updateTarget();
+				} else {
+					$scope.trackingTarget = false;
 				}
 			}
-		}
+		} // onTouchStart
 
 		function onTouchMove( e )
 		{
@@ -173,12 +197,12 @@ lpcDirective.controller( 'LpcDirectiveController',
 			if ($scope.trackingTarget) {
 				if (e.cancellable) e.preventDefault();
 
-				var element = $scope.lpcRenderer.renderer.domElement;
+				//var element = $scope.lpcRenderer.renderer.domElement;
 
 				var point = positionForTouch((e.changedTouches !== undefined) ? e.changedTouches[0] : e);
-				var px = point.x + $scope.lpcRenderer.WIDTH / 2;
+				var px = point.x + $scope.lpcRenderer.dim.W / 2;
 
-				$scope.data.targetF3 = linScale(px, 0, $scope.lpcRenderer.WIDTH, 0, 4500);
+				$scope.data.targetF3 = linScale(px, 0, $scope.lpcRenderer.dim.W, 0, 4500);
 				$scope.targetNeedsUpdate = true;
 			}
 		}
@@ -202,34 +226,57 @@ lpcDirective.controller( 'LpcDirectiveController',
 	///////////////////////////////////
 	//  RENDER
 	///////////////////////////////////
+		var c = 0;
+
 		$scope.animate = function () {
 		  if ($scope.active) {
 
-		    if ($scope.lpcRenderer.WIDTH !== $scope.lpcRenderer.parentElement.clientWidth ||
-		      $scope.lpcRenderer.HEIGHT !== $scope.lpcRenderer.parentElement.clientHeight
+		    if ($scope.lpcRenderer.dim.W !== $scope.lpcRenderer.parentElement.clientWidth ||
+		      $scope.lpcRenderer.dim.H !== $scope.lpcRenderer.parentElement.clientHeight
 		    ) {
-		      $scope.updateCanvasSize();
+					console.log('new size');
+					$scope.updateCanvasSize( );
 		    }
 
-		    if ($scope.renderTextSprite) {
-		      if (textSprite === undefined) {
-		        textSprite = Drawing.makeTextSprite(sliderFz);
-		        textSprite.position.set(0, 10, 9);
-		        label.add(textSprite);
-		      } else {
-		        label.remove(textSprite);
-		        textSprite = Drawing.makeTextSprite(sliderFz);
-		        textSprite.position.set(0, 10, 9);
-		        label.add(textSprite);
-		      }
-		    }
+				if ($scope.beach) {
+					fzText.innerHTML = Math.floor($scope.data.targetF3);
 
-		    if ($scope.pause === false) {
+					if ( $scope.lpcPaused === false ) {
+						$scope.getLPCCoefficients($scope.lpcCoefficientCallback);
+					 	pauseGroup = $scope.lpcRenderer.scene.getObjectByName('pauseGroup');
+					 	playGroup = $scope.lpcRenderer.scene.getObjectByName('playGroup');
+					 	pauseGroup.visible = true;
+					 	playGroup.visible = false;
+				} else {
+						pauseGroup = $scope.lpcRenderer.scene.getObjectByName('pauseGroup');
+						playGroup = $scope.lpcRenderer.scene.getObjectByName('playGroup');
+						pauseGroup.visible = false;
+						playGroup.visible = true;
+					}
+				}
+
+		    if (!$scope.beach) {
 		      $scope.getLPCCoefficients($scope.lpcCoefficientCallback);
 		    }
 
+				// if ($scope.renderTextSprite) {
+				//   if (textSprite === undefined) {
+				//     textSprite = Drawing.makeTextSprite(sliderFz);
+				//     textSprite.position.set(0, 10, 9);
+				//     label.add(textSprite);
+				//   } else {
+				//     label.remove(textSprite);
+				//     textSprite = Drawing.makeTextSprite(sliderFz);
+				//     textSprite.position.set(0, 10, 9);
+				//     label.add(textSprite);
+				//   }
+				// }
+
 		    //stats.update();
 		    window.requestAnimFrame($scope.animate);
+
+				//$scope.updateTarget();
+
 		    if ($scope.targetNeedsUpdate) {
 		      if ($scope.targetTextUpdateCount >= maxTargetTextUpdateCount) {
 		        $scope.targetTextUpdateCount = 0;
@@ -239,6 +286,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 		        $scope.targetTextUpdateCount++;
 		      }
 		    }
+
 		    $scope.lpcRenderer.render();
 		  }
 		};
@@ -250,14 +298,18 @@ lpcDirective.controller( 'LpcDirectiveController',
 	////////////////////////////
 
 	function setInitialTarget() {
+		$scope.data.targetF3 = 2440;
+		$scope.updateTarget();
+		console.log('Fake initial target is ' + $scope.data.targetF3 );
+		/*
 		ProfileService.getCurrentProfile().then(function(res)
 		{
-			console.log('currentProfile:', res)
+			//console.log('currentProfile:', res)
 			if (res) {
 				if (res.targetF3)
 				{
 					$scope.data.targetF3 = res.targetF3;
-					console.log('existing targetF3:', res.targetF3)
+					//console.log('existing targetF3:', res.targetF3)
 				}
 				else
 				{
@@ -272,6 +324,12 @@ lpcDirective.controller( 'LpcDirectiveController',
 				$scope.updateTarget();
 			});
 		})
+		*/
+	}
+
+	$scope.pauseHandler = function( pauseState ) {
+		$scope.lpcPaused = !$scope.lpcPaused;
+		//console.log($scope.lpcRenderer.scene.children);
 	}
 
 	$scope.updateTarget = function() {
@@ -280,15 +338,17 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 		var sliderPosition = linScale($scope.data.targetF3, 0, 4500, 0, 1);
 		$scope.lpcRenderer.sliderPosition = sliderPosition;
-		$scope.lpcRenderer.targetFrequency = $scope.data.targetF3;
+		console.log(sliderPosition);
+		//$scope.lpcRenderer.targetFrequency = $scope.data.targetF3;
 
     //Update current user's Target F3
-    ProfileService.runTransactionForCurrentProfile(function(handle, profile, t) {
-      t.update(handle, { targetF3: parseInt($scope.data.targetF3) });
-    });
+    // ProfileService.runTransactionForCurrentProfile(function(handle, profile, t) {
+    //   t.update(handle, { targetF3: parseInt($scope.data.targetF3) });
+    // });
 	};
 
 	$scope.resetF3 = function() {
+		/*
 		ProfileService.getCurrentProfile().then(function(res)
 		{
 			if(res)
@@ -300,6 +360,10 @@ lpcDirective.controller( 'LpcDirectiveController',
 				})
 			}
 		})
+		*/
+		$scope.data.targetF3 = 1440;
+		$scope.updateTarget();
+		console.log('Target reset to: ' + $scope.data.targetF3);
 	};
 
 	$scope.stopPractice = function() {
@@ -315,7 +379,8 @@ lpcDirective.controller( 'LpcDirectiveController',
 	}
 
 	$scope.updateCanvasSize = function() {
-		$scope.lpcRenderer.updateDrawingDim();
+		console.log('size update called');
+		$scope.lpcRenderer.updateDrawingDim( parentElement );
 		$scope.lpcRenderer.updateCameraSize();
 		$scope.lpcRenderer.clearScene();
 		$scope.lpcRenderer.drawScene();
@@ -334,10 +399,10 @@ lpcDirective.controller( 'LpcDirectiveController',
 			window.addEventListener('mouseup', onTouchEnd, false);
 		}
 
-		$scope.pause = false;
+		$scope.lpcPaused = false;
 		$scope.pointerDown = false;
 
-		$scope.updateCanvasSize();
+		$scope.updateCanvasSize( parentElement );
 		$scope.active = true;
 		setInitialTarget();
 		$scope.animate();
@@ -358,7 +423,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 		if (next === $scope.myURL) {
 			$scope.active = true;
 			$scope.animate();
-			$scope.updateCanvasSize();
+			$scope.updateCanvasSize( parentElement );
 			setInitialTarget();
 		} else {
 			$scope.active = false;

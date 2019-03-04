@@ -12,12 +12,15 @@
     </div>
   </div>
 
+  <!-- 'slider-and-canvas': !tutorial, -->
   <div
     id="lpc-canvas-parentSize"
-    ng-class="{
-      'slider-and-canvas': !tutorial,
-      buttons_visible: rate }"
+    ng-class="{ buttons_visible: rate }"
     >
+
+    <!-- #hc! ng-if="beach" -->
+    <div id="fzText"></div>
+
     <!-- Renderer will be inserted here -->
     <canvas
       id="lpc-canvas"
@@ -35,12 +38,12 @@
       Stop {{type}} {{probe ? "probe" : "practice"}}
     </button>
 
-    <button
+    <!-- <button
       ng-click="resetF3()"
       class="reset-button big-button"
       ng-if="reset && !probe">
       Reset Target
-    </button>
+    </button> -->
 
     <button
       ng-click="showLPC()"

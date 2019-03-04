@@ -18,16 +18,28 @@ function linScale(v, inlow, inhigh, outlow, outhigh) {
 		return ov;
 	}
 
-lpcDirective.factory('LPCRenderer', function (Drawing, $http)
+lpcDirective.factory('LPCRenderer', function (Drawing, Draw, Mesh, $http)
 {
 	function LPCRenderer(parentElement, canvasElement, maxNumPeaks)
 	{
-		this._doShowSand = true;
-		this._doShowSlider = true;
+		// this._doShowSand = false;
+		// this._doShowSlider = true;
+		// this.textures = [];
+		// this.dimScene = {};
+		// this.dimWave = {};
+		//this.geometries = [];
+
 		this.maxNumPeaks = maxNumPeaks;
-		this.geometries = [];
-		this.materials = [];
-		this.textures = [];
+		this.materials = undefined;
+		this.dim = {};
+
+		this.graphicsGroup = undefined;
+		this.sliderGroup = undefined;
+		this.bubBtnGroup = undefined;
+		this.peaksGroup = undefined;
+		this.waveGroup = undefined;
+		this.waveMesh = undefined;
+
 		this.initialize(parentElement, canvasElement);
 	}
 
@@ -35,26 +47,33 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 		set: function sliderPosition(s) {
 			if (s > 1) s = 1;
 			if (s < 0) s = 0;
-			if (this.slider !== undefined) this.slider.position.x = linScale(s, 0, 1, this.LEFT, this.RIGHT);
+			var sPad = 0.75;
+			var sLow = this.dim.wave.edgeLeft + (this.dim.col_W * sPad);
+			var sHigh = this.dim.wave.edgeRight - (this.dim.col_W * sPad);
+
+			if (this.sliderGroup !== undefined) {
+				this.sliderGroup.position.x = Draw.linScale(s, 0, 1, sLow, sHigh);
+			}
 		}
 	});
 
-	Object.defineProperty(LPCRenderer.prototype, 'targetFrequency', {
-		set: function targetFrequency(f) {
-			this.updateTextSprite( Math.floor(f) );
-		}
-	});
+	// Object.defineProperty(LPCRenderer.prototype, 'targetFrequency', {
+	// 	set: function targetFrequency(f) {
+	// 		this.updateTextSprite( Math.floor(f) );
+	// 	}
+	// });
 
-	Object.defineProperty(LPCRenderer.prototype, 'doShowSand', {
-		get: function() {
-			return this._doShowSand;
-		},
-		set: function(sand) {
-			return this._doShowSand = sand;
-			if (this.sand !== undefined) this.sand.visible = sand;
-		}
-	});
+	// Object.defineProperty(LPCRenderer.prototype, 'doShowSand', {
+	// 	get: function() {
+	// 		return this._doShowSand;
+	// 	},
+	// 	set: function(sand) {
+	// 		return this._doShowSand = sand;
+	// 		if (this.sand !== undefined) this.sand.visible = sand;
+	// 	}
+	// });
 
+	/*
 	Object.defineProperty(LPCRenderer.prototype, 'doShowSlider', {
 		get: function() {
 			return this._doShowSlider;
@@ -64,120 +83,157 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 			if (this.slider !== undefined) this.slider.visible = slider;
 		}
 	});
+	*/
 
-	LPCRenderer.prototype.updateDrawingDim = function()
+	Object.defineProperty(LPCRenderer.prototype, 'beachScene', {
+		get: function() {
+			return this._beachScene;
+		},
+		set: function( beach ) {
+			if (this.beach !== undefined) {
+				return this._beachScene = false;
+			} else {
+				return this._beachScene = beach;
+			}
+		}
+	});
+
+
+	// ===============================================
+	// SCENE SET UP ----------------------------------
+
+	LPCRenderer.prototype.updateDrawingDim = function(  )
 	{
 		var parentElement = this.parentElement;
-		this.WIDTH = parentElement.clientWidth;
-		this.HEIGHT = parentElement.clientHeight;
-		this.ASPECT = this.WIDTH / this.HEIGHT;
 
-		// 3d coords
-		this.LEFT =  this.WIDTH / -2;
-		this.RIGHT = this.WIDTH / 2;
-		this.TOP = 	this.HEIGHT / 2;
-		this.BOTTOM = this.HEIGHT / -2;
+		this.dim.W = this.parentElement.clientWidth;
+		this.dim.H = this.parentElement.clientHeight;
+		this.dim.aspect = this.dim.W / this.dim.H;
 
-		// obj boundaries
-		this.yOffset = this.HEIGHT * 0.15; //shifts y=0 up due to sand
-		this.waveBottom = this.BOTTOM + this.yOffset;
+		this.dim.edgeLeft = this.dim.W / -2;
+		this.dim.edgeRight = this.dim.W / 2;
+		this.dim.edgeTop = this.dim.H / 2;
+		this.dim.edgeBottom = this.dim.H / -2;
 
-		//waveTop = TOP - yOffset;
-		this.padH = this.WIDTH * 0.05; // scene padding
-		this.padV = this.HEIGHT * 0.05; // scene padding
+		this.dim.row_H = this.dim.H / 4;
+		this.dim.col_W = this.dim.W / 12;
 
-		this.btnRad = 30; // button radius
-		this.btnBox = (this.padH * 2) + this.btnRad;
-
-		this.sliderWidth = this.RIGHT - this.btnBox;
+		if (this._beachScene) {
+			console.log( 'this is beachScene')
+			// wave boundaries
+			this.dim.wave = {
+				edgeLeft: this.dim.edgeLeft + (this.dim.col_W * 3),
+				edgeTop: this.dim.edgeTop - (this.dim.row_H * 1.25),
+				edgeRight: this.dim.edgeRight - (this.dim.col_W * 2),
+				edgeBottom: this.dim.edgeBottom + (this.dim.row_H * 1.25)
+			};
+		} else {
+			console.log( 'not beachScene')
+			// wave boundaries are same as parent ele
+			this.dim.wave = {
+				edgeLeft: this.dim.edgeLeft,
+				edgeTop: this.dim.edgeTop,
+				edgeRight: this.dim.edgeRight,
+				edgeBottom: this.dim.edgeBottom
+			};
+		}
 	};
 
+	// DONE
 	LPCRenderer.prototype.buildStage = function()
 	{
 		this.scene = new THREE.Scene();
-		this.camera = new THREE.OrthographicCamera(this.LEFT, this.RIGHT, this.TOP, this.BOTTOM, 1, 1000);
+		this.camera = new THREE.OrthographicCamera(this.dim.edgeLeft, this.dim.edgeRight, this.dim.edgeTop, this.dim.edgeBottom, 1, 1000);
 		this.scene.add(this.camera);
 	};
 
+	// DONE
 	LPCRenderer.prototype.updateCameraSize = function()
 	{
 		// this.renderer.setPixelRatio( 1 );
-		this.renderer.setSize(this.WIDTH, this.HEIGHT);
-		//this.renderer.setClearColor(0xc5f3ff, 1.0); // OLD
+		// this.renderer.setPixelRatio( window.devicePixelRatio );
+		this.renderer.setSize(this.dim.W, this.dim.H);
 		this.renderer.setClearColor( 0x000000, 0 );
 
 		this.camera.position.set(0, 0, 100);
-		this.camera.aspect = this.WIDTH/this.HEIGHT;
+		this.camera.aspect = this.dim.aspect;
 		this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-		this.camera.left = this.LEFT;
-		this.camera.top = this.TOP;
-		this.camera.right = this.RIGHT;
-		this.camera.bottom = this.BOTTOM;
+		this.camera.left = this.dim.edgeLeft;
+		this.camera.top = this.dim.edgeTop;
+		this.camera.right = this.dim.edgeRight;
+		this.camera.bottom = this.dim.edgeBottom;
 		this.camera.updateProjectionMatrix();
-
-		// this.renderer.setPixelRatio( window.devicePixelRatio );
 	}
 
+	// DONE
 	LPCRenderer.prototype.buildMaterials = function()
 	{
-		// basic mesh mats
-		this.blueMat = new THREE.MeshBasicMaterial({ color: colors.blueMain});
-		this.blueMat.side = THREE.DoubleSide;
-		this.materials.push(this.blueMat);
+		if (this.materials != undefined) { this.materials= undefined; }
 
-		this.yellowMat = new THREE.MeshBasicMaterial({ color: colors.yellowMain});
-		this.materials.push(this.yellowMat);
-		//yellowMat.side = THREE.DoubleSide;
+		this.materials = [];
 
-		this.whiteMat = new THREE.MeshBasicMaterial({ color: colors.white});
-		this.materials.push(this.whiteMat);
-		//whiteMat.side = THREE.DoubleSide;
+		var commonColors = [
+			{ name: 'blueMain', color: 0x53C8E9 },
+			{ name: 'aquaMain', color: 0x50d3d6 },
+			{ name: 'yellowMain', color: 0xFFC95F },
+			{ name: 'yellowHL', color: 0xffe592 },
+			{ name: 'whitePure', color: 0xffffff },
+			{ name: 'bubShad', color: 0xb4e9ed },
+			{ name: 'bubBg', color: 0xf0f9fc },
+			{ name: 'ropeDark', color: 0xe3d5ba },
+			{ name: 'ropeLight', color: 0xf3e7cd }
+		]; // end basicMats
 
-		this.sandMat = new THREE.MeshBasicMaterial({ color: colors.yellowLight});
-		this.materials.push(this.sandMat);
-		//sandMat.side = THREE.DoubleSide;
+		// LINE MAT
+		this.materials.push( new THREE.LineBasicMaterial({
+			color: 0x018B9D,
+			name:'peakMat'
+		}));
 
-		// basic line mats
-		this.peakMat = new THREE.LineBasicMaterial({ color: 0x2095b6 });
-		this.materials.push(this.peakMat);
-		//blueDarkLineMat = new THREE.LineBasicMaterial({ color: 0x2095b6 });
-
-		this.needleMat = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 3 });
-		this.materials.push(this.needleMat);
+		// BASIC MATS
+		for(var i=0; i<commonColors.length; i++) {
+			var item = commonColors[i];
+			var mat = new THREE.MeshBasicMaterial({
+				color: item.color,
+				name: item.name,
+				side: THREE.DoubleSide,
+			});
+			this.materials.push(mat);
+		}
 	};
 
-	// Really dumb hittest that just returns the name of the hit object, if any
-	LPCRenderer.prototype.hitTest = function(point)
-	{
-		// NDC for raycaster. raycaster will ONLY accept NDC for mouse events
-		point.x = 2 * (point.x / this.canvas.clientWidth );
-		point.y = (( point.y / this.canvas.clientHeight ) * -2);
+	// ===============================================
+	// DYNAMIC MESHES: CREATE & UPDATE 	--------------
 
+	//DONE
+	LPCRenderer.prototype.createPeakSegments = function() {
 
-		this.raycaster.setFromCamera(point, this.camera); // gives the raycaster coords from mouse (NDC) & cam (world) positions
+		if (this.peaksGroup === !undefined) return;
 
-		var intersects = this.raycaster.intersectObjects(this.scene.children, true); // cast a ray & get an array of things that it hits. 'recursive = true' is necessary to autoloop thru the descendants of grouped objs (i.e. scence.children's children)
-		//console.log(intersects.length);
-
-		if (intersects.length > 0) { // if the ray hits things
-			for ( var i = 0; i < intersects.length; i++ ) {
-
-				var INTERSECTED = intersects[i];
-
-				return INTERSECTED.object.name;
-			}
+		var peakGeometry = new THREE.Geometry();
+		for (var i=0; i < this.maxNumPeaks; i++) {
+			peakGeometry.vertices.push(new THREE.Vector3(0,0,3));
+			peakGeometry.vertices.push(new THREE.Vector3(0,0,3));
 		}
-	}
+		var peakSegments = new THREE.LineSegments(peakGeometry, this.materials[0]);
+		peakSegments.name = "peaks";
+		peakSegments.geometry.dynamic = true;
+
+		this.peaksGroup.add(peakSegments);
+		//return peakSegments;
+	};
+
 
 	LPCRenderer.prototype.updateWave = function(points, peaks, frequencyScaling)
 	{
-		if (this.peakSegments === undefined) return;
+		// if (this.peakSegments === undefined) return;
+		if (this.peaksGroup === undefined) return;
 
 		// Make an array of all the topmost points
 		var shapeArr = [];
 		for (var i=0; i<points.length; i++) {
-			var point = points[i] * this.TOP;
-			var px = linScale(i * frequencyScaling, 0, points.length-1, this.LEFT, this.RIGHT);
+			var point = points[i] * this.dim.wave.edgeTop; //this.TOP;
+			var px = Draw.linScale(i * frequencyScaling, 0, points.length-1, this.dim.wave.edgeLeft, this.dim.wave.edgeRight);
 			shapeArr.push([px, point]);
 		}
 
@@ -186,8 +242,15 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 			var tmpGeometry = new THREE.Geometry();
 
 			for (var i=1; i<shapeArr.length; i++) {
-				tmpGeometry.vertices.push(new THREE.Vector3(shapeArr[i-1][0], this.BOTTOM, 0));
-				tmpGeometry.vertices.push(new THREE.Vector3(shapeArr[i][0], shapeArr[i][1], 0));
+				tmpGeometry.vertices.push(new THREE.Vector3(
+					shapeArr[i-1][0],
+					this.dim.wave.edgeBottom,
+					0));
+				tmpGeometry.vertices.push(new THREE.Vector3(
+					shapeArr[i][0],
+					shapeArr[i][1],
+					0));
+
 				if (i>0) {
 					tmpGeometry.faces.push(new THREE.Face3((i-1)*2, (i-1)*2 + 1, (i-1)*2 + 2));
 					tmpGeometry.faces.push(new THREE.Face3((i-1)*2 + 2, (i-1)*2 + 1, (i-1)*2 + 3));
@@ -210,7 +273,7 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 			var p = this.waveGeometry.attributes.position.array;
 			var idx = (i-1) * 18;
 			p[idx++] = shapeArr[i-1][0]; // Bottom-left
-			p[idx++] = this.BOTTOM; //bottomEdge;
+			p[idx++] = this.dim.wave.edgeBottom; //bottomEdge;
 			p[idx++] = 0;
 			p[idx++] = shapeArr[i-1][0]; // Top-left
 			p[idx++] = shapeArr[i-1][1];
@@ -219,10 +282,10 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 			p[idx++] = shapeArr[i][1];
 			p[idx++] = 0;
 			p[idx++] = shapeArr[i-1][0]; // Bottom-left
-			p[idx++] = this.BOTTOM; //bottomEdge;
+			p[idx++] = this.dim.wave.edgeBottom; //bottomEdge;
 			p[idx++] = 0;
 			p[idx++] = shapeArr[i][0]; // Bottom-right
-			p[idx++] = this.BOTTOM; //bottomEdge;
+			p[idx++] = this.dim.wave.edgeBottom; //bottomEdge;
 			p[idx++] = 0;
 			p[idx++] = shapeArr[i][0]; // Top-right
 			p[idx++] = shapeArr[i][1];
@@ -232,273 +295,144 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 		this.waveGeometry.attributes.position.needsUpdate = true;
 
 		if (this.waveMesh === undefined) {
-			this.waveMesh = new THREE.Mesh(this.waveGeometry, this.blueMat);
-			this.waveMesh.name = "wave";
-			this.scene.add( this.waveMesh );
-		}
+			if (this._beachScene) {
+				this.waveMesh = new THREE.Mesh(this.waveGeometry, this.materials[2]);
+			} else { // if ( !beachScene )
+				this.waveMesh = new THREE.Mesh(this.waveGeometry, this.materials[1]);
+			} // end ( !beachScene )
+			this.waveGroup.add( this.waveMesh );
+			this.waveGroup.name = "wave";
+			this.scene.add( this.waveGroup );
+		} // end if (this.waveMesh === undefined)
 
-		// Update peaks
+		this.updatePeaks( peaks, frequencyScaling );
+	}; // end updateWave();
+
+	//DONE
+	// updatePeaks() should only be called from w/in updateWave()
+	LPCRenderer.prototype.updatePeaks = function(peaks, frequencyScaling)
+	{
+		var peakSegments = this.scene.getObjectByName('peaks');
+
 		for (var i = 0; i < this.maxNumPeaks; i++) {
-			var px = 0, py = this.BOTTOM;
+			var px = 0, py = this.dim.wave.edgeBottom;
 			if (i < peaks.length) {
 				var peak = peaks[i];
-				px = linScale(peak.X, -1, 1, 0, frequencyScaling);
-				px = linScale(px, 0, 1, this.LEFT, this.RIGHT);
-				py = linScale(peak.Y, 1, -1, this.TOP, this.BOTTOM);
+				px = Draw.linScale(peak.X, -1, 1, 0, frequencyScaling);
+				px = Draw.linScale(px, 0, 1, this.dim.wave.edgeLeft, this.dim.wave.edgeRight);
+				py = Draw.linScale(peak.Y, 1, -1, this.dim.wave.edgeTop, this.dim.wave.edgeBottom);
 			}
-			this.peakSegments.geometry.vertices[2*i].x = px;
-			this.peakSegments.geometry.vertices[2*i].y = py;
-			this.peakSegments.geometry.vertices[2*i+1].x = px;
-			this.peakSegments.geometry.vertices[2*i+1].y = this.BOTTOM;
+			peakSegments.geometry.vertices[2*i].x = px;
+			peakSegments.geometry.vertices[2*i].y = py;
+			peakSegments.geometry.vertices[2*i+1].x = px;
+			peakSegments.geometry.vertices[2*i+1].y = this.dim.wave.edgeBottom;
 		}
+		peakSegments.geometry.verticesNeedUpdate = true;
+	}; // updatePeaks()
 
-		this.peakSegments.geometry.verticesNeedUpdate = true;
-	};
+
+	// ===============================================
+	// COMPOSE THE SCENE -----------------------------
 
 	LPCRenderer.prototype.drawScene = function()
 	{
-		this.slider = new THREE.Object3D();
-		this.slider.name = "slider";
+		this.peaksGroup = new THREE.Group();
+		this.peaksGroup.name = 'peaksGroup';
 
-		this.slider.position.set(-100000, 0, 9); // offscreen to start
-		this.slider.visible = this.doShowSlider;
-		this.scene.add(this.slider);
+		this.waveGroup = new THREE.Group();
+		this.waveGroup.name = 'waveGroup';
 
-		this.needle = this.createNeedle();
-		this.slider.add(this.needle);
+		if (this._beachScene) {
+			//console.log( 'Beach is TRUE');
 
-		this.sand = this.createSand();
-		this.scene.add(this.sand);
+			this.graphicsGroup = new THREE.Group();
+			this.graphicsGroup.name = 'graphicsGroup';
 
-		this.label = this.createLabel();
-		this.label.geometry.computeBoundingBox();
-		this.slider.add(this.label);
+			this.sliderGroup = new THREE.Group();
+			this.sliderGroup.name = 'sliderGroup';
 
-		this.textSprite = this.initializeTextSprite();
+			this.bubBtnGroup = new THREE.Group();
+			this.bubBtnGroup.name = 'bubBtnGroup';
 
-		// Could eventually use this to draw the star as an SVG---only problem
-		// is it's not supported by Safari.
-		// $http.get('img/star2.svg').then( (function(res) {
-		// 	this.createStar(res.data, (function(star) {
-		// 		this.star = star;
-		// 		this.star.position.set(5, -120, 10);
-		// 		this.slider.add(this.star);
-		// 	}).bind(this) );
-		// }).bind(this) );
+			/* --------------------------------------------------
+				Synchronously makes each non-dynamic mesh and
+				adds them to their Group, and then to the Scene
 
-		var textureLoader = new THREE.TextureLoader();
-		textureLoader.load('img/star.png', (function(starTex) {
-			this.createStarFromTexture(starTex, (function(starSprite) {
-				this.star = starSprite;
-				this.star.position.set(0, -125, 10);
-				this.slider.add(this.star);
-			}).bind(this));
-		}).bind(this));
+				ARGS:
+						- All 'Mesh.create' functions need:
+								1.) the current dim,
+								2.) a parent Group
+						- 'Mesh.create' methods that do NOT reply entirely on the
+							svgLoaderToMesh will need:
+							3.) a material in this.materials
+							4.) any req'd shape helpers from Draw
+				*/
 
-		this.pauseButton = this.createPauseButton();
-		this.scene.add(this.pauseButton);
+			Mesh.createFoamGroup( this.dim, this.graphicsGroup );
 
-		this.targetButton = this.createTargetButton();
-		this.scene.add(this.targetButton);
+			var roundedRect = Draw.roundedRect;
+			Mesh.createPostLeft( this.dim, this.graphicsGroup, this.materials, roundedRect );
 
-		this.targetFrequency = this.savedTarget;
+			Mesh.createPostRight( this.dim, this.graphicsGroup );
 
-		this.peakSegments = this.createPeakSegments();
-		this.scene.add(this.peakSegments);
+			Mesh.createBubBtn( this.dim, this.bubBtnGroup, this.materials );
+			this.scene.add( this.bubBtnGroup );
 
-		// temporarily disable both of those silly buttons
-		this.pauseButton.visible = false;
-		this.targetButton.visible = false;
+			Mesh.createSlider( this.dim, this.sliderGroup, this.materials );
+			this.scene.add( this.sliderGroup );
+
+			// ----------------------------------
+			this.graphicsGroup.position.z = 2;
+			this.scene.add( this.graphicsGroup );
+
+			this.createPeakSegments();
+			this.peaksGroup.position.set(0, -5, 1);
+			this.waveGroup.position.set(0, -5, 0);
+
+		} else {
+			console.log( 'Beach is FALSE');
+			this.peakSegments = this.createPeakSegments();
+
+		}
+		this.scene.add(this.peaksGroup);
+		// console.log(this.dimWave);
+		// console.log(this.dim);
 	};
 
 	LPCRenderer.prototype.clearScene = function()
 	{
-		this.scene.remove(this.slider);
-		this.scene.remove(this.sand);
-		this.scene.remove(this.pauseButton);
-		this.scene.remove(this.targetButtonButton);
-		this.scene.remove(this.peakSegments);
-
-		this.geometries = [];
+		this.scene.remove( this.graphicsGroup );
+		this.scene.remove( this.sliderGroup );
+		this.scene.remove( this.bubBtnGroup );
+		this.scene.remove( this.peaksGroup );
+		this.peaksGroup = undefined;
 	}
 
-	LPCRenderer.prototype.createLabel = function()
+	// ================================================
+	// EVERYTHING ELSE --------------------------------
+
+	// Really simple hittest that just returns the name of the hit object, if any
+	LPCRenderer.prototype.hitTest = function(point)
 	{
-		var labelWidth = 75;
-		var labelHeight = 35;
-		var labelRad = 10;
+		// NDC for raycaster. raycaster will ONLY accept NDC for mouse events
+		point.x = 2 * (point.x / this.canvas.clientWidth );
+		point.y = (( point.y / this.canvas.clientHeight ) * -2);
 
-		var labelShape = new THREE.Shape();
-		Drawing.roundedRect(labelShape, 0, 0, labelWidth , labelHeight, labelRad);
 
-		var labelGeom = new THREE.ShapeGeometry(labelShape);
-		var label = new THREE.Mesh(labelGeom, this.whiteMat);
-		this.geometries.push(labelGeom);
+		this.raycaster.setFromCamera(point, this.camera); // gives the raycaster coords from mouse (NDC) & cam (world) positions
 
-		label.position.set(labelWidth/-2, this.TOP - this.padH, 8 );
-		label.name = "label";
+		var intersects = this.raycaster.intersectObjects(this.scene.children, true); // cast a ray & get an array of things that it hits. 'recursive = true' is necessary to autoloop thru the descendants of grouped objs (i.e. scence.children's children)
+		//console.log(intersects.length);
 
-		return label;
-	};
+		if (intersects.length > 0) { // if the ray hits things
+			for ( var i = 0; i < intersects.length; i++ ) {
 
-	LPCRenderer.prototype.initializeTextSprite = function()
-	{
-		this.canvas2d = document.createElement('canvas');
-		this.canvas2d.width = 256;
-		this.canvas2d.height = 128;
+				var INTERSECTED = intersects[i];
 
-		this.textTexture = new THREE.CanvasTexture( this.canvas2d );
-		this.textures.push(this.textTexture);
-		this.spriteMaterial = new THREE.SpriteMaterial( {
-			map: this.textTexture,
-		});
-		this.materials.push(this.spriteMaterial);
-
-		this.textSprite = new THREE.Sprite( this.spriteMaterial );
-		this.textSprite.scale.set(256, 128, 1.0);
-		this.textSprite.name = "fzLabel";
-
-		var px = (this.label.geometry.boundingBox.max.x) / 2;
-		var py = (this.label.geometry.boundingBox.max.y) / 2;
-
-		this.textSprite.position.set(px, py, 0);
-		this.label.add( this.textSprite );
-	};
-
-	LPCRenderer.prototype.updateTextSprite = function(message)
-	{
-		if (this.canvas2d === undefined) return;
-
-		var color = "#4d4d4d";
-
-		var ctx = this.canvas2d.getContext('2d');
-
-		ctx.clearRect(0, 0, 256, 128);
-
-		ctx.font = "20px Quicksand";
-		ctx.fillStyle = color;
-		ctx.textAlign = "center";
-		ctx.textBaseline = "middle";
-		ctx.fillText(message, this.canvas2d.width/2, this.canvas2d.height/2);
-
-		this.textTexture.needsUpdate = true;
-	}
-
-	LPCRenderer.prototype.createSand = function() {
-		var sandShape = new THREE.Shape();
-		sandShape.moveTo(this.LEFT, this.waveBottom);
-		sandShape.lineTo(this.RIGHT, this.waveBottom);
-		sandShape.lineTo(this.RIGHT, this.BOTTOM);
-		sandShape.lineTo(this.LEFT, this.BOTTOM);
-		sandShape.lineTo(this.LEFT, this.waveBottom);
-
-		var sandGeom = new THREE.ShapeGeometry(sandShape);
-		this.geometries.push(sandGeom);
-
-		sand = new THREE.Mesh(sandGeom, this.sandMat);
-		sand.name = "sand";
-
-		sand.position.set(0,0,9);
-		sand.visible = this.doShowSand;
-
-		return sand;
-	};
-
-	LPCRenderer.prototype.createNeedle = function() {
-		var needleGeom = new THREE.Geometry();
-		this.geometries.push(needleGeom);
-
-		needleGeom.vertices.push(
-			new THREE.Vector3(0, this.waveBottom, 7),
-			new THREE.Vector3(0, this.TOP, 7 )
-		);
-
-		var needle = new THREE.Line(needleGeom, this.needleMat);
-		needle.name = "needle";
-
-		return needle;
-	};
-
-	LPCRenderer.prototype.createStar = function(starSvg, callback) {
-		var cwidth = 256;
-		var cheight = 256;
-		var canvas2d = document.createElement('canvas');
-		canvas2d.width = cwidth;
-		canvas2d.height = cheight;
-		var ctx = canvas2d.getContext('2d');
-
-		var DOMURL = window.URL || window.webkitURL || window;
-
-		var img = new Image();
-		var svg = new Blob([starSvg], {type: 'image/svg+xml'});
-		var url = DOMURL.createObjectURL(svg);
-
-		img.onload = function () {
-			ctx.drawImage(img, 0, 0);
-			DOMURL.revokeObjectURL(url);
-
-			var tex = new THREE.CanvasTexture(canvas2d);
-
-			var spriteMaterial = new THREE.SpriteMaterial( {
-				map: tex
-			} );
-
-			var starSprite = new THREE.Sprite(spriteMaterial);
-			starSprite.scale.set(65, 65, 1.0);
-
-			callback(starSprite);
+				return INTERSECTED.object.name;
+			}
 		}
-
-		img.src = url;
 	}
-
-	LPCRenderer.prototype.createStarFromTexture = function(starTexture, callback) {
-		var spriteMaterial = new THREE.SpriteMaterial( { map: starTexture } );
-		var starSprite = new THREE.Sprite(spriteMaterial);
-		starSprite.scale.set(55, 65, 1.0);
-
-		callback(starSprite);
-	}
-
-	LPCRenderer.prototype.createPauseButton = function() {
-		var pauseShape = new THREE.Shape();
-		var radius = 30;
-		Drawing.circle(pauseShape, 0, 0, radius);
-
-		var pauseGeom = new THREE.ShapeGeometry(pauseShape);
-		pauseBtn = new THREE.Mesh(pauseGeom, this.yellowMat);
-
-		pauseBtn.position.set(this.RIGHT - ((radius / 2) + this.padH), this.TOP - ((radius / 2) + this.padV), 10);
-		pauseBtn.name = "pauseBtn";
-
-		return pauseBtn;
-	};
-
-	LPCRenderer.prototype.createTargetButton = function() {
-		var targetShape = new THREE.Shape();
-		var radius = 30;
-		Drawing.circle(targetShape, 0, 0, radius);
-
-		var targetGeom = new THREE.ShapeGeometry(targetShape);
-		targetBtn = new THREE.Mesh(targetGeom, this.yellowMat);
-
-		targetBtn.position.set(this.RIGHT - ((radius / 2) + this.padH), this.BOTTOM + (this.yOffset / 2), 10);
-		targetBtn.name = "targetBtn";
-
-		return targetBtn;
-	};
-
-	LPCRenderer.prototype.createPeakSegments = function() {
-		var peakGeometry = new THREE.Geometry();
-		for (var i=0; i < this.maxNumPeaks; i++) {
-			peakGeometry.vertices.push(new THREE.Vector3(0,0,1));
-			peakGeometry.vertices.push(new THREE.Vector3(0,0,1));
-		}
-		var peakSegments = new THREE.LineSegments(peakGeometry, this.peakMat);
-		peakSegments.geometry.dynamic = true;
-
-		return peakSegments;
-	};
 
 	LPCRenderer.prototype.render = function() {
 		this.renderer.render(this.scene, this.camera);
@@ -516,15 +450,13 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 
 		this.savedTarget = 2247;
 
+		//console.log(this.parentElement);
 		this.updateDrawingDim();
-
 		this.buildStage();
-
 		this.updateCameraSize();
-
 		this.buildMaterials();
 
-		this.drawScene();
+		//this.drawScene(); // this will be called from the controller
 
 		this.raycaster = new THREE.Raycaster();
 	}
@@ -532,10 +464,10 @@ lpcDirective.factory('LPCRenderer', function (Drawing, $http)
 	LPCRenderer.prototype.destroy = function() {
 		delete this.renderer;
 		delete this.canvas;
-		delete this.canvas2d;
-		delete this.textSprite;
-		delete this.textTexture;
-		delete this.spriteMaterial;
+		// delete this.canvas2d;
+		// delete this.textSprite;
+		// delete this.textTexture;
+		// delete this.spriteMaterial;
 
 		// Remove all children
 		while (this.scene.children.length) {
