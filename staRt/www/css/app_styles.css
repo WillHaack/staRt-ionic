@@ -1808,7 +1808,7 @@ div.needleBox {
     position: relative;
     display: flex;
     flex-direction: column;
-    padding-left: 8.33333vw;
+    padding-left: 0;
     height: 100%;
     width: 100%;
     justify-content: space-around;
@@ -1816,7 +1816,8 @@ div.needleBox {
 
 .quiz-menu-page {
   height: 100%;
-  padding: 16.66667vh 8.33333vw; }
+  padding: 16.66667vh 8.33333vw;
+  padding-left: 16.66667vw; }
 
 .quiz-menu-row {
   position: relative;
@@ -1903,25 +1904,19 @@ div.needleBox {
     width: 100%;
     height: 100%;
     z-index: 1; }
-    .quest-layout_view-container .quest-layout_bg-container .img-bg_qtBF--BG {
+    .quest-layout_view-container .quest-layout_bg-container .img-bg_BF {
       background-color: #c2f2f2;
-      background-image: url("../img/bgImg/bg_quest-BF--background.svg");
+      background-image: url("../img/bgImg/bg-BF.svg");
       z-index: 1; }
     .quest-layout_view-container .quest-layout_bg-container .img-bg_qtNoBF {
       background-color: #c2f2f2;
       background-image: url("../img/bgImg/bg_quest-NoBF.svg");
       z-index: 1; }
-    .quest-layout_view-container .quest-layout_bg-container .img-bg_qtBF--MG {
-      background-image: url("../img/bgImg/bg_quest-BF--midground.svg");
-      z-index: 3; }
-    .quest-layout_view-container .quest-layout_bg-container .img-bg_qtBF--FG {
-      background-image: url("../img/bgImg/bg_quest-BF--foreground.svg");
-      z-index: 5; }
   .quest-layout_view-container .quest-layout_content-container {
     position: relative;
     display: flex;
     flex-flow: column nowrap;
-    padding-left: 8.33333vw;
+    padding-left: 0;
     height: 100%;
     width: 100%;
     justify-content: space-around;
@@ -1956,7 +1951,9 @@ div.needleBox {
 
 .quest-menu-page {
   height: 100%;
-  padding: 16.66667vh 8.33333vw; }
+  padding: 16.66667vh 8.33333vw;
+  padding-left: 16.66667vw;
+  border: 1px solid pink; }
 
 .quest-menu-row {
   position: relative;
@@ -1998,7 +1995,8 @@ div.needleBox {
   flex-flow: column nowrap;
   justify-content: space-around;
   padding: 0 8.33333vw;
-  padding-top: 16.66667vh; }
+  padding-top: 16.66667vh;
+  padding-left: 16.66667vw; }
 
 .quest-config-row {
   position: relative;
@@ -2145,6 +2143,7 @@ div.needleBox {
       background-color: #D7F4F3; }
 
 lpc-directive {
+  position: relative;
   display: -webkit-flex;
   -webkit-flex: 1;
   margin: auto;
@@ -2161,12 +2160,14 @@ lpc-directive {
   width: 100%;
   height: 100%;
   display: block;
-  align-items: center;
-  border: 1px solid lime; }
+  align-items: center; }
 
 canvas {
   width: 100%;
   height: 100%; }
+
+.dev_lpcBorder {
+  border: 1px solid deeppink; }
 
 .button-side-container {
   position: absolute;
@@ -2314,7 +2315,8 @@ canvas {
   opacity: 0.5; }
 
 .practice-directive-container {
-  height: 100%; }
+  height: 100%;
+  width: 100%; }
 
 .promptBox-layout {
   position: absolute;
@@ -2323,14 +2325,15 @@ canvas {
   justify-content: center;
   margin-top: 16.66667vh;
   height: 16.66667vh;
-  width: 96%; }
+  width: 100%; }
   .promptBox-layout .promptBox {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-end;
     align-items: center;
     height: 16.66667vh;
-    width: 54.16667vw;
+    width: 58.33333vw;
+    margin-left: 8.33333vw;
     border-bottom: 1px solid white; }
 
 .words-word {
@@ -2355,10 +2358,9 @@ canvas {
   width: 100%; }
   .lpcDir-layout_quiz-quest lpc-directive div.lpc-contentBox div#lpc-canvas-parentSize {
     position: relative;
-    top: 41.66667vh;
-    left: 16.66667vw;
-    height: 41.66667vh;
-    width: 58.33333vw; }
+    width: 100%;
+    height: 66.66667vh;
+    top: 16.66667vh; }
 
 .coin-row-layout {
   position: absolute;

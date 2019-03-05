@@ -6,7 +6,7 @@
 
 	freePlay.controller('FreePlayController', function($scope, $timeout, $localForage, StartUIState, NotifyingService, $rootScope, $state)
 	{
-		//console.log('FreePlayController here!');
+		console.log('FreePlayController here!');
 
 		$scope.data = {
 			navTitle: "Free Play"

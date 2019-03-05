@@ -1,34 +1,9 @@
 var lpcDirective = angular.module('lpcDirective');
 
-var colors = Object.freeze({
-	yellowMain: 0xFFC95F,
-	yellowLight: 0xFFECCB,
-	blueMain: 0x53C8E9,
-	blueLight: 0xC5F3FF,
-	blueDark: 0x018B9D,
-	white: 0xffffff,
-	grayTxt: 0x4d4d4d
-});
-
-function linScale(v, inlow, inhigh, outlow, outhigh) {
-		var range = outhigh - outlow;
-		var domain = inhigh - inlow;
-		var ov = (v - inlow) / domain;
-		ov = (ov * range) + outlow;
-		return ov;
-	}
-
-lpcDirective.factory('LPCRenderer', function (Drawing, Draw, Mesh, $http)
+lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 {
 	function LPCRenderer(parentElement, canvasElement, maxNumPeaks)
 	{
-		// this._doShowSand = false;
-		// this._doShowSlider = true;
-		// this.textures = [];
-		// this.dimScene = {};
-		// this.dimWave = {};
-		//this.geometries = [];
-
 		this.maxNumPeaks = maxNumPeaks;
 		this.materials = undefined;
 		this.dim = {};
@@ -45,15 +20,18 @@ lpcDirective.factory('LPCRenderer', function (Drawing, Draw, Mesh, $http)
 
 	Object.defineProperty(LPCRenderer.prototype, 'sliderPosition', {
 		set: function sliderPosition(s) {
-			//0.25, 0.83
 			if (s > 1) s = 1;
 			if (s < 0) s = 0;
-			var sPad = 0.75;
-			var sLow = this.dim.wave.edgeLeft + (this.dim.col_W * sPad);
-			var sHigh = this.dim.wave.edgeRight - (this.dim.col_W * sPad);
+
+			// padding for slider area.
+			var sPadLow = 0;
+			var sPadHigh = 0.75;
+			var sLow = this.dim.wave.edgeLeft + (this.dim.col_W * sPadLow);
+			var sHigh = this.dim.wave.edgeRight - (this.dim.col_W * sPadHigh);
 
 			if (this.sliderGroup !== undefined) {
 				this.sliderGroup.position.x = Draw.linScale(s, 0, 1, sLow, sHigh);
+				//console.log('s: ' + s);
 			}
 		}
 	});
@@ -103,7 +81,7 @@ lpcDirective.factory('LPCRenderer', function (Drawing, Draw, Mesh, $http)
 	// ===============================================
 	// SCENE SET UP ----------------------------------
 
-	LPCRenderer.prototype.updateDrawingDim = function(  )
+	LPCRenderer.prototype.updateDrawingDim = function()
 	{
 		var parentElement = this.parentElement;
 
@@ -216,7 +194,12 @@ lpcDirective.factory('LPCRenderer', function (Drawing, Draw, Mesh, $http)
 			peakGeometry.vertices.push(new THREE.Vector3(0,0,3));
 			peakGeometry.vertices.push(new THREE.Vector3(0,0,3));
 		}
-		var peakSegments = new THREE.LineSegments(peakGeometry, this.materials[0]);
+
+		var mat = this.materials.filter(function (obj) {
+			return obj.name === 'peakMat';
+		});
+
+		var peakSegments = new THREE.LineSegments(peakGeometry, mat[0]);
 		peakSegments.name = "peaks";
 		peakSegments.geometry.dynamic = true;
 
@@ -344,8 +327,6 @@ lpcDirective.factory('LPCRenderer', function (Drawing, Draw, Mesh, $http)
 		this.waveGroup.name = 'waveGroup';
 
 		if (this._beachScene) {
-			//console.log( 'Beach is TRUE');
-
 			this.graphicsGroup = new THREE.Group();
 			this.graphicsGroup.name = 'graphicsGroup';
 
@@ -396,8 +377,6 @@ lpcDirective.factory('LPCRenderer', function (Drawing, Draw, Mesh, $http)
 
 		}
 		this.scene.add(this.peaksGroup);
-		// console.log(this.dimWave);
-		// console.log(this.dim);
 	};
 
 	LPCRenderer.prototype.clearScene = function()
@@ -419,12 +398,11 @@ lpcDirective.factory('LPCRenderer', function (Drawing, Draw, Mesh, $http)
 		point.x = 2 * (point.x / this.canvas.clientWidth );
 		point.y = (( point.y / this.canvas.clientHeight ) * -2);
 
-
-		this.raycaster.setFromCamera(point, this.camera); // gives the raycaster coords from mouse (NDC) & cam (world) positions
+		// gives the raycaster coords from mouse (NDC) & cam (world) positions
+		this.raycaster.setFromCamera(point, this.camera);
 
 		var intersects = this.raycaster.intersectObjects(this.scene.children, true); // cast a ray & get an array of things that it hits. 'recursive = true' is necessary to autoloop thru the descendants of grouped objs (i.e. scence.children's children)
 		//console.log(intersects.length);
-
 		if (intersects.length > 0) { // if the ray hits things
 			for ( var i = 0; i < intersects.length; i++ ) {
 
@@ -451,13 +429,11 @@ lpcDirective.factory('LPCRenderer', function (Drawing, Draw, Mesh, $http)
 
 		this.savedTarget = 2247;
 
-		//console.log(this.parentElement);
 		this.updateDrawingDim();
 		this.buildStage();
 		this.updateCameraSize();
 		this.buildMaterials();
-
-		//this.drawScene(); // this will be called from the controller
+		//this.drawScene(); // this is called from the controller
 
 		this.raycaster = new THREE.Raycaster();
 	}
@@ -465,17 +441,13 @@ lpcDirective.factory('LPCRenderer', function (Drawing, Draw, Mesh, $http)
 	LPCRenderer.prototype.destroy = function() {
 		delete this.renderer;
 		delete this.canvas;
-		// delete this.canvas2d;
-		// delete this.textSprite;
-		// delete this.textTexture;
-		// delete this.spriteMaterial;
 
 		// Remove all children
 		while (this.scene.children.length) {
 			this.scene.remove(this.scene.children[0]);
 		}
 
-		var disposables = ["geometries", "materials", "textures"];
+		var disposables = ["geometries", "materials"];
 		for (var k = 0; k < disposables.length; k++) {
 			var junk = this[disposables[k]];
 			for (var i=0; i<junk.length; i++) {
@@ -483,9 +455,8 @@ lpcDirective.factory('LPCRenderer', function (Drawing, Draw, Mesh, $http)
 			}
 		}
 
-		this.geometries = [];
+		//this.geometries = [];
 		this.materials = [];
-		this.textures = [];
 	}
 
 	return LPCRenderer;

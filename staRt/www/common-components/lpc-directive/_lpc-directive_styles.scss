@@ -3,6 +3,7 @@
 // ================================================
 
 lpc-directive { // Parent ele. Layout class.
+	position: relative;
 	display: -webkit-flex;
 	-webkit-flex: 1;
 	margin: auto;
@@ -29,7 +30,7 @@ lpc-directive { // Parent ele. Layout class.
 	height: 100%;
 	display: block; //#hc
 	align-items: center;
-	border: 1px solid lime;
+	//border: 1px solid deeppink;
 }
 
 canvas {
@@ -38,11 +39,10 @@ canvas {
 	// border: 1px solid deeppink;
 }
 
-// .reset-button {
-// 	margin-top: 0px;
-//   margin-right: 0px;
-// 	//border: 1px solid cyan;
-// }
+.dev_lpcBorder {
+	border: 1px solid deeppink;
+}
+
 
 // ================================================
 // RATING + RESET BUTTONS

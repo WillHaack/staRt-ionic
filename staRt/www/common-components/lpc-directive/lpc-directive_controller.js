@@ -44,17 +44,12 @@ lpcDirective.controller( 'LpcDirectiveController',
 	$scope.lpcRenderer = new LPCRenderer(parentElement, canvasElement, 20);
 
 	$scope.lpcHidden = false;
-	// $scope.lpcRenderer.doShowSand = $scope.sand;
-	//$scope.lpcRenderer.doShowSlider = $scope.slider;
-	$scope.lpcRenderer.doShowSlider = $scope.beach;
 
 	$scope.lpcRenderer.beachScene = $scope.beach;
-	var fzText; // displays $scope.data.targetF3
-	var pauseGroup; // holds pause icon from lpcRenderer
-	var playGroup; 	// holds play icon from lpcRenderer
-	if ($scope.beach) {
-		fzText = $element[0].querySelector('#fzText');
-	}
+	var fzText; 		// displays $scope.data.targetF3
+	var pauseGroup;	// holds pause icon from lpcRenderer
+	var playGroup;	// holds play icon from lpcRenderer
+	if ($scope.beach) { fzText = $element[0].querySelector('#fzText'); }
 	$scope.targetNeedsUpdate = false;
 	$scope.targetTextUpdateCount = 0;
 
@@ -68,7 +63,6 @@ lpcDirective.controller( 'LpcDirectiveController',
 				$scope.makeDummyData(cb);
 			}
 		};
-
 
 		var pointCount = 256;
 		var dummyPoints = [];
@@ -144,12 +138,14 @@ lpcDirective.controller( 'LpcDirectiveController',
 			}
 		}
 
+		// fx that updates for screen coords
+
+
 		function onTouchStart( e )
 		{
 			if ($scope.active !== true) return;
 
 			if ($scope.lpcRenderer.beachScene === false) return;
-			//#hc change to beach
 
 			if ($scope.pointerDown === false) {
 				$scope.pointerDown = true;
@@ -162,12 +158,12 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 				var point = positionForTouch((e.type === 'touchstart') ? e.changedTouches[0] : e);
 				var px = point.x + $scope.lpcRenderer.dim.W / 2;
+				console.log('touch: ' + px);
 
 				var intersects = $scope.lpcRenderer.hitTest(point);
 				console.log('raycaster says: ' + intersects);
 
 				if (intersects === 'resetBtn') {
-					// handleButtonPress(intersects);
 					$scope.resetF3();
 					$scope.trackingTarget = false;
 
@@ -179,7 +175,20 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 				} else if( intersects === 'star' ) {
 					$scope.trackingTarget = true;
-					$scope.data.targetF3 = linScale(px, $scope.lpcRenderer.dim.wave.edgeLeft, $scope.lpcRenderer.dim.wave.edgeRight, 0, 4500);
+					// console.log('touch: ' + px);
+
+					var fzPadHigh = 4500 - ((4500/7) * 0.75); //adjusts for starfish padding. See renderer script.
+
+					//var rightEdgePad = ($scope.lpcRenderer.dim.col_W * 0.75);
+
+
+					var px_waveEdgeLeft = ($scope.lpcRenderer.dim.col_W * 3);
+					var px_waveEdgeRight = $scope.lpcRenderer.dim.W - ($scope.lpcRenderer.dim.col_W * 2.75); // 0.75 is padding
+					// console.log('touchStart left: ' + px_waveEdgeLeft);
+					// console.log('touchStart right: ' + px_waveEdgeRight);
+
+					$scope.data.targetF3 = linScale(px, px_waveEdgeLeft, px_waveEdgeRight, 0, fzPadHigh);
+					console.log($scope.lpcRenderer.dim);
 					//$scope.updateTarget();
 				} else {
 					$scope.trackingTarget = false;
@@ -197,15 +206,29 @@ lpcDirective.controller( 'LpcDirectiveController',
 			if ($scope.trackingTarget) {
 				if (e.cancellable) e.preventDefault();
 
-				//var element = $scope.lpcRenderer.renderer.domElement;
-
 				var point = positionForTouch((e.changedTouches !== undefined) ? e.changedTouches[0] : e);
 				var px = point.x + $scope.lpcRenderer.dim.W / 2;
+				console.log('slider touchMove px: ' + px);
 
-				$scope.data.targetF3 = linScale(px, 0, $scope.lpcRenderer.dim.W, 0, 4500);
+				//$scope.data.targetF3 = linScale(px, 0, $scope.lpcRenderer.dim.W, 0, 4500);
+
+				// convert screen coords to wave boundaries
+				var px_waveEdgeLeft = ($scope.lpcRenderer.dim.col_W * 3);
+				var px_waveEdgeRight01 = $scope.lpcRenderer.dim.W - ($scope.lpcRenderer.dim.col_W * 2.75); // 0.75 is padding
+				var px_waveEdgeRight02 = px_waveEdgeLeft + ($scope.lpcRenderer.dim.col_W * 6.25);
+				var fzPadHigh = 4500 - ((4500/7) * 0.75); //adjusts for starfish padding. See renderer script.
+
+				console.log('left: ' + px_waveEdgeLeft);
+				console.log('right01: ' + px_waveEdgeRight01);
+				console.log('right02: ' + px_waveEdgeRight02);
+				// var px_waveEdgeRight;
+
+				// get slider location
+				$scope.data.targetF3 = linScale(px, px_waveEdgeLeft, px_waveEdgeRight01, 0, fzPadHigh);
+
 				$scope.targetNeedsUpdate = true;
-			}
-		}
+			} // tracking target
+		} // touchMove
 
 		function onTouchEnd( e ) {
 			if ($scope.active !== true) return;
@@ -215,18 +238,25 @@ lpcDirective.controller( 'LpcDirectiveController',
 			var identifier = ((e.changedTouches !== undefined) ? e.changedTouches[0].identifier : undefined);
 			if ($scope.trackedTouch !== undefined && $scope.trackedTouch !== identifier) return;
 
+			if ($scope.trackingTarget) {
+				if (e.cancellable) e.preventDefault();
+				// Q for #SJT: This may be a better place to update the user's profile targetF3 via the Profile Service
+				//console.log('F3 at touch end: ' + $scope.data.targetF3);
+			}
+
 			if (e.cancellable) e.preventDefault();
 
 			$scope.pointerDown = false;
 			$scope.trackedTouch = undefined;
 			$scope.trackingTarget = false;
+
+			//console.log('F3 at touch end: ' + $scope.data.targetF3);
 		}
 
 
 	///////////////////////////////////
 	//  RENDER
 	///////////////////////////////////
-		var c = 0;
 
 		$scope.animate = function () {
 		  if ($scope.active) {
@@ -239,7 +269,6 @@ lpcDirective.controller( 'LpcDirectiveController',
 		    }
 
 				if ($scope.beach) {
-					fzText.innerHTML = Math.floor($scope.data.targetF3);
 
 					if ( $scope.lpcPaused === false ) {
 						$scope.getLPCCoefficients($scope.lpcCoefficientCallback);
@@ -247,45 +276,34 @@ lpcDirective.controller( 'LpcDirectiveController',
 					 	playGroup = $scope.lpcRenderer.scene.getObjectByName('playGroup');
 					 	pauseGroup.visible = true;
 					 	playGroup.visible = false;
+
 				} else {
 						pauseGroup = $scope.lpcRenderer.scene.getObjectByName('pauseGroup');
 						playGroup = $scope.lpcRenderer.scene.getObjectByName('playGroup');
 						pauseGroup.visible = false;
 						playGroup.visible = true;
+					} // end if(lpcPaused)
+
+					//$scope.updateTarget(); //yuck!!!
+
+					// even though we aren't writing to a text sprite anymore,
+					// this is still helpful to smooth out the animation
+					if ($scope.targetNeedsUpdate) {
+						if ($scope.targetTextUpdateCount >= maxTargetTextUpdateCount) {
+							$scope.targetTextUpdateCount = 0;
+							$scope.updateTarget();
+							$scope.targetNeedsUpdate = false;
+						} else {
+							$scope.targetTextUpdateCount++;
+						}
 					}
-				}
+				} // end if(beach)
 
 		    if (!$scope.beach) {
 		      $scope.getLPCCoefficients($scope.lpcCoefficientCallback);
 		    }
 
-				// if ($scope.renderTextSprite) {
-				//   if (textSprite === undefined) {
-				//     textSprite = Drawing.makeTextSprite(sliderFz);
-				//     textSprite.position.set(0, 10, 9);
-				//     label.add(textSprite);
-				//   } else {
-				//     label.remove(textSprite);
-				//     textSprite = Drawing.makeTextSprite(sliderFz);
-				//     textSprite.position.set(0, 10, 9);
-				//     label.add(textSprite);
-				//   }
-				// }
-
-		    //stats.update();
 		    window.requestAnimFrame($scope.animate);
-
-				//$scope.updateTarget();
-
-		    if ($scope.targetNeedsUpdate) {
-		      if ($scope.targetTextUpdateCount >= maxTargetTextUpdateCount) {
-		        $scope.targetTextUpdateCount = 0;
-		        $scope.updateTarget();
-		        $scope.targetNeedsUpdate = false;
-		      } else {
-		        $scope.targetTextUpdateCount++;
-		      }
-		    }
 
 		    $scope.lpcRenderer.render();
 		  }
@@ -329,18 +347,37 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 	$scope.pauseHandler = function( pauseState ) {
 		$scope.lpcPaused = !$scope.lpcPaused;
-		//console.log($scope.lpcRenderer.scene.children);
 	}
 
 	$scope.updateTarget = function() {
 
 		if ($scope.data.targetF3 === undefined) return;
 
+		var F3valIn = $scope.data.targetF3;
 
-		var sliderPosition = linScale($scope.data.targetF3, 0, 4500, 0, 1);
-		$scope.lpcRenderer.sliderPosition = sliderPosition;
-		console.log(sliderPosition);
-		//$scope.lpcRenderer.targetFrequency = $scope.data.targetF3;
+		var sPos; // float: normalized slider position
+		var sPos = linScale($scope.data.targetF3, 0, 4500, 0, 1);
+		if(sPos > 1) { sPos = 1 };
+		if(sPos < 0) { sPos = 0 };
+		$scope.lpcRenderer.sliderPosition = sPos;
+
+		/*	this just ensures we are writing the clamped value to the fzSign,
+				and not touch points which get detected but are outside of
+				our desired slider domain
+			padding/adjustment notes (everything is based on the dim grid):
+				starfish width = $scope.lpcRenderer.dim.col_W * 1
+				wave width = $scope.lpcRenderer.dim.col_W * 7
+		*/
+		var fzPadHigh = 4500 - ((4500/7) * 0.75); //adjusts for starfish padding. See renderer script.
+		var nScalePadHigh = 1 - ((1/7) * 0.75);
+		var fzFromSliderPos = linScale(sPos, 0, nScalePadHigh, 0, fzPadHigh);
+
+		fzText.innerHTML = Math.floor(fzFromSliderPos);
+		$scope.data.targetF3 = fzFromSliderPos;
+
+		// test
+		console.log('data.targetF3 in: ' + F3valIn);
+		console.log('data.targetF3 out: ' + $scope.data.targetF3);
 
     //Update current user's Target F3
     // ProfileService.runTransactionForCurrentProfile(function(handle, profile, t) {
@@ -349,7 +386,6 @@ lpcDirective.controller( 'LpcDirectiveController',
 	};
 
 	$scope.resetF3 = function() {
-		/*
 		ProfileService.getCurrentProfile().then(function(res)
 		{
 			if(res)
@@ -361,10 +397,11 @@ lpcDirective.controller( 'LpcDirectiveController',
 				})
 			}
 		})
-		*/
-		$scope.data.targetF3 = 1440;
-		$scope.updateTarget();
-		console.log('Target reset to: ' + $scope.data.targetF3);
+
+		// FOR OFFLINE DEV ONLY
+		// $scope.data.targetF3 = 1440;
+		// $scope.updateTarget();
+		// console.log('Target reset to: ' + $scope.data.targetF3);
 	};
 
 	$scope.stopPractice = function() {
@@ -381,7 +418,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 	$scope.updateCanvasSize = function() {
 		console.log('size update called');
-		$scope.lpcRenderer.updateDrawingDim( parentElement );
+		$scope.lpcRenderer.updateDrawingDim();
 		$scope.lpcRenderer.updateCameraSize();
 		$scope.lpcRenderer.clearScene();
 		$scope.lpcRenderer.drawScene();
@@ -424,10 +461,11 @@ lpcDirective.controller( 'LpcDirectiveController',
 		if (next === $scope.myURL) {
 			$scope.active = true;
 			$scope.animate();
-			$scope.updateCanvasSize( parentElement );
+			$scope.updateCanvasSize();
 			setInitialTarget();
 		} else {
 			$scope.active = false;
+			fzText.innerHTML = "";
 		}
 	});
 

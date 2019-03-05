@@ -1,5 +1,7 @@
 <div class="lpc-contentBox">
 
+  <div class="toolbar"></div>
+
   <div class="button-side-container rateBtn-container" ng-if="rate">
     <div ng-click="data.rating = 3" class="rateBtn rate-gold">
       <span class="rateBtn-textbox">Great</span>
@@ -12,22 +14,23 @@
     </div>
   </div>
 
-  <!-- 'slider-and-canvas': !tutorial, -->
   <div
     id="lpc-canvas-parentSize"
     ng-class="{ buttons_visible: rate }"
     >
 
-    <!-- #hc! ng-if="beach" -->
-    <div id="fzText"></div>
+    <div
+      id="fzText"
+      ng-hide="lpcHidden || probe || waveHidden || $root.rootWaveHidden">
+    </div>
 
     <!-- Renderer will be inserted here -->
     <canvas
       id="lpc-canvas"
-      ng-hide="lpcHidden || probe || waveHidden || $root.rootWaveHidden" >
+      ng-hide="lpcHidden || probe || waveHidden || $root.rootWaveHidden"
+      ng-class="{ dev_lpcBorder: beach }">
     </canvas>
   </div>
-
 
 
   <div class="button-side-container ctlBtn-container">
@@ -37,13 +40,6 @@
       ng-if="rate">
       Stop {{type}} {{probe ? "probe" : "practice"}}
     </button>
-
-    <!-- <button
-      ng-click="resetF3()"
-      class="reset-button big-button"
-      ng-if="reset && !probe">
-      Reset Target
-    </button> -->
 
     <button
       ng-click="showLPC()"
