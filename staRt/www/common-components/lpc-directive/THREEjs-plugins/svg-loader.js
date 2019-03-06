@@ -57,49 +57,49 @@ THREE.SVGLoader.prototype = {
 
 			switch ( node.nodeName ) {
 
-				case 'svg':
-					break;
+			case 'svg':
+				break;
 
-				case 'g':
-					style = parseStyle( node, style );
-					break;
+			case 'g':
+				style = parseStyle( node, style );
+				break;
 
-				case 'path':
-					style = parseStyle( node, style );
-					if ( node.hasAttribute( 'd' ) && isVisible( style ) ) path = parsePathNode( node, style );
-					break;
+			case 'path':
+				style = parseStyle( node, style );
+				if ( node.hasAttribute( 'd' ) && isVisible( style ) ) path = parsePathNode( node, style );
+				break;
 
-				case 'rect':
-					style = parseStyle( node, style );
-					if ( isVisible( style ) ) path = parseRectNode( node, style );
-					break;
+			case 'rect':
+				style = parseStyle( node, style );
+				if ( isVisible( style ) ) path = parseRectNode( node, style );
+				break;
 
-				case 'polygon':
-					style = parseStyle( node, style );
-					if ( isVisible( style ) ) path = parsePolygonNode( node, style );
-					break;
+			case 'polygon':
+				style = parseStyle( node, style );
+				if ( isVisible( style ) ) path = parsePolygonNode( node, style );
+				break;
 
-				case 'polyline':
-					style = parseStyle( node, style );
-					if ( isVisible( style ) ) path = parsePolylineNode( node, style );
-					break;
+			case 'polyline':
+				style = parseStyle( node, style );
+				if ( isVisible( style ) ) path = parsePolylineNode( node, style );
+				break;
 
-				case 'circle':
-					style = parseStyle( node, style );
-					if ( isVisible( style ) ) path = parseCircleNode( node, style );
-					break;
+			case 'circle':
+				style = parseStyle( node, style );
+				if ( isVisible( style ) ) path = parseCircleNode( node, style );
+				break;
 
-				case 'ellipse':
-					style = parseStyle( node, style );
-					if ( isVisible( style ) ) path = parseEllipseNode( node, style );
-					break;
+			case 'ellipse':
+				style = parseStyle( node, style );
+				if ( isVisible( style ) ) path = parseEllipseNode( node, style );
+				break;
 
-				case 'line':
-					style = parseStyle( node, style );
-					if ( isVisible( style ) ) path = parseLineNode( node, style );
-					break;
+			case 'line':
+				style = parseStyle( node, style );
+				if ( isVisible( style ) ) path = parseLineNode( node, style );
+				break;
 
-				default:
+			default:
 					//console.log( node );
 
 			}
@@ -160,283 +160,283 @@ THREE.SVGLoader.prototype = {
 
 				switch ( type ) {
 
-					case 'M':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j += 2 ) {
-							point.x = numbers[ j + 0 ];
-							point.y = numbers[ j + 1 ];
-							control.x = point.x;
-							control.y = point.y;
-							if ( j === 0 ) {
-								path.moveTo( point.x, point.y );
-							} else {
-								path.lineTo( point.x, point.y );
-							}
-						}
-						break;
-
-					case 'H':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j ++ ) {
-							point.x = numbers[ j ];
-							control.x = point.x;
-							control.y = point.y;
+				case 'M':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j += 2 ) {
+						point.x = numbers[ j + 0 ];
+						point.y = numbers[ j + 1 ];
+						control.x = point.x;
+						control.y = point.y;
+						if ( j === 0 ) {
+							path.moveTo( point.x, point.y );
+						} else {
 							path.lineTo( point.x, point.y );
 						}
-						break;
+					}
+					break;
 
-					case 'V':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j ++ ) {
-							point.y = numbers[ j ];
-							control.x = point.x;
-							control.y = point.y;
-							path.lineTo( point.x, point.y );
-						}
-						break;
+				case 'H':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j ++ ) {
+						point.x = numbers[ j ];
+						control.x = point.x;
+						control.y = point.y;
+						path.lineTo( point.x, point.y );
+					}
+					break;
 
-					case 'L':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j += 2 ) {
-							point.x = numbers[ j + 0 ];
-							point.y = numbers[ j + 1 ];
-							control.x = point.x;
-							control.y = point.y;
-							path.lineTo( point.x, point.y );
-						}
-						break;
+				case 'V':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j ++ ) {
+						point.y = numbers[ j ];
+						control.x = point.x;
+						control.y = point.y;
+						path.lineTo( point.x, point.y );
+					}
+					break;
 
-					case 'C':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j += 6 ) {
-							path.bezierCurveTo(
-								numbers[ j + 0 ],
-								numbers[ j + 1 ],
-								numbers[ j + 2 ],
-								numbers[ j + 3 ],
-								numbers[ j + 4 ],
-								numbers[ j + 5 ]
-							);
-							control.x = numbers[ j + 2 ];
-							control.y = numbers[ j + 3 ];
-							point.x = numbers[ j + 4 ];
-							point.y = numbers[ j + 5 ];
-						}
-						break;
+				case 'L':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j += 2 ) {
+						point.x = numbers[ j + 0 ];
+						point.y = numbers[ j + 1 ];
+						control.x = point.x;
+						control.y = point.y;
+						path.lineTo( point.x, point.y );
+					}
+					break;
 
-					case 'S':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j += 4 ) {
-							path.bezierCurveTo(
-								getReflection( point.x, control.x ),
-								getReflection( point.y, control.y ),
-								numbers[ j + 0 ],
-								numbers[ j + 1 ],
-								numbers[ j + 2 ],
-								numbers[ j + 3 ]
-							);
-							control.x = numbers[ j + 0 ];
-							control.y = numbers[ j + 1 ];
-							point.x = numbers[ j + 2 ];
-							point.y = numbers[ j + 3 ];
-						}
-						break;
+				case 'C':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j += 6 ) {
+						path.bezierCurveTo(
+							numbers[ j + 0 ],
+							numbers[ j + 1 ],
+							numbers[ j + 2 ],
+							numbers[ j + 3 ],
+							numbers[ j + 4 ],
+							numbers[ j + 5 ]
+						);
+						control.x = numbers[ j + 2 ];
+						control.y = numbers[ j + 3 ];
+						point.x = numbers[ j + 4 ];
+						point.y = numbers[ j + 5 ];
+					}
+					break;
 
-					case 'Q':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j += 4 ) {
-							path.quadraticCurveTo(
-								numbers[ j + 0 ],
-								numbers[ j + 1 ],
-								numbers[ j + 2 ],
-								numbers[ j + 3 ]
-							);
-							control.x = numbers[ j + 0 ];
-							control.y = numbers[ j + 1 ];
-							point.x = numbers[ j + 2 ];
-							point.y = numbers[ j + 3 ];
-						}
-						break;
+				case 'S':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j += 4 ) {
+						path.bezierCurveTo(
+							getReflection( point.x, control.x ),
+							getReflection( point.y, control.y ),
+							numbers[ j + 0 ],
+							numbers[ j + 1 ],
+							numbers[ j + 2 ],
+							numbers[ j + 3 ]
+						);
+						control.x = numbers[ j + 0 ];
+						control.y = numbers[ j + 1 ];
+						point.x = numbers[ j + 2 ];
+						point.y = numbers[ j + 3 ];
+					}
+					break;
 
-					case 'T':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j += 2 ) {
-							var rx = getReflection( point.x, control.x );
-							var ry = getReflection( point.y, control.y );
-							path.quadraticCurveTo(
-								rx,
-								ry,
-								numbers[ j + 0 ],
-								numbers[ j + 1 ]
-							);
-							control.x = rx;
-							control.y = ry;
-							point.x = numbers[ j + 0 ];
-							point.y = numbers[ j + 1 ];
-						}
-						break;
+				case 'Q':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j += 4 ) {
+						path.quadraticCurveTo(
+							numbers[ j + 0 ],
+							numbers[ j + 1 ],
+							numbers[ j + 2 ],
+							numbers[ j + 3 ]
+						);
+						control.x = numbers[ j + 0 ];
+						control.y = numbers[ j + 1 ];
+						point.x = numbers[ j + 2 ];
+						point.y = numbers[ j + 3 ];
+					}
+					break;
 
-					case 'A':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j += 7 ) {
-							var start = point.clone();
-							point.x = numbers[ j + 5 ];
-							point.y = numbers[ j + 6 ];
-							control.x = point.x;
-							control.y = point.y;
-							parseArcCommand(
-								path, numbers[ j ], numbers[ j + 1 ], numbers[ j + 2 ], numbers[ j + 3 ], numbers[ j + 4 ], start, point
-							);
-						}
-						break;
+				case 'T':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j += 2 ) {
+						var rx = getReflection( point.x, control.x );
+						var ry = getReflection( point.y, control.y );
+						path.quadraticCurveTo(
+							rx,
+							ry,
+							numbers[ j + 0 ],
+							numbers[ j + 1 ]
+						);
+						control.x = rx;
+						control.y = ry;
+						point.x = numbers[ j + 0 ];
+						point.y = numbers[ j + 1 ];
+					}
+					break;
+
+				case 'A':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j += 7 ) {
+						var start = point.clone();
+						point.x = numbers[ j + 5 ];
+						point.y = numbers[ j + 6 ];
+						control.x = point.x;
+						control.y = point.y;
+						parseArcCommand(
+							path, numbers[ j ], numbers[ j + 1 ], numbers[ j + 2 ], numbers[ j + 3 ], numbers[ j + 4 ], start, point
+						);
+					}
+					break;
 
 					//
 
-					case 'm':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j += 2 ) {
-							point.x += numbers[ j + 0 ];
-							point.y += numbers[ j + 1 ];
-							control.x = point.x;
-							control.y = point.y;
-							if ( j === 0 ) {
-								path.moveTo( point.x, point.y );
-							} else {
-								path.lineTo( point.x, point.y );
-							}
-						}
-						break;
-
-					case 'h':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j ++ ) {
-							point.x += numbers[ j ];
-							control.x = point.x;
-							control.y = point.y;
+				case 'm':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j += 2 ) {
+						point.x += numbers[ j + 0 ];
+						point.y += numbers[ j + 1 ];
+						control.x = point.x;
+						control.y = point.y;
+						if ( j === 0 ) {
+							path.moveTo( point.x, point.y );
+						} else {
 							path.lineTo( point.x, point.y );
 						}
-						break;
+					}
+					break;
 
-					case 'v':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j ++ ) {
-							point.y += numbers[ j ];
-							control.x = point.x;
-							control.y = point.y;
-							path.lineTo( point.x, point.y );
-						}
-						break;
+				case 'h':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j ++ ) {
+						point.x += numbers[ j ];
+						control.x = point.x;
+						control.y = point.y;
+						path.lineTo( point.x, point.y );
+					}
+					break;
 
-					case 'l':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j += 2 ) {
-							point.x += numbers[ j + 0 ];
-							point.y += numbers[ j + 1 ];
-							control.x = point.x;
-							control.y = point.y;
-							path.lineTo( point.x, point.y );
-						}
-						break;
+				case 'v':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j ++ ) {
+						point.y += numbers[ j ];
+						control.x = point.x;
+						control.y = point.y;
+						path.lineTo( point.x, point.y );
+					}
+					break;
 
-					case 'c':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j += 6 ) {
-							path.bezierCurveTo(
-								point.x + numbers[ j + 0 ],
-								point.y + numbers[ j + 1 ],
-								point.x + numbers[ j + 2 ],
-								point.y + numbers[ j + 3 ],
-								point.x + numbers[ j + 4 ],
-								point.y + numbers[ j + 5 ]
-							);
-							control.x = point.x + numbers[ j + 2 ];
-							control.y = point.y + numbers[ j + 3 ];
-							point.x += numbers[ j + 4 ];
-							point.y += numbers[ j + 5 ];
-						}
-						break;
+				case 'l':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j += 2 ) {
+						point.x += numbers[ j + 0 ];
+						point.y += numbers[ j + 1 ];
+						control.x = point.x;
+						control.y = point.y;
+						path.lineTo( point.x, point.y );
+					}
+					break;
 
-					case 's':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j += 4 ) {
-							path.bezierCurveTo(
-								getReflection( point.x, control.x ),
-								getReflection( point.y, control.y ),
-								point.x + numbers[ j + 0 ],
-								point.y + numbers[ j + 1 ],
-								point.x + numbers[ j + 2 ],
-								point.y + numbers[ j + 3 ]
-							);
-							control.x = point.x + numbers[ j + 0 ];
-							control.y = point.y + numbers[ j + 1 ];
-							point.x += numbers[ j + 2 ];
-							point.y += numbers[ j + 3 ];
-						}
-						break;
+				case 'c':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j += 6 ) {
+						path.bezierCurveTo(
+							point.x + numbers[ j + 0 ],
+							point.y + numbers[ j + 1 ],
+							point.x + numbers[ j + 2 ],
+							point.y + numbers[ j + 3 ],
+							point.x + numbers[ j + 4 ],
+							point.y + numbers[ j + 5 ]
+						);
+						control.x = point.x + numbers[ j + 2 ];
+						control.y = point.y + numbers[ j + 3 ];
+						point.x += numbers[ j + 4 ];
+						point.y += numbers[ j + 5 ];
+					}
+					break;
 
-					case 'q':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j += 4 ) {
-							path.quadraticCurveTo(
-								point.x + numbers[ j + 0 ],
-								point.y + numbers[ j + 1 ],
-								point.x + numbers[ j + 2 ],
-								point.y + numbers[ j + 3 ]
-							);
-							control.x = point.x + numbers[ j + 0 ];
-							control.y = point.y + numbers[ j + 1 ];
-							point.x += numbers[ j + 2 ];
-							point.y += numbers[ j + 3 ];
-						}
-						break;
+				case 's':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j += 4 ) {
+						path.bezierCurveTo(
+							getReflection( point.x, control.x ),
+							getReflection( point.y, control.y ),
+							point.x + numbers[ j + 0 ],
+							point.y + numbers[ j + 1 ],
+							point.x + numbers[ j + 2 ],
+							point.y + numbers[ j + 3 ]
+						);
+						control.x = point.x + numbers[ j + 0 ];
+						control.y = point.y + numbers[ j + 1 ];
+						point.x += numbers[ j + 2 ];
+						point.y += numbers[ j + 3 ];
+					}
+					break;
 
-					case 't':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j += 2 ) {
-							var rx = getReflection( point.x, control.x );
-							var ry = getReflection( point.y, control.y );
-							path.quadraticCurveTo(
-								rx,
-								ry,
-								point.x + numbers[ j + 0 ],
-								point.y + numbers[ j + 1 ]
-							);
-							control.x = rx;
-							control.y = ry;
-							point.x = point.x + numbers[ j + 0 ];
-							point.y = point.y + numbers[ j + 1 ];
-						}
-						break;
+				case 'q':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j += 4 ) {
+						path.quadraticCurveTo(
+							point.x + numbers[ j + 0 ],
+							point.y + numbers[ j + 1 ],
+							point.x + numbers[ j + 2 ],
+							point.y + numbers[ j + 3 ]
+						);
+						control.x = point.x + numbers[ j + 0 ];
+						control.y = point.y + numbers[ j + 1 ];
+						point.x += numbers[ j + 2 ];
+						point.y += numbers[ j + 3 ];
+					}
+					break;
 
-					case 'a':
-						var numbers = parseFloats( data );
-						for ( var j = 0, jl = numbers.length; j < jl; j += 7 ) {
-							var start = point.clone();
-							point.x += numbers[ j + 5 ];
-							point.y += numbers[ j + 6 ];
-							control.x = point.x;
-							control.y = point.y;
-							parseArcCommand(
-								path, numbers[ j ], numbers[ j + 1 ], numbers[ j + 2 ], numbers[ j + 3 ], numbers[ j + 4 ], start, point
-							);
-						}
-						break;
+				case 't':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j += 2 ) {
+						var rx = getReflection( point.x, control.x );
+						var ry = getReflection( point.y, control.y );
+						path.quadraticCurveTo(
+							rx,
+							ry,
+							point.x + numbers[ j + 0 ],
+							point.y + numbers[ j + 1 ]
+						);
+						control.x = rx;
+						control.y = ry;
+						point.x = point.x + numbers[ j + 0 ];
+						point.y = point.y + numbers[ j + 1 ];
+					}
+					break;
+
+				case 'a':
+					var numbers = parseFloats( data );
+					for ( var j = 0, jl = numbers.length; j < jl; j += 7 ) {
+						var start = point.clone();
+						point.x += numbers[ j + 5 ];
+						point.y += numbers[ j + 6 ];
+						control.x = point.x;
+						control.y = point.y;
+						parseArcCommand(
+							path, numbers[ j ], numbers[ j + 1 ], numbers[ j + 2 ], numbers[ j + 3 ], numbers[ j + 4 ], start, point
+						);
+					}
+					break;
 
 					//
 
-					case 'Z':
-					case 'z':
-						path.currentPath.autoClose = true;
-						if ( path.currentPath.curves.length > 0 ) {
-							// Reset point to beginning of Path
-							point.copy( firstPoint );
-							path.currentPath.currentPoint.copy( point );
-							isFirstPoint = true;
-						}
-						break;
+				case 'Z':
+				case 'z':
+					path.currentPath.autoClose = true;
+					if ( path.currentPath.curves.length > 0 ) {
+						// Reset point to beginning of Path
+						point.copy( firstPoint );
+						path.currentPath.currentPoint.copy( point );
+						isFirstPoint = true;
+					}
+					break;
 
-					default:
-						console.warn( command );
+				default:
+					console.warn( command );
 
 				}
 
@@ -771,8 +771,8 @@ THREE.SVGLoader.prototype = {
 			for ( var tIndex = transformsTexts.length - 1; tIndex >= 0; tIndex-- ) {
 
 				var transformText = transformsTexts[ tIndex ];
-				var openParPos = transformText.indexOf( "(" );
-				var closeParPos = transformText.indexOf( ")" );
+				var openParPos = transformText.indexOf( '(' );
+				var closeParPos = transformText.indexOf( ')' );
 
 				if ( openParPos > 0 && openParPos < closeParPos ) {
 
@@ -784,113 +784,113 @@ THREE.SVGLoader.prototype = {
 
 					switch ( transformType ) {
 
-						case "translate":
+					case 'translate':
 
-							if ( array.length >= 1 ) {
+						if ( array.length >= 1 ) {
 
-								var tx = array[ 0 ];
-								var ty = tx;
+							var tx = array[ 0 ];
+							var ty = tx;
 
-								if ( array.length >= 2 ) {
+							if ( array.length >= 2 ) {
 
-									ty = array[ 1 ];
-
-								}
-
-								currentTransform.translate( tx, ty );
+								ty = array[ 1 ];
 
 							}
 
-							break;
+							currentTransform.translate( tx, ty );
 
-						case "rotate":
+						}
 
-							if ( array.length >= 1 ) {
+						break;
 
-								var angle = 0;
-								var cx = 0;
-								var cy = 0;
+					case 'rotate':
 
-								// Angle
-								angle = - array[ 0 ] * Math.PI / 180;
+						if ( array.length >= 1 ) {
 
-								if ( array.length >= 3 ) {
+							var angle = 0;
+							var cx = 0;
+							var cy = 0;
 
-									// Center x, y
-									cx = array[ 1 ];
-									cy = array[ 2 ];
+							// Angle
+							angle = - array[ 0 ] * Math.PI / 180;
 
-								}
+							if ( array.length >= 3 ) {
 
-								// Rotate around center (cx, cy)
-								tempTransform1.identity().translate( -cx, -cy );
-								tempTransform2.identity().rotate( angle );
-								tempTransform3.multiplyMatrices( tempTransform2, tempTransform1 );
-								tempTransform1.identity().translate( cx, cy );
-								currentTransform.multiplyMatrices( tempTransform1, tempTransform3 );
+								// Center x, y
+								cx = array[ 1 ];
+								cy = array[ 2 ];
 
 							}
 
-							break;
+							// Rotate around center (cx, cy)
+							tempTransform1.identity().translate( -cx, -cy );
+							tempTransform2.identity().rotate( angle );
+							tempTransform3.multiplyMatrices( tempTransform2, tempTransform1 );
+							tempTransform1.identity().translate( cx, cy );
+							currentTransform.multiplyMatrices( tempTransform1, tempTransform3 );
 
-						case "scale":
+						}
 
-							if ( array.length >= 1 ) {
+						break;
 
-								var scaleX = array[ 0 ];
-								var scaleY = scaleX;
+					case 'scale':
 
-								if ( array.length >= 2 ) {
-									scaleY = array[ 1 ];
-								}
+						if ( array.length >= 1 ) {
 
-								currentTransform.scale( scaleX, scaleY );
+							var scaleX = array[ 0 ];
+							var scaleY = scaleX;
 
+							if ( array.length >= 2 ) {
+								scaleY = array[ 1 ];
 							}
 
-							break;
+							currentTransform.scale( scaleX, scaleY );
 
-						case "skewX":
+						}
 
-							if ( array.length === 1 ) {
+						break;
 
-								currentTransform.set(
-									1, Math.tan( array[ 0 ] * Math.PI / 180 ), 0,
-									0, 1, 0,
-									0, 0, 1
-								);
+					case 'skewX':
 
-							}
+						if ( array.length === 1 ) {
 
-							break;
+							currentTransform.set(
+								1, Math.tan( array[ 0 ] * Math.PI / 180 ), 0,
+								0, 1, 0,
+								0, 0, 1
+							);
 
-						case "skewY":
+						}
 
-							if ( array.length === 1 ) {
+						break;
 
-								currentTransform.set(
-									1, 0, 0,
-									Math.tan( array[ 0 ] * Math.PI / 180 ), 1, 0,
-									0, 0, 1
-								);
+					case 'skewY':
 
-							}
+						if ( array.length === 1 ) {
 
-							break;
+							currentTransform.set(
+								1, 0, 0,
+								Math.tan( array[ 0 ] * Math.PI / 180 ), 1, 0,
+								0, 0, 1
+							);
 
-						case "matrix":
+						}
 
-							if ( array.length === 6 ) {
+						break;
 
-								currentTransform.set(
-									array[ 0 ], array[ 2 ], array[ 4 ],
-									array[ 1 ], array[ 3 ], array[ 5 ],
-									0, 0, 1
-								);
+					case 'matrix':
 
-							}
+						if ( array.length === 6 ) {
 
-							break;
+							currentTransform.set(
+								array[ 0 ], array[ 2 ], array[ 4 ],
+								array[ 1 ], array[ 3 ], array[ 5 ],
+								0, 0, 1
+							);
+
+						}
+
+						break;
 					}
 
 				}
@@ -950,7 +950,7 @@ THREE.SVGLoader.prototype = {
 					} else if ( curve.isEllipseCurve ) {
 
 						if ( isRotated ) {
-							console.warn( "SVGLoader: Elliptic arc or ellipse rotation or skewing is not implemented." );
+							console.warn( 'SVGLoader: Elliptic arc or ellipse rotation or skewing is not implemented.' );
 						}
 
 						tempV2.set( curve.aX, curve.aY );
@@ -975,12 +975,12 @@ THREE.SVGLoader.prototype = {
 
 		function getTransformScaleX( m ) {
 			var te = m.elements;
-			return Math.sqrt( te[ 0 ] * te[ 0 ] + te[ 1 ] * te[ 1 ] )
+			return Math.sqrt( te[ 0 ] * te[ 0 ] + te[ 1 ] * te[ 1 ] );
 		}
 
 		function getTransformScaleY( m ) {
 			var te = m.elements;
-			return Math.sqrt( te[ 3 ] * te[ 3 ] + te[ 4 ] * te[ 4 ] )
+			return Math.sqrt( te[ 3 ] * te[ 3 ] + te[ 4 ] * te[ 4 ] );
 		}
 
 		//

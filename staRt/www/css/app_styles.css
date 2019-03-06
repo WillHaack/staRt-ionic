@@ -1889,8 +1889,7 @@ div.needleBox {
   display: flex;
   flex-flow: column nowrap;
   height: 66.66667vh;
-  width: 100%;
-  border: 1px solid cyan; }
+  width: 100%; }
 
 .quest-layout_view-container {
   position: relative;

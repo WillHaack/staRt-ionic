@@ -23,34 +23,15 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 			if (s > 1) s = 1;
 			if (s < 0) s = 0;
 
-			// padding for slider area.
-			var sPadLow = 0;
-			var sPadHigh = 0.75;
-			var sLow = this.dim.wave.edgeLeft + (this.dim.col_W * sPadLow);
-			var sHigh = this.dim.wave.edgeRight - (this.dim.col_W * sPadHigh);
-
 			if (this.sliderGroup !== undefined) {
-				this.sliderGroup.position.x = Draw.linScale(s, 0, 1, sLow, sHigh);
-				//console.log('s: ' + s);
+				this.sliderGroup.position.x =
+					this.linScale( s, 0, 1,
+						this.dim.wave.edgeLeft,
+						this.dim.wave.edgeRight
+					);
 			}
 		}
 	});
-
-	// Object.defineProperty(LPCRenderer.prototype, 'targetFrequency', {
-	// 	set: function targetFrequency(f) {
-	// 		this.updateTextSprite( Math.floor(f) );
-	// 	}
-	// });
-
-	// Object.defineProperty(LPCRenderer.prototype, 'doShowSand', {
-	// 	get: function() {
-	// 		return this._doShowSand;
-	// 	},
-	// 	set: function(sand) {
-	// 		return this._doShowSand = sand;
-	// 		if (this.sand !== undefined) this.sand.visible = sand;
-	// 	}
-	// });
 
 	/*
 	Object.defineProperty(LPCRenderer.prototype, 'doShowSlider', {
@@ -78,13 +59,15 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 	});
 
 
+	LPCRenderer.prototype.linScale = function(v, inlow, inhigh, outlow, outhigh) {
+		return Draw.linScale(v, inlow, inhigh, outlow, outhigh);
+	};
+
 	// ===============================================
 	// SCENE SET UP ----------------------------------
 
 	LPCRenderer.prototype.updateDrawingDim = function()
 	{
-		var parentElement = this.parentElement;
-
 		this.dim.W = this.parentElement.clientWidth;
 		this.dim.H = this.parentElement.clientHeight;
 		this.dim.aspect = this.dim.W / this.dim.H;
@@ -98,7 +81,7 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 		this.dim.col_W = this.dim.W / 12;
 
 		if (this._beachScene) {
-			console.log( 'this is beachScene')
+			console.log( 'this is beachScene');
 			// wave boundaries
 			this.dim.wave = {
 				edgeLeft: this.dim.edgeLeft + (this.dim.col_W * 3),
@@ -107,7 +90,7 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 				edgeBottom: this.dim.edgeBottom + (this.dim.row_H * 1.25)
 			};
 		} else {
-			console.log( 'not beachScene')
+			console.log( 'not beachScene');
 			// wave boundaries are same as parent ele
 			this.dim.wave = {
 				edgeLeft: this.dim.edgeLeft,
@@ -118,7 +101,6 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 		}
 	};
 
-	// DONE
 	LPCRenderer.prototype.buildStage = function()
 	{
 		this.scene = new THREE.Scene();
@@ -126,7 +108,6 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 		this.scene.add(this.camera);
 	};
 
-	// DONE
 	LPCRenderer.prototype.updateCameraSize = function()
 	{
 		// this.renderer.setPixelRatio( 1 );
@@ -142,9 +123,8 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 		this.camera.right = this.dim.edgeRight;
 		this.camera.bottom = this.dim.edgeBottom;
 		this.camera.updateProjectionMatrix();
-	}
+	};
 
-	// DONE
 	LPCRenderer.prototype.buildMaterials = function()
 	{
 		if (this.materials != undefined) { this.materials= undefined; }
@@ -184,7 +164,6 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 	// ===============================================
 	// DYNAMIC MESHES: CREATE & UPDATE 	--------------
 
-	//DONE
 	LPCRenderer.prototype.createPeakSegments = function() {
 
 		if (this.peaksGroup === !undefined) return;
@@ -200,7 +179,7 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 		});
 
 		var peakSegments = new THREE.LineSegments(peakGeometry, mat[0]);
-		peakSegments.name = "peaks";
+		peakSegments.name = 'peaks';
 		peakSegments.geometry.dynamic = true;
 
 		this.peaksGroup.add(peakSegments);
@@ -217,7 +196,7 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 		var shapeArr = [];
 		for (var i=0; i<points.length; i++) {
 			var point = points[i] * this.dim.wave.edgeTop; //this.TOP;
-			var px = Draw.linScale(i * frequencyScaling, 0, points.length-1, this.dim.wave.edgeLeft, this.dim.wave.edgeRight);
+			var px = this.linScale(i * frequencyScaling, 0, points.length-1, this.dim.wave.edgeLeft, this.dim.wave.edgeRight);
 			shapeArr.push([px, point]);
 		}
 
@@ -285,14 +264,13 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 				this.waveMesh = new THREE.Mesh(this.waveGeometry, this.materials[1]);
 			} // end ( !beachScene )
 			this.waveGroup.add( this.waveMesh );
-			this.waveGroup.name = "wave";
+			this.waveGroup.name = 'wave';
 			this.scene.add( this.waveGroup );
 		} // end if (this.waveMesh === undefined)
 
 		this.updatePeaks( peaks, frequencyScaling );
 	}; // end updateWave();
 
-	//DONE
 	// updatePeaks() should only be called from w/in updateWave()
 	LPCRenderer.prototype.updatePeaks = function(peaks, frequencyScaling)
 	{
@@ -302,9 +280,9 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 			var px = 0, py = this.dim.wave.edgeBottom;
 			if (i < peaks.length) {
 				var peak = peaks[i];
-				px = Draw.linScale(peak.X, -1, 1, 0, frequencyScaling);
-				px = Draw.linScale(px, 0, 1, this.dim.wave.edgeLeft, this.dim.wave.edgeRight);
-				py = Draw.linScale(peak.Y, 1, -1, this.dim.wave.edgeTop, this.dim.wave.edgeBottom);
+				px = this.linScale(peak.X, -1, 1, 0, frequencyScaling);
+				px = this.linScale(px, 0, 1, this.dim.wave.edgeLeft, this.dim.wave.edgeRight);
+				py = this.linScale(peak.Y, 1, -1, this.dim.wave.edgeTop, this.dim.wave.edgeBottom);
 			}
 			peakSegments.geometry.vertices[2*i].x = px;
 			peakSegments.geometry.vertices[2*i].y = py;
@@ -386,7 +364,7 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 		this.scene.remove( this.bubBtnGroup );
 		this.scene.remove( this.peaksGroup );
 		this.peaksGroup = undefined;
-	}
+	};
 
 	// ================================================
 	// EVERYTHING ELSE --------------------------------
@@ -411,7 +389,7 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 				return INTERSECTED.object.name;
 			}
 		}
-	}
+	};
 
 	LPCRenderer.prototype.render = function() {
 		this.renderer.render(this.scene, this.camera);
@@ -425,7 +403,7 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 
 		this.parentElement = parentElement;
 		this.canvas = canvasElement;
-		this.canvas.id = "lpc-canvas";
+		this.canvas.id = 'lpc-canvas';
 
 		this.savedTarget = 2247;
 
@@ -436,7 +414,7 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 		//this.drawScene(); // this is called from the controller
 
 		this.raycaster = new THREE.Raycaster();
-	}
+	};
 
 	LPCRenderer.prototype.destroy = function() {
 		delete this.renderer;
@@ -447,7 +425,7 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 			this.scene.remove(this.scene.children[0]);
 		}
 
-		var disposables = ["geometries", "materials"];
+		var disposables = ['geometries', 'materials'];
 		for (var k = 0; k < disposables.length; k++) {
 			var junk = this[disposables[k]];
 			for (var i=0; i<junk.length; i++) {
@@ -457,7 +435,7 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 
 		//this.geometries = [];
 		this.materials = [];
-	}
+	};
 
 	return LPCRenderer;
 });

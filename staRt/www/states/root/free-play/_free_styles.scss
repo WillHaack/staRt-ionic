@@ -49,32 +49,5 @@
 	flex-flow: column nowrap;
 	height: $row-h * 4;
 	width: 100%;
-	border: 1px solid cyan;
+	//border: 1px solid cyan;
 }
-
-// .free-lpcFrame {
-// 	position: relative;
-// 	width: 100%;
-// 	height: 460px;
-// 	border-radius: 6px;
-// 	display: block;
-// 	background-color: #F0F9FC;
-// 	border: 15px solid #F0F9FC;
-// 	border-bottom: 25px solid #F0F9FC;
-// 	box-shadow: 1px 1px 1px rgba(0,0,0,0.25);
-//
-// 	.free-lpcBox {
-// 		width: 100%;
-// 		height: 405px;
-// 		padding-top: 35px;
-// 		background-color: $blue-light;
-//
-// 		.reset-button { // adds to base styles from lpc-directive
-// 			margin-top: $row-h * -0.4;
-// 			border-radius: 4px;
-// 			background-color: white;
-// 			box-shadow: 1px 1px 1px rgba(0,0,0,0.25);
-// 			z-index: 100;
-// 		}
-// 	} //.free-lpcBox
-// } // .free-lpcFrame
