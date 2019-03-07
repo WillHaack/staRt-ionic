@@ -26,6 +26,7 @@
   "devDependencies": {
     "bower": "^1.8.2",
     "cordova": "^7.0.1",
+    "eslint": "^5.15.1",
     "gulp": "^3.9.1",
     "gulp-angular-filesort": "^1.1.1",
     "gulp-concat": "^2.6.1",

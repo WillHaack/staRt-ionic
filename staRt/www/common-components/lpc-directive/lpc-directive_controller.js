@@ -226,13 +226,15 @@ lpcDirective.controller( 'LpcDirectiveController',
 				//if (e.cancellable) e.preventDefault();
 				// Q for #SJT: This may be a better place to update the user's profile targetF3 via the Profile Service
 				//console.log('F3 at touch end: ' + $scope.data.targetF3);
+				//Update current user's Target F3
+				// ProfileService.runTransactionForCurrentProfile(function(handle, profile, t) {
+				//   t.update(handle, { targetF3: parseInt($scope.data.targetF3) });
+				// });
 			}
 
 			$scope.pointerDown = false;
 			$scope.trackedTouch = undefined;
 			$scope.trackingTarget = false;
-
-			//console.log('F3 at touch end: ' + $scope.data.targetF3);
 		}
 
 
@@ -320,12 +322,6 @@ lpcDirective.controller( 'LpcDirectiveController',
 					$scope.updateTarget();
 				});
 			});
-
-			// FOR OFFLINE DEV ONLY
-			// $scope.data.targetF3 = 2440;
-			// $scope.updateTarget();
-			// console.log('Fake initial target is ' + $scope.data.targetF3 );
-
 		} // end setInitialTarget()
 
 		$scope.updateTarget = function() {
@@ -340,9 +336,9 @@ lpcDirective.controller( 'LpcDirectiveController',
 			fzText.innerHTML = Math.floor($scope.data.targetF3);
 
 			//Update current user's Target F3
-			// ProfileService.runTransactionForCurrentProfile(function(handle, profile, t) {
-			//   t.update(handle, { targetF3: parseInt($scope.data.targetF3) });
-			// });
+			ProfileService.runTransactionForCurrentProfile(function(handle, profile, t) {
+			  t.update(handle, { targetF3: parseInt($scope.data.targetF3) });
+			});
 		};
 
 		$scope.resetF3 = function() {
@@ -357,11 +353,6 @@ lpcDirective.controller( 'LpcDirectiveController',
 					});
 				}
 			});
-
-		// DEV ONLY (if no fb)
-		// $scope.data.targetF3 = 1440;
-		// $scope.updateTarget();
-		// console.log('Target reset to: ' + $scope.data.targetF3);
 		};
 
 
