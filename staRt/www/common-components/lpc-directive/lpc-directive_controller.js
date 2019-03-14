@@ -95,9 +95,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 					}
 				}
 			}
-			//msg.freqScale = 2.2; // orig
-			//msg.freqScale = 0.5;
-			msg.freqScale = 1;
+			msg.freqScale = 2.2;
 			if (cb)
 				cb(msg);
 		};
@@ -106,8 +104,8 @@ lpcDirective.controller( 'LpcDirectiveController',
 			if ($scope.active) {
 				var points = msg.coefficients;
 				var peaks = msg.freqPeaks;
-				var frequencyScaling = msg.freqScale;
-
+				//var frequencyScaling = msg.freqScale;
+				var frequencyScaling = 1;
 				$scope.lpcRenderer.updateWave(points, peaks, frequencyScaling);
 			}
 		};
@@ -333,7 +331,10 @@ lpcDirective.controller( 'LpcDirectiveController',
 			if(sliderPosition > 1) { sliderPosition = 1; }
 			if(sliderPosition < 0) { sliderPosition = 0; }
 			$scope.lpcRenderer.sliderPosition = sliderPosition;
-			fzText.innerHTML = Math.floor($scope.data.targetF3);
+
+			if (fzText !== undefined) {
+				fzText.innerHTML = Math.floor($scope.data.targetF3);
+			}
 
 			//Update current user's Target F3
 			ProfileService.runTransactionForCurrentProfile(function(handle, profile, t) {
@@ -359,6 +360,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 		// INTERFACE ---------------------
 		$scope.pauseHandler = function() {
 			$scope.lpcPaused = !$scope.lpcPaused;
+			// console.log($scope.lpcRenderer.scene.children);
 		};
 
 		$scope.showLPC = function() {

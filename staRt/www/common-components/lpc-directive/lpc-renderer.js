@@ -186,52 +186,69 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 		//return peakSegments;
 	};
 
+	LPCRenderer.prototype.createWaveMesh = function() {
+	/* Sets up an empty geom to recieve updates
+	// from AudioPlugin and scene changes	*/
+	var pointCount = 256;
+
+	// this.waveGroup is defined on drawScene()
+	if (this.waveGroup === undefined) return;
+	if (this.waveMesh === !undefined) return;
+
+	// Make an array of all the topmost points
+	var emptyShapeArr = [];
+	for (var i=0; i<pointCount; i++) {
+		var point = this.dim.wave.edgeTop;
+		var px = this.linScale(i, 0, pointCount-1, this.dim.wave.edgeLeft, this.dim.wave.edgeRight);
+		emptyShapeArr.push([px, point]);
+	}
+
+	// Create geometry and its faces
+	if (this.waveGeometry === undefined) {
+		var tmpGeometry = new THREE.Geometry();
+
+		for (var i=1; i<emptyShapeArr.length; i++) {
+			tmpGeometry.vertices.push(new THREE.Vector3(
+				emptyShapeArr[i-1][0], this.dim.wave.edgeBottom, 0));
+
+			tmpGeometry.vertices.push(new THREE.Vector3(
+				emptyShapeArr[i][0], emptyShapeArr[i][1], 0));
+
+			if (i>0) {
+				tmpGeometry.faces.push(new THREE.Face3((i-1)*2, (i-1)*2 + 1, (i-1)*2 + 2));
+				tmpGeometry.faces.push(new THREE.Face3((i-1)*2 + 2, (i-1)*2 + 1, (i-1)*2 + 3));
+			}
+		}
+
+		this.waveGeometry = new THREE.BufferGeometry().fromGeometry( tmpGeometry );
+		this.waveGeometry.dynamic = true;
+	}
+} // createWaveMesh
+
 
 	LPCRenderer.prototype.updateWave = function(points, peaks, frequencyScaling)
 	{
-		// if (this.peakSegments === undefined) return;
 		if (this.peaksGroup === undefined) return;
 
-		// Make an array of all the topmost points
+		// An array to hold incoming data for topmost points
 		var shapeArr = [];
 		for (var i=0; i<points.length; i++) {
-			var point = points[i] * this.dim.wave.edgeTop; //this.TOP;
+			var point = points[i] * this.dim.wave.edgeTop;
 			var px = this.linScale(i * frequencyScaling, 0, points.length-1, this.dim.wave.edgeLeft, this.dim.wave.edgeRight);
 			shapeArr.push([px, point]);
 		}
 
-		// Setup the geometry and its faces
-		if (this.waveGeometry === undefined) {
-			var tmpGeometry = new THREE.Geometry();
+		/* TLDR; Update waveGeometry.attributes with new data from the shapeArr
+				All this does is explicitly update all of the triangles that are being used to draw the
+				wave geometry. Imagine that between every two adjacent points along the top curve we draw
+				a long rectangle with a slanted top. The top-left corner of that rectangle is wave[i-1],
+				the top-right corner is wave[i], and the bottom left and bottom right are the same points
+				but on the bottom edge of the image. This rectangle strip has four points, but we draw it
+				as two triangles. Each of those triangles has three points, so there are 3 * 3 vertices
+				to update, for each of 2 triangles, for a total of 18 vertices per every point on the
+				wave curve.
+		*/
 
-			for (var i=1; i<shapeArr.length; i++) {
-				tmpGeometry.vertices.push(new THREE.Vector3(
-					shapeArr[i-1][0],
-					this.dim.wave.edgeBottom,
-					0));
-				tmpGeometry.vertices.push(new THREE.Vector3(
-					shapeArr[i][0],
-					shapeArr[i][1],
-					0));
-
-				if (i>0) {
-					tmpGeometry.faces.push(new THREE.Face3((i-1)*2, (i-1)*2 + 1, (i-1)*2 + 2));
-					tmpGeometry.faces.push(new THREE.Face3((i-1)*2 + 2, (i-1)*2 + 1, (i-1)*2 + 3));
-				}
-			}
-
-			this.waveGeometry = new THREE.BufferGeometry().fromGeometry( tmpGeometry );
-			this.waveGeometry.dynamic = true;
-		}
-
-		// All this does is explicitly update all of the triangles that are being used to draw the
-		// wave geometry. Imagine that between every two adjacent points along the top curve we draw
-		// a long rectangle with a slanted top. The top-left corner of that rectangle is wave[i-1],
-		// the top-right corner is wave[i], and the bottom left and bottom right are the same points
-		// but on the bottom edge of the image. This rectangle strip has four points, but we draw it
-		// as two triangles. Each of those triangles has three points, so there are 3 * 3 vertices
-		// to update, for each of 2 triangles, for a total of 18 vertices per every point on the
-		// wave curve.
 		for (var i=1; i<shapeArr.length; i++) {
 			var p = this.waveGeometry.attributes.position.array;
 			var idx = (i-1) * 18;
@@ -254,7 +271,6 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 			p[idx++] = shapeArr[i][1];
 			p[idx++] = 0;
 		}
-
 		this.waveGeometry.attributes.position.needsUpdate = true;
 
 		if (this.waveMesh === undefined) {
@@ -264,8 +280,6 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 				this.waveMesh = new THREE.Mesh(this.waveGeometry, this.materials[1]);
 			} // end ( !beachScene )
 			this.waveGroup.add( this.waveMesh );
-			this.waveGroup.name = 'wave';
-			this.scene.add( this.waveGroup );
 		} // end if (this.waveMesh === undefined)
 
 		this.updatePeaks( peaks, frequencyScaling );
@@ -345,15 +359,17 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 			this.graphicsGroup.position.z = 2;
 			this.scene.add( this.graphicsGroup );
 
+			this.createWaveMesh();
 			this.createPeakSegments();
 			this.peaksGroup.position.set(0, -5, 1);
 			this.waveGroup.position.set(0, -5, 0);
 
 		} else {
 			console.log( 'Beach is FALSE');
-			this.peakSegments = this.createPeakSegments();
-
+			this.createWaveMesh();
+			this.createPeakSegments();
 		}
+		this.scene.add(this.waveGroup);
 		this.scene.add(this.peaksGroup);
 	};
 
@@ -363,6 +379,7 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 		this.scene.remove( this.sliderGroup );
 		this.scene.remove( this.bubBtnGroup );
 		this.scene.remove( this.peaksGroup );
+		this.waveMesh === undefined;
 		this.peaksGroup = undefined;
 	};
 
@@ -411,7 +428,7 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 		this.buildStage();
 		this.updateCameraSize();
 		this.buildMaterials();
-		//this.drawScene(); // this is called from the controller
+		//this.drawScene(); is called from the controller on scene change
 
 		this.raycaster = new THREE.Raycaster();
 	};
