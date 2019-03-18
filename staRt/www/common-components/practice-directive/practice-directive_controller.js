@@ -459,7 +459,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 		// map csvs to adaptive difficulty key names
 		// to cause as few side effects as possible
 
-		$scope.csvs.forEach((csv) => {
+		$scope.csvs.forEach(function (csv) {
 		    var key = csv.replace('data/wp_', '').replace('.csv', '');
 		    if($scope.difficulty <= 3){
 			tempWordList = tempWordList.concat(words[key][$scope.difficulty]);
@@ -505,83 +505,85 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	    }
 	}
 
-	$scope.$on('ratingChange', function(event, data)
-	    {
-		console.log('rating change! ' + data);
-		$scope.rating = data === undefined ? 0 : data;
-		if (!!$scope.rating) {
-		    $scope.nextWord();
-		}
-		// keep running average of ratings
-		if(data){
-		    // visual reinforcement
-		    if(!$scope.probe){
-			$scope.block_coins[$scope.block_coins.length - 1].push(visual_reinforcement_coin_color_map[data]);
-			$scope.session_coins[visual_reinforcement_coin_color_map[data]]++;
-			if(visual_reinforcement_coin_color_map[data] == "gold"){
-			    $scope.consecutive_golds++;
-			    var temp_golds_consecutive_gold_display = 0;
-			    $scope.consecutive_golds_breakpoints.forEach((value) => {
-				if($scope.consecutive_golds >= value){
-				    temp_golds_consecutive_gold_display = value;
-				}
-			    })
-			    $scope.consecutive_golds_display = temp_golds_consecutive_gold_display;
-			}else{
-			    $scope.consecutive_golds = 0;
-			}
-		    }
+	$scope.$on('ratingChange', function (event, data) {
+	  console.log('rating change! ' + data);
+	  $scope.rating = data === undefined ? 0 : data;
+	  if (!!$scope.rating) {
+	    $scope.nextWord();
+	  }
+	  // keep running average of ratings
+	  if (data) {
+	    // visual reinforcement
+	    if (!$scope.probe) {
+	      $scope.block_coins[$scope.block_coins.length - 1].push(visual_reinforcement_coin_color_map[data]);
+	      $scope.session_coins[visual_reinforcement_coin_color_map[data]]++;
+	      if (visual_reinforcement_coin_color_map[data] == "gold") {
+	        $scope.consecutive_golds++;
+	        var temp_golds_consecutive_gold_display = 0;
+	        $scope.consecutive_golds_breakpoints.forEach(function (value) {
+	          if ($scope.consecutive_golds >= value) {
+	            temp_golds_consecutive_gold_display = value;
+	          }
+	        })
+	        $scope.consecutive_golds_display = temp_golds_consecutive_gold_display;
+	      } else {
+	        $scope.consecutive_golds = 0;
+	      }
+	    }
 
-		    // adaptive difficulty
+	    // adaptive difficulty
 
-		    $scope.block_score += remap_adaptive_difficulty_score[data];
-		    $scope.session_score += remap_adaptive_difficulty_score[data];
+	    $scope.block_score += remap_adaptive_difficulty_score[data];
+	    $scope.session_score += remap_adaptive_difficulty_score[data];
 
-		    if($scope.currentWordIdx % 10 == 0
-		       && $scope.currentWordIdx != 0){
-			// todo: ratingChange emit error is preventing accurate calculation
+	    if ($scope.currentWordIdx % 10 == 0 &&
+	      $scope.currentWordIdx != 0) {
+	      // todo: ratingChange emit error is preventing accurate calculation
 
-			// recalculate difficulty
-			var performance = calculate_difficulty_performance(
-			    $scope.block_score,
-			    10 // working in blocks of ten
-			);
+	      // recalculate difficulty
+	      var performance = calculate_difficulty_performance(
+	        $scope.block_score,
+	        10 // working in blocks of ten
+	      );
 
 
-			if(!$scope.probe){
-			    // recalculate highscores
-			    $scope.block_score_highscore = Math.max($scope.block_score_highscore, $scope.block_score);
-			    $scope.block_golds_highscore = Math.max($scope.block_golds_highscore,
-								    $scope.block_coins[$scope.block_coins.length - 1].filter(color => color == "gold").length);
+	      if (!$scope.probe) {
+	        // recalculate highscores
+	        $scope.block_score_highscore = Math.max($scope.block_score_highscore, $scope.block_score);
+	        $scope.block_golds_highscore = Math.max($scope.block_golds_highscore,
+	          $scope.block_coins[$scope.block_coins.length - 1].filter(function (color) {
+              color == "gold"
+            }).length);
 
-			    // reset scores
-			    $scope.block_score = 0;
 
-			    // reset coins
-			    $scope.block_coins.push([]);
+	        // reset scores
+	        $scope.block_score = 0;
 
-			    // reset consecutive count
-			    $scope.consecutive_golds = 0;
-			    $scope.consecutive_golds_display = 0;
-			}
+	        // reset coins
+	        $scope.block_coins.push([]);
 
-			if(performance >= increase_difficulty_threshold
-			   && $scope.difficulty < 5){
-			    $scope.difficulty++;
-			    revise_difficulty();
-			    $scope.reloadCSVData();
-			}
-			if(performance <= decrease_difficulty_threshold
-			   && $scope.difficulty > 1){
-			    $scope.difficulty--;
-			    revise_difficulty();
-			    $scope.reloadCSVData();
-			}
-			// implied else
-			// keep difficulty the same
-		    }
-		}
-	    });
+	        // reset consecutive count
+	        $scope.consecutive_golds = 0;
+	        $scope.consecutive_golds_display = 0;
+	      }
+
+	      if (performance >= increase_difficulty_threshold &&
+	        $scope.difficulty < 5) {
+	        $scope.difficulty++;
+	        revise_difficulty();
+	        $scope.reloadCSVData();
+	      }
+	      if (performance <= decrease_difficulty_threshold &&
+	        $scope.difficulty > 1) {
+	        $scope.difficulty--;
+	        revise_difficulty();
+	        $scope.reloadCSVData();
+	      }
+	      // implied else
+	      // keep difficulty the same
+	    }
+	  }
+	});
 
 	$scope.$on('stopPractice', function(event)
 	    {
