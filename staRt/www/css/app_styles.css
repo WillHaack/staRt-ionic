@@ -611,6 +611,49 @@ input, textarea {
   height: 100%;
   width: 100%; }
 
+.toolbar-container {
+  position: absolute;
+  width: 33.33333vw;
+  height: 10vh;
+  top: 0;
+  left: 66.66667vw;
+  display: flex;
+  padding: 0;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  z-index: 99; }
+
+.toolbar-tab {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+  width: 8.33333vw;
+  margin-left: 3px;
+  padding: 4px;
+  background-color: #d4f9f9;
+  border: 1px solid #cbf3f4;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: 3px 3px #addfdf;
+  cursor: pointer; }
+  .toolbar-tab .tbTab-icon {
+    height: 3.33333vw;
+    width: 3.33333vw;
+    margin-bottom: 4px; }
+  .toolbar-tab .tbTab-txt {
+    text-align: center;
+    font-size: 0.9em;
+    font-weight: bold;
+    width: 100%;
+    color: #7ab5b8; }
+
+.toolbar-tab:active {
+  background-color: #addfdf;
+  border-color: #9bcecc;
+  box-shadow: 3px 3px #8cbfbb; }
+
 #nav-container {
   position: absolute;
   display: -webkit-flex;
@@ -2313,9 +2356,13 @@ canvas {
   z-index: 10;
   opacity: 0.5; }
 
+.words-contentBox {
+  border: 1px solid red; }
+
 .practice-directive-container {
   height: 100%;
-  width: 100%; }
+  width: 100%;
+  border: 1px solid lime; }
 
 .promptBox-layout {
   position: absolute;
@@ -2366,7 +2413,8 @@ canvas {
   top: 83.33333vh;
   left: 16.66667vw;
   width: 58.33333vw;
-  height: 13.33333vh; }
+  height: 13.33333vh;
+  border: 1px solid red; }
 
 .coinBox-layout {
   text-align: left;

@@ -117,6 +117,34 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	$scope.currentWordIdx = -1;
 	$scope.currentPracticeSession = null;
 
+  // TOOLBAR ----------------------------------------------------
+  $scope.toolbar = [
+    // {
+    // 	icon: './img/icons/line/back.svg',
+    // 	title: 'Back',
+    // 	action: 'tbBack()'
+    // },
+    // {
+    // 	icon: './img/icons/line/anchor.svg',
+    // 	title: 'Stop',
+    // 	action: 'tbStop()'
+    // },
+    {
+      icon: './img/icons/line/lifesaver.svg',
+      title: 'Help',
+      action: 'tbHelp()'
+    },
+  ];
+
+  $scope.tbBack = function(){
+    console.log('BACK clicked');
+  }
+  $scope.tbHelp = function(){
+    console.log('HELP clicked');
+  }
+  $scope.tbStop = function(){
+    console.log('STOP clicked');
+  }
 	/* --------------------------------
 	   adaptive difficulty
   	   -------------------------------- */

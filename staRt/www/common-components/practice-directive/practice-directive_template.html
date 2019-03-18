@@ -1,5 +1,14 @@
 <div class="words-contentBox practice-directive-container">
 
+  <div class="toolbar-container">
+      <div class="toolbar-tab" ng-repeat="tab in toolbar"
+      ng-click={{tab.action}}>
+        <div class="tbTab-icon l-ico-cTextSubtle"
+          ng-include="tab.icon"></div>
+        <div class="tbTab-txt">{{tab.title}}</div>
+      </div>
+  </div>
+
   <button style="margin:40px;"
     ng-click="beginWordPractice()"
     ng-hide="suppressStartButton || isPracticing || !hasValidWordList">
