@@ -188,15 +188,12 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 				var point = positionForTouch((e.changedTouches !== undefined) ? e.changedTouches[0] : e);
 				var px = point.x + $scope.lpcRenderer.dim.W / 2;
-				//console.log('slider touchMove px: ' + px);
-
-				//$scope.data.targetF3 = linScale(px, 0, $scope.lpcRenderer.dim.W, 0, 4500);
 
 				// get wave boundaries in screen coords
 				var px_waveEdgeLeft = ($scope.lpcRenderer.dim.W/2) + $scope.lpcRenderer.dim.wave.edgeLeft;
 				var px_waveEdgeRight = ($scope.lpcRenderer.dim.W/2) + $scope.lpcRenderer.dim.wave.edgeRight;
 
-				//adds padding on right edge (prevents slider from overlapping reset sign.)
+				//adds padding on right edge (prevents slider from overlapping reset sign.
 				var padRight = $scope.lpcRenderer.dim.col_W * 0.75;
 				px_waveEdgeRight -= padRight;
 				var fzPadHigh = 4500 - ((4500/7) * 0.75); //adjusts for starfish padding.
@@ -221,13 +218,10 @@ lpcDirective.controller( 'LpcDirectiveController',
 			if (e.cancellable) e.preventDefault();
 
 			if ($scope.trackingTarget) {
-				//if (e.cancellable) e.preventDefault();
-				// Q for #SJT: This may be a better place to update the user's profile targetF3 via the Profile Service
-				//console.log('F3 at touch end: ' + $scope.data.targetF3);
-				//Update current user's Target F3
-				// ProfileService.runTransactionForCurrentProfile(function(handle, profile, t) {
-				//   t.update(handle, { targetF3: parseInt($scope.data.targetF3) });
-				// });
+				//Update current user's saved targetF3
+				ProfileService.runTransactionForCurrentProfile(function(handle, profile, t) {
+				  t.update(handle, { targetF3: parseInt($scope.data.targetF3) });
+				});
 			}
 
 			$scope.pointerDown = false;
@@ -270,7 +264,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 					}
 
 					// even though we aren't writing to a text sprite anymore,
-					// this may still helpful to smooth out the animation
+					// this may still be helpful to smooth out the animation
 					// if ($scope.targetNeedsUpdate) {
 					// 	if ($scope.targetTextUpdateCount >= maxTargetTextUpdateCount) {
 					// 		$scope.targetTextUpdateCount = 0;
@@ -326,7 +320,6 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 			if ($scope.data.targetF3 === undefined) return;
 
-			//var sPos; // float: normalized slider position
 			var sliderPosition = $scope.lpcRenderer.linScale($scope.data.targetF3, 0, 4500, 0, 1);
 			if(sliderPosition > 1) { sliderPosition = 1; }
 			if(sliderPosition < 0) { sliderPosition = 0; }
@@ -335,11 +328,6 @@ lpcDirective.controller( 'LpcDirectiveController',
 			if (fzText !== undefined) {
 				fzText.innerHTML = Math.floor($scope.data.targetF3);
 			}
-
-			//Update current user's Target F3
-			ProfileService.runTransactionForCurrentProfile(function(handle, profile, t) {
-			  t.update(handle, { targetF3: parseInt($scope.data.targetF3) });
-			});
 		};
 
 		$scope.resetF3 = function() {
@@ -360,7 +348,6 @@ lpcDirective.controller( 'LpcDirectiveController',
 		// INTERFACE ---------------------
 		$scope.pauseHandler = function() {
 			$scope.lpcPaused = !$scope.lpcPaused;
-			// console.log($scope.lpcRenderer.scene.children);
 		};
 
 		$scope.showLPC = function() {
