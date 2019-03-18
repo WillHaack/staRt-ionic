@@ -17,13 +17,6 @@ window.requestAnimFrame = (function(){
 	};
 })();
 
-function linScale(v, inlow, inhigh, outlow, outhigh) {
-	var range = outhigh - outlow;
-	var domain = inhigh - inlow;
-	var ov = (v - inlow) / domain;
-	ov = (ov * range) + outlow;
-	return ov;
-}
 
 var lpcDirective = angular.module( 'lpcDirective' );
 
@@ -31,29 +24,31 @@ lpcDirective.controller( 'LpcDirectiveController',
 	function($rootScope, $scope, $state, $stateParams, $element, $timeout, $localForage, ProfileService, LPCRenderer )
 	{
 
-	$scope.data = {};
+		$scope.data = {};
 
-	$scope.$watchCollection('data', function()
-	{
-		$scope.$emit('ratingChange', $scope.data.rating);
-	});
+		$scope.$watchCollection('data', function()
+		{
+			$scope.$emit('ratingChange', $scope.data.rating);
+		});
 
-	// --------- #HC
-	var canvasElement = $element[0].querySelector('#lpc-canvas');
-	var parentElement = $element[0].querySelector('#lpc-canvas-parentSize');
-	//console.log('canvas ele: ', canvasElement);
+		var canvasElement = $element[0].querySelector('#lpc-canvas');
+		var parentElement = $element[0].querySelector('#lpc-canvas-parentSize');
 
-	$scope.lpcRenderer = new LPCRenderer(parentElement, canvasElement, 20);
+		$scope.lpcRenderer = new LPCRenderer(parentElement, canvasElement, 20);
 
-	$scope.lpcHidden = false;
-	$scope.lpcRenderer.doShowSand = $scope.sand;
-	$scope.lpcRenderer.doShowSlider = $scope.slider;
-	$scope.targetNeedsUpdate = false;
-	$scope.targetTextUpdateCount = 0;
+		$scope.lpcHidden = false;
 
-	///////////////////////////////////
-	//  GET DATA
-	///////////////////////////////////
+		$scope.lpcRenderer.beachScene = $scope.beach;
+		var fzText; 		// holds DOM ele to display $scope.data.targetF3
+		var pauseGroup;	// holds pause icon from lpcRenderer
+		var playGroup;	// holds play icon from lpcRenderer
+		if ($scope.beach) { fzText = $element[0].querySelector('#fzText'); }
+		$scope.targetNeedsUpdate = false;
+		$scope.targetTextUpdateCount = 0;
+
+		///////////////////////////////////
+		//  WAVE DATA
+		///////////////////////////////////
 		$scope.getLPCCoefficients = function(cb) {
 			if (window.AudioPlugin !== undefined) {
 				AudioPlugin.getLPCCoefficients(cb);
@@ -62,12 +57,11 @@ lpcDirective.controller( 'LpcDirectiveController',
 			}
 		};
 
-
 		var pointCount = 256;
 		var dummyPoints = [];
 		for (var i=0; i<pointCount; i++)
 			dummyPoints.push(0);
-		var dummyNoisiness = 0.05
+		var dummyNoisiness = 0.05;
 
 		$scope.makeDummyData = function(cb) {
 
@@ -85,9 +79,9 @@ lpcDirective.controller( 'LpcDirectiveController',
 			}
 			for (var i=0; i<pointCount; i++) {
 				if (i==0 || i==(pointCount-1))
-					msg.coefficients.push(dummyPoints[i])
+					msg.coefficients.push(dummyPoints[i]);
 				else {
-					var vrg = dummyPoints[i-1] + dummyPoints[i] + dummyPoints[i+1]
+					var vrg = dummyPoints[i-1] + dummyPoints[i] + dummyPoints[i+1];
 					msg.coefficients.push(vrg/3);
 				}
 			}
@@ -95,7 +89,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 				if (i>0 && i<(pointCount-1)) {
 					if (dummyPoints[i-1] > dummyPoints[i] && dummyPoints[i] < dummyPoints[i+1]) {
 						msg.freqPeaks.push({
-							X: linScale(i, 0, pointCount-1, -1, 1),
+							X: $scope.lpcRenderer.linScale(i, 0, pointCount-1, -1, 1),
 							Y: msg.coefficients[i]
 						});
 					}
@@ -104,31 +98,37 @@ lpcDirective.controller( 'LpcDirectiveController',
 			msg.freqScale = 2.2;
 			if (cb)
 				cb(msg);
-		}
+		};
 
 		$scope.lpcCoefficientCallback = function(msg) {
 			if ($scope.active) {
 				var points = msg.coefficients;
 				var peaks = msg.freqPeaks;
-				var frequencyScaling = msg.freqScale;
-
+				//var frequencyScaling = msg.freqScale;
+				var frequencyScaling = 1;
 				$scope.lpcRenderer.updateWave(points, peaks, frequencyScaling);
 			}
 		};
 
-		function positionForTouch(t) {
+
+		///////////////////////////////////
+		//  TOUCH HANDLERS
+		///////////////////////////////////
+
+		function positionForTouch( t )
+		{
 			if (t.layerX && t.layerY) {
 				var point = {
-					x: t.layerX - $scope.lpcRenderer.WIDTH / 2,
-					y: t.layerY - $scope.lpcRenderer.HEIGHT / 2
+					x: t.layerX - $scope.lpcRenderer.dim.W / 2,
+					y: t.layerY - $scope.lpcRenderer.dim.H / 2
 				};
 				return point;
 
 			} else {
 				var rect = $scope.lpcRenderer.canvas.getBoundingClientRect();
 				var point = {
-					x: t.pageX - rect.left - $scope.lpcRenderer.WIDTH / 2,
-					y: t.pageY - rect.top - $scope.lpcRenderer.HEIGHT / 2
+					x: t.pageX - rect.left - $scope.lpcRenderer.dim.W / 2,
+					y: t.pageY - rect.top - $scope.lpcRenderer.dim.H / 2
 				};
 				return point;
 			}
@@ -138,7 +138,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 		{
 			if ($scope.active !== true) return;
 
-			if ($scope.lpcRenderer.doShowSlider === false) return;
+			if ($scope.lpcRenderer.beachScene === false) return;
 
 			if ($scope.pointerDown === false) {
 				$scope.pointerDown = true;
@@ -150,18 +150,31 @@ lpcDirective.controller( 'LpcDirectiveController',
 				if (e.cancellable) e.preventDefault();
 
 				var point = positionForTouch((e.type === 'touchstart') ? e.changedTouches[0] : e);
-				var px = point.x + $scope.lpcRenderer.WIDTH / 2;
+				var px = point.x + $scope.lpcRenderer.dim.W / 2;
+				//console.log('touch: ' + px);
 
 				var intersects = $scope.lpcRenderer.hitTest(point);
-				if (intersects === 'pauseBtn' || intersects === 'targetBtn') {
-					handleButtonPress(intersects);
-				} else {
+				console.log('raycaster says: ' + intersects);
+
+				if (intersects === 'resetBtn') {
+					$scope.resetF3();
+					$scope.trackingTarget = false;
+
+				} else if(intersects === 'bubBtn'
+					|| intersects === 'playIcon'
+					|| intersects === 'pauseIcon') {
+					$scope.pauseHandler();
+					$scope.trackingTarget = false;
+
+				} else if( intersects === 'star' ) {
 					$scope.trackingTarget = true;
-					$scope.data.targetF3 = linScale(px, 0, $scope.lpcRenderer.WIDTH, 0, 4500);
-					$scope.updateTarget();
+					// console.log('touch: ' + px);
+					//$scope.updateTarget();
+				} else {
+					$scope.trackingTarget = false;
 				}
 			}
-		}
+		} // onTouchStart
 
 		function onTouchMove( e )
 		{
@@ -173,15 +186,26 @@ lpcDirective.controller( 'LpcDirectiveController',
 			if ($scope.trackingTarget) {
 				if (e.cancellable) e.preventDefault();
 
-				var element = $scope.lpcRenderer.renderer.domElement;
-
 				var point = positionForTouch((e.changedTouches !== undefined) ? e.changedTouches[0] : e);
-				var px = point.x + $scope.lpcRenderer.WIDTH / 2;
+				var px = point.x + $scope.lpcRenderer.dim.W / 2;
 
-				$scope.data.targetF3 = linScale(px, 0, $scope.lpcRenderer.WIDTH, 0, 4500);
+				// get wave boundaries in screen coords
+				var px_waveEdgeLeft = ($scope.lpcRenderer.dim.W/2) + $scope.lpcRenderer.dim.wave.edgeLeft;
+				var px_waveEdgeRight = ($scope.lpcRenderer.dim.W/2) + $scope.lpcRenderer.dim.wave.edgeRight;
+
+				//adds padding on right edge (prevents slider from overlapping reset sign.
+				var padRight = $scope.lpcRenderer.dim.col_W * 0.75;
+				px_waveEdgeRight -= padRight;
+				var fzPadHigh = 4500 - ((4500/7) * 0.75); //adjusts for starfish padding.
+
+				// update target data w/ clamped slider range and flag for UI update
+				if( px < px_waveEdgeLeft) { px = px_waveEdgeLeft; }
+				if( px > px_waveEdgeRight) { px = px_waveEdgeRight; }
+				$scope.data.targetF3 = $scope.lpcRenderer.linScale(px, px_waveEdgeLeft, px_waveEdgeRight, 0, fzPadHigh);
+
 				$scope.targetNeedsUpdate = true;
-			}
-		}
+			} // end tracking target
+		} // end touchMove
 
 		function onTouchEnd( e ) {
 			if ($scope.active !== true) return;
@@ -193,179 +217,207 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 			if (e.cancellable) e.preventDefault();
 
+			if ($scope.trackingTarget) {
+				//Update current user's saved targetF3
+				ProfileService.runTransactionForCurrentProfile(function(handle, profile, t) {
+				  t.update(handle, { targetF3: parseInt($scope.data.targetF3) });
+				});
+			}
+
 			$scope.pointerDown = false;
 			$scope.trackedTouch = undefined;
 			$scope.trackingTarget = false;
 		}
 
 
-	///////////////////////////////////
-	//  RENDER
-	///////////////////////////////////
+		///////////////////////////////////
+		//  RENDER
+		///////////////////////////////////
+
 		$scope.animate = function () {
-		  if ($scope.active) {
+			if ($scope.active) {
 
-		    if ($scope.lpcRenderer.WIDTH !== $scope.lpcRenderer.parentElement.clientWidth ||
-		      $scope.lpcRenderer.HEIGHT !== $scope.lpcRenderer.parentElement.clientHeight
-		    ) {
-		      $scope.updateCanvasSize();
-		    }
+				if ( $scope.lpcRenderer.dim.W !== $scope.lpcRenderer.parentElement.clientWidth ||
+					$scope.lpcRenderer.dim.H !== $scope.lpcRenderer.parentElement.clientHeight ) {
+					console.log('new size');
+					$scope.updateCanvasSize( );
+				}
 
-		    if ($scope.renderTextSprite) {
-		      if (textSprite === undefined) {
-		        textSprite = Drawing.makeTextSprite(sliderFz);
-		        textSprite.position.set(0, 10, 9);
-		        label.add(textSprite);
-		      } else {
-		        label.remove(textSprite);
-		        textSprite = Drawing.makeTextSprite(sliderFz);
-		        textSprite.position.set(0, 10, 9);
-		        label.add(textSprite);
-		      }
-		    }
+				if ($scope.beach) {
 
-		    if ($scope.pause === false) {
-		      $scope.getLPCCoefficients($scope.lpcCoefficientCallback);
-		    }
+					if ( $scope.lpcPaused === false ) {
+						$scope.getLPCCoefficients($scope.lpcCoefficientCallback);
+						pauseGroup = $scope.lpcRenderer.scene.getObjectByName('pauseGroup');
+						playGroup = $scope.lpcRenderer.scene.getObjectByName('playGroup');
+						pauseGroup.visible = true;
+						playGroup.visible = false;
 
-		    //stats.update();
-		    window.requestAnimFrame($scope.animate);
-		    if ($scope.targetNeedsUpdate) {
-		      if ($scope.targetTextUpdateCount >= maxTargetTextUpdateCount) {
-		        $scope.targetTextUpdateCount = 0;
-		        $scope.updateTarget();
-		        $scope.targetNeedsUpdate = false;
-		      } else {
-		        $scope.targetTextUpdateCount++;
-		      }
-		    }
-		    $scope.lpcRenderer.render();
-		  }
+					} else {
+						pauseGroup = $scope.lpcRenderer.scene.getObjectByName('pauseGroup');
+						playGroup = $scope.lpcRenderer.scene.getObjectByName('playGroup');
+						pauseGroup.visible = false;
+						playGroup.visible = true;
+					} // end if(lpcPaused)
+
+					if ($scope.targetNeedsUpdate) {
+						$scope.updateTarget();
+					}
+
+					// even though we aren't writing to a text sprite anymore,
+					// this may still be helpful to smooth out the animation
+					// if ($scope.targetNeedsUpdate) {
+					// 	if ($scope.targetTextUpdateCount >= maxTargetTextUpdateCount) {
+					// 		$scope.targetTextUpdateCount = 0;
+					// 		$scope.updateTarget();
+					// 		$scope.targetNeedsUpdate = false;
+					// 	} else {
+					// 		$scope.targetTextUpdateCount++;
+					// 	}
+					// }
+				} // end if(beach)
+
+				if (!$scope.beach) {
+					$scope.getLPCCoefficients($scope.lpcCoefficientCallback);
+				}
+
+				window.requestAnimFrame($scope.animate);
+
+				$scope.lpcRenderer.render();
+			}
 		};
 
-//--------------------------------------------------------------
+		//--------------------------------------------------------------
 
-	////////////////////////////
-	//  Interaction & Targets
-	////////////////////////////
+		////////////////////////////
+		//  Interaction & Targets
+		////////////////////////////
 
-	function setInitialTarget() {
-		ProfileService.getCurrentProfile().then(function(res)
-		{
-			console.log('currentProfile:', res)
-			if (res) {
-				if (res.targetF3)
-				{
-					$scope.data.targetF3 = res.targetF3;
-					console.log('existing targetF3:', res.targetF3)
-				}
-				else
-				{
-					$scope.data.targetF3 = ProfileService.lookupDefaultF3(res);
-					console.log('going w default tf3:', $scope.data.targetF3);
-				}
-			}
-
-			// Set initial LPC
-			$timeout(function()
+		function setInitialTarget() {
+			ProfileService.getCurrentProfile().then(function(res)
 			{
-				$scope.updateTarget();
-			});
-		})
-	}
-
-	$scope.updateTarget = function() {
-
-		if ($scope.data.targetF3 === undefined) return;
-
-		var sliderPosition = linScale($scope.data.targetF3, 0, 4500, 0, 1);
-		$scope.lpcRenderer.sliderPosition = sliderPosition;
-		$scope.lpcRenderer.targetFrequency = $scope.data.targetF3;
-
-    //Update current user's Target F3
-    ProfileService.runTransactionForCurrentProfile(function(handle, profile, t) {
-      t.update(handle, { targetF3: parseInt($scope.data.targetF3) });
-    });
-	};
-
-	$scope.resetF3 = function() {
-		ProfileService.getCurrentProfile().then(function(res)
-		{
-			if(res)
-			{
-				$scope.data.targetF3 = ProfileService.lookupDefaultF3(res);
+			//console.log('currentProfile:', res)
+				if (res) {
+					if (res.targetF3)
+					{
+						$scope.data.targetF3 = res.targetF3;
+						console.log('existing targetF3:', res.targetF3);
+					}
+					else
+					{
+						$scope.data.targetF3 = ProfileService.lookupDefaultF3(res);
+						console.log('going w default tf3:', $scope.data.targetF3);
+					}
+				}
+				// Set initial LPC
 				$timeout(function()
 				{
 					$scope.updateTarget();
-				})
+				});
+			});
+		} // end setInitialTarget()
+
+		$scope.updateTarget = function() {
+
+			if ($scope.data.targetF3 === undefined) return;
+
+			var sliderPosition = $scope.lpcRenderer.linScale($scope.data.targetF3, 0, 4500, 0, 1);
+			if(sliderPosition > 1) { sliderPosition = 1; }
+			if(sliderPosition < 0) { sliderPosition = 0; }
+			$scope.lpcRenderer.sliderPosition = sliderPosition;
+
+			if (fzText !== undefined) {
+				fzText.innerHTML = Math.floor($scope.data.targetF3);
 			}
-		})
-	};
+		};
 
-	$scope.stopPractice = function() {
-		$scope.$emit('stopPractice');
-	}
-
-	$scope.showLPC = function() {
-		$scope.lpcHidden = false;
-	};
-
-	$scope.hideLPC = function() {
-		$scope.lpcHidden = true;
-	}
-
-	$scope.updateCanvasSize = function() {
-		$scope.lpcRenderer.updateDrawingDim();
-		$scope.lpcRenderer.updateCameraSize();
-		$scope.lpcRenderer.clearScene();
-		$scope.lpcRenderer.drawScene();
-		setInitialTarget();
-	}
-
-	{
-		if ('ontouchstart' in window) {
-			$scope.lpcRenderer.renderer.domElement.addEventListener('touchstart', onTouchStart, false);
-			$scope.lpcRenderer.renderer.domElement.addEventListener('touchmove', onTouchMove, false);
-			$scope.lpcRenderer.renderer.domElement.addEventListener('touchcancel', onTouchEnd, false);
-			$scope.lpcRenderer.renderer.domElement.addEventListener('touchend', onTouchEnd, false);
-		} else {
-			$scope.lpcRenderer.renderer.domElement.addEventListener('mousedown', onTouchStart, false);
-			window.addEventListener('mousemove', onTouchMove, false);
-			window.addEventListener('mouseup', onTouchEnd, false);
-		}
-
-		$scope.pause = false;
-		$scope.pointerDown = false;
-
-		$scope.updateCanvasSize();
-		$scope.active = true;
-		setInitialTarget();
-		$scope.animate();
-	}
-
-	$scope.$on("resetRating", function() {
-		$scope.data.rating = 0;
-	});
-
-	$scope.$watch('targetF3', function() {
-		$scope.updateTarget();
-	});
+		$scope.resetF3 = function() {
+			ProfileService.getCurrentProfile().then(function(res)
+			{
+				if(res)
+				{
+					$scope.data.targetF3 = ProfileService.lookupDefaultF3(res);
+					$timeout(function()
+					{
+						$scope.updateTarget();
+					});
+				}
+			});
+		};
 
 
-	$scope.myURL = $state.current.name;
+		// INTERFACE ---------------------
+		$scope.pauseHandler = function() {
+			$scope.lpcPaused = !$scope.lpcPaused;
+		};
 
-	var unsubscribe = $rootScope.$on("$urlChangeStart", function(event, next) {
-		if (next === $scope.myURL) {
-			$scope.active = true;
-			$scope.animate();
-			$scope.updateCanvasSize();
+		$scope.showLPC = function() {
+			$scope.lpcHidden = false;
+		};
+
+		$scope.hideLPC = function() {
+			$scope.lpcHidden = true;
+		};
+
+		$scope.updateCanvasSize = function() {
+			console.log('size update called');
+			$scope.lpcRenderer.updateDrawingDim();
+			$scope.lpcRenderer.updateCameraSize();
+			$scope.lpcRenderer.clearScene();
+			$scope.lpcRenderer.drawScene();
 			setInitialTarget();
-		} else {
-			$scope.active = false;
-		}
-	});
+		};
 
-	$scope.$on("$destroy", function() {
-		unsubscribe();
+		{
+			if ('ontouchstart' in window) {
+				$scope.lpcRenderer.renderer.domElement.addEventListener('touchstart', onTouchStart, false);
+				$scope.lpcRenderer.renderer.domElement.addEventListener('touchmove', onTouchMove, false);
+				$scope.lpcRenderer.renderer.domElement.addEventListener('touchcancel', onTouchEnd, false);
+				$scope.lpcRenderer.renderer.domElement.addEventListener('touchend', onTouchEnd, false);
+			} else {
+				$scope.lpcRenderer.renderer.domElement.addEventListener('mousedown', onTouchStart, false);
+				window.addEventListener('mousemove', onTouchMove, false);
+				window.addEventListener('mouseup', onTouchEnd, false);
+			}
+
+			$scope.lpcPaused = false;
+			$scope.pointerDown = false;
+
+			$scope.updateCanvasSize( parentElement );
+			$scope.active = true;
+			setInitialTarget();
+			$scope.animate();
+		}
+
+
+		// ---------------------------------------
+
+		$scope.stopPractice = function() {
+			$scope.$emit('stopPractice');
+		};
+
+		$scope.$on('resetRating', function() {
+			$scope.data.rating = 0;
+		});
+
+		$scope.$watch('targetF3', function() {
+			$scope.updateTarget();
+		});
+
+		$scope.myURL = $state.current.name;
+
+		var unsubscribe = $rootScope.$on('$urlChangeStart', function(event, next) {
+			if (next === $scope.myURL) {
+				$scope.active = true;
+				$scope.animate();
+				$scope.updateCanvasSize();
+				setInitialTarget();
+			} else {
+				$scope.active = false;
+				fzText.innerHTML = '';
+			}
+		});
+
+		$scope.$on('$destroy', function() {
+			unsubscribe();
+		});
 	});
-});
