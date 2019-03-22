@@ -369,6 +369,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
       if (profile.formalTester) {
         doStoreSession = (
           $scope.currentPracticeSession.ratings.length > 0 &&
+          $scope.currentPracticeSession.count > $scope.currentPracticeSession.ratings.length &&
           AutoService.isSessionActive()
         );
       }

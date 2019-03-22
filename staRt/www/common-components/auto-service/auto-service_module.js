@@ -310,7 +310,7 @@ var SessionAuto = function (profile, currentStates, onShow, initialState) {
 	};
 
 	this.firstStep = steps.confirm;
-	this.contextString = this.biofeedback + "-" + sessionIndex;
+	this.contextString = this.state.biofeedback + "-" + sessionIndex;
 };
 SessionAuto.prototype = Object.create(AutoState.prototype);
 SessionAuto.shouldBegin = function (profile) {
@@ -412,8 +412,8 @@ var ConclusionAuto = function (profile, currentStates, onShow, initialState) {
 };
 ConclusionAuto.prototype = Object.create(AutoState.prototype);
 ConclusionAuto.shouldBegin = function (profile) {
-	var biofeedbackCompleteGood = profile.nBiofeedbackSessionsCompleted >= 4;
-	var nonBiofeedbackCompleteGood = profile.nNonBiofeedbackSessionsCompleted >= 4;
+	var biofeedbackCompleteGood = profile.nBiofeedbackSessionsCompleted >= (TOTAL_SESSION_COUNT / 2);
+	var nonBiofeedbackCompleteGood = profile.nNonBiofeedbackSessionsCompleted >= (TOTAL_SESSION_COUNT / 2);
 	var formalGood = !!profile.formalTester;
 	var treatmentComplete = !!profile.nFormalTreatmentComplete;
 	return biofeedbackCompleteGood && nonBiofeedbackCompleteGood && formalGood && !treatmentComplete;
@@ -476,10 +476,10 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
 				_setCurrentAuto(new SessionAuto(profile, currentStates, function (message, completed) {
 					if (message) _showMessage(message);
 					if (completed) {
-						if (currentAuto.didFinishSession) {
+						if (currentAuto.state.didFinishSession) {
 							NotifyingService.notify('session-completed', {
 								profile: profile,
-								practice: currentAuto.biofeedback
+								practice: currentAuto.state.biofeedback
 							});
 						}
 						_setCurrentAuto(null);
@@ -492,7 +492,7 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
 				_setCurrentAuto(new ConclusionAuto(profile, currentStates, function (message, completed) {
 					if (message) _showMessage(message);
 					if (completed) {
-						if (currentAuto.didFinishSession) {
+						if (currentAuto.state.didFinishSession) {
 							NotifyingService.notify('conclusion-completed', {
 								profile: profile
 							});
