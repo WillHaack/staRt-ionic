@@ -709,13 +709,13 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
         if (!currentAuto.state.categoryRestrictions) {
           currentAuto.state.categoryRestrictions = [];
         }
-      }
 
-      if (state && currentAuto.state.categoryRestrictions.indexOf(index) === -1) {
-        currentAuto.state.categoryRestrictions.push(index);
-      } else if (!state && currentAuto.state.categoryRestrictions.indexOf(index) !== -1) {
-        var pos = currentAuto.state.categoryRestrictions.indexOf(index);
-        currentAuto.state.categoryRestrictions.splice(pos, 1);
+        if (state && currentAuto.state.categoryRestrictions.indexOf(index) === -1) {
+          currentAuto.state.categoryRestrictions.push(index);
+        } else if (!state && currentAuto.state.categoryRestrictions.indexOf(index) !== -1) {
+          var pos = currentAuto.state.categoryRestrictions.indexOf(index);
+          currentAuto.state.categoryRestrictions.splice(pos, 1);
+        }
       }
     },
   }
