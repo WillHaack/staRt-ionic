@@ -69,9 +69,9 @@ function compareRecordings(ra, rb) {
       });
 
       NotifyingService.subscribe("profile-stats-updated", $scope, function(msg, updateData) {
-        let profile = updateData[0];
-        let currentProfileStats = updateData[1];
-        let updateKeys = updateData[2];
+        var profile = updateData[0];
+        var currentProfileStats = updateData[1];
+        var updateKeys = updateData[2];
         updateKeys.forEach(function(key) {
           $scope.data.currentProfile[key] = profile[key];
         });

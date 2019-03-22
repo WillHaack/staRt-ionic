@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	x="0px" y="0px"
+	viewBox="0 0 64 64">
+
+<g id="arrow">
+	<line class="" x1="32.1" y1="21.5" x2="32.1" y2="61.5"/>
+	<line class="" x1="32.1" y1="21.5" x2="42.3" y2="31.7"/>
+	<line class="" x1="31.9" y1="21.5" x2="21.7" y2="31.7"/>
+</g>
+<polyline class="" points="43.4,54.5 60.9,54.5 60.9,3.5 3.1,3.5 3.1,54.5 20.6,54.5 "/>
+</svg>

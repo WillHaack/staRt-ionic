@@ -239,7 +239,7 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 
     getProfileTransactionHandle(profileData)
     {
-      const profileUUID = profileData.uuid;
+      var profileUUID = profileData.uuid;
       return FirebaseService.db().collection("profiles").doc(profileUUID);
     },
 
@@ -315,7 +315,7 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
     runTransactionForCurrentProfile(transactionFunction) {
       return this.getCurrentProfile().then((function(profile) {
         if (profile) {
-          const handle = this.getProfileTransactionHandle(profile);
+          var handle = this.getProfileTransactionHandle(profile);
           if (handle) {
             return this.runTransaction(handle, transactionFunction);
           }

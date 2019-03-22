@@ -16,9 +16,9 @@
 		height: 100%;
 		z-index: 1;
 
-		.img-bg_qtBF--BG {
+		.img-bg_BF {
 			background-color: $c-bg;
-			background-image: url("../img/bgImg/bg_quest-BF--background.svg");
+			background-image: url("../img/bgImg/bg-BF.svg");
 			z-index: 1;
 		}
 		.img-bg_qtNoBF {
@@ -26,21 +26,13 @@
 			background-image: url("../img/bgImg/bg_quest-NoBF.svg");
 			z-index: 1;
 		}
-		.img-bg_qtBF--MG {
-			background-image: url("../img/bgImg/bg_quest-BF--midground.svg");
-			z-index: 3;
-		}
-		.img-bg_qtBF--FG {
-			background-image: url("../img/bgImg/bg_quest-BF--foreground.svg");
-			z-index: 5;
-		}
 	}
 
 	.quest-layout_content-container {
 		position: relative;
 		display: flex;
 		flex-flow: column nowrap;
-		padding-left: $col-w;
+		padding-left: 0;
 		height: 100%;
 		width: 100%;
 		justify-content: space-around;
@@ -91,6 +83,8 @@
 .quest-menu-page {
 	height: 100%;
 	padding: $row-h $col-w;
+	padding-left: $col-w * 2;
+	border: 1px solid pink;
 }
 
 .quest-menu-row {
@@ -150,6 +144,7 @@
 	justify-content: space-around;
 	padding: 0 $col-w;
 	padding-top: $row-h;
+	padding-left: $col-w * 2;
 }
 
 .quest-config-row {

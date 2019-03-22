@@ -14,12 +14,17 @@
 		<div class="seachBar-row">
 			<div class="searchBar">
 				<label class="searchBar-label">
-					<input class="nameSearch" ng-model="nameSearch" type="text" placeholder="Search">
+					<input class="nameSearch" ng-model="nameSearch" type="text" placeholder="">
 				</label>
-				<!--
-				<i class="icon ion-search"></i>
-				<i class="icon ion-close "></i>
-				-->
+
+				<div class="s-ico24 l-ico-cWhite"
+				  ng-include=" './img/icons/line/search.svg' " >
+				</div>
+
+				<!-- <div class="s-ico24 l-ico-cWhite"
+					ng-include=" './img/icons/line/close.svg' " >
+				</div> -->
+
 			</div>
 			<!-- end searchBar -->
 		</div> <!-- end searchBar-row -->
@@ -53,9 +58,10 @@
 									<div class="name-text">{{profile.name}}</div>
 
 									<div class="r-item-iconBox">
-										<!--  -->
 										<div ng-if="profile.formalTester"
-										class="r-ico32 r-ico-starfish"></div>
+											class="s-ico24 p-ico-cTextMain"
+											ng-include=" './img/icons/path/starfish.svg' " >
+										</div>
 									</div>
 
 								</div> <!-- r-item-nameRow -->
@@ -87,6 +93,9 @@
 		ng-disabled="isEditing">
 			<span class="btnTitle">Clinician's Card</span>
 			<i class="icon ion-ios-people-outline"></i>
+			<!-- <div class="r-ico32 r-ico-cTextMain"
+			  ng-include=" './img/icons/_captain-left.svg' " >
+			</div> -->
 		</button>
 	</div>
 

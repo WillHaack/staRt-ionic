@@ -1,8 +1,8 @@
 var uploadService = angular.module('uploadService', []);
 
 var fileKeys = [
-  "Ratings", "Metadata", "LPC", "Audio"
-]
+	"Ratings", "Metadata", "LPC", "Audio"
+];
 
 var uploadURLs = {
 	Ratings: "https://byunlab.com/start/session/ratings",
@@ -28,14 +28,14 @@ var uploadURLs = {
 var downloadStatusCache = {};
 
 function _mimeTypeForFile(value) {
-  if (value.endsWith("csv")) return "text/csv";
-  if (value.endsWith("json")) return "application/json";
-  if (value.endsWith("mp4") || value.endsWith("m4a")) return "audio/mp4";
-  if (value.endsWith("mp3")) return "audio/mpeg";
-  if (value.endsWith("aif")) return "audio/x-aiff";
-  if (value.endsWith("ogg")) return "audio/ogg";
-  if (value.endsWith("wav")) return "audio/vnd.wav";
-  return null;
+	if (value.endsWith("csv")) return "text/csv";
+	if (value.endsWith("json")) return "application/json";
+	if (value.endsWith("mp4") || value.endsWith("m4a")) return "audio/mp4";
+	if (value.endsWith("mp3")) return "audio/mpeg";
+	if (value.endsWith("aif")) return "audio/x-aiff";
+	if (value.endsWith("ogg")) return "audio/ogg";
+	if (value.endsWith("wav")) return "audio/vnd.wav";
+	return null;
 }
 
 uploadService.factory('UploadService', function($localForage, $http, $cordovaDialogs, StartServerService)
@@ -55,18 +55,18 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 
 	// Returns a promise that resolves when the upload is complete (or fails)
 	function uploadFile(absolutePath, destURL, mimeType, sessionID, progressCb, $http, $cordovaDialogs)
-    {
+	{
 		return new Promise(function (resolve, reject) {
 			var win = function (r) {
 				console.log("Code = " + r.responseCode);
 				console.log("Response = " + r.response);
 				console.log("Sent = " + r.bytesSent);
 				resolve(r);
-			}
+			};
 
 			var fail = function (error) {
-        reject(error);
-			}
+				reject(error);
+			};
 
 			resolveLocalFileSystemURL("file://" + absolutePath, function(fileEntry) {
 				fileEntry.file( function(file) {
@@ -121,14 +121,14 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 		uploadPracticeSessionFiles: function(filesToUpload, id, progressCallback, completeCallback, errorCallback) {
 			var uploadTodos = [];
 
-      saveUploadStatusForSessionKey(id, {uploading: true});
+			saveUploadStatusForSessionKey(id, {uploading: true});
 
-      fileKeys.forEach(fileKey => {
-        var filename = filesToUpload[fileKey];
-        var mimeType = _mimeTypeForFile(filename);
-        uploadURL = uploadURLs[fileKey];
-        var progressCb = function(res) {
-					progressCallback(res, idx)
+			fileKeys.forEach(function (fileKey, idx) {
+				var filename = filesToUpload[fileKey];
+				var mimeType = _mimeTypeForFile(filename);
+				var uploadURL = uploadURLs[fileKey];
+				var progressCb = function(res) {
+					progressCallback(res, idx);
 				};
 				uploadTodos.push(uploadFile(filename,
 					uploadURL,
@@ -138,8 +138,9 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 					$http,
 					$cordovaDialogs
 				));
-      });
+			});
 
+			// eslint-disable-next-line no-undef
 			Promise.all(uploadTodos)
 				.then(function() {
 					saveUploadStatusForSessionKey(id, {uploading: false, uploaded: true});

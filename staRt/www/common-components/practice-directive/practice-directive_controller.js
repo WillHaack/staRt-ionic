@@ -129,7 +129,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	var decrease_difficulty_threshold = 0.5;
 
 	// remap data according to specs
-	const remap_adaptive_difficulty_score = {
+	var remap_adaptive_difficulty_score = {
 	    3: 1,
 	    2: .5,
 	    1: 0
@@ -146,8 +146,8 @@ practiceDirective.controller( 'PracticeDirectiveController',
       $scope.session_coins[visual_reinforcement_coin_color_map[data]]++;
       if (visual_reinforcement_coin_color_map[data] == "gold") {
         $scope.consecutive_golds++;
-        let temp_golds_consecutive_gold_display = 0;
-        $scope.consecutive_golds_breakpoints.forEach((value) => {
+        var temp_golds_consecutive_gold_display = 0;
+        $scope.consecutive_golds_breakpoints.forEach(function (value) {
           if ($scope.consecutive_golds >= value) {
             temp_golds_consecutive_gold_display = value;
           }
@@ -168,7 +168,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
       // todo: ratingChange emit error is preventing accurate calculation
 
       // recalculate difficulty
-      let performance = calculate_difficulty_performance(
+      var performance = calculate_difficulty_performance(
         $scope.block_score,
         10 // working in blocks of ten
       );
@@ -178,7 +178,9 @@ practiceDirective.controller( 'PracticeDirectiveController',
         // recalculate highscores
         $scope.block_score_highscore = Math.max($scope.block_score_highscore, $scope.block_score);
         $scope.block_golds_highscore = Math.max($scope.block_golds_highscore,
-          $scope.block_coins[$scope.block_coins.length - 1].filter(color => color == "gold").length);
+          $scope.block_coins[$scope.block_coins.length - 1].filter(function (color) {
+            return color === "gold";
+          }).length);
 
         // reset scores
         $scope.block_score = 0;
@@ -283,7 +285,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	}
 
 	// need this outside for some reason
-	const visual_reinforcement_coin_color_map = {
+	var visual_reinforcement_coin_color_map = {
 	    3: "gold",
 	    2: "silver",
 	    1: "bronze"
@@ -359,9 +361,9 @@ practiceDirective.controller( 'PracticeDirectiveController',
       }
     });
 
-	  ProfileService.getCurrentProfile().then((profile) => {
-      let doUpload = ($scope.currentPracticeSession.ratings.length > 0);
-      let doStoreSession = false;
+	  ProfileService.getCurrentProfile().then(function (profile) {
+      var doUpload = ($scope.currentPracticeSession.ratings.length > 0);
+      var doStoreSession = false;
 	    // If the user is not done yet, we should save all the data that we need
       // to restore the practice session.
       if (profile.formalTester) {
@@ -371,7 +373,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
         );
       }
 
-      let storeTask = Promise.resolve();
+      var storeTask = Promise.resolve();
       if (doStoreSession) {
         storeTask = $cordovaDialogs.confirm(
           "Do you want to resume this recording session later?",
@@ -381,7 +383,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
           if (index === 1) {
             AutoService.pauseSession();
             ProfileService.runTransactionForCurrentProfile(function(handle, doc, t) {
-              const res = t.update(handle, { inProcessSession: $scope.currentPracticeSession });
+              var res = t.update(handle, { inProcessSession: $scope.currentPracticeSession });
               console.log(res);
             });
           } else {
@@ -468,7 +470,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
       sessionPrepTask = forEachPromise(previousRatings, function (rating) {
         $scope.currentWordIdx++;
         return handleRatingData($scope, rating.rating);
-      }).then(() => {
+      }).then(function () {
         $scope.currentWordIdx = $scope.currentPracticeSession.ratings.length - 1;
       });
     } else {
@@ -532,7 +534,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	        // will not trigger if serving
 	        navigator.notification.confirm("Pausing for feedback",
 	          function () {
-	            $scope.$apply(() => {
+	            $scope.$apply(function () {
 	              $scope.isFeedbacking = false;
 	            });
 	          }, "",
@@ -576,7 +578,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
   	   -------------------------------- */
 	  if (!$scope.probe) {
 	    // check if new highscores
-	    let shouldUpdateHighscores = false;
+	    var shouldUpdateHighscores = false;
 	    if ($scope.block_score_highscore > $scope.highscores.block.score.total) {
 	      shouldUpdateHighscores = true;
 	      $scope.highscores.block.score.total = $scope.block_score_highscore;
@@ -643,13 +645,13 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	    // if requested CSV is data/Word_Probe
 	    &&
 	    $scope.csvs[0] !== "data/Word_Probe.csv") {
-	    let tempWordList = [];
+	    var tempWordList = [];
 
 	    // map csvs to adaptive difficulty key names
 	    // to cause as few side effects as possible
 
-	    $scope.csvs.forEach((csv) => {
-	      let key = csv.replace('data/wp_', '').replace('.csv', '');
+	    $scope.csvs.forEach(function (csv) {
+	      var key = csv.replace('data/wp_', '').replace('.csv', '');
 	      if ($scope.difficulty <= 3) {
 	        tempWordList = tempWordList.concat(words[key][$scope.difficulty]);
 	      } else {
@@ -710,7 +712,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	$scope.$watch("csvs", function () {
 	    $scope.hasValidWordList = false;
 	    if ($scope.csvs) {
-        $scope.reloadCSVData().then(() => {
+        $scope.reloadCSVData().then(function () {
           if ($scope.hasValidWordList && !$scope.isPracticing && $scope.beginOnLoad) {
             $scope.beginWordPractice();
           }
@@ -719,7 +721,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	});
 
 	if ($scope.csvs) {
-    $scope.reloadCSVData().then(() => {
+    $scope.reloadCSVData().then(function () {
       if ($scope.hasValidWordList && !$scope.isPracticing && $scope.beginOnLoad) {
         $scope.beginWordPractice();
       }
@@ -747,7 +749,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 
 
 // save here to avoid async loads
-const carrier_phrases_bank = [
+var carrier_phrases_bank = [
     ["___"],
     ["Say ___ to me"],
     [
@@ -774,7 +776,7 @@ const carrier_phrases_bank = [
 ];
 
 
-const words = {
+var words = {
     'consonantal_back': {
 	'1': [
 	    'rod',

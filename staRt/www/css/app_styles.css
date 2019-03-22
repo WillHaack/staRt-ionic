@@ -371,62 +371,141 @@ input[type=range]::-webkit-slider-thumb {
     -webkit-transform: perspective(400px);
     transform: perspective(400px); } }
 
-.r-ico56 {
+/* ICON ELEMENTS -------------------------------------
+
+FOR NOW:
+size it, color it, inject it
+
+--- example ---
+<div class="s-ico32 l-ico-cTextMain"
+  ng-include=" './img/icons/line/edit.svg' " >
+</div>
+
+
+LATER:
+Once we know what we need, we'll make either an icon font,
+or just pre-color the assets and use 'em as css bg-images.
+
+*/
+.s-icoFull {
+  position: relative;
+  display: inline-block;
+  height: 100%;
+  width: 100%; }
+
+.s-ico64 {
+  position: relative;
+  display: inline-block;
+  height: 64px;
+  width: 64px; }
+
+.s-ico56 {
   position: relative;
   display: inline-block;
   height: 56px;
-  width: 56px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain; }
+  width: 56px; }
 
-.r-ico48 {
+.s-ico48 {
   position: relative;
   display: inline-block;
   height: 48px;
-  width: 48px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain; }
+  width: 48px; }
 
-.r-ico40 {
+.s-ico40 {
   position: relative;
   display: inline-block;
   height: 40px;
-  width: 40px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain; }
+  width: 40px; }
 
-.r-ico32 {
+.s-ico32 {
   position: relative;
   display: inline-block;
   height: 32px;
-  width: 32px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain; }
+  width: 32px; }
 
-.r-ico24 {
+.s-ico24 {
   position: relative;
   display: inline-block;
   height: 24px;
-  width: 24px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain; }
+  width: 24px; }
 
-.r-ico16 {
+.s-ico16 {
   position: relative;
   display: inline-block;
   height: 16px;
-  width: 16px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain; }
+  width: 16px; }
 
-.r-ico-starfish {
-  background-image: url("../img/profiles/ico_star-line.svg"); }
+/* ========================================================
+  LINE ICONS
+  ======================================================== */
+.l-ico-cTextMain {
+  fill: none;
+  stroke: #3d6d84;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-miterlimit: 10; }
+
+.l-ico-cWhite {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-miterlimit: 10; }
+
+.l-ico-cRed {
+  fill: none;
+  stroke: #ff0000;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-miterlimit: 10; }
+
+.l-ico-cBronze {
+  fill: none;
+  stroke: #efbd88;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-miterlimit: 10; }
+
+.ico-stroke2 {
+  stroke-width: 2; }
+
+.ico-stroke1 {
+  stroke-width: 1; }
+
+/* ========================================================
+  PATH-ONLY ICONS
+  ======================================================== */
+/* NOTE: The Nav Icons are PATH-ONLY svg.
+    They use the size and color mixins, and the rest of their styles (e.g. :active)
+    are in ./states/_root-styles
+*/
+.p-ico-cTextMain {
+  fill: #3d6d84;
+  opacity: 1;
+  stroke: none;
+  mix-blend-mode: normal; }
+
+.p-ico-cWhite {
+  fill: #ffffff;
+  opacity: 1;
+  stroke: none;
+  mix-blend-mode: normal; }
+
+.p-ico-cRed {
+  fill: #ff0000;
+  opacity: 1;
+  stroke: none;
+  mix-blend-mode: normal; }
+
+.p-ico-cBronze {
+  fill: #efbd88;
+  opacity: 1;
+  stroke: none;
+  mix-blend-mode: normal; }
 
 * {
   margin: 0;
@@ -536,54 +615,63 @@ input, textarea {
   position: absolute;
   display: -webkit-flex;
   -webkit-flex-direction: column;
-  width: 10vw;
+  width: 10.41667vw;
   height: 100vh;
   z-index: 999; }
-
-.nav-container {
-  z-index: 99; }
-
-.navTabs {
-  height: 100vh;
-  display: -webkit-flex;
-  -webkit-flex: 1;
-  -webkit-flex-direction: column;
-  color: #ffffff;
-  text-transform: uppercase;
-  font-weight: bold; }
-
-.navTab {
-  display: -webkit-flex;
-  -webkit-flex: 1;
-  background-image: url("../img/nav/new/navTab-off.svg");
-  background-image-size: 100% 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  text-align: center;
-  border-radius: 10px;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
-  width: 10vw;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-  transition: width 0.5s ease-in-out; }
-  .navTab.active {
-    color: white;
-    background-image: url("../img/nav/new/navTab-on.svg");
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
-    z-index: 25;
-    width: 11vw; }
-
-.navTabText {
-  margin: auto;
-  padding-top: 10%;
-  padding-bottom: 5%; }
-
-.nav-svg {
-  height: 65px;
-  width: 65px;
-  display: block;
-  margin: 0 auto;
-  padding-bottom: 5px; }
+  #nav-container list.navTabs {
+    height: 101%;
+    display: -webkit-flex;
+    -webkit-flex: 1;
+    -webkit-flex-direction: column;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: bold; }
+  #nav-container item.navTab {
+    display: -webkit-flex;
+    -webkit-flex: 1;
+    background-image: url("../img/ui/navTab-off.svg");
+    background-image-size: 100% 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+    height: 18.33333vh;
+    width: 9.33333vw;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    transition: width 0.5s ease-in-out; }
+    #nav-container item.navTab.active {
+      color: white;
+      background-image: url("../img/ui/navTab-on.svg");
+      box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+      z-index: 25;
+      width: 10.41667vw; }
+  #nav-container .navTabContent {
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    height: 65%;
+    width: 75%;
+    margin: auto;
+    z-index: 35; }
+    #nav-container .navTabContent .navTabIcon {
+      display: block;
+      margin: 0 auto;
+      padding-bottom: 10px; }
+      #nav-container .navTabContent .navTabIcon svg * {
+        fill: #ffffff;
+        opacity: 0.85; }
+      #nav-container .navTabContent .navTabIcon.active svg * {
+        opacity: 1; }
+    #nav-container .navTabContent .navTabText {
+      color: white;
+      font-size: 0.8em;
+      opacity: 0.75; }
+      #nav-container .navTabContent .navTabText.active {
+        color: white;
+        opacity: 1; }
 
 /*
   This section contains global styles for the state-level ion-view.
@@ -591,9 +679,9 @@ input, textarea {
 
   Each ion-view.state-contentBox is injected into the root_template's ion-nav-view#content-container, which is controlled by the router and handles pg transitions and other important stuff.
 
-  At this point, these are essentially just a css reset, which creates a full-width, full-height .state-contentBox.
+  At this point, these rules sets are just a css reset, which create a full-width, full-height .state-contentBox.
 
-  NOTE: Styles for everything below ion-view.state-contentBox are in the state's .scss file -- even theme-like elements, such as layout or the  header bar. Currently each state is self-contained thing, responsisble for implementing its own layout and styles.
+  NOTE: Styles for everything below ion-view.state-contentBox live in the individual state's .scss file. (With the exception of 'common-styles' classes, each state should be thought of as a self-contained thing, responsisble for implementing its own layout and custom styles.)
 */
 .state-contentBox {
   position: relative;
@@ -663,11 +751,7 @@ input, textarea {
     left: 0;
     width: 41.66667vw;
     height: 100%;
-    background-color: #0fabc1;
-    background-image: url("../img/profiles/sky-75alpha.png");
-    background-position: top right;
-    background-repeat: no-repeat;
-    background-size: auto 100%;
+    background: linear-gradient(12deg, rgba(111, 206, 214, 0.8) 0%, rgba(182, 222, 225, 0.6) 100%);
     z-index: 90; }
 
 .profiles-layout_content-container {
@@ -741,7 +825,7 @@ input, textarea {
       width: auto;
       height: auto;
       padding-left: 16.66667vw;
-      color: #3D6D84;
+      color: #3d6d84;
       font-size: 1em;
       font-weight: 600;
       text-align: left; }
@@ -878,7 +962,7 @@ input, textarea {
       .profiles-drawer-item .r-item-content .r-item-nameRow .name-text {
         display: flex;
         align-items: center;
-        color: #3D6D84;
+        color: #3d6d84;
         font-weight: 500;
         width: 100%;
         height: 100%;
@@ -914,7 +998,7 @@ input, textarea {
     padding-left: 16.66667vw;
     height: 50%;
     width: 100%;
-    color: #3D6D84; }
+    color: #3d6d84; }
     .p-drawer_layout_foot .footRow button.footBtn {
       position: relative;
       display: flex;
@@ -924,7 +1008,7 @@ input, textarea {
       height: 100%;
       width: 100%;
       padding-right: 1em;
-      color: #3D6D84;
+      color: #3d6d84;
       font-weight: 600;
       border: 0;
       box-shadow: none;
@@ -964,9 +1048,9 @@ input, textarea {
   height: 75vh;
   margin-left: 4.16667vw;
   padding-top: 4.16667vh;
-  color: #3D6D84; }
+  color: #3d6d84; }
   .profiles-noCard h1, .profiles-noCard h2, .profiles-noCard h3 {
-    color: #3D6D84;
+    color: #3d6d84;
     padding-left: 0.5em; }
   .profiles-noCard .divider {
     position: absolute;
@@ -996,7 +1080,7 @@ input, textarea {
       justify-content: space-between;
       align-items: center;
       width: 100%;
-      color: #3D6D84;
+      color: #3d6d84;
       margin: 2em 0;
       padding: 1em 2em;
       box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15); }
@@ -1039,7 +1123,7 @@ input, textarea {
     width: 100%;
     padding-left: 2.5em;
     padding-bottom: 0.25em;
-    color: #3D6D84; }
+    color: #3d6d84; }
     .p-card_head .card-headerBox .card-titleBox {
       display: flex;
       flex-flow: column nowrap;
@@ -1050,16 +1134,16 @@ input, textarea {
         text-align: left;
         font-size: 1.5em;
         width: 100%;
-        color: #3D6D84;
+        color: #3d6d84;
         font-weight: 400; }
     .p-card_head .card-headerBox .card-closeBox {
       display: flex;
       height: 100%;
-      width: 64px;
+      width: 96px;
       background-color: transparent; }
       .p-card_head .card-headerBox .card-closeBox button {
         height: 100%;
-        width: 8.33333vh;
+        width: 100%;
         border-radius: 10px;
         font-size: 2.5em;
         font-weight: 600;
@@ -1082,14 +1166,14 @@ input, textarea {
     justify-content: center;
     height: 100%;
     padding: 0em 1em;
-    color: #3D6D84;
+    color: #3d6d84;
     font-size: 0.9em;
     font-weight: 400; }
     .p-card_head .p-card_navBox .pro_navitem.pro_navitem--active {
       height: 100%;
       font-weight: 700;
-      border-top: 2px solid #3D6D84;
-      border-bottom: 2px solid #3D6D84; }
+      border-top: 2px solid #3d6d84;
+      border-bottom: 2px solid #3d6d84; }
   .p-card_head .p-card_navBox.p-card_navBox--slp {
     border-top: 2px solid #efbd88;
     border-bottom: 2px solid #efbd88; }
@@ -1102,7 +1186,7 @@ input, textarea {
   height: 58.33333vh;
   width: 100%;
   text-align: left;
-  color: #3D6D84; }
+  color: #3d6d84; }
   .card-content .card-body {
     position: relative;
     display: flex;
@@ -1111,10 +1195,10 @@ input, textarea {
     width: 100%;
     padding: 2em 2.5em;
     padding-bottom: 0;
-    color: #3D6D84; }
+    color: #3d6d84; }
     .card-content .card-body h3 {
       font-size: 1em;
-      color: #3D6D84; }
+      color: #3d6d84; }
   .card-content .card-foot {
     position: relative;
     display: flex;
@@ -1132,7 +1216,7 @@ input, textarea {
   border: none;
   border-radius: 10px; }
   .iconBtn i.r-icon {
-    color: #3D6D84;
+    color: #3d6d84;
     height: 100%;
     width: 100%; }
 
@@ -1162,7 +1246,7 @@ i.r-icon-big {
       flex-flow: row nowrap;
       align-items: flex-end;
       width: 100%;
-      color: #3D6D84;
+      color: #3d6d84;
       font-size: 1em;
       margin-bottom: 1.75em;
       border-bottom: 1px solid #c2f2f2; }
@@ -1331,7 +1415,7 @@ i.r-icon-big {
   height: 100%;
   width: 20%; }
   .slp-iconBtn i.r-icon {
-    color: #3D6D84;
+    color: #3d6d84;
     font-size: 2.5em !important;
     height: 100%;
     width: 100%; }
@@ -1344,7 +1428,7 @@ i.r-icon-big {
   align-items: flex-start;
   margin-left: 1em;
   width: 72%;
-  color: #3D6D84; }
+  color: #3d6d84; }
   .slpCard-desc h3 {
     display: block;
     font-weight: 700;
@@ -1724,7 +1808,7 @@ div.needleBox {
     position: relative;
     display: flex;
     flex-direction: column;
-    padding-left: 8.33333vw;
+    padding-left: 0;
     height: 100%;
     width: 100%;
     justify-content: space-around;
@@ -1732,7 +1816,8 @@ div.needleBox {
 
 .quiz-menu-page {
   height: 100%;
-  padding: 16.66667vh 8.33333vw; }
+  padding: 16.66667vh 8.33333vw;
+  padding-left: 16.66667vw; }
 
 .quiz-menu-row {
   position: relative;
@@ -1784,39 +1869,27 @@ div.needleBox {
     width: 100%;
     height: 100%;
     z-index: 1; }
+    .free-layout_view-container .free-layout_bg-container .img-bg_BF {
+      background-color: #c2f2f2;
+      background-image: url("../img/bgImg/bg-BF.svg");
+      z-index: 1; }
   .free-layout_view-container .free-layout_content-container {
     position: relative;
     display: flex;
     flex-flow: column nowrap;
-    margin-top: 25vh;
-    margin-left: 16.66vw;
-    height: 66.66667vh;
-    width: 75vw;
+    height: 100%;
+    padding-top: 16.66667vh;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
     z-index: 10; }
 
-.free-lpcFrame {
+.free-lpcBox {
   position: relative;
-  width: 100%;
-  height: 460px;
-  border-radius: 6px;
-  display: block;
-  background-color: #F0F9FC;
-  border: 15px solid #F0F9FC;
-  border-bottom: 25px solid #F0F9FC;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25); }
-  .free-lpcFrame .free-lpcBox {
-    width: 100%;
-    height: 405px;
-    padding-top: 35px;
-    background-color: #c5f3ff; }
-    .free-lpcFrame .free-lpcBox .reset-button {
-      margin-top: -6.66667vh;
-      border-radius: 4px;
-      background-color: white;
-      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
-      z-index: 100; }
+  display: flex;
+  flex-flow: column nowrap;
+  height: 66.66667vh;
+  width: 100%; }
 
 .quest-layout_view-container {
   position: relative;
@@ -1830,25 +1903,19 @@ div.needleBox {
     width: 100%;
     height: 100%;
     z-index: 1; }
-    .quest-layout_view-container .quest-layout_bg-container .img-bg_qtBF--BG {
+    .quest-layout_view-container .quest-layout_bg-container .img-bg_BF {
       background-color: #c2f2f2;
-      background-image: url("../img/bgImg/bg_quest-BF--background.svg");
+      background-image: url("../img/bgImg/bg-BF.svg");
       z-index: 1; }
     .quest-layout_view-container .quest-layout_bg-container .img-bg_qtNoBF {
       background-color: #c2f2f2;
       background-image: url("../img/bgImg/bg_quest-NoBF.svg");
       z-index: 1; }
-    .quest-layout_view-container .quest-layout_bg-container .img-bg_qtBF--MG {
-      background-image: url("../img/bgImg/bg_quest-BF--midground.svg");
-      z-index: 3; }
-    .quest-layout_view-container .quest-layout_bg-container .img-bg_qtBF--FG {
-      background-image: url("../img/bgImg/bg_quest-BF--foreground.svg");
-      z-index: 5; }
   .quest-layout_view-container .quest-layout_content-container {
     position: relative;
     display: flex;
     flex-flow: column nowrap;
-    padding-left: 8.33333vw;
+    padding-left: 0;
     height: 100%;
     width: 100%;
     justify-content: space-around;
@@ -1883,7 +1950,9 @@ div.needleBox {
 
 .quest-menu-page {
   height: 100%;
-  padding: 16.66667vh 8.33333vw; }
+  padding: 16.66667vh 8.33333vw;
+  padding-left: 16.66667vw;
+  border: 1px solid pink; }
 
 .quest-menu-row {
   position: relative;
@@ -1925,7 +1994,8 @@ div.needleBox {
   flex-flow: column nowrap;
   justify-content: space-around;
   padding: 0 8.33333vw;
-  padding-top: 16.66667vh; }
+  padding-top: 16.66667vh;
+  padding-left: 16.66667vw; }
 
 .quest-config-row {
   position: relative;
@@ -2033,11 +2103,11 @@ div.needleBox {
     border-bottom: 1px solid white; }
     .res-sect .head .resTitle {
       text-transform: uppercase;
-      color: #3D6D84;
+      color: #3d6d84;
       font-size: 1em;
       font-weight: 500; }
     .res-sect .head .resDesc {
-      color: #3D6D84;
+      color: #3d6d84;
       font-size: 0.8em;
       font-weight: 400; }
   .res-sect .body {
@@ -2060,7 +2130,7 @@ div.needleBox {
       font-size: 0.8em;
       line-height: 1.5;
       font-weight: 500;
-      color: #3D6D84;
+      color: #3d6d84;
       text-decoration: none;
       border-radius: 10px;
       background-color: #ACE2E5;
@@ -2072,6 +2142,7 @@ div.needleBox {
       background-color: #D7F4F3; }
 
 lpc-directive {
+  position: relative;
   display: -webkit-flex;
   -webkit-flex: 1;
   margin: auto;
@@ -2087,12 +2158,15 @@ lpc-directive {
   z-index: 10;
   width: 100%;
   height: 100%;
-  display: flex;
+  display: block;
   align-items: center; }
 
-.reset-button {
-  margin-top: 0px;
-  margin-right: 0px; }
+canvas {
+  width: 100%;
+  height: 100%; }
+
+.dev_lpcBorder {
+  border: 1px solid deeppink; }
 
 .button-side-container {
   position: absolute;
@@ -2221,17 +2295,27 @@ lpc-directive {
     top: -30px;
     z-index: -1; }
 
-#sand {
-  height: 60px;
-  display: block;
+#fzText {
   position: absolute;
-  left: -1px;
-  bottom: 0px;
-  width: 100.3%;
-  background-color: #FFC95F; }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 45%;
+  padding-top: 1px;
+  left: 18.75vw;
+  width: 8.33333vw;
+  height: auto;
+  font-size: 1.1em;
+  font-weight: 600;
+  text-align: center;
+  color: #018B9D;
+  /* #50d3d6; #018B9D;*/
+  z-index: 10;
+  opacity: 0.5; }
 
 .practice-directive-container {
-  height: 100%; }
+  height: 100%;
+  width: 100%; }
 
 .promptBox-layout {
   position: absolute;
@@ -2240,14 +2324,15 @@ lpc-directive {
   justify-content: center;
   margin-top: 16.66667vh;
   height: 16.66667vh;
-  width: 96%; }
+  width: 100%; }
   .promptBox-layout .promptBox {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-end;
     align-items: center;
     height: 16.66667vh;
-    width: 54.16667vw;
+    width: 58.33333vw;
+    margin-left: 8.33333vw;
     border-bottom: 1px solid white; }
 
 .words-word {
@@ -2255,7 +2340,7 @@ lpc-directive {
   line-height: 1em;
   display: inline-block;
   vertical-align: middle;
-  color: #3D6D84; }
+  color: #3d6d84; }
   .words-word.small {
     font-size: 3.75em; }
   .words-word.tiny {
@@ -2272,10 +2357,9 @@ lpc-directive {
   width: 100%; }
   .lpcDir-layout_quiz-quest lpc-directive div.lpc-contentBox div#lpc-canvas-parentSize {
     position: relative;
-    top: 41.66667vh;
-    left: 16.66667vw;
-    height: 41.66667vh;
-    width: 58.33333vw; }
+    width: 100%;
+    height: 66.66667vh;
+    top: 16.66667vh; }
 
 .coin-row-layout {
   position: absolute;

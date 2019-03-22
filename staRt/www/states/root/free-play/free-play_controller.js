@@ -8,6 +8,10 @@
 	{
 		console.log('FreePlayController here!');
 
+		$scope.data = {
+			navTitle: "Free Play"
+		};
+
 		var lastChronoTime = Date.now();
 
 		var logInterval = function() {

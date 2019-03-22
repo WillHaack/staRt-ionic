@@ -1,39 +1,29 @@
 <ion-view view-title="Free Play" class="state-contentBox">
 
 	<div class="free-layout_view-container">
-		<ion-nav-bar class="ion-nav-bar--old"></ion-nav-bar>
+		<!-- <ion-nav-bar class="ion-nav-bar--old"></ion-nav-bar> -->
+		<ion-nav-bar class="ion-nav-bar">
+			<ion-nav-title>{{data.navTitle}}</ion-nav-title>
+		</ion-nav-bar>
 
 		<!-- full-width eles go here -->
 		<div class="free-layout_bg-container">
-		<!--  for update, when ready -->
-			<!--
-			<div class="img-bg img-bg_qtBF--BG"></div>
-			<div class="img-bg img-bg_qtBF--MG"></div>
-			<div class="img-bg img-bg_qtBF--FG"></div>
-			-->
+			<div class="img-bg img-bg_BF"></div>
 		</div>
 
 
 		<!-- content goes here -->
 		<div class="free-layout_content-container">
 
-			<!-- <div class="text-and-lpc__text"> -->
-			<div class="free-header">
-				This is the place to practice your /r/ sounds on your own. There are no prompts or words to match here. It's just you and the wave.
+			<div class="free-lpcBox">
+				<lpc-directive
+					slider="true"
+					reset="true"
+					tutorial="false"
+					active="lpcActive"
+					beach="true">
+				</lpc-directive>
 			</div>
-
-			<div class="free-lpcFrame">
-				<div class="free-lpcBox">
-					<lpc-directive
-						slider="true"
-						reset="true"
-						sand="true"
-						tutorial="false"
-						active="lpcActive">
-					</lpc-directive>
-				</div>
-			</div>
-
 
 		</div> <!-- end free-layout-->
 

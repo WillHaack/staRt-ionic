@@ -2,8 +2,11 @@ var autoService = angular.module('autoService', []);
 
 var INTRO_FREEPLAY_TIME = 300000; // Five minutes
 var SESSION_FREEPLAY_TIME = 300000; // Five minutes
-var SPEEDY_INTRO_FREEPLAY_TIME = 10000; // Ten seconds. Use this if the profile is named 'Speedy' for testing
-var SPEEDY_SESSION_FREEPLAY_TIME = 10000; // Ten seconds. Use this if the profile is named 'Speedy' for testing
+var SPEEDY_INTRO_FREEPLAY_TIME = 1000; // One second. Use this if the profile is named 'Speedy' for testing
+var SPEEDY_SESSION_FREEPLAY_TIME = 1000; // One second. Use this if the profile is named 'Speedy' for testing
+var TOTAL_SESSION_COUNT = 16;
+var TRIALS_PER_SESSION = 100;
+var SPEEDY_TRIALS_PER_SESSION = 5;
 
 function _hasIntersection(arrayA, arrayB) {
   return arrayA.filter(function (a) {
@@ -124,35 +127,29 @@ IntroAuto.shouldBegin = function (profile) {
   return profile.nIntroComplete === 0 && profile.formalTester;
 }
 
-// One of the eight guided runs through the app
-var SessionAuto = function (profile, currentStates, onShow, initialState) {
-  AutoState.call(this, profile, currentStates, onShow, initialState);
+// One of the sixteen guided runs through the app
+var SessionAuto = function (profile, currentStates, onShow) {
+  AutoState.call(this, profile, currentStates, onShow);
 
-  if (initialState && initialState.categoryRestrictions) {
-    this.restrictions.categoryRestrictions = Object.assign(initialState.categoryRestrictions);
-  }
-
-  this.state = Object.assign({
-    hasAcceptedSessionPrompt: false,
-    wantsToDoItLater: false,
-    hasAcceptedBiofeedbackPrompt: false,
-    hasAcceptedQuestPrompt: false,
-    didFinishSession: false,
-  }, this.state);
+  this.hasAcceptedSessionPrompt = false;
+  this.wantsToDoItLater = false;
+  this.hasAcceptedBiofeedbackPrompt = false;
+  this.hasAcceptedQuestPrompt = false;
+  this.didFinishSession = false;
 
   var steps = {};
-  var ordinals = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth"];
+  var ordinals = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh", "Twelfth", "Thirteenth", "Fourteenth", "Fifteenth", "Sixteenth"];
   var sessionIndex = profile.nBiofeedbackSessionsCompleted + profile.nNonBiofeedbackSessionsCompleted;
 
   // Re-use the biofeedback constraint, if you have one saved
   if (!this.state.biofeedback) {
     var biofeedback = [];
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < (TOTAL_SESSION_COUNT / 2); i++) {
       if (i >= profile.nBiofeedbackSessionsCompleted) {
         biofeedback.push("BF");
       }
     }
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < (TOTAL_SESSION_COUNT / 2); i++) {
       if (i >= profile.nNonBiofeedbackSessionsCompleted) {
         biofeedback.push("TRAD");
       }
@@ -169,7 +166,9 @@ var SessionAuto = function (profile, currentStates, onShow, initialState) {
     this.restrictions.rootWaveForced = true;
     this.restrictions.rootWaveHidden = true;
   }
-  this.restrictions.rootTrialCount = 100;
+  this.restrictions.rootTrialCount = profile.name === 'Speedy'
+    ? SPEEDY_TRIALS_PER_SESSION
+    : TRIALS_PER_SESSION;
 
   steps.confirm = {
     next: (function () {
@@ -253,9 +252,10 @@ var SessionAuto = function (profile, currentStates, onShow, initialState) {
     }).bind(this)
   };
 
+  var goal = profile.name === "Speedy" ? SPEEDY_TRIALS_PER_SESSION : TRIALS_PER_SESSION;
   steps.whichQuest = {
     next: (function (profile, currentStates) {
-      if (currentStates.thisQuestTrialsCompleted >= 100) {
+      if (currentStates.thisQuestTrialsCompleted >= goal) {
         this.state.didFinishSession = true;
         return steps.allDone;
       }
@@ -284,9 +284,9 @@ var SessionAuto = function (profile, currentStates, onShow, initialState) {
   steps.allDone = {
     dialog: function (profile, currentStates) {
       var text;
-      if (sessionIndex === 7) {
+      if (sessionIndex === (TOTAL_SESSION_COUNT - 1)) {
         var percentCorrectStr = profile.percentTrialsCorrect.toString().split(".")[0];
-        text = "Congratulations, you finished your eight quests! Your total accuracy was approximately " + percentCorrectStr +
+        text = "Congratulations, you finished your sixteen quests! Your total accuracy was approximately " + percentCorrectStr +
           "% correct. Your accuracy in your final session was approximatedly " + currentStates.thisQuestPercentTrialsCorrect + "% correct." +
           " To complete your tasks as a formal pilot tester, please schedule one more visit to complete the Word Quiz and the Syllable Quiz " +
           "at the post-treatment time point.";
@@ -310,10 +310,11 @@ SessionAuto.prototype = Object.create(AutoState.prototype);
 SessionAuto.shouldBegin = function (profile) {
   var introGood = profile.nIntroComplete >= 1;
   var formalGood = !!profile.formalTester;
-  var biofeedbackCompleteGood = profile.nBiofeedbackSessionsCompleted < 4;
-  var nonBiofeedbackCompleteGood = profile.nNonBiofeedbackSessionsCompleted < 4;
+  var bfSessions = profile.nBiofeedbackSessionsCompleted;
+  var tradSessions = profile.nNonBiofeedbackSessionsCompleted;
+  var sessionsGood = (bfSessions + tradSessions) < TOTAL_SESSION_COUNT;
   var treatmentComplete = !!profile.nFormalTreatmentComplete;
-  return introGood && formalGood && (biofeedbackCompleteGood || nonBiofeedbackCompleteGood) && !treatmentComplete;
+  return introGood && formalGood && sessionsGood && !treatmentComplete;
 }
 
 // The concluding guided auto run, which measures syllable and word performance at the end of the series
@@ -628,7 +629,7 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
     console.log("Stopping session");
     ProfileService.getCurrentProfile().then(function (profile) {
       if (profile) {
-        const state = currentAuto.getState();
+        var state = currentAuto.getState();
         ProfileService.runTransactionForCurrentProfile(function (handle, doc, t) {
           t.update(handle, {
             inProcessSessionState: null

@@ -166,7 +166,9 @@
 				ng-hide="isEditing"
 				ng-disabled="!data.currentProfile"
 				ng-hide="!data.currentProfile">
-				<i class="icon ion-edit"></i>
+				<!-- <div class="s-ico32 l-ico-cWhite ico-stroke2"
+					ng-include=" './img/icons/line/edit.svg' " >
+				</div> -->
 				Edit User Profile
 			</button>
 
@@ -192,7 +194,11 @@
 				ng-click="deleteProfile(data.currentProfile)"
 				ng-show="!isEditing"
 				ng-disabled="!data.currentProfile">
-				<i class="icon ion-trash-b"></i>
+
+				<!-- <div class="s-ico32 l-ico-cWhite"
+					ng-include=" './img/icons/line/delete.svg' " >
+				</div> -->
+				<!-- <i class="icon ion-trash-b"></i> -->
 				Delete User Profile
 			</button>
 
