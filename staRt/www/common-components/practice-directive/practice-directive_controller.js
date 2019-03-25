@@ -445,8 +445,6 @@ practiceDirective.controller( 'PracticeDirectiveController',
     }, Promise.resolve());
   }
 
-  // So, this would be the place to load a previous session. Why don't we just
-  // store that session with the user?
   function beginPracticeForUser(user) {
     /* --------------------------------
 	    visual reinforcement

@@ -91,6 +91,6 @@
         <variable name="URL_SCHEME" value="com.ionicframework.start925154" />
     </plugin>
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
-    <plugin name="site.girlfriends.start.audio" spec="../audio-plugin" />
     <plugin name="cordova-custom-config" spec="^5.0.2" />
+    <plugin name="site.girlfriends.start.audio" spec="../audio-plugin" />
 </widget>

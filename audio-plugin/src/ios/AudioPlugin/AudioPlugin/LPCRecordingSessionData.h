@@ -11,6 +11,7 @@
 
 typedef struct {
     const char  *accountUUID;
+	const char  *accountEmail;
     const char  *username;
     const char  *gender; // Probably 'male' or 'female', but could in principle be whatever
     int16_t     ageInYears; // -1 if undefined

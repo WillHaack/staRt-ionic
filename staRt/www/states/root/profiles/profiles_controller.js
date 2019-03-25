@@ -143,21 +143,25 @@ function compareRecordings(ra, rb) {
 		// ===========================================================
 		// PROFILE DRAWER
 		// ===========================================================
-		$scope.updateCurrentProfile = function(profile)
-		{
-			ProfileService.setCurrentProfileUUID(profile.uuid).then(function() {
-				ProfileService.getCurrentProfile().then(function(res) {
-					if (res) {
-						$scope.data.currentProfile = res;
-					}
+		$scope.updateCurrentProfile = function (profile) {
+		  ProfileService.setCurrentProfileUUID(profile.uuid).then(function () {
+		    ProfileService.getCurrentProfile().then(function (res) {
+		      if (res) {
+		        $scope.data.currentProfile = res;
+		      }
 
-					ProfileService.runTransactionForCurrentProfile(function(handle, profileDoc, t) {
-						t.update(handle, {
-							lastLoginTimestamp: Date.now()
-						});
-					});
-				});
-			});
+		      ProfileService.runTransactionForCurrentProfile(function (handle, profileDoc, t) {
+		        if (!profileDoc.data().email) {
+		          t.update(handle, {
+		            email: FirebaseService.userEmail()
+		          });
+		        }
+		        t.update(handle, {
+		          lastLoginTimestamp: Date.now()
+		        });
+		      });
+	      });
+	    });
 		};
 
 		$scope.createProfile = function()

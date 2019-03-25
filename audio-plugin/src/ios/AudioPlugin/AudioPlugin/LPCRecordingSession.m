@@ -149,6 +149,11 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
     } else {
         data.username = nil;
     }
+	if ([self.profileDescription.metadata objectForKey:LPCProfileDescriptionKeyEmail]) {
+		data.accountEmail = [[self.profileDescription.metadata objectForKey:LPCProfileDescriptionKeyEmail] cStringUsingEncoding:NSUTF8StringEncoding];
+	} else {
+		data.accountEmail = nil;
+	}
     if ([self.profileDescription.metadata objectForKey:LPCProfileDescriptionKeyGender]) {
         data.gender = [[self.profileDescription.metadata objectForKey:LPCProfileDescriptionKeyGender] cStringUsingEncoding:NSUTF8StringEncoding];
     } else {

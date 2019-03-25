@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 FOUNDATION_EXPORT NSString *const LPCProfileDescriptionKeyName;
+FOUNDATION_EXPORT NSString *const LPCProfileDescriptionKeyEmail;
 FOUNDATION_EXPORT NSString *const LPCProfileDescriptionKeyUUID;
 FOUNDATION_EXPORT NSString *const LPCProfileDescriptionKeyAge;
 FOUNDATION_EXPORT NSString *const LPCProfileDescriptionKeyGender;

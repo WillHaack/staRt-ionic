@@ -18,7 +18,8 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 
 		return {
 			accountId: FirebaseService.userId(),
-			name: undefined,
+      name: undefined,
+      email: FirebaseService.userEmail(),
 			age: undefined,
 			heightFeet: undefined,
 			heightInches: undefined,
@@ -282,7 +283,7 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 					NotifyingService.notify('will-set-current-profile-uuid', profileUUID);
 				}
 				res['currentProfileUUID'] = profileUUID;
-				commitProfilesInterfaceState();
+        commitProfilesInterfaceState();
 				return res['currentProfileUUID'];
 			});
 		},
