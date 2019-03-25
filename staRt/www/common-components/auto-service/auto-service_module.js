@@ -209,7 +209,7 @@ var SessionAuto = function (profile, currentStates, onShow, initialState) {
 
 	steps.biofeedbackPrompt = {
 		next: (function () {
-			if (this.state.hasAcceptedBiofeedbackPrompt) return steps.quest;
+			if (this.state.hasAcceptedBiofeedbackPrompt) return steps.freePlay;
 			return null;
 		}).bind(this),
 		dialog: (function (profile, currentStates, changeList) {
