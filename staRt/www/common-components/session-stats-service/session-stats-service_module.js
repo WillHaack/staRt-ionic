@@ -107,7 +107,7 @@ sessionStatsService.factory('SessionStatsService', function($rootScope, $localFo
 
       if (session.ratings.length) {
         // Remember, each rating is an array of length 2, eg ["target", <rating>]
-        var score = session.ratings.map(function (x) { return Math.max(0, (x[1] - 1) / 2 )})
+        var score = session.ratings.map(function (x) { return Math.max(0, (x.rating - 1) / 2 )})
           .reduce(function (x, accum) { return x + accum; });
 
         // Increment and calculate stats for the profile

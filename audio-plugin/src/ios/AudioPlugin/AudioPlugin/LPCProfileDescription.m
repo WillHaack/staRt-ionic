@@ -10,6 +10,7 @@
 #import "CHCSVParser.h"
 
 NSString *const LPCProfileDescriptionKeyName = @"name";
+NSString *const LPCProfileDescriptionKeyEmail = @"email";
 NSString *const LPCProfileDescriptionKeyUUID = @"uuid";
 NSString *const LPCProfileDescriptionKeyAge = @"age";
 NSString *const LPCProfileDescriptionKeyGender = @"gender";
@@ -36,6 +37,7 @@ static NSArray *metadataParams;
 {
     metadataParams = @[
                        LPCProfileDescriptionKeyName,
+					   LPCProfileDescriptionKeyEmail,
                        LPCProfileDescriptionKeyAge,
                        LPCProfileDescriptionKeyGender,
                        LPCProfileDescriptionKeyHeightFeet,
@@ -66,6 +68,7 @@ static NSArray *metadataParams;
     LPCProfileDescription *desc = [[LPCProfileDescription alloc] init];
     desc.mutableMetadata = [NSMutableDictionary dictionary];
     desc.uuid = [rows[0] objectForKey:@"uuid"];
+	[desc.mutableMetadata setObject:[rows[0] objectForKey:@"email"] forKey:LPCProfileDescriptionKeyEmail];
     [desc.mutableMetadata setObject:[rows[0] objectForKey:@"username"] forKey:LPCProfileDescriptionKeyName];
     [desc.mutableMetadata setObject:[rows[0] objectForKey:@"age"] forKey:LPCProfileDescriptionKeyAge];
     [desc.mutableMetadata setObject:[rows[0] objectForKey:@"gender"] forKey:LPCProfileDescriptionKeyGender];

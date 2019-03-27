@@ -18,7 +18,8 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 
 		return {
 			accountId: FirebaseService.userId(),
-			name: undefined,
+      name: undefined,
+      email: FirebaseService.userEmail(),
 			age: undefined,
 			heightFeet: undefined,
 			heightInches: undefined,
@@ -52,6 +53,8 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 			lastSessionTimestamp: null, // Unix timestamp of most recent trial
 			creationTimestamp: Date.now(), // Unix timestamp profile creation
       lastLoginTimestamp: Date.now(), // Unix time of last login
+      inProcessSession: null, // Ratings etc. in the current recording
+      inProcessSessionState: null, // The state of the resumed session
 		};
 	};
 
@@ -199,6 +202,16 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 	profilesInterfaceState = loadProfilesInterfaceState();
 
 	return {
+    clearInProgressSessionForCurrentProfile: function()
+    {
+      return this.runTransactionForCurrentProfile(function(handle, doc, t) {
+        t.update(handle, {
+          inProcessSession: null,
+          inProcessSessionState: null
+        });
+      });
+    },
+
 		getAllProfiles: function()
 		{
 			return _getAllProfiles();
@@ -270,7 +283,7 @@ profileService.factory('ProfileService', function($rootScope, $localForage, $htt
 					NotifyingService.notify('will-set-current-profile-uuid', profileUUID);
 				}
 				res['currentProfileUUID'] = profileUUID;
-				commitProfilesInterfaceState();
+        commitProfilesInterfaceState();
 				return res['currentProfileUUID'];
 			});
 		},

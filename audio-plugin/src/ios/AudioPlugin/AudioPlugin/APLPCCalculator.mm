@@ -200,13 +200,14 @@ static void receiverCallback(__unsafe_unretained APLPCCalculator *THIS,
 		return;
 	}
 	
-	const char *metadataHeader = "user_string, stream_sample_rate, uuid, deviceID, username, gender, age, heightFeet, heightInches, targetF3, stdevF3, targetLPCOrder, start_date, end_date, lpc_order, lpc_file, audio_file\n";
+	const char *metadataHeader = "user_string, stream_sample_rate, uuid, email, deviceID, username, gender, age, heightFeet, heightInches, targetF3, stdevF3, targetLPCOrder, start_date, end_date, lpc_order, lpc_file, audio_file\n";
 	fwrite(metadataHeader, sizeof(char), strlen(metadataHeader), metadataFile);
 	fprintf(metadataFile,
-			"%s, %f, %s, %s, %s, %s, %d, %d, %d, %f, %f, %d, %s, %s, %d, %s, %s",
+			"%s, %f, %s, %s, %s, %s, %s, %d, %d, %d, %f, %f, %d, %s, %s, %d, %s, %s",
 			sessionData->userDataString,
 			sampleRate,
 			sessionData->accountUUID,
+			sessionData->accountEmail,
 			sessionData->identifier,
 			sessionData->username,
 			sessionData->gender,

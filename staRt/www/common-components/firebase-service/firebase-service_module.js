@@ -52,6 +52,8 @@ firebaseService.factory('FirebaseService', function()
 
         userId: function() { return firebase.auth().currentUser ? firebase.auth().currentUser.uid : null; },
 
-        userName: function() { return firebase.auth().currentUser ? firebase.auth().currentUser.displayName : null; }
+        userName: function() { return firebase.auth().currentUser ? firebase.auth().currentUser.displayName : null; },
+
+        userEmail: function() { return firebase.auth().currentUser ? firebase.auth().currentUser.email : null; }
     }
 });

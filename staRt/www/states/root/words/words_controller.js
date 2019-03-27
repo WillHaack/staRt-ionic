@@ -7,9 +7,9 @@
 {
 	var words = angular.module( 'words' );
 
-	words.controller('WordsController', function($scope, $timeout, $localForage, FirebaseService, NotifyingService, ProfileService, StartUIState, $rootScope, $state)
+	words.controller('WordsController', function($scope, $timeout, $localForage, AutoService, FirebaseService, NotifyingService, ProfileService, StartUIState, $rootScope, $state, $cordovaDialogs)
 	{
-		console.log('WordsController here!');
+    console.log('WordsController here!');
 
 		var lastChronoTime;
 		var ticker = undefined;
@@ -35,7 +35,8 @@
 		$scope.configuring = false;
 		$scope.order = "random";
 		$scope.data = {
-			categoryString: null,
+      categoriesRestricted: !!$rootScope.categoryRestrictions,
+      categoryString: null,
 			count: $rootScope.rootTrialCount || 50,
 			csvs: [],
 			navTitle: "Quest",
@@ -84,7 +85,12 @@
 			$scope.data.csvs = [];
 			$scope.configuring = true;
 			$scope.order = "random";
-			$scope.data.type = "Syllable";
+      $scope.data.type = "Syllable";
+      if ($rootScope.categoryRestrictions) {
+        for (var i = 0; i < $rootScope.categoryRestrictions.length; i++) {
+          $scope.toggleRCategory($rootScope.categoryRestrictions[i], true);
+        }
+      }
 		}
 
 		$scope.beginWordQuestConfiguration = function() {
@@ -96,7 +102,12 @@
 			$scope.data.csvs = [];
 			$scope.configuring = true;
 			$scope.order = "random";
-			$scope.data.type = "Word";
+      $scope.data.type = "Word";
+      if ($rootScope.categoryRestrictions) {
+        for (var i = 0; i < $rootScope.categoryRestrictions.length; i++) {
+          $scope.toggleRCategory($rootScope.categoryRestrictions[i], true);
+        }
+      }
 		}
 
 		$scope.beginQuest = function() {
@@ -119,13 +130,20 @@
 			clearTimeLogger();
 		};
 
-		$scope.toggleRCategory = function(wordCategoryIdx) {
+		$scope.toggleRCategory = function(wordCategoryIdx, force) {
+      if (!force && !!$rootScope.categoryRestrictions) {
+        $cordovaDialogs.alert("When resuming a session, you cannot change /r/ categories", "Session in progress");
+        return;
+      }
+
 			var idx = $scope.data.selectedCategories.indexOf(wordCategoryIdx);
 			if (idx === -1) {
 				$scope.data.selectedCategories.push(wordCategoryIdx)
-				$scope.data.selectedCategories.sort();
+        $scope.data.selectedCategories.sort();
+        AutoService.toggleCategoryRestriction(wordCategoryIdx, 1);
 			} else {
-				$scope.data.selectedCategories.splice(idx, 1);
+        $scope.data.selectedCategories.splice(idx, 1);
+        AutoService.toggleCategoryRestriction(wordCategoryIdx, 0);
 			}
 
 			var csvSource = $scope.data.type === "Word" ? $scope.wordCategoryCSVs : $scope.syllableCategoryCSVs;
@@ -141,7 +159,8 @@
 
 		$scope.$on('$destroy', function() {
 			clearTimeLogger();
-		});
+    });
+
 	});
 
 } )(  );

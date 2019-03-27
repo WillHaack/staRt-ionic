@@ -55,27 +55,27 @@ function compareRecordings(ra, rb) {
 
 			$scope.data = {};
 			$scope.data.uploadMessage = "";
-      $scope.data.selectedProfileRecordings = [];
-      $scope.data.sessionIsActive = AutoService.isSessionActive();
+			$scope.data.selectedProfileRecordings = [];
+			$scope.data.sessionIsActive = AutoService.isSessionActive();
 			$scope.data.lpcOrder = 0; //Card-Settings: Sets init val for adjust-lpc slider. Will be overwritten once currentProfile lpcOrder data arrives.
 
 
-      NotifyingService.subscribe("session-did-begin", $scope, function() {
-        $scope.data.sessionIsActive = true;
-      });
+			NotifyingService.subscribe("session-did-begin", $scope, function() {
+				$scope.data.sessionIsActive = true;
+			});
 
-      NotifyingService.subscribe("session-did-end", $scope, function() {
-        $scope.data.sessionIsActive = false;
-      });
+			NotifyingService.subscribe("session-did-end", $scope, function() {
+				$scope.data.sessionIsActive = false;
+			});
 
-      NotifyingService.subscribe("profile-stats-updated", $scope, function(msg, updateData) {
-        var profile = updateData[0];
-        var currentProfileStats = updateData[1];
-        var updateKeys = updateData[2];
-        updateKeys.forEach(function(key) {
-          $scope.data.currentProfile[key] = profile[key];
-        });
-      });
+			NotifyingService.subscribe("profile-stats-updated", $scope, function(msg, updateData) {
+				var profile = updateData[0];
+				var currentProfileStats = updateData[1];
+				var updateKeys = updateData[2];
+				updateKeys.forEach(function(key) {
+					$scope.data.currentProfile[key] = profile[key];
+				});
+			});
 
 			ProfileService.getAllProfiles().then( function(res) {
 				//console.log(res);
@@ -112,18 +112,18 @@ function compareRecordings(ra, rb) {
 				{
 					$scope.data.currentProfileUUID = $scope.data.currentProfile.uuid;
 
-          if ($scope.data.currentProfile.lpcOrder)
-          {
-            if ($scope.data.lpcOrder !== $scope.data.currentProfile.lpcOrder) {
-              $scope.data.lpcOrder = $scope.data.currentProfile.lpcOrder;
+					if ($scope.data.currentProfile.lpcOrder)
+					{
+						if ($scope.data.lpcOrder !== $scope.data.currentProfile.lpcOrder) {
+							$scope.data.lpcOrder = $scope.data.currentProfile.lpcOrder;
 
-              if (window.AudioPlugin !== undefined) {
-                console.log('watchCollection calls AudioPlugin with:' + $scope.data.lpcOrder);
-                AudioPlugin.setLPCOrder("" + $scope.data.currentProfile.lpcOrder, $scope.logPluginLPCOrder);
-              } else {
-                console.log('dude no audio');
-              }
-            }
+							if (window.AudioPlugin !== undefined) {
+								console.log('watchCollection calls AudioPlugin with:' + $scope.data.lpcOrder);
+								AudioPlugin.setLPCOrder("" + $scope.data.currentProfile.lpcOrder, $scope.logPluginLPCOrder);
+							} else {
+								console.log('dude no audio');
+							}
+						}
 
 					} else {
 						$scope.data.lpcOrder = 35; // updates display
@@ -141,26 +141,36 @@ function compareRecordings(ra, rb) {
 
 
 		// ===========================================================
-	  	// PROFILE DRAWER
-	  	// ===========================================================
-			$scope.updateCurrentProfile = function(profile)
-			{
-				ProfileService.setCurrentProfileUUID(profile.uuid).then(function() {
-					ProfileService.getCurrentProfile().then(function(res) {
-						if (res) {
-							$scope.data.currentProfile = res;
-						}
-					});
-				});
-			};
+		// PROFILE DRAWER
+		// ===========================================================
+		$scope.updateCurrentProfile = function (profile) {
+		  ProfileService.setCurrentProfileUUID(profile.uuid).then(function () {
+		    ProfileService.getCurrentProfile().then(function (res) {
+		      if (res) {
+		        $scope.data.currentProfile = res;
+		      }
 
-			$scope.createProfile = function()
-			{
-				$scope.data.currentProfile = ProfileService.createProfile();
-				$scope.setIsEditing(true);
-				$scope.slpView = false;
-				$scope.setCardState('profile');
-			};
+		      ProfileService.runTransactionForCurrentProfile(function (handle, profileDoc, t) {
+		        if (!profileDoc.data().email) {
+		          t.update(handle, {
+		            email: FirebaseService.userEmail()
+		          });
+		        }
+		        t.update(handle, {
+		          lastLoginTimestamp: Date.now()
+		        });
+		      });
+	      });
+	    });
+		};
+
+		$scope.createProfile = function()
+		{
+			$scope.data.currentProfile = ProfileService.createProfile();
+			$scope.setIsEditing(true);
+			$scope.slpView = false;
+			$scope.setCardState('profile');
+		};
 
 
 		// ===========================================================
@@ -376,13 +386,14 @@ function compareRecordings(ra, rb) {
 				if (window.AudioPlugin) {
 					if (recording) {
 						var session = {
-							files: {},
 							id: null
-						};
-						session.files.Metadata = recording.Metadata;
-						session.files.Audio = recording.Audio;
-						session.files.LPC = recording.LPC;
-						session.files.Ratings = session.files.Metadata.replace('-meta.csv', '-ratings.json');
+            };
+            session.files = {
+              Metadata: recording.Metadata,
+              Audio: recording.Audio,
+              LPC: recording.LPC,
+              Ratings: recording.Metadata.replace('-meta.csv', '-ratings.json')
+            };
 						session.id = session.files.Metadata.split('/').pop().substr(0, 36);
 						$scope.uploadCount += 1;
 						UploadService.uploadPracticeSessionFiles(session.files, session.id, progress, win, fail);
@@ -476,8 +487,8 @@ function compareRecordings(ra, rb) {
 
 
 
-	// -----------------------------------------------------------
-	// qs for #sjt
+		// -----------------------------------------------------------
+		// qs for #sjt
 
 		var selected = [];  // #sjt  I don't know which block this belongs to... any ideas?  SORRY!
 

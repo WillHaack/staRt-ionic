@@ -61,8 +61,8 @@
         "URL_SCHEME": "com.ionicframework.start925154"
       },
       "cordova-plugin-app-version": {},
-      "site.girlfriends.start.audio": {},
-      "cordova-custom-config": {}
+      "cordova-custom-config": {},
+      "site.girlfriends.start.audio": {}
     },
     "platforms": [
       "ios"
