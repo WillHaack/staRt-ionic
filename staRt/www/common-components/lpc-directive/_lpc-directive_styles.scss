@@ -11,7 +11,7 @@ lpc-directive { // Parent ele. Layout class.
 	width: 100%;
   height: 100%;
   justify-content: space-around;
-	// border: 1px solid violet;
+	border: 1px solid violet;
 
 	.lpc-contentBox { // Container class.
 		// Holds LPC and any .button-side-containers
@@ -59,12 +59,8 @@ canvas {
 	//border: 1px solid red;
 
   &.rateBtn-container {
-    top: $row-h * 0.75;
+    top: $row-h;
     height: $row-h * 2;
-  }
-
-  &.ctlBtn-container {
-    top: $row-h * 0.75 + 40vh;
   }
 }
 

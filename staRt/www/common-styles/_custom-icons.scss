@@ -47,6 +47,7 @@ or just pre-color the assets and use 'em as css bg-images.
 }
 
 .l-ico-cTextMain { @include l-icoColor($c-text-main) }
+.l-ico-cTextSubtle { @include l-icoColor($c-text-subtle) }
 .l-ico-cWhite { @include l-icoColor($white) }
 .l-ico-cRed { @include l-icoColor(#ff0000) }
 .l-ico-cBronze { @include l-icoColor( $c-bronze-500 ) }

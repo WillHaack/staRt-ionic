@@ -94,7 +94,7 @@ function saveJSON(jsonObject, absolutePath, successCb)
 var practiceDirective = angular.module( 'practiceDirective' );
 
 practiceDirective.controller( 'PracticeDirectiveController',
-			      function($scope, $timeout, $localForage, AutoService, NotifyingService, FirebaseService, ProfileService, SessionStatsService, StartUIState, UploadService, $rootScope, $state, $http, $cordovaDialogs)
+			      function($scope, $timeout, $localForage, AutoService, NotifyingService, FirebaseService, ProfileService, SessionStatsService, StartUIState, UploadService, $rootScope, $state, $http, $cordovaDialogs, ToolbarService)
     {
 	// var uploadURLs = [
 	// 	"http://localhost:5000",
@@ -119,23 +119,40 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	$scope.currentPracticeSession = null;
 
   // TOOLBAR ----------------------------------------------------
-  $scope.toolbar = [
-    // {
-    // 	icon: './img/icons/line/back.svg',
-    // 	title: 'Back',
-    // 	action: 'tbBack()'
-    // },
-    // {
-    // 	icon: './img/icons/line/anchor.svg',
-    // 	title: 'Stop',
-    // 	action: 'tbStop()'
-    // },
-    {
-      icon: './img/icons/line/lifesaver.svg',
-      title: 'Help',
-      action: 'tbHelp()'
-    },
-  ];
+  // isFeedbacking -- is the wave present
+  // isPracticing --
+  // if probe=true  its a quiz
+  // if probe=false  its a quest
+
+  //ToolbarService.initTB_quiz();
+
+  $scope.setupToolbar = function() { // called by $scope.beginWordPractice()
+
+    if($scope.probe) { // quizzes
+      console.log('PROBE IS TRUE');
+      console.log('type:' + $scope.type);
+      console.log('count:' + $scope.count);
+      $scope.toolbar = ToolbarService.initTB_quiz();
+      // count < 30 = SWQ
+    }
+
+
+    if(!$scope.probe) { //qtBF
+      if(!$scope.forceWaveHidden) {
+        console.log('this is QuestBF');
+        console.log($scope.forceWaveHidden);
+        console.log('type:' + $scope.type);
+        $scope.toolbar = ToolbarService.initTB_questBF();
+      }
+
+      if($scope.forceWaveHidden) { //qtNoBF
+        console.log('this is QuestNoBF');
+        console.log($scope.forceWaveHidden);
+        console.log('type:' + $scope.type);
+        $scope.toolbar = ToolbarService.initTB_questNoBF();
+      }
+    } //end if probe
+  }
 
   $scope.tbBack = function(){
     console.log('BACK clicked');
@@ -143,9 +160,12 @@ practiceDirective.controller( 'PracticeDirectiveController',
   $scope.tbHelp = function(){
     console.log('HELP clicked');
   }
-  $scope.tbStop = function(){
-    console.log('STOP clicked');
+  $scope.tbStop = function() {
+    if ($scope.isPracticing) {
+      $scope.endWordPractice();
+    }
   }
+
 	/* --------------------------------
 	   adaptive difficulty
   	   -------------------------------- */
@@ -319,6 +339,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	    1: "bronze"
 	}
 
+  // ----------------------------------------------
 
 	function recordingDidStart(profileDescArray) {
 	    $scope.isRecording = true;
@@ -575,6 +596,8 @@ practiceDirective.controller( 'PracticeDirectiveController',
     $scope.currentWord = null;
     if ($scope.isPracticing) return;
     $scope.isPracticing = true;
+    $scope.setupToolbar();
+
 	  console.log("Beginning " + sessionDisplayString());
 
 	  if (window.AudioPlugin === undefined) {

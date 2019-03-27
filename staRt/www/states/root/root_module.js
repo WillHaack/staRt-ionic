@@ -13,6 +13,7 @@
 		'startServerService',
 		'startStateService',
 		'uploadService',
+		'toolbarService',
 		'lpcDirective',
 		'ngCordova',
 		'auto',
