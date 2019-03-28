@@ -139,59 +139,15 @@ $navW: $nav-btnW + $col-pad; // OLD nav
 
 
 // TOOLBAR -------------------------------------
-.toolbar-container {
-  position: absolute;
-  width: $col-w * 4;
-  height: $row-h * 0.6;
-  top: 0;
-  left: $col-w * 8;
-  display: flex;
-  padding: 0;
-  flex-flow: row nowrap;
-  justify-content: flex-end;
-  z-index: 99;
-  //border: 1px solid blue;
-}
+// see common-styles/toolbar
+/* The .toolbar-container layout props are:
+    position: absolute;
+    width: $col-w * 4;
+    height: $row-h * 0.6;
+    top: 0;
+    left: $col-w * 8;
+*/
 
-.toolbar-tab {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: flex-end;
-  align-items: center;
-  height: 100%;
-  width: $col-w;
-  margin-left: 3px;
-  padding: 4px;
-
-  background-color: #d4f9f9;
-  border: 1px solid #cbf3f4;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  box-shadow: 3px 3px #addfdf;
-
-  cursor: pointer;
-  //z-index: 10;
-
-  .tbTab-icon {
-    height: $col-w * 0.4;
-    width: $col-w * 0.4;
-    margin-bottom: 4px;
-    //border: 1px solid white;
-  }
-  .tbTab-txt {
-    text-align: center;
-    font-size: 0.9em;
-    font-weight: bold;
-    width: 100%;
-    color: $c-text-subtle;
-    //border: 1px solid white;
-  }
-}
-.toolbar-tab:active {
-    background-color: #addfdf;
-    border-color: #9bcecc;
-    box-shadow: 3px 3px #8cbfbb;
-}
 
 // NAV CONTAINER -------------------------------------
 // All of the nav icon animations live in  'common-styles/_keyframeAni.scss'

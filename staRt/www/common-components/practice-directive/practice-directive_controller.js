@@ -119,46 +119,49 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	$scope.currentPracticeSession = null;
 
   // TOOLBAR ----------------------------------------------------
-  // isFeedbacking -- is the wave present
-  // isPracticing --
-  // if probe=true  its a quiz
-  // if probe=false  its a quest
 
-  //ToolbarService.initTB_quiz();
-
-  $scope.setupToolbar = function() { // called by $scope.beginWordPractice()
-
+  // called by $scope.beginWordPractice()
+  $scope.setupToolbar = function() {
+    /*
     if($scope.probe) { // quizzes
-      console.log('PROBE IS TRUE');
-      console.log('type:' + $scope.type);
-      console.log('count:' + $scope.count);
-      $scope.toolbar = ToolbarService.initTB_quiz();
-      // count < 30 = SWQ
+      if($scope.type === 'Syllable') { //qzSyll
+        console.log('tb sez: Syllable Quiz');
+        $scope.toolbar = ToolbarService.initTB_quizSyll();
+      } else { // word quizzes
+        if ($scope.count < 30) { //qzSWQ
+          console.log('tb sez: Short Word Quiz');
+          $scope.toolbar = ToolbarService.initTB_quizSWQ();
+        } else { //qzLWQ
+          console.log('tb sez: Long Word Quiz');
+          $scope.toolbar = ToolbarService.initTB_quizLWQ();
+        }
+      }
+      $scope.tbBack = function(){
+        console.log('BACK in Quiz clicked');
+      }
     }
 
-
-    if(!$scope.probe) { //qtBF
-      if(!$scope.forceWaveHidden) {
-        console.log('this is QuestBF');
-        console.log($scope.forceWaveHidden);
-        console.log('type:' + $scope.type);
+    if(!$scope.probe) { // quests
+      if(!$scope.forceWaveHidden) { //qtBF
+        console.log('tb sez: QuestBF');
         $scope.toolbar = ToolbarService.initTB_questBF();
       }
-
       if($scope.forceWaveHidden) { //qtNoBF
-        console.log('this is QuestNoBF');
-        console.log($scope.forceWaveHidden);
-        console.log('type:' + $scope.type);
+        console.log('tb sez: this is QuestNoBF');
         $scope.toolbar = ToolbarService.initTB_questNoBF();
       }
-    } //end if probe
-  }
+      $scope.tbBack = function(){
+        console.log('BACK in Quest clicked');
+      }
+    } //end if !probe
+    //console.log($scope.toolbar);
+    */
+  } // end setupToolbar
 
-  $scope.tbBack = function(){
-    console.log('BACK clicked');
-  }
+
   $scope.tbHelp = function(){
-    console.log('HELP clicked');
+    var helpMsg = $scope.toolbar[$scope.toolbar.length -1].helpMsg;
+    console.log( helpMsg );
   }
   $scope.tbStop = function() {
     if ($scope.isPracticing) {

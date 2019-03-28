@@ -2,7 +2,6 @@
 		//border: 1px solid red;
 }
 
-
 .practice-directive-container {
   height: 100%;
   width: 100%;
@@ -10,8 +9,7 @@
 }
 
 // TOOLBAR ------------------------------------
-
-
+// see common-styles/toolbar
 
 // WORD PROMPT ------------------------------------
  .promptBox-layout {
@@ -60,7 +58,7 @@
 }
 
 
-// WAVE AND RATING BUTTONS ------------------------------------
+// LPC DIRECTIVE: Wave & Rating Btns -------------------------
 .lpcDir-layout_quiz-quest {
   position: absolute;
   display: block;
@@ -92,7 +90,7 @@
   left: $col-w * 2;
   width: $col-w * 7;
   height: $row-h * 0.8;
-  border: 1px solid red;
+  //border: 1px solid red;
 }
  .coinBox-layout {
   text-align: left;
