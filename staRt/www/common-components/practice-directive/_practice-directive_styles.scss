@@ -20,7 +20,9 @@
   margin-top: $row-h;
   height: $row-h;
   width: 100%;
-  // border: 1px solid tan;
+  padding-left: $col-w * 3;
+  padding-right: $col-w * 2;
+
 
    .promptBox {
     display: flex;
@@ -28,9 +30,8 @@
     justify-content: flex-end;
     align-items: center;
     height: $row-h;
-    width: $col-w * 7;
-    margin-left: $col-w;
-    // border: 1px solid white;
+    width: 100%;
+
     border-bottom: 1px solid white;
   }
 }
@@ -54,7 +55,9 @@
  .words-progress-indicator {
 	display: inline-block;
 	vertical-align: middle;
-	// border: 1px solid red;
+  //color: $c-text-main;
+  color: $c-text-subtle;
+	//border: 1px solid red;
 }
 
 

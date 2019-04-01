@@ -103,16 +103,20 @@ $navW: $nav-btnW + $col-pad; // OLD nav
   }
    .bar-header { //ionic style for <ion-header-bar>
     background-color: transparent;
-    height: $row-h !important;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    // nb: margins are the same as the practice-directive promptBox
-    margin-left: $col-w * 3;
-    margin-right: $col-w * 2;
-    width: $col-w * 6.5;
+    height: $row-h !important;
+    // nb: the padding gives .bar-header content the same
+    // width and x-pos as the same as the
+    // practice-directive promptBox
+    width: 100%;
+    padding-left: $col-w * 3;
+    padding-right: $col-w * 2;
+    // width: $col-w * 7;
     // border: 1px solid white;
+
      .title { //ionic style for .title w/in <ion-header-bar>
       position: relative;
       display: block;
@@ -120,6 +124,10 @@ $navW: $nav-btnW + $col-pad; // OLD nav
       font-weight: 500;
       font-size: 1.75em;
       color: $c-text-subtle;
+      width: 100%;
+      margin: 0;
+      // border-left: 1px solid blue;
+      // border-right: 1px solid blue;
     } //end .title
   } // end .bar-header
 } // end ion-nav-bar
