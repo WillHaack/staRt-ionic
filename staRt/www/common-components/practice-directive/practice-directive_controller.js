@@ -119,46 +119,19 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	$scope.currentPracticeSession = null;
 
   // TOOLBAR ----------------------------------------------------
+  // TO BE IMPLEMENTED IN THE FUTURE / NOT CURRENTLY IN USE
+
+  // holds toolbar content for the current practice state
+  $scope.toolbar;
 
   // called by $scope.beginWordPractice()
   $scope.setupToolbar = function() {
-    /*
-    if($scope.probe) { // quizzes
-      if($scope.type === 'Syllable') { //qzSyll
-        console.log('tb sez: Syllable Quiz');
-        $scope.toolbar = ToolbarService.initTB_quizSyll();
-      } else { // word quizzes
-        if ($scope.count < 30) { //qzSWQ
-          console.log('tb sez: Short Word Quiz');
-          $scope.toolbar = ToolbarService.initTB_quizSWQ();
-        } else { //qzLWQ
-          console.log('tb sez: Long Word Quiz');
-          $scope.toolbar = ToolbarService.initTB_quizLWQ();
-        }
-      }
-      $scope.tbBack = function(){
-        console.log('BACK in Quiz clicked');
-      }
-    }
-
-    if(!$scope.probe) { // quests
-      if(!$scope.forceWaveHidden) { //qtBF
-        console.log('tb sez: QuestBF');
-        $scope.toolbar = ToolbarService.initTB_questBF();
-      }
-      if($scope.forceWaveHidden) { //qtNoBF
-        console.log('tb sez: this is QuestNoBF');
-        $scope.toolbar = ToolbarService.initTB_questNoBF();
-      }
-      $scope.tbBack = function(){
-        console.log('BACK in Quest clicked');
-      }
-    } //end if !probe
-    //console.log($scope.toolbar);
-    */
+    $scope.toolbar = ToolbarService.practice_initTB(
+      $scope.probe, $scope.type,
+      $scope.count, $scope.forceWaveHidden );
   } // end setupToolbar
 
-
+  // assign event handlers to toolbar btns
   $scope.tbHelp = function(){
     var helpMsg = $scope.toolbar[$scope.toolbar.length -1].helpMsg;
     console.log( helpMsg );

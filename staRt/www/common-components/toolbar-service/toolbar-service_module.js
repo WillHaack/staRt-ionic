@@ -26,7 +26,7 @@ toolbarService.factory('ToolbarService', function()
 	var initTB_freePlay = function() {
 		tbArray = [];
 		tbArray.push( tbBtns.help);
-
+		console.log('init toolbar for freePlay');
 		return tbArray;
 	};
 
@@ -35,7 +35,7 @@ toolbarService.factory('ToolbarService', function()
 		tbArray.push( tbBtns.stop );
 		tbArray.push( tbBtns.help );
 		tbArray[tbArray.length -1].helpMsg = 'HELP clicked for questBF';
-
+		console.log('init toolbar for questBF');
 		return tbArray;
 	};
 
@@ -44,7 +44,7 @@ toolbarService.factory('ToolbarService', function()
 		tbArray.push( tbBtns.stop );
 		tbArray.push( tbBtns.help );
 		tbArray[tbArray.length -1].helpMsg = 'HELP clicked for questNoBF';
-
+		console.log('init toolbar for questNoBF');
 		return tbArray;
 	};
 
@@ -53,7 +53,7 @@ toolbarService.factory('ToolbarService', function()
 		tbArray.push( tbBtns.stop );
 		tbArray.push( tbBtns.help );
 		tbArray[tbArray.length -1].helpMsg = 'HELP clicked for qzSyll';
-
+		console.log('init toolbar for quizSyll');
 		return tbArray;
 	};
 
@@ -62,7 +62,7 @@ toolbarService.factory('ToolbarService', function()
 		tbArray.push( tbBtns.stop );
 		tbArray.push( tbBtns.help );
 		tbArray[tbArray.length -1].helpMsg = 'HELP clicked for quizSWQ';
-
+		console.log('init toolbar for quizSWQ');
 		return tbArray;
 	};
 
@@ -71,20 +71,28 @@ toolbarService.factory('ToolbarService', function()
 		tbArray.push( tbBtns.stop );
 		tbArray.push( tbBtns.help );
 		tbArray[tbArray.length -1].helpMsg = 'HELP clicked for quizLWQ';
-
+		console.log('init toolbar for quizLWQ');
 		return tbArray;
 	};
 
+	var practice_initTB = function( probe, type, count, forceWaveHidden )
+	{
+		if(probe) { // quizzes
+			if(type === 'Syllable') { //qzSyll
+				initTB_quizSyll();
+			} else { // word quizzes
+				(count < 30) ?  initTB_quizSWQ() : initTB_quizLWQ();
+			}
+		} else if(!probe) { // quests
+			(forceWaveHidden) ? initTB_questNoBF() : initTB_questBF();
+		} //end if !probe
+	} // end practice_initTB
 
 	// SERVICE EXPORT ------------------------------------------
 	return {
 		logMe: function() { console.log('toolbarService works!'); },
 		initTB_freePlay: initTB_freePlay,
-		initTB_questBF: initTB_questBF,
-		initTB_questNoBF: initTB_questNoBF,
-		initTB_quizSyll: initTB_quizSyll,
-		initTB_quizSWQ: initTB_quizSWQ,
-		initTB_quizLWQ: initTB_quizLWQ
+		practice_initTB: practice_initTB
 	}; //end return
 
 });
