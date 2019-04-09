@@ -88,6 +88,10 @@ NSString *const LPCRecordingSessionAudioKey = @"Audio";
         return nil;
     }
 	
+	if (rows.count == 0) {
+		return nil;
+	}
+	
 	session.userDataString = [rows[0] objectForKey:@"user_string"];
     session.dateString = [rows[0] objectForKey:@"start_date"];
 	session.endDateString = [rows[0] objectForKey:@"end_date"];
