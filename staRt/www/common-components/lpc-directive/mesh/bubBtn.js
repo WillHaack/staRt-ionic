@@ -56,7 +56,7 @@ Mesh.prototype.createBubBtn = function(dim, bubBtnGroup, materials) {
 		createBubBg();
 		createBubHl();
 
-		bubBtnGroup.position.set(dim.col_W * 3.25, (dim.row_H - (bubRadius/2) + 6), 6);
+		bubBtnGroup.position.set(dim.col_W * 3.25, dim.row_H, 6);
 	} // end createBubs
 
 

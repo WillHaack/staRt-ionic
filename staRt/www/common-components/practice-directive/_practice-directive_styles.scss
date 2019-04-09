@@ -1,14 +1,17 @@
 .words-contentBox { // parent ele (is this still in use?)
-		//border: 1px solid lime;
+		//border: 1px solid red;
 }
 
-// PRACTICE-DIRECTIVE ------------------------------------
 .practice-directive-container {
   height: 100%;
   width: 100%;
-  // border: 1px solid lime;
+  //border: 1px solid lime;
 }
 
+// TOOLBAR ------------------------------------
+// see common-styles/toolbar
+
+// WORD PROMPT ------------------------------------
  .promptBox-layout {
   position: absolute;
   display: flex;
@@ -17,7 +20,9 @@
   margin-top: $row-h;
   height: $row-h;
   width: 100%;
-  // border: 1px solid tan;
+  padding-left: $col-w * 3;
+  padding-right: $col-w * 2;
+
 
    .promptBox {
     display: flex;
@@ -25,9 +30,8 @@
     justify-content: flex-end;
     align-items: center;
     height: $row-h;
-    width: $col-w * 7;
-    margin-left: $col-w;
-    // border: 1px solid white;
+    width: 100%;
+
     border-bottom: 1px solid white;
   }
 }
@@ -51,11 +55,13 @@
  .words-progress-indicator {
 	display: inline-block;
 	vertical-align: middle;
-	// border: 1px solid red;
+  //color: $c-text-main;
+  color: $c-text-subtle;
+	//border: 1px solid red;
 }
 
 
-// WAVE AND SIDE BUTTONS ------------------------------------
+// LPC DIRECTIVE: Wave & Rating Btns -------------------------
 .lpcDir-layout_quiz-quest {
   position: absolute;
   display: block;
@@ -69,10 +75,6 @@
 
       div#lpc-canvas-parentSize {
         position: relative;
-        // top: $row-h * 2.5;
-        // left: $col-w * 2;
-        // height: $row-h * 2.5;
-        // width: $col-w * 7;
         width: 100%;
         height: $row-h * 4;
         top: $row-h;

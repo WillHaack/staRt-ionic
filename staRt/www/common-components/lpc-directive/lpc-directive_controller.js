@@ -413,7 +413,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 				setInitialTarget();
 			} else {
 				$scope.active = false;
-				fzText.innerHTML = '';
+				fzText = undefined;
 			}
 		});
 

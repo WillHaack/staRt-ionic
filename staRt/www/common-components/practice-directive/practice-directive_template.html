@@ -1,5 +1,35 @@
 <div class="words-contentBox practice-directive-container">
 
+  <!-- TOOLBAR ------------------------------- -->
+
+  <!-- Toolbar, as designed -->
+  <!--
+  <div class="toolbar-container">
+      <div class="toolbar-tab" ng-repeat="tab in toolbar"
+      ng-click={{tab.action}}>
+        <div class="tbTab-icon l-ico-cTextSubtle"
+          ng-include="tab.icon"></div>
+        <div class="tbTab-txt">{{tab.title}}</div>
+      </div>
+  </div>
+  -->
+
+
+
+  <!-- Temp 'Stop Session' Button
+      (will be replaced by toolbar in the future) -->
+  <div class="toolbar-container">
+    <div class="toolbar-tab-long"
+      ng-click="tbStop()">
+        <div class="tbTab-txt_temp">Stop<br/>{{probe ? "Quiz" : "Quest"}}</div>
+        <div class="tbTab-icon_temp l-ico-cTextSubtle"
+          ng-include=" './img/icons/line/anchor.svg' ">
+        </div>
+    </div>
+  </div>
+
+
+<!-- (what is this? #sjt) ----------------------------- -->
   <button style="margin:40px;"
     ng-click="beginWordPractice()"
     ng-hide="suppressStartButton || isPracticing || !hasValidWordList">
@@ -10,6 +40,8 @@
     Next {{type}}
   </button>
 
+
+  <!-- PROMPT BOX ------------------------------- -->
   <div class="promptBox-layout" ng-hide="!isPracticing">
     <div class="promptBox">
       <p class="words-progress-indicator"> {{currentWordIdx + 1}} of {{count}} </p>
@@ -24,6 +56,7 @@
   </div>
 
 
+  <!-- LPC DIRECTIVE: Wave & Rating Btns --------------- -->
   <div class="lpcDir-layout_quiz-quest">
 
     <lpc-directive
@@ -41,7 +74,8 @@
    </div> <!-- end quest-lpcDir-layout -->
 
 
-   <div class="coin-row-layout ">
+   <!-- COIN ROW ------------------------------- -->
+   <div class="coin-row-layout" ng-if="!probe">
      <div class="coinBox-layout" style="width: {{sandholes.length * 41}}px;">
        <div class="sand_coins">
          <div ng-repeat="stack_coins in block_coins track by $index" class="coin_stack">
