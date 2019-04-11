@@ -303,7 +303,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	function sessionDisplayString() {
 	    var type = $scope.type ? $scope.type.toLowerCase() : "word";
 	    var sesh = $scope.probe ? "quiz" : "quest";
-	    var hidden = $scope.forceWaveHidden ? " hidden" : "";
+	    var hidden = $scope.forceWaveHidden ? " trad" : " bio";
 	    var stats = SessionStatsService.getCurrentProfileStats();
 	    var session = stats ? stats.thisContextString : "";
 	    return type + " " + sesh + hidden + " " + session;
