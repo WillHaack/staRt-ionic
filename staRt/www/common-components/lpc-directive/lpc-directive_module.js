@@ -12,7 +12,7 @@ lpcDirective.config(['resizeProvider', function(resizeProvider){
 lpcDirective.directive( 'lpcDirective', function()
 {
 	/* ISOLATE SCOPE KEY
-		active: ????  idk what this does
+		active: is the $scope active
 		probe: "probe" ???  idk what this does. probably something w/ the practice-directive
 		slider: T/F 	creates LPC with slider  (default is true)
 		reset: T/F 		adds Reset Target btn

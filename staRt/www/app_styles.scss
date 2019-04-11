@@ -6,6 +6,7 @@
 @import 'common-styles/custom-icons';
 
 
+
 // State styles
 @import 'states/root/root_styles';
 @import 'states/root/profiles/profiles_styles';
@@ -16,6 +17,8 @@
 @import 'states/root/words/words_styles';
 @import 'states/root/resources/resources_styles';
 
+
 // Directive styles
 @import 'common-components/lpc-directive/lpc-directive_styles';
 @import 'common-components/practice-directive/practice-directive_styles';
+@import 'common-styles/toolbar'; // this needs to be after the practice directive
