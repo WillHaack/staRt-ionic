@@ -5,18 +5,18 @@ staRt as a (potentially) cross-platform speech therapy app, powered by Ionic
 
 The start-ionic app has two parts: an web plugin that manages everything audio related, and an Ionic app that comprises the interface. The audio plugin must be built separately before it can be loaded into the main app
 
-#### First time setup
-Before you can do anything, you need to install and setup a few dependencies. First, you'll need Ionic. Follow the instructions at http://ionicframework.com/getting-started/, which boil down to running
+### First time setup
+Before you can do anything, you need to install and setup a few dependencies. First, you'll need Ionic version 3. Follow the instructions at http://ionicframework.com/getting-started/, which boil down to running
 
 ```
-npm install -g cordova ionic
+npm install -g cordova ionic@3.19.1
 ```
 Next you'll need the TheAmazingAudioEngine submodle, so run
 
 ```
 git submodule update --init
 ```
-This downloads TheAmazingAudioEngine as a git submodule. Next, download all of the dependencies from npm and bower
+This downloads TheAmazingAudioEngine as a git submodule. You will also need to have node and bower installed, so install these however is appropriate for your platform. Next, download all of the dependencies from npm and bower
 
 ```
 cd staRt
@@ -32,7 +32,7 @@ ionic platform add ios
 
 There may be a couple of errors or something, don't sweat it.
 
-#### Building the plugin
+### Building the plugin
 
 ```
 open audio-plugin/src/ios/AudioPlugin/AudioPlugin.xcodeproj
@@ -46,7 +46,7 @@ The audio plugin Xcode project has a couple of different targets. You can see al
 
 So, to build the plugin, simply select the UniversalLib target and build it.
 
-#### Password Protected Server
+### Adding Credentials
 The production server is password protected. Therefore, you'll need to create a JSON file `staRt/www/data/credentials.json` with the following format:
 ```json
 {
@@ -56,13 +56,23 @@ The production server is password protected. Therefore, you'll need to create a 
 ```
 This file is in the `.gitignore` so that the username and password will not be accidentally uploaded to Github. It is important to have this file so when the Ionic application is built, the username and password will be included. To get the username and password, just ask someone.
 
-#### Buliding the ionic app
+### Installing the audio plugin
+
+Most cordova plugins can be installed by simply running
 
 ```
-cd staRt
-ionic cordova prepare
+ionic plugin add <plugin-name>
 ```
-This will load the audio plugin into the app, as well as a few other plugins. You need to run the `ionic state reset` command every time you change and rebuild the plugin.
+
+The local audio plugin must be installed like so
+
+```
+ionic cordova plugin add ../audio-plugin
+```
+
+otherwise the plugin will not install correctly. Whenever you change the plugin, it may be necessary to uninstall and reinstall the plugin.
+
+### Buliding the ionic app
 
 ```
 npm install
@@ -71,22 +81,32 @@ bower install
 This downloads and installs all of the project javascript dependencies. You should only need to do this when you first set up the repository, or whenever you install a new package with npm or bower.
 
 ```
+cd staRt
+ionic cordova platform add ios
+```
+
+This creates an xcode project at `platforms/ios`. This Xcode project is what you use to build and run the app, as well as to upload it to the App Store.
+
+```
+open platforms/ios/staRt.xcworkspace
+```
+Will open the workspace to run. Then choose your target (simulator or iOS) and run at your leisure. If you make a change to any of the code, you need to run
+```
 ionic cordova prepare
 ```
-This builds the plugin. You will need to run this command whenever you change something in the ionic app, as well as whenever you rebuild the plugin. Finally, you can run the app. There are two ways to do this. You can run
+
+in order to copy the changed files into the application bundle. Otherwise, you may find that changes you make to files in `www` do not propage to the compiled version of the iOS app.
 
 ```
 ionic serve
 ```
-which will open a web browser that serves the app. The nice thing about the web browser is that it has live reload, which means that whenever you change something in the ionic app, the web page will automatically reload to display your changes. The only downside is that it can't display the LPC, since that requires the web plugin which only runs in iOS or in the simulator. If you want to run the app in the simulator or on a device, first open the xcode project:
+Is useful if you want to run the app in a browser. This will open a web browser that serves the app. The nice thing about the web browser is that it has live reload, which means that whenever you change something in the ionic app, the web page will automatically reload to display your changes. The only downside is that it can't display the LPC, since that requires the web plugin which only runs in iOS or in the simulator. If you want to run the app in the simulator or on a device, you'll have to open and run the xcode project.
 
-```
-open platforms/ios/staRt.xcodeproj
-```
-Then choose your target (simulator or iOS) and run
+### Updating the app version
 
-## Example Workflows
+When you need to bump the application version, change the appropriate value in `staRt/config.xml` and rebuild the xcode project. Don't change the value in `staRt.xcodeproj` directly.
 
+### Workflows
 #### Changing the audio plugin
 - Make some change to the audio plugin
 - Rebuild the UniversalLib target
