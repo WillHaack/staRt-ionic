@@ -21,8 +21,6 @@ var paths = {
 	js: ['./www/app_module.js', './www/states/**/*.js', './www/common-components/**/*.js']
 };
 
-gulp.task('default', ['sass', 'inject']);
-
 gulp.task('sass', function(done) {
 	console.log('sass task running');
 	gulp.src( paths.sass )
@@ -71,6 +69,8 @@ gulp.task('inject', function()
 		.pipe( gulp.dest( './www' ) )
 		.pipe( connect.reload() );
 });
+
+gulp.task('default', ['sass', 'inject']);
 
 gulp.task('watch', function() {
 	gulp.watch( [ __dirname + '/www/**/*.scss', __dirname + '/www/states/root/**/*.scss'], ['sass']);
