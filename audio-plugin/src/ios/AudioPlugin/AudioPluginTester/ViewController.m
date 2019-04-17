@@ -63,15 +63,13 @@ static NSDictionary *s_descDict;
 - (IBAction)startRecording:(id)sender
 {
     LPCProfileDescription *desc = [LPCProfileDescription accountDescriptionWithDictionary:s_descDict];
-    LPCRecordingSession *session = [LPCRecordingSession sessionWithProfileDescription:desc];
+    LPCRecordingSession *session = [LPCRecordingSession sessionWithProfileDescription:desc clientUserData:@""];
     [self.audioManager startRecordingForRecordingSession:session];
 }
 
 - (IBAction)stopRecording:(id)sender
 {
-	LPCProfileDescription *desc = [LPCProfileDescription accountDescriptionWithDictionary:s_descDict];
-	LPCRecordingSession *session = [LPCRecordingSession sessionWithProfileDescription:desc];
-	[self.audioManager stopRecordingForRecordingSession:session];
+	[self.audioManager stopRecording];
 }
 
 - (IBAction)listRecordings:(id)sender
