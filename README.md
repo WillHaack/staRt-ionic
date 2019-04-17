@@ -61,13 +61,13 @@ This file is in the `.gitignore` so that the username and password will not be a
 Most cordova plugins can be installed by simply running
 
 ```
-ionic plugin add <plugin-name>
+ionic cordova plugin add <plugin-name>
 ```
 
-The local audio plugin must be installed like so
+The local audio plugin must be installed like so, without the 'ionic' prefix
 
 ```
-ionic cordova plugin add ../audio-plugin
+cordova plugin add ../audio-plugin
 ```
 
 otherwise the plugin will not install correctly. Whenever you change the plugin, it may be necessary to uninstall and reinstall the plugin.
