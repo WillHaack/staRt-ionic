@@ -220,7 +220,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 			if ($scope.trackingTarget) {
 				//Update current user's saved targetF3
 				ProfileService.runTransactionForCurrentProfile(function(handle, profile, t) {
-				  t.update(handle, { targetF3: parseInt($scope.data.targetF3) });
+					t.update(handle, { targetF3: parseInt($scope.data.targetF3) });
 				});
 			}
 
@@ -239,7 +239,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 				if ( $scope.lpcRenderer.dim.W !== $scope.lpcRenderer.parentElement.clientWidth ||
 					$scope.lpcRenderer.dim.H !== $scope.lpcRenderer.parentElement.clientHeight ) {
-					console.log('new size');
+					//console.log('new size');
 					$scope.updateCanvasSize( );
 				}
 

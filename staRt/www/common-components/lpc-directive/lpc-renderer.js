@@ -1,6 +1,6 @@
 var lpcDirective = angular.module('lpcDirective');
 
-lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
+lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 {
 	function LPCRenderer(parentElement, canvasElement, maxNumPeaks)
 	{
@@ -81,7 +81,7 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 		this.dim.col_W = this.dim.W / 12;
 
 		if (this._beachScene) {
-			console.log( 'this is beachScene');
+			//console.log( 'this is beachScene');
 			// wave boundaries
 			this.dim.wave = {
 				edgeLeft: this.dim.edgeLeft + (this.dim.col_W * 3),
@@ -90,7 +90,7 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 				edgeBottom: this.dim.edgeBottom + (this.dim.row_H * 1.25)
 			};
 		} else {
-			console.log( 'not beachScene');
+			//console.log( 'not beachScene');
 			// wave boundaries are same as parent ele
 			this.dim.wave = {
 				edgeLeft: this.dim.edgeLeft,
@@ -189,41 +189,41 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh, $http )
 	LPCRenderer.prototype.createWaveMesh = function() {
 	/* Sets up an empty geom to recieve updates
 	// from AudioPlugin and scene changes	*/
-	var pointCount = 256;
+		var pointCount = 256;
 
-	// this.waveGroup is defined on drawScene()
-	if (this.waveGroup === undefined) return;
-	if (this.waveMesh === !undefined) return;
+		// this.waveGroup is defined on drawScene()
+		if (this.waveGroup === undefined) return;
+		if (this.waveMesh === !undefined) return;
 
-	// Make an array of all the topmost points
-	var emptyShapeArr = [];
-	for (var i=0; i<pointCount; i++) {
-		var point = this.dim.wave.edgeTop;
-		var px = this.linScale(i, 0, pointCount-1, this.dim.wave.edgeLeft, this.dim.wave.edgeRight);
-		emptyShapeArr.push([px, point]);
-	}
-
-	// Create geometry and its faces
-	if (this.waveGeometry === undefined) {
-		var tmpGeometry = new THREE.Geometry();
-
-		for (var i=1; i<emptyShapeArr.length; i++) {
-			tmpGeometry.vertices.push(new THREE.Vector3(
-				emptyShapeArr[i-1][0], this.dim.wave.edgeBottom, 0));
-
-			tmpGeometry.vertices.push(new THREE.Vector3(
-				emptyShapeArr[i][0], emptyShapeArr[i][1], 0));
-
-			if (i>0) {
-				tmpGeometry.faces.push(new THREE.Face3((i-1)*2, (i-1)*2 + 1, (i-1)*2 + 2));
-				tmpGeometry.faces.push(new THREE.Face3((i-1)*2 + 2, (i-1)*2 + 1, (i-1)*2 + 3));
-			}
+		// Make an array of all the topmost points
+		var emptyShapeArr = [];
+		for (var i=0; i<pointCount; i++) {
+			var point = this.dim.wave.edgeTop;
+			var px = this.linScale(i, 0, pointCount-1, this.dim.wave.edgeLeft, this.dim.wave.edgeRight);
+			emptyShapeArr.push([px, point]);
 		}
 
-		this.waveGeometry = new THREE.BufferGeometry().fromGeometry( tmpGeometry );
-		this.waveGeometry.dynamic = true;
-	}
-} // createWaveMesh
+		// Create geometry and its faces
+		if (this.waveGeometry === undefined) {
+			var tmpGeometry = new THREE.Geometry();
+
+			for (var i=1; i<emptyShapeArr.length; i++) {
+				tmpGeometry.vertices.push(new THREE.Vector3(
+					emptyShapeArr[i-1][0], this.dim.wave.edgeBottom, 0));
+
+				tmpGeometry.vertices.push(new THREE.Vector3(
+					emptyShapeArr[i][0], emptyShapeArr[i][1], 0));
+
+				if (i>0) {
+					tmpGeometry.faces.push(new THREE.Face3((i-1)*2, (i-1)*2 + 1, (i-1)*2 + 2));
+					tmpGeometry.faces.push(new THREE.Face3((i-1)*2 + 2, (i-1)*2 + 1, (i-1)*2 + 3));
+				}
+			}
+
+			this.waveGeometry = new THREE.BufferGeometry().fromGeometry( tmpGeometry );
+			this.waveGeometry.dynamic = true;
+		}
+	}; // createWaveMesh
 
 
 	LPCRenderer.prototype.updateWave = function(points, peaks, frequencyScaling)
