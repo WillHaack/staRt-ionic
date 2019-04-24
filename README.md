@@ -27,7 +27,7 @@ bower install
 Finally, add the iOS platform, which you need to build the audio plugin
 
 ```
-ionic platform add ios
+ionic cordova platform add ios
 ```
 
 There may be a couple of errors or something, don't sweat it.
