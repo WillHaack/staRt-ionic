@@ -94,7 +94,7 @@ function saveJSON(jsonObject, absolutePath, successCb)
 var practiceDirective = angular.module( 'practiceDirective' );
 
 practiceDirective.controller( 'PracticeDirectiveController',
-			      function($scope, $timeout, $localForage, AutoService, NotifyingService, FirebaseService, ProfileService, SessionStatsService, StartUIState, UploadService, $rootScope, $state, $http, $cordovaDialogs)
+			      function($scope, $timeout, $localForage, AutoService, NotifyingService, FirebaseService, ProfileService, SessionStatsService, StartUIState, UploadService, $rootScope, $state, $http, $cordovaDialogs, ToolbarService)
     {
 	// var uploadURLs = [
 	// 	"http://localhost:5000",
@@ -117,6 +117,30 @@ practiceDirective.controller( 'PracticeDirectiveController',
 
 	$scope.currentWordIdx = -1;
 	$scope.currentPracticeSession = null;
+
+  // TOOLBAR ----------------------------------------------------
+  // TO BE IMPLEMENTED IN THE FUTURE / NOT CURRENTLY IN USE
+
+  // holds toolbar content for the current practice state
+  $scope.toolbar;
+
+  // called by $scope.beginWordPractice()
+  $scope.setupToolbar = function() {
+    $scope.toolbar = ToolbarService.practice_initTB(
+      $scope.probe, $scope.type,
+      $scope.count, $scope.forceWaveHidden );
+  } // end setupToolbar
+
+  // assign event handlers to toolbar btns
+  $scope.tbHelp = function(){
+    var helpMsg = $scope.toolbar[$scope.toolbar.length -1].helpMsg;
+    console.log( helpMsg );
+  }
+  $scope.tbStop = function() {
+    if ($scope.isPracticing) {
+      $scope.endWordPractice();
+    }
+  }
 
 	/* --------------------------------
 	   adaptive difficulty
@@ -291,6 +315,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	    1: "bronze"
 	}
 
+  // ----------------------------------------------
 
 	function recordingDidStart(profileDescArray) {
 	    $scope.isRecording = true;
@@ -303,7 +328,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	function sessionDisplayString() {
 	    var type = $scope.type ? $scope.type.toLowerCase() : "word";
 	    var sesh = $scope.probe ? "quiz" : "quest";
-	    var hidden = $scope.forceWaveHidden ? " hidden" : "";
+	    var hidden = $scope.forceWaveHidden ? " trad" : " bio";
 	    var stats = SessionStatsService.getCurrentProfileStats();
 	    var session = stats ? stats.thisContextString : "";
 	    return type + " " + sesh + hidden + " " + session;
@@ -547,6 +572,8 @@ practiceDirective.controller( 'PracticeDirectiveController',
     $scope.currentWord = null;
     if ($scope.isPracticing) return;
     $scope.isPracticing = true;
+    $scope.setupToolbar();
+
 	  console.log("Beginning " + sessionDisplayString());
 
 	  if (window.AudioPlugin === undefined) {

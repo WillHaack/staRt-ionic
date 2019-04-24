@@ -143,6 +143,7 @@ uploadService.factory('UploadService', function($localForage, $http, $cordovaDia
 			// eslint-disable-next-line no-undef
 			Promise.all(uploadTodos)
 				.then(function() {
+          console.log("Uploaded true for key " + id);
 					saveUploadStatusForSessionKey(id, {uploading: false, uploaded: true});
 					completeCallback();
 				})

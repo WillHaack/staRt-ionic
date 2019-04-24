@@ -133,7 +133,9 @@
     
     NSString *metadataFile = [[recordingAsDict objectForKey:LPCRecordingSessionMetadataKey] lastPathComponent];
     LPCRecordingSession *session = [LPCRecordingSession sessionWithMetadataFile:metadataFile];
-    [session deleteFiles];
+	if (session) {
+		[session deleteFiles];
+	}
 	[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]
 								callbackId:command.callbackId];
 	

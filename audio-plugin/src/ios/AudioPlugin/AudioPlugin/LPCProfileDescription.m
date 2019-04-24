@@ -68,7 +68,11 @@ static NSArray *metadataParams;
     LPCProfileDescription *desc = [[LPCProfileDescription alloc] init];
     desc.mutableMetadata = [NSMutableDictionary dictionary];
     desc.uuid = [rows[0] objectForKey:@"uuid"];
-	[desc.mutableMetadata setObject:[rows[0] objectForKey:@"email"] forKey:LPCProfileDescriptionKeyEmail];
+	
+	if ([rows[0] objectForKey:@"email"]) {
+		[desc.mutableMetadata setObject:[rows[0] objectForKey:@"email"] forKey:LPCProfileDescriptionKeyEmail];
+	}
+	
     [desc.mutableMetadata setObject:[rows[0] objectForKey:@"username"] forKey:LPCProfileDescriptionKeyName];
     [desc.mutableMetadata setObject:[rows[0] objectForKey:@"age"] forKey:LPCProfileDescriptionKeyAge];
     [desc.mutableMetadata setObject:[rows[0] objectForKey:@"gender"] forKey:LPCProfileDescriptionKeyGender];

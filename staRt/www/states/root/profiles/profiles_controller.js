@@ -295,13 +295,17 @@ function compareRecordings(ra, rb) {
 
 		$scope.updateRecordingsList = function()
 		{
+			function sessionKeyForRecording(recording) {
+				return recording.Metadata.split('/').pop().substr(0, 36);
+			}
+
 			$scope.data.selectedProfileRecordings = [];
 			ProfileService.getRecordingsForProfile($scope.data.currentProfile, function(recordings) {
 				var statusesToFetch = [];
 				recordings.sort(compareRecordings); // Prefer the recordings sorted from present to past
 				recordings.forEach(function(recording) {
 					statusesToFetch.push(
-						UploadService.getUploadStatusForSessionKey(recording.Metadata.split('/').pop())
+						UploadService.getUploadStatusForSessionKey(sessionKeyForRecording(recording))
 							.then(function(status) {
 								recording.uploaded = !!status.uploaded;
 								if (recording.endDate && recording.endDate.length > 0) {
@@ -387,13 +391,13 @@ function compareRecordings(ra, rb) {
 					if (recording) {
 						var session = {
 							id: null
-            };
-            session.files = {
-              Metadata: recording.Metadata,
-              Audio: recording.Audio,
-              LPC: recording.LPC,
-              Ratings: recording.Metadata.replace('-meta.csv', '-ratings.json')
-            };
+						};
+						session.files = {
+							Metadata: recording.Metadata,
+							Audio: recording.Audio,
+							LPC: recording.LPC,
+							Ratings: recording.Metadata.replace('-meta.csv', '-ratings.json')
+						};
 						session.id = session.files.Metadata.split('/').pop().substr(0, 36);
 						$scope.uploadCount += 1;
 						UploadService.uploadPracticeSessionFiles(session.files, session.id, progress, win, fail);

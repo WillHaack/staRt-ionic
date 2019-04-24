@@ -41,13 +41,36 @@
 // STATE STYLES
 // ================================================
 
-.free-header {}
-
 .free-lpcBox {
 	position: relative;
 	display: flex;
 	flex-flow: column nowrap;
 	height: $row-h * 4;
 	width: 100%;
-	//border: 1px solid cyan;
+	// border: 1px solid cyan;
+
+	.free_header-layout {
+	// similar to .promptBox-layout in practice-dir
+	 position: absolute;
+	 display: flex;
+	 flex-flow: row nowrap;
+	 justify-content: center;
+	 height: $row-h;
+	 width: 100%;
+	 padding-left: $col-w * 3;
+	 padding-right: $col-w * 2;
+	 //border: 1px solid tan;
+
+		.free_line {
+			// similar to .promptBox in practice-dir
+		 display: flex;
+		 flex-flow: column nowrap;
+		 justify-content: flex-end;
+		 align-items: center;
+		 height: $row-h;
+		 width: 100%;
+		 border-bottom: 1px solid white;
+	 }
+	}
+
 }
