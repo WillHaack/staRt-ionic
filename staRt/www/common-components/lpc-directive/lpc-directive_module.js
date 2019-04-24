@@ -1,12 +1,12 @@
 'use strict';
 
 var lpcDirective = angular.module( 'lpcDirective',
-[
-    'ngResize'
-]);
+	[
+		'ngResize'
+	]);
 
 lpcDirective.config(['resizeProvider', function(resizeProvider){
-    resizeProvider.throttle = 100;
+	resizeProvider.throttle = 100;
 }]);
 
 lpcDirective.directive( 'lpcDirective', function()
@@ -17,15 +17,15 @@ lpcDirective.directive( 'lpcDirective', function()
 		controller: 'LpcDirectiveController',
 		scope:
 		{
-      active: "=",
+			active: '=',
 			probe: '=',
 			slider: '=',
 			reset: '=',
 			rate: '=',
 			hideBtn: '=',
-      waveHidden: "=",
-			tutorial: "=",
-      beach: "="
+			waveHidden: '=',
+			tutorial: '=',
+			beach: '='
 		},
 		templateUrl: 'common-components/lpc-directive/lpc-directive_template.html'
 	};

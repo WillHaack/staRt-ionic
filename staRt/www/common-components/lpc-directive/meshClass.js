@@ -4,11 +4,14 @@ function Mesh() {
 	//this.hello = () => console.log('LETS MAKE SOME MESHES!');
 } // end Mesh Constructor
 
-// Mesh is just a class through which to access each static mesh Group's 'create' function.
-// Rationale: its easier just to attach just 1 object, 'Mesh,' to the lpcDirective.
-// The code for each mesh group is in lpc-directive/meshes/.
+/*
+Mesh is just a class through which to access each static mesh Group's 'create' function when needed. It is scoped to the lpc-renderer.
+Rationale: its easier just to attach just 1 provider/class, 'Mesh,' to the lpcDirective.
+All the Mesh.create fx are called from LPCRenderer.drawScene()
 
-// All the Mesh.create fx are called from LPCRenderer.drawScene()
+Each Mesh.create function returns a THREE.Group to the lpc-renderer scene. The the incoming svgs and three drawings are composited with in their Group (local space), and then the Groups are is compositted into the scene with LPCRenderer.drawScene()
+*/
+
 
 Mesh.prototype.createBubBtn = function(dim, bubBtnGroup, materials) {
 	//console.log( 'create BubBtn');
@@ -89,6 +92,7 @@ Mesh.prototype.createBubBtn = function(dim, bubBtnGroup, materials) {
 
 		bubBtnGroup.add(pauseGroup);
 	} // createPauseBtn()
+
 
 	function createPlayBtn() {
 		playGroup = new THREE.Group();
