@@ -3,7 +3,7 @@
 
 'use strict';
 
-var maxTargetTextUpdateCount = 2;
+var maxTargetTextUpdateCount = 2; // #hmc document this
 
 // requestAnim shim layer by Paul Irish
 window.requestAnimFrame = (function(){
@@ -43,8 +43,9 @@ lpcDirective.controller( 'LpcDirectiveController',
 		var pauseGroup;	// holds pause icon from lpcRenderer
 		var playGroup;	// holds play icon from lpcRenderer
 		if ($scope.beach) { fzText = $element[0].querySelector('#fzText'); }
+
 		$scope.targetNeedsUpdate = false;
-		$scope.targetTextUpdateCount = 0;
+		$scope.targetTextUpdateCount = 0; // #hmc document this
 
 		///////////////////////////////////
 		//  WAVE DATA
@@ -259,21 +260,21 @@ lpcDirective.controller( 'LpcDirectiveController',
 						playGroup.visible = true;
 					} // end if(lpcPaused)
 
-					if ($scope.targetNeedsUpdate) {
-						$scope.updateTarget();
-					}
+					// if ($scope.targetNeedsUpdate) {
+					// 	$scope.updateTarget();
+					// }
 
 					// even though we aren't writing to a text sprite anymore,
 					// this may still be helpful to smooth out the animation
-					// if ($scope.targetNeedsUpdate) {
-					// 	if ($scope.targetTextUpdateCount >= maxTargetTextUpdateCount) {
-					// 		$scope.targetTextUpdateCount = 0;
-					// 		$scope.updateTarget();
-					// 		$scope.targetNeedsUpdate = false;
-					// 	} else {
-					// 		$scope.targetTextUpdateCount++;
-					// 	}
-					// }
+					if ($scope.targetNeedsUpdate) {
+						if ($scope.targetTextUpdateCount >= maxTargetTextUpdateCount) {
+							$scope.targetTextUpdateCount = 0;
+							$scope.updateTarget();
+							$scope.targetNeedsUpdate = false;
+						} else {
+							$scope.targetTextUpdateCount++;
+						}
+					}
 				} // end if(beach)
 
 				if (!$scope.beach) {
