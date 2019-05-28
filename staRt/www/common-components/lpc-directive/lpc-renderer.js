@@ -83,32 +83,25 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 		this.dim.graph = {
 			width: this.dim.canvas.width,
 			height: this.dim.canvas.width/2, // 2:1 aspect ratio
-			//height: this.dim.row_H * 2;
 			top: this.dim.canvas.top,
 			right: this.dim.canvas.right,
 			bottom: this.dim.canvas.bottom,
 			left: this.dim.canvas.left,
-			// xOffset: 0,
-			// yOffset: 0
+			yOffset: 0
 		}
 
 		if (this._beachScene) {
 			//console.log( 'this is beachScene');
 
 			this.dim.graph.width = this.dim.col_W * 7;
-			 this.dim.graph.height =  this.dim.graph.width/2; //ORIG
-			//this.dim.graph.height = this.dim.row_H * 4;
-
-			//this.dim.graph.top = this.dim.row_H * 2;
+			this.dim.graph.height =  this.dim.graph.width/2; //ORIG
 			this.dim.graph.top = this.dim.graph.height / 2;
-			//this.dim.graph.bottom = this.dim.row_H * -2;
 			this.dim.graph.bottom = this.dim.graph.height / -2;
 
 			this.dim.graph.right = this.dim.col_W * 4;
 			this.dim.graph.left = -this.dim.col_W * 3;
-
+			this.dim.graph.yOffset = this.dim.row_H * 0.33;
 		}
-
 		// console.log('canvas: ')
 		// console.log(this.dim.canvas);
 		// console.log('graph: ')
@@ -163,7 +156,7 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 		this.materials.push( new THREE.LineBasicMaterial({
 			//color: 0x018B9D, // navy
 			//color: 0xc2f2f2, //sky
-			color: 0xffffff, //sky
+			color: 0xffffff,
 			name:'peakMat'
 		}));
 
@@ -270,10 +263,8 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 			peakSegments.geometry.vertices[2*i].y = py;
 			peakSegments.geometry.vertices[2*i+1].x = px;
 			//peakSegments.geometry.vertices[2*i+1].y = this.dim.graph.bottom;
-
-			//(this.dim.row_H * -1)
 			if(py > (this.dim.row_H * -0.75)) {
-				peakSegments.geometry.vertices[2*i+1].y = this.dim.graph.bottom;
+				peakSegments.geometry.vertices[2*i+1].y = this.dim.graph.bottom; //prevents negative #s
 			} else {
 				peakSegments.geometry.vertices[2*i+1].y = py;
 			}
@@ -362,8 +353,6 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 		this.waveGroup = new THREE.Group();
 		this.waveGroup.name = 'waveGroup';
 
-		var yOffset;
-
 		if (this._beachScene) {
 			this.graphicsGroup = new THREE.Group();
 			this.graphicsGroup.name = 'graphicsGroup';
@@ -409,18 +398,16 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 
 			this.createWaveMesh();
 			this.createPeakSegments();
-			yOffset = this.dim.row_H * 0.33;
-			this.peaksGroup.position.set(0, yOffset, 1);
-			this.waveGroup.position.set(0, yOffset, 0);
-
+			//yOffset = this.dim.row_H * 0.33
 		} else {
 			console.log( 'Beach is FALSE');
-			yOffset = 0;
 			this.createWaveMesh();
 			this.createPeakSegments();
 		}
-		this.scene.add(this.waveGroup);
-		this.scene.add(this.peaksGroup);
+
+		this.peaksGroup.position.set(0, this.dim.graph.yOffset, 1);
+		this.waveGroup.position.set(0, this.dim.graph.yOffset, 0);
+		this.scene.add(this.waveGroup, this.peaksGroup);
 	};
 
 	LPCRenderer.prototype.clearScene = function()

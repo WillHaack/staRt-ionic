@@ -170,7 +170,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 				} else if( intersects === 'star' ) {
 					$scope.trackingTarget = true;
-					console.log('touch: ' + px);
+					//console.log('touch: ' + px);
 					//$scope.updateTarget();
 				} else {
 					$scope.trackingTarget = false;
@@ -195,9 +195,9 @@ lpcDirective.controller( 'LpcDirectiveController',
 				var px_waveEdgeLeft = ($scope.lpcRenderer.dim.canvas.width/2) + $scope.lpcRenderer.dim.graph.left;
 				var px_waveEdgeRight = ($scope.lpcRenderer.dim.canvas.width/2) + $scope.lpcRenderer.dim.graph.right;
 
-				console.log('left: ' + px_waveEdgeLeft);
-				console.log('right: ' +px_waveEdgeRight);
-				console.log('px: ' +px);
+				// console.log('left: ' + px_waveEdgeLeft);
+				// console.log('right: ' +px_waveEdgeRight);
+				// console.log('px: ' +px);
 
 				//adds padding on right edge (prevents slider from overlapping reset sign.
 				var padRight = $scope.lpcRenderer.dim.col_W * 0.75;

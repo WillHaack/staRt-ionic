@@ -1,7 +1,7 @@
 CONTENTS:
   LPC-DIRECTIVE INSTANCES & ISOLATE SCOPE
   DIMENSIONS FOR LPC-DIRECTIVE INSTANCES
-  MESH CLASS GROUPS AND Z-INDICES
+  BEACH-SCENE MESH CLASS GROUPS AND Z-INDICES
 
 
 ===========================================
@@ -160,24 +160,25 @@ waveHidden: "isFeedbacking" || "forceWaveHidden"
 ===========================================
 DIMENSIONS FOR LPC-DIRECTIVE INSTANCES
 ---------------------------------------
+The wave should always be drawn at the 2:1 aspect ratio.
+This allows the freqScale value from the AudioPlugin to show on the 0-4500hz section of the spectrum on the canvas. (For example, if you set freqScale = 1, you will see the entire spectrum and not just the speech-relevant frequencies.)
+
+In beachScene, there are 2 sets of dimensions.
+dim.canvas = 3:1, holds the entire THREEjs sketch
+  col_W * 12, row_H * 4
+
+dim.graph = 2:1, boundaries for the wave drawing
+  col_W * 7, row_H * 3.5
+
+To bring out the peaks (stretch the y-axis by 0.5 * row_H), the Audio plugin data's xPos values are mapped (linScaled) to dim.canvas.top and dim.canvas.top, and offset by -0.25 * row_H.
+
+everything was designed on a 12:6 grid of 1024px x 748px
 col_W = ~85.33
 row_H = 128 (compiled ~124)
-aspect ratio 2:1
-
-v1 wave dimensions
---------------------
-w: 737px
-h: 370px
-
-
-v2 wave dimensions
---------------------
-w: 597.333  (col_W * 7)
-h: 298.666  (row_H * )
 
 
 ===========================================
-MESH CLASS GROUPS AND Z-INDICES
+BEACH-SCENE MESH CLASS GROUPS AND Z-INDICES
 ---------------------------------------
 
 sliderGroup: 7 in scene
