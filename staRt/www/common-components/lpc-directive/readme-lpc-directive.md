@@ -1,3 +1,4 @@
+===========================================
 LPC-DIRECTIVE INSTANCES & ISOLATE SCOPE
 ---------------------------------------
 Currently we have 4 instances of the lpc-directive.
@@ -146,3 +147,24 @@ waveHidden: "isFeedbacking" || "forceWaveHidden"
     pract-dir   "forceWaveHidden || isFeedbacking"
     profiles    --
     tutorial    --
+
+
+
+
+===========================================
+LPC-DIRECTIVE INSTANCES DIMENSIONS
+---------------------------------------
+col_W = ~85.33
+row_H = 128 (compiled ~124)
+aspect ratio 2:1
+
+v1 wave dimensions
+--------------------
+w: 737px
+h: 370px
+
+
+v2 wave dimensions
+--------------------
+w: 597.333  (col_W * 7)
+h: 298.666  (row_H * )

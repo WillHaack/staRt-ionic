@@ -133,11 +133,13 @@ Mesh.prototype.createPostLeft = function(dim, graphicsGroup, materials, roundedR
 
 	function createRopes() {
 		var ropeGroupTop = new THREE.Group();
-		var r = 5;
-		var h = dim.row_H * 0.09;
+		//var r = 5;
+		var r = 3;
+		//var h = dim.row_H * 0.09;
+		var h = dim.row_H * 0.05;
 
 		function createRopeBG() {
-			var w = dim.col_W * 0.78;
+			var w = dim.col_W * 0.74;
 
 			var shape = new THREE.Shape();
 			// roundedRect: (shape, x, y, w, h, r)
@@ -174,13 +176,13 @@ Mesh.prototype.createPostLeft = function(dim, graphicsGroup, materials, roundedR
 		createRopeHL();
 
 		var ropeGroupBottom = ropeGroupTop.clone();
-		ropeGroupBottom.position.set(-1, -14, 0);
+		ropeGroupBottom.position.set(-1, -10, 0);
 		ropeGroupBottom.rotation.set(0, 0, -0.1);
 
 		ropeGroup.add(ropeGroupTop, ropeGroupBottom);
 
-		var xpos = dim.col_W * -3.65;
-		var ypos = dim.row_H * -0.4;
+		var xpos = dim.col_W * -3.62;
+		var ypos = dim.row_H * -0.2;
 		ropeGroup.position.set(xpos, ypos, 4);
 		ropeGroup.rotation.set(0, 0, -0.1);
 
@@ -195,7 +197,7 @@ Mesh.prototype.createPostLeft = function(dim, graphicsGroup, materials, roundedR
 
 		var xpos = (dim.col_W * -3.75) - 4;
 		var ypos = (dim.row_H * 0.5);
-		var zpos = 3;
+		var zpos = 4;
 		var zrot = 0;
 		postBigGroup.position.set(xpos, ypos, zpos);
 		postBigGroup.rotation.set(0, 0, zrot);
@@ -247,11 +249,14 @@ Mesh.prototype.createPostRight = function(dim, graphicsGroup) {
 	resetBtnGroup.name = 'resetBtnGroup';
 
 	// MESH CALLBACKS ---------------------------
-	function postSmallCB() {
-		// postSmallGroup.scale.set(s, s, s);
+	var sy = 1.2;
+	var s = 1;
 
-		var xpos = dim.col_W * 3.97;
-		var ypos = dim.row_H * -0.31;
+	function postSmallCB() {
+		postSmallGroup.scale.set(s, sy, s);
+
+		var xpos = dim.col_W * 3.9;
+		var ypos = dim.row_H * -0.1;
 		var zpos = 1;
 		var zrot = -0.09;
 		postSmallGroup.position.set(xpos, ypos, zpos);
@@ -259,10 +264,10 @@ Mesh.prototype.createPostRight = function(dim, graphicsGroup) {
 	}
 
 	function resetBtnCB() {
-		// resetBtnGroup.scale.set(s, s, s);
+		//resetBtnGroup.scale.set(s, s, s);
 
-		var xpos = dim.col_W * 3.52;
-		var ypos = dim.row_H * -0.365;
+		var xpos = dim.col_W * 3.45;
+		var ypos = dim.row_H * -0.2;
 		var zpos = 2;
 		var zrot = -0.09;
 		resetBtnGroup.position.set(xpos, ypos, zpos);
@@ -287,29 +292,68 @@ Mesh.prototype.createPostRight = function(dim, graphicsGroup) {
 	graphicsGroup.add(postRightGroup);
 };
 
-Mesh.prototype.createFoamGroup = function(dim, graphicsGroup) {
-	// console.log( 'create Foam Group');
+Mesh.prototype.createRightTailGroup = function(dim, graphicsGroup) {
+	var rightTailGroup = new THREE.Group();
+	rightTailGroup.name = 'rightTailGroup';
 
-	// var localDim = dim;
+	function rightTailCB() {
+		console.log('rightTail CB');
+		var xpos = dim.col_W * 4;
+		var ypos = (dim.row_H * 0.98);
+		var zpos = 4;
+		rightTailGroup.position.set(xpos, ypos, zpos);
+	}
+
+
+	// LOAD SVG ---------------------------
+	function loadRightTail() {
+		svgLoaderToMesh(
+			'img/lpcDir/rightTail.svg',
+			'rightTail',
+			rightTailGroup,
+			rightTailCB
+		);
+	}
+
+	loadRightTail();
+
+	graphicsGroup.add(rightTailGroup);
+
+}
+
+Mesh.prototype.createFoamGroup = function(dim, graphicsGroup, materials) {
+	// console.log( 'create Foam Group');
 
 	var foamGroup = new THREE.Group();
 	foamGroup.name = 'foamGroup';
 
+	// function createTempFoam() {
+	// 	var geom = new THREE.PlaneGeometry( (dim.col_W * 9), 25);
+	// 		var mat = materials.filter(function (obj) {
+	// 			return obj.name === 'whitePure';
+	// 		});
+	//
+	// 		var mesh = new THREE.Mesh(geom, mat);
+	// 		mesh.position.set(dim.col_W * 1.5, dim.row_H * -0.75, 3);
+	// 		mesh.name = 'foamTemp';
+	//
+	// 		foamGroup.add(mesh);
+	// 		graphicsGroup.add(foamGroup);
+	// }
+	//
+	// createTempFoam();
+
 	// MESH CALLBACK ---------------------------
 	function foamBaseCB() {
-		// var s = 1
-		// var sY = 1; //0.75;
-		// var sX = localDim.W / 100; //
-		// foamGroup.scale.set(s, s, 1);
-
-		var xpos = dim.edgeLeft + dim.col_W;
-		var ypos = (dim.row_H * -0.75);
-		var zpos = 2;
+		//console.log('foambase CB');
+		var xpos = dim.col_W * -3.35;
+		var ypos = (dim.row_H * -0.65); //-0.75
+		var zpos = 3;
 		foamGroup.position.set(xpos, ypos, zpos);
 
 		foamGroup.children.forEach(function (i) {
 			i.material.transparent = true;
-			i.material.opacity = 0.75;
+			i.material.opacity = 0.85;
 		});
 
 		graphicsGroup.add(foamGroup);

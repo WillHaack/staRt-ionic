@@ -95,6 +95,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 					}
 				}
 			}
+
 			msg.freqScale = 2.2;
 			if (cb)
 				cb(msg);
@@ -104,8 +105,8 @@ lpcDirective.controller( 'LpcDirectiveController',
 			if ($scope.active) {
 				var points = msg.coefficients;
 				var peaks = msg.freqPeaks;
-				//var frequencyScaling = msg.freqScale;
-				var frequencyScaling = 1;
+				var frequencyScaling = msg.freqScale;
+				//var frequencyScaling = 1;
 				$scope.lpcRenderer.updateWave(points, peaks, frequencyScaling);
 			}
 		};
@@ -119,16 +120,16 @@ lpcDirective.controller( 'LpcDirectiveController',
 		{
 			if (t.layerX && t.layerY) {
 				var point = {
-					x: t.layerX - $scope.lpcRenderer.dim.W / 2,
-					y: t.layerY - $scope.lpcRenderer.dim.H / 2
+					x: t.layerX - $scope.lpcRenderer.dim.canvas.width / 2,
+					y: t.layerY - $scope.lpcRenderer.dim.canvas.height / 2
 				};
 				return point;
 
 			} else {
 				var rect = $scope.lpcRenderer.canvas.getBoundingClientRect();
 				var point = {
-					x: t.pageX - rect.left - $scope.lpcRenderer.dim.W / 2,
-					y: t.pageY - rect.top - $scope.lpcRenderer.dim.H / 2
+					x: t.pageX - rect.left - $scope.lpcRenderer.dim.canvas.width / 2,
+					y: t.pageY - rect.top - $scope.lpcRenderer.dim.canvas.height / 2
 				};
 				return point;
 			}
@@ -150,7 +151,8 @@ lpcDirective.controller( 'LpcDirectiveController',
 				if (e.cancellable) e.preventDefault();
 
 				var point = positionForTouch((e.type === 'touchstart') ? e.changedTouches[0] : e);
-				var px = point.x + $scope.lpcRenderer.dim.W / 2;
+
+				var px = point.x + $scope.lpcRenderer.dim.canvas.width / 2;
 				//console.log('touch: ' + px);
 
 				var intersects = $scope.lpcRenderer.hitTest(point);
@@ -168,7 +170,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 
 				} else if( intersects === 'star' ) {
 					$scope.trackingTarget = true;
-					// console.log('touch: ' + px);
+					console.log('touch: ' + px);
 					//$scope.updateTarget();
 				} else {
 					$scope.trackingTarget = false;
@@ -187,20 +189,26 @@ lpcDirective.controller( 'LpcDirectiveController',
 				if (e.cancellable) e.preventDefault();
 
 				var point = positionForTouch((e.changedTouches !== undefined) ? e.changedTouches[0] : e);
-				var px = point.x + $scope.lpcRenderer.dim.W / 2;
+				var px = point.x + $scope.lpcRenderer.dim.canvas.width / 2;
 
-				// get wave boundaries in screen coords
-				var px_waveEdgeLeft = ($scope.lpcRenderer.dim.W/2) + $scope.lpcRenderer.dim.wave.edgeLeft;
-				var px_waveEdgeRight = ($scope.lpcRenderer.dim.W/2) + $scope.lpcRenderer.dim.wave.edgeRight;
+				// get wave boundaries in web screen coords (origin = top left)
+				var px_waveEdgeLeft = ($scope.lpcRenderer.dim.canvas.width/2) + $scope.lpcRenderer.dim.graph.left;
+				var px_waveEdgeRight = ($scope.lpcRenderer.dim.canvas.width/2) + $scope.lpcRenderer.dim.graph.right;
+
+				console.log('left: ' + px_waveEdgeLeft);
+				console.log('right: ' +px_waveEdgeRight);
+				console.log('px: ' +px);
 
 				//adds padding on right edge (prevents slider from overlapping reset sign.
 				var padRight = $scope.lpcRenderer.dim.col_W * 0.75;
 				px_waveEdgeRight -= padRight;
 				var fzPadHigh = 4500 - ((4500/7) * 0.75); //adjusts for starfish padding.
+				// var fzPadHigh = 4500;
 
 				// update target data w/ clamped slider range and flag for UI update
 				if( px < px_waveEdgeLeft) { px = px_waveEdgeLeft; }
 				if( px > px_waveEdgeRight) { px = px_waveEdgeRight; }
+
 				$scope.data.targetF3 = $scope.lpcRenderer.linScale(px, px_waveEdgeLeft, px_waveEdgeRight, 0, fzPadHigh);
 
 				$scope.targetNeedsUpdate = true;
@@ -237,8 +245,8 @@ lpcDirective.controller( 'LpcDirectiveController',
 		$scope.animate = function () {
 			if ($scope.active) {
 
-				if ( $scope.lpcRenderer.dim.W !== $scope.lpcRenderer.parentElement.clientWidth ||
-					$scope.lpcRenderer.dim.H !== $scope.lpcRenderer.parentElement.clientHeight ) {
+				if ( $scope.lpcRenderer.dim.canvas.width !== $scope.lpcRenderer.parentElement.clientWidth ||
+					$scope.lpcRenderer.dim.canvas.height !== $scope.lpcRenderer.parentElement.clientHeight ) {
 					//console.log('new size');
 					$scope.updateCanvasSize( );
 				}
@@ -323,6 +331,7 @@ lpcDirective.controller( 'LpcDirectiveController',
 			var sliderPosition = $scope.lpcRenderer.linScale($scope.data.targetF3, 0, 4500, 0, 1);
 			if(sliderPosition > 1) { sliderPosition = 1; }
 			if(sliderPosition < 0) { sliderPosition = 0; }
+
 			$scope.lpcRenderer.sliderPosition = sliderPosition;
 
 			if (fzText !== undefined) {
