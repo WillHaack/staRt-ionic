@@ -1,3 +1,9 @@
+CONTENTS:
+  LPC-DIRECTIVE INSTANCES & ISOLATE SCOPE
+  DIMENSIONS FOR LPC-DIRECTIVE INSTANCES
+  MESH CLASS GROUPS AND Z-INDICES
+
+
 ===========================================
 LPC-DIRECTIVE INSTANCES & ISOLATE SCOPE
 ---------------------------------------
@@ -152,7 +158,7 @@ waveHidden: "isFeedbacking" || "forceWaveHidden"
 
 
 ===========================================
-LPC-DIRECTIVE INSTANCES DIMENSIONS
+DIMENSIONS FOR LPC-DIRECTIVE INSTANCES
 ---------------------------------------
 col_W = ~85.33
 row_H = 128 (compiled ~124)
@@ -168,3 +174,37 @@ v2 wave dimensions
 --------------------
 w: 597.333  (col_W * 7)
 h: 298.666  (row_H * )
+
+
+===========================================
+MESH CLASS GROUPS AND Z-INDICES
+---------------------------------------
+
+sliderGroup: 7 in scene
+  holds star and needle
+
+---
+bubBtnGroup: 6 in scene
+  holds pause/play btn meshes
+
+---
+graphicsGroup: 2 in scene
+
+  PostLeftGroup: 5 in graphicsGroup
+    postSmallGroup: 5
+    resetBtnGroup: 7
+
+  PostRight
+    fzSignGroup:  7 in graphicsGroup
+    ropeGroup:    6 in graphicsGroup
+    postBigGroup: 5 in graphicsGroup
+
+  FoamGroup:      4 in graphicsGroup
+
+  RightTailGroup: 3 in graphicsGroup
+
+---
+peaksGroup: 1 in scene
+
+---
+waveGroup: 0 in scene
