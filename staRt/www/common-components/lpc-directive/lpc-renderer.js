@@ -26,8 +26,8 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 			if (this.sliderGroup !== undefined) {
 				this.sliderGroup.position.x =
 					this.linScale( s, 0, 1,
-						this.dim.wave.edgeLeft,
-						this.dim.wave.edgeRight
+						this.dim.graph.left,
+						this.dim.graph.right
 					);
 			}
 		}
@@ -68,43 +68,52 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 
 	LPCRenderer.prototype.updateDrawingDim = function()
 	{
-		this.dim.W = this.parentElement.clientWidth;
-		this.dim.H = this.parentElement.clientHeight;
-		this.dim.aspect = this.dim.W / this.dim.H;
+		// Designed on a 12:6 grid of 1024px x 748px
+		this.dim.row_H = 128; //this.dim.H / 4;
+		this.dim.col_W = 85.33 //this.dim.W / 12;
+		this.dim.canvas = {};
 
-		this.dim.edgeLeft = this.dim.W / -2;
-		this.dim.edgeRight = this.dim.W / 2;
-		this.dim.edgeTop = this.dim.H / 2;
-		this.dim.edgeBottom = this.dim.H / -2;
+		this.dim.canvas.width = this.parentElement.clientWidth;
+		this.dim.canvas.height = this.parentElement.clientHeight;
+		this.dim.canvas.top = this.dim.canvas.height / 2;
+		this.dim.canvas.right = this.dim.canvas.width / 2;
+		this.dim.canvas.bottom = this.dim.canvas.height / -2;
+		this.dim.canvas.left = this.dim.canvas.width / -2;
 
-		this.dim.row_H = this.dim.H / 4;
-		this.dim.col_W = this.dim.W / 12;
+		this.dim.graph = {
+			width: this.dim.canvas.width,
+			height: this.dim.canvas.width/2, // 2:1 aspect ratio
+			top: this.dim.canvas.top,
+			right: this.dim.canvas.right,
+			bottom: this.dim.canvas.bottom,
+			left: this.dim.canvas.left,
+			yOffset: 0
+		}
 
 		if (this._beachScene) {
 			//console.log( 'this is beachScene');
-			// wave boundaries
-			this.dim.wave = {
-				edgeLeft: this.dim.edgeLeft + (this.dim.col_W * 3),
-				edgeTop: this.dim.edgeTop - (this.dim.row_H * 1.25),
-				edgeRight: this.dim.edgeRight - (this.dim.col_W * 2),
-				edgeBottom: this.dim.edgeBottom + (this.dim.row_H * 1.25)
-			};
-		} else {
-			//console.log( 'not beachScene');
-			// wave boundaries are same as parent ele
-			this.dim.wave = {
-				edgeLeft: this.dim.edgeLeft,
-				edgeTop: this.dim.edgeTop,
-				edgeRight: this.dim.edgeRight,
-				edgeBottom: this.dim.edgeBottom
-			};
+
+			this.dim.graph.width = this.dim.col_W * 7;
+			this.dim.graph.height =  this.dim.graph.width/2; //ORIG
+			this.dim.graph.top = this.dim.graph.height / 2;
+			this.dim.graph.bottom = this.dim.graph.height / -2;
+
+			this.dim.graph.right = this.dim.col_W * 4;
+			this.dim.graph.left = -this.dim.col_W * 3;
+			this.dim.graph.yOffset = this.dim.row_H * 0.33;
 		}
+		// console.log('canvas: ')
+		// console.log(this.dim.canvas);
+		// console.log('graph: ')
+		// console.log(this.dim.graph);
 	};
+
+
 
 	LPCRenderer.prototype.buildStage = function()
 	{
 		this.scene = new THREE.Scene();
-		this.camera = new THREE.OrthographicCamera(this.dim.edgeLeft, this.dim.edgeRight, this.dim.edgeTop, this.dim.edgeBottom, 1, 1000);
+		this.camera = new THREE.OrthographicCamera(this.dim.canvas.left, this.dim.edgeRight, this.dim.edgeTop, this.dim.edgeBottom, 1, 1000);
 		this.scene.add(this.camera);
 	};
 
@@ -112,16 +121,16 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 	{
 		// this.renderer.setPixelRatio( 1 );
 		// this.renderer.setPixelRatio( window.devicePixelRatio );
-		this.renderer.setSize(this.dim.W, this.dim.H);
+		this.renderer.setSize(this.dim.canvas.width, this.dim.canvas.height);
 		this.renderer.setClearColor( 0x000000, 0 );
 
 		this.camera.position.set(0, 0, 100);
 		this.camera.aspect = this.dim.aspect;
 		this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-		this.camera.left = this.dim.edgeLeft;
-		this.camera.top = this.dim.edgeTop;
-		this.camera.right = this.dim.edgeRight;
-		this.camera.bottom = this.dim.edgeBottom;
+		this.camera.left = this.dim.canvas.left;
+		this.camera.top = this.dim.canvas.top;
+		this.camera.right = this.dim.canvas.right;
+		this.camera.bottom = this.dim.canvas.bottom;
 		this.camera.updateProjectionMatrix();
 	};
 
@@ -145,7 +154,9 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 
 		// LINE MAT
 		this.materials.push( new THREE.LineBasicMaterial({
-			color: 0x018B9D,
+			//color: 0x018B9D, // navy
+			//color: 0xc2f2f2, //sky
+			color: 0xffffff,
 			name:'peakMat'
 		}));
 
@@ -198,8 +209,11 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 		// Make an array of all the topmost points
 		var emptyShapeArr = [];
 		for (var i=0; i<pointCount; i++) {
-			var point = this.dim.wave.edgeTop;
-			var px = this.linScale(i, 0, pointCount-1, this.dim.wave.edgeLeft, this.dim.wave.edgeRight);
+
+			var point = this.dim.graph.top;
+
+			var px = this.linScale(i, 0, pointCount-1, this.dim.graph.left, this.dim.graph.right);
+
 			emptyShapeArr.push([px, point]);
 		}
 
@@ -208,8 +222,10 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 			var tmpGeometry = new THREE.Geometry();
 
 			for (var i=1; i<emptyShapeArr.length; i++) {
+				// tmpGeometry.vertices.push(new THREE.Vector3(
+				// 	emptyShapeArr[i-1][0], this.dim.wave.edgeBottom, 0));
 				tmpGeometry.vertices.push(new THREE.Vector3(
-					emptyShapeArr[i-1][0], this.dim.wave.edgeBottom, 0));
+					emptyShapeArr[i-1][0], this.dim.graph.bottom, 0));
 
 				tmpGeometry.vertices.push(new THREE.Vector3(
 					emptyShapeArr[i][0], emptyShapeArr[i][1], 0));
@@ -225,16 +241,54 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 		}
 	}; // createWaveMesh
 
+	// updatePeaks() should only be called from w/in updateWave()
+	LPCRenderer.prototype.updatePeaks = function(peaks, frequencyScaling)
+	{
+		var peakSegments = this.scene.getObjectByName('peaks');
+
+		for (var i = 0; i < this.maxNumPeaks; i++) {
+			var px = 0;
+			var py = 0;
+
+			if (i < peaks.length) {
+				var peak = peaks[i];
+				px = this.linScale(peak.X, -1, 1, 0, frequencyScaling);
+
+				px = this.linScale(px, 0, 1, this.dim.graph.left, this.dim.graph.right);
+
+				// py = this.linScale(peak.Y, 1, -1, this.dim.graph.top, this.dim.graph.bottom);
+				py = this.linScale(peak.Y, 1, -1, this.dim.canvas.top, this.dim.canvas.bottom);
+			}
+			peakSegments.geometry.vertices[2*i].x = px;
+			peakSegments.geometry.vertices[2*i].y = py;
+			peakSegments.geometry.vertices[2*i+1].x = px;
+			//peakSegments.geometry.vertices[2*i+1].y = this.dim.graph.bottom;
+			if(py > (this.dim.row_H * -0.75)) {
+				peakSegments.geometry.vertices[2*i+1].y = this.dim.graph.bottom; //prevents negative #s
+			} else {
+				peakSegments.geometry.vertices[2*i+1].y = py;
+			}
+		}
+		peakSegments.geometry.verticesNeedUpdate = true;
+	}; // updatePeaks()
 
 	LPCRenderer.prototype.updateWave = function(points, peaks, frequencyScaling)
 	{
-		if (this.peaksGroup === undefined) return;
+		if (this.peaksGroup === undefined) {
+			return;
+		} else {
+			this.updatePeaks( peaks, frequencyScaling );
+		}
 
 		// An array to hold incoming data for topmost points
 		var shapeArr = [];
 		for (var i=0; i<points.length; i++) {
-			var point = points[i] * this.dim.wave.edgeTop;
-			var px = this.linScale(i * frequencyScaling, 0, points.length-1, this.dim.wave.edgeLeft, this.dim.wave.edgeRight);
+
+			//var point = points[i] * this.dim.graph.top;
+			var point = points[i] * this.dim.canvas.top;
+
+			var px = this.linScale(i * frequencyScaling, 0, points.length-1, this.dim.graph.left, this.dim.graph.right);
+
 			shapeArr.push([px, point]);
 		}
 
@@ -249,11 +303,15 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 				wave curve.
 		*/
 
+		//var waveBottom = this.dim.wave.edgeBottomWithOffset;
+		var waveBottom = this.dim.graph.bottom;
+
 		for (var i=1; i<shapeArr.length; i++) {
+
 			var p = this.waveGeometry.attributes.position.array;
 			var idx = (i-1) * 18;
 			p[idx++] = shapeArr[i-1][0]; // Bottom-left
-			p[idx++] = this.dim.wave.edgeBottom; //bottomEdge;
+			p[idx++] = waveBottom; //this.dim.wave.edgeBottom; //bottomEdge;
 			p[idx++] = 0;
 			p[idx++] = shapeArr[i-1][0]; // Top-left
 			p[idx++] = shapeArr[i-1][1];
@@ -262,10 +320,10 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 			p[idx++] = shapeArr[i][1];
 			p[idx++] = 0;
 			p[idx++] = shapeArr[i-1][0]; // Bottom-left
-			p[idx++] = this.dim.wave.edgeBottom; //bottomEdge;
+			p[idx++] = waveBottom; //this.dim.wave.edgeBottom; //bottomEdge;
 			p[idx++] = 0;
 			p[idx++] = shapeArr[i][0]; // Bottom-right
-			p[idx++] = this.dim.wave.edgeBottom; //bottomEdge;
+			p[idx++] = waveBottom; //this.dim.wave.edgeBottom; //bottomEdge;
 			p[idx++] = 0;
 			p[idx++] = shapeArr[i][0]; // Top-right
 			p[idx++] = shapeArr[i][1];
@@ -282,30 +340,7 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 			this.waveGroup.add( this.waveMesh );
 		} // end if (this.waveMesh === undefined)
 
-		this.updatePeaks( peaks, frequencyScaling );
 	}; // end updateWave();
-
-	// updatePeaks() should only be called from w/in updateWave()
-	LPCRenderer.prototype.updatePeaks = function(peaks, frequencyScaling)
-	{
-		var peakSegments = this.scene.getObjectByName('peaks');
-
-		for (var i = 0; i < this.maxNumPeaks; i++) {
-			var px = 0, py = this.dim.wave.edgeBottom;
-			if (i < peaks.length) {
-				var peak = peaks[i];
-				px = this.linScale(peak.X, -1, 1, 0, frequencyScaling);
-				px = this.linScale(px, 0, 1, this.dim.wave.edgeLeft, this.dim.wave.edgeRight);
-				py = this.linScale(peak.Y, 1, -1, this.dim.wave.edgeTop, this.dim.wave.edgeBottom);
-			}
-			peakSegments.geometry.vertices[2*i].x = px;
-			peakSegments.geometry.vertices[2*i].y = py;
-			peakSegments.geometry.vertices[2*i+1].x = px;
-			peakSegments.geometry.vertices[2*i+1].y = this.dim.wave.edgeBottom;
-		}
-		peakSegments.geometry.verticesNeedUpdate = true;
-	}; // updatePeaks()
-
 
 	// ===============================================
 	// COMPOSE THE SCENE -----------------------------
@@ -342,7 +377,9 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 							4.) any req'd shape helpers from Draw
 				*/
 
-			Mesh.createFoamGroup( this.dim, this.graphicsGroup );
+			Mesh.createFoamGroup( this.dim, this.graphicsGroup, this.materials);
+
+			Mesh.createRightTailGroup( this.dim, this.graphicsGroup );
 
 			var roundedRect = Draw.roundedRect;
 			Mesh.createPostLeft( this.dim, this.graphicsGroup, this.materials, roundedRect );
@@ -361,16 +398,16 @@ lpcDirective.factory('LPCRenderer', function ( Draw, Mesh )
 
 			this.createWaveMesh();
 			this.createPeakSegments();
-			this.peaksGroup.position.set(0, -5, 1);
-			this.waveGroup.position.set(0, -5, 0);
-
+			//yOffset = this.dim.row_H * 0.33
 		} else {
 			console.log( 'Beach is FALSE');
 			this.createWaveMesh();
 			this.createPeakSegments();
 		}
-		this.scene.add(this.waveGroup);
-		this.scene.add(this.peaksGroup);
+
+		this.peaksGroup.position.set(0, this.dim.graph.yOffset, 1);
+		this.waveGroup.position.set(0, this.dim.graph.yOffset, 0);
+		this.scene.add(this.waveGroup, this.peaksGroup);
 	};
 
 	LPCRenderer.prototype.clearScene = function()
