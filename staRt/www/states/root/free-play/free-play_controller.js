@@ -9,8 +9,16 @@
 		console.log('FreePlayController here!');
 
 		$scope.data = {
-			navTitle: "Free Play"
+			navTitle: "Free Play",
+			waveHidden: false
 		};
+
+		if( $rootScope.rootWaveForced && $rootScope.rootWaveHidden) {
+			$scope.data.waveHidden = true;
+		} else {
+			$scope.data.waveHidden = false
+		}
+
 
 		var lastChronoTime = Date.now();
 
@@ -20,6 +28,7 @@
 			NotifyingService.notify("freeplay-tick", duration);
 			lastChronoTime = nextChronoTime;
 		}
+
 
 		// Start a timer to log the time spend in free play
 		var ticker = setInterval(logInterval, 10000);

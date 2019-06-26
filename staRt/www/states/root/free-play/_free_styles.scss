@@ -21,6 +21,12 @@
 			background-image: url("../img/bgImg/bg-BF.svg");
 			z-index: 1;
 		}
+
+		.img-bg_qtNoBF {
+			background-color: $c-bg;
+			background-image: url("../img/bgImg/bg_quest-NoBF.svg");
+			z-index: 1;
+		}
 	} // free-layout_bg-container
 
 	.free-layout_content-container  {
