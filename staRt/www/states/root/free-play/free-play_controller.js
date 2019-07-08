@@ -10,15 +10,20 @@
 
 		$scope.data = {
 			navTitle: "Free Play",
-			waveHidden: false
+			waveHidden: false,
+			researchSession: false
 		};
 
 		if( $rootScope.rootWaveForced && $rootScope.rootWaveHidden) {
 			$scope.data.waveHidden = true;
-		} else {
-			$scope.data.waveHidden = false
+			$scope.data.researchSession= true;
+		} else if( $rootScope.rootWaveForced && !$rootScope.rootWaveHidden) {
+			$scope.data.waveHidden = false;
+			$scope.data.researchSession= true;
+		} else if( !$rootScope.rootWaveForced && !$rootScope.rootWaveHidden) {
+			$scope.data.waveHidden = false;
+			$scope.data.researchSession= false;
 		}
-
 
 		var lastChronoTime = Date.now();
 

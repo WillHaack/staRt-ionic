@@ -24,8 +24,7 @@ function _scramble(array) {
 }
 
 // -----------------------------------------------------------------------
-// Object to hold state of user's progress thru the RCT
-// (RCT = randomized control trial protocol)
+// Object to hold state of user's progress thru the protocol
 
 var AutoState = function (profile, currentStates, onShow, initialState) {
 	this.onShow = onShow;
