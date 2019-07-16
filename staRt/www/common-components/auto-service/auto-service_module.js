@@ -23,6 +23,9 @@ function _scramble(array) {
 	}
 }
 
+// -----------------------------------------------------------------------
+// Object to hold state of user's progress thru the protocol
+
 var AutoState = function (profile, currentStates, onShow, initialState) {
 	this.onShow = onShow;
 	this.currentStep = null;
@@ -63,8 +66,15 @@ AutoState.prototype = {
 	}
 };
 
+
+// -----------------------------------------------------------------------
 // Introductory auto guide, which helps the user get familiar with the app
+
+/* NOTE: AutoState.call takes 'this' (IntroAuto state) and essentially initialises it with the AutoState prototype.
+	 In this case, .call populates a new AutoState object (IntroAuto), with the data provided to IntroAuto constructor fn. The next assignment sets the IntroAuto.prototype as a descendant of AutoState.prototype -- it will inherit all methods from the AutoState.prototype.
+*/
 var IntroAuto = function (profile, currentStates, onShow, initialState) {
+
 	AutoState.call(this, profile, currentStates, onShow, initialState);
 
 	var steps = {};
@@ -122,11 +132,16 @@ var IntroAuto = function (profile, currentStates, onShow, initialState) {
 	this.firstStep = steps.welcome;
 	this.contextString = "introduction";
 };
+
+// IntroAuto.prototype inherits all methods from from AutoState.prototype
 IntroAuto.prototype = Object.create(AutoState.prototype);
+
 IntroAuto.shouldBegin = function (profile) {
 	return profile.nIntroComplete === 0 && profile.formalTester;
 };
 
+
+// -----------------------------------------------------------------------
 // One of the sixteen guided runs through the app
 var SessionAuto = function (profile, currentStates, onShow, initialState) {
 	AutoState.call(this, profile, currentStates, onShow, initialState);
@@ -419,6 +434,7 @@ ConclusionAuto.shouldBegin = function (profile) {
 	return biofeedbackCompleteGood && nonBiofeedbackCompleteGood && formalGood && !treatmentComplete;
 };
 
+// =============================================================================
 autoService.factory('AutoService', function ($rootScope, $ionicPlatform, NotifyingService, ProfileService, SessionStatsService, $cordovaDialogs) {
 	var currentAuto = null;
 	var currentRestrictions = null;
@@ -608,6 +624,7 @@ autoService.factory('AutoService', function ($rootScope, $ionicPlatform, Notifyi
 			if (profile) {
 				var currentStates = SessionStatsService.getCurrentProfileStats() || {};
 				var changeList = ['resume'];
+
 				if (profile.inProcessSession) {
 					$cordovaDialogs.confirm(
 						"It looks like you were in the middle of a session. Would you like to pick up where you left off, or start over?",

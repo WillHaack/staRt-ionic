@@ -1,14 +1,14 @@
 <ion-view view-title="Free Play" class="state-contentBox">
 
 	<div class="free-layout_view-container">
-		<!-- <ion-nav-bar class="ion-nav-bar--old"></ion-nav-bar> -->
 		<ion-nav-bar class="ion-nav-bar">
 			<ion-nav-title>{{data.navTitle}}</ion-nav-title>
 		</ion-nav-bar>
 
 		<!-- full-width eles go here -->
 		<div class="free-layout_bg-container">
-			<div class="img-bg img-bg_BF"></div>
+			<div ng-if="!data.waveHidden" class="img-bg img-bg_BF"></div>
+			<div ng-if="data.waveHidden" class="img-bg img-bg_qtNoBF"></div>
 		</div>
 
 
@@ -18,17 +18,32 @@
 			<div class="free-lpcBox">
 
 				<div class="free_header-layout">
+					<div class="free_headText"></div>
 					<div class="free_line"></div>
 				</div>
 
-				<lpc-directive
-					slider="true"
-					reset="true"
-					tutorial="false"
-					active="lpcActive"
-					beach="true">
-				</lpc-directive>
-			</div>
+				<!-- NOTE: If(!data.waveHidden") in freePlay, the LPC component hides all of its elements. For stability, do NOT do an ng-if="!data.waveHidden" on the <lpc-directive> here.
+				-->
+					<lpc-directive
+						slider="true"
+						reset="true"
+						tutorial="false"
+						active="lpcActive"
+						beach="true"
+					</lpc-directive>
+
+			</div> <!-- end free-lpcBox-->
+
+			<div class="free-sandContainer">
+				<!--  ng-if="!data.researchSession" -->
+
+				<div class="free-sandText">
+					This is the place to practice &#47;r&#47; sounds on your own.<br>
+					There are no prompts or words to match -<br>
+					just try different things and see what works best.
+				</div>
+
+			</div> <!-- end .free-sandContainer-->
 
 		</div> <!-- end free-layout-->
 

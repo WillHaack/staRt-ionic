@@ -45,6 +45,10 @@
 			type: null,
 			waveHidden: false
 		};
+		if( $rootScope.rootWaveForced && $rootScope.rootWaveHidden ) {
+			$scope.data.waveHidden = true;
+		}
+
 
 		$scope.categoryNames = [
 			"Syllabic /r/",
@@ -115,6 +119,11 @@
 			$scope.practicing = true;
 			$scope.configuring = false;
 			$scope.order = "random";
+			if ($rootScope.categoryRestrictions) {
+				for (var i = 0; i < $rootScope.categoryRestrictions.length; i++) {
+					$scope.toggleRCategory($rootScope.categoryRestrictions[i], true);
+				}
+			}
 
 			// Start a timer to log the time spend in quest mode play
 			NotifyingService.notify("quest-start");

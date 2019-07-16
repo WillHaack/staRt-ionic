@@ -67,8 +67,27 @@
 
 		$scope.tabData = StartUIState.tabData;
 
-		AutoService.init();	
+		// -----------------------------------------------
+		// Start Session Tracking & Protocol Services
+		AutoService.init();
 		SessionStatsService.init();
+		/*
+			NOTE: (not sure if this is correct, but here's what I think is happening -hc)
+
+			AutoService communicates the status of a protocol-session with the variables, $rootScope.rootWaveHidden and $rootScope.rootWaveForced
+
+			$rootScope.rootWaveHidden
+			This will be FALSE if the user is in a BF auto-sesh.
+			It will be TRUE if the user is in a noBF auto-sesh.
+			It will be UNDEFINED if the user is not in an auto-sesh.
+
+			$rootScope.rootWaveForced
+			This will always be TRUE the user is in auto-sesh.
+			It will be UNDEFINED if the user is not in an auto-sesh.
+
+			#sjt:  ???
+		*/
+
 	});
 
 } )(  );
