@@ -68,16 +68,17 @@
 	 padding-right: $col-w * 2;
 	 //border: 1px solid tan;
 
-		.free_headText {
-			display: flex;
-			flex-flow: row nowrap;
-			justify-content: center;
-			align-items: flex-end;
-			font-size: 1.25em;
-			color: $c-text-main;
-			width: 100%;
+		.free_headText { // not currently in use
+			// similar to .promptBox in practice-dir
+			// display: flex;
+			// flex-flow: row nowrap;
+			// justify-content: center;
+			// align-items: flex-end;
+			// font-size: 1.25em;
+			// color: $c-text-main;
+			// width: 100%;
 			// padding-bottom: 2em;
-			//border: 1px solid white;
+			// border: 1px solid white;
 		}
 
 		.free_line {
@@ -98,7 +99,7 @@
 	padding-right: $col-w * 2.25;
 	padding-bottom: $row-h * 0.4;
 
-	.free-sandText {
+	.free-sandText { 
 		font-size: 1.25em;
 		color: #847263; //#998675;
 		//border: 1px solid white;
