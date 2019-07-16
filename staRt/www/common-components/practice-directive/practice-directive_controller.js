@@ -94,7 +94,7 @@ function saveJSON(jsonObject, absolutePath, successCb)
 var practiceDirective = angular.module( 'practiceDirective' );
 
 practiceDirective.controller( 'PracticeDirectiveController',
-			      function($scope, $timeout, $localForage, AutoService, NotifyingService, FirebaseService, ProfileService, SessionStatsService, StartUIState, UploadService, $rootScope, $state, $http, $cordovaDialogs, ToolbarService)
+			      function($scope, $timeout, $localForage, AutoService, NotifyingService, FirebaseService, ProfileService, SessionStatsService, StartUIState, UploadService, $rootScope, $state, $http, $cordovaDialogs, ToolbarService, AdaptDiff)
     {
 	// var uploadURLs = [
 	// 	"http://localhost:5000",
@@ -117,6 +117,8 @@ practiceDirective.controller( 'PracticeDirectiveController',
 
 	$scope.currentWordIdx = -1;
 	$scope.currentPracticeSession = null;
+
+  // console.log(AdaptDiff);
 
   // TOOLBAR ----------------------------------------------------
   // TO BE IMPLEMENTED IN THE FUTURE / NOT CURRENTLY IN USE
@@ -148,7 +150,9 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	$scope.block_score = 0;
 	$scope.session_score = 0;
 	$scope.difficulty = 1;
-	var carrier_phrases = carrier_phrases_bank[0];
+	//var carrier_phrases = carrier_phrases_bank[0];
+  $scope.carrier_phrases = AdaptDiff.phrases[0];
+
 	var increase_difficulty_threshold = 0.8;
 	var decrease_difficulty_threshold = 0.5;
 
@@ -236,9 +240,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
   }
 
 	function revise_difficulty() {
-	  if ($scope.type == "Syllable" ||
-	    $scope.probe) {
-	    // hackzorz
+	  if ($scope.type == "Syllable" || $scope.probe) {
 	    // don't modify carrier phrase if doing a Syllable Quest or Word Quiz
 	    return;
 	  }
@@ -247,16 +249,18 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	    case 1:
 	    case 2:
 	    case 3:
-	      carrier_phrases = carrier_phrases_bank[0];
+	      //carrier_phrases = carrier_phrases_bank[0];
+        $scope.carrier_phrases = AdaptDiff.phrases[0];
 	      break;
 	    case 4:
-	      carrier_phrases = carrier_phrases_bank[1];
+	      //carrier_phrases = carrier_phrases_bank[1];
+        $scope.carrier_phrases = AdaptDiff.phrases[1];
 	      break;
 	    case 5:
-	      carrier_phrases = carrier_phrases_bank[2];
+	      //carrier_phrases = carrier_phrases_bank[2];
+        $scope.carrier_phrases = AdaptDiff.phrases[2];
 	      break;
 	    default:
-
 	  }
 	}
 
@@ -546,7 +550,8 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	    $scope.currentWord = $scope.wordList[$scope.wordOrder[lookupIdx]];
 
 	    // also select a random carrier phrase
-      $scope.carrier_phrase = carrier_phrases[Math.floor(Math.random() * carrier_phrases.length)];
+      // $scope.carrier_phrase = carrier_phrases[Math.floor(Math.random() * carrier_phrases.length)];
+      $scope.carrier_phrase = $scope.carrier_phrases[Math.floor(Math.random() * $scope.carrier_phrases.length)];
       $scope.smallFont = $scope.carrier_phrase.length >= 16;
       $scope.tinyFont = $scope.carrier_phrase.length >= 32;
 	  }
@@ -679,13 +684,14 @@ practiceDirective.controller( 'PracticeDirectiveController',
 	    $scope.csvs.forEach(function (csv) {
 	      var key = csv.replace('data/wp_', '').replace('.csv', '');
 	      if ($scope.difficulty <= 3) {
-	        tempWordList = tempWordList.concat(words[key][$scope.difficulty]);
+	        // tempWordList = tempWordList.concat(words[key][$scope.difficulty]);
+          tempWordList = tempWordList.concat(AdaptDiff.words[key][$scope.difficulty]);
 	      } else {
 	        // difficulty is 4 or 5
 	        tempWordList = tempWordList
-	          .concat(words[key][1])
-	          .concat(words[key][2])
-	          .concat(words[key][3]);
+	          .concat(AdaptDiff.words[key][1])
+	          .concat(AdaptDiff.words[key][2])
+	          .concat(AdaptDiff.words[key][3]);
 	      }
 	    });
 
@@ -773,7 +779,7 @@ practiceDirective.controller( 'PracticeDirectiveController',
     }
 );
 
-
+/*
 // save here to avoid async loads
 var carrier_phrases_bank = [
     ["___"],
@@ -800,8 +806,9 @@ var carrier_phrases_bank = [
 	"I named my dog ___"
     ]
 ];
+*/
 
-
+/*
 var words = {
     'consonantal_back': {
 	'1': [
@@ -1059,3 +1066,4 @@ var words = {
 	]
     }
 };
+*/
